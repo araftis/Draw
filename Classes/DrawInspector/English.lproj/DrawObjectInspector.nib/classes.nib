@@ -1,0 +1,47 @@
+{
+    IBClasses = (
+        {
+            CLASS = AJRInspectorModule; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = DrawInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = DrawInspectorModule; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = AJRInspectorModule; 
+        }, 
+        {
+            ACTIONS = {setHeadSymbol = id; setTailSymbol = id; }; 
+            CLASS = DrawLinkInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                headInspectorView = id; 
+                headMatrix = id; 
+                tailInspectorView = id; 
+                tailMatrix = id; 
+            }; 
+            SUPERCLASS = DrawInspector; 
+        }, 
+        {
+            ACTIONS = {setFlatness = id; setObjectRepetition = id; }; 
+            CLASS = DrawObjectInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                flatnessSlider = id; 
+                flatnessText = id; 
+                repetitionMatrix = id; 
+                subinspector = id; 
+            }; 
+            SUPERCLASS = DrawInspectorModule; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

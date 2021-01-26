@@ -1,0 +1,11 @@
+/* 
+  DrawSquiggleTool.strings
+  Draw
+
+  Created by Alex Raftis on 10/19/11.
+  Copyright (c) 2011 Apple, Inc. All rights reserved.
+*/
+
+"Open Pen" = "Pluma abierta";
+"Closed Pen" = "Pluma cerrada";
+"Smart Pen" = "Pluma inteligente";

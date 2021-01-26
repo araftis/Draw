@@ -1,0 +1,13 @@
+/* 
+  DrawORSRibbonInspector.strings
+  Draw
+
+  Created by Alex Raftis on 9/8/11.
+  Copyright (c) 2011 Apple, Inc. All rights reserved.
+*/
+
+"Opacity" = "Opacity:";
+"Shadow" = "Shadow";
+"Reflection" = "Reflection";
+"Opacity, Shadow, and Reflection" = "Opacity, Shadow, and Reflection";
+"Multiple" = "Multiple";

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="DrawInspectorGroupsController" customModule="Draw" customModuleProvider="target">
+            <connections>
+                <outlet property="buttonBar" destination="5" id="e4V-dm-onn"/>
+                <outlet property="managedView" destination="tac-58-9En" id="eBw-hH-jsy"/>
+                <outlet property="view" destination="4" id="16"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="4">
+            <rect key="frame" x="0.0" y="0.0" width="275" height="350"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="5" customClass="AJRButtonBar">
+                    <rect key="frame" x="0.0" y="272" width="275" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="26" id="26Y-ab-cky"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="tac-58-9En">
+                    <rect key="frame" x="0.0" y="0.0" width="275" height="271"/>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" id="10"/>
+                <constraint firstItem="5" firstAttribute="top" secondItem="4" secondAttribute="top" constant="52" id="15"/>
+                <constraint firstAttribute="bottom" secondItem="tac-58-9En" secondAttribute="bottom" id="MYU-Te-aHH"/>
+                <constraint firstItem="tac-58-9En" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="1" id="T3N-rv-6AM"/>
+                <constraint firstItem="5" firstAttribute="leading" secondItem="4" secondAttribute="leading" id="XKW-AR-iXV"/>
+                <constraint firstAttribute="trailing" secondItem="tac-58-9En" secondAttribute="trailing" id="aAi-ik-jrm"/>
+                <constraint firstItem="tac-58-9En" firstAttribute="leading" secondItem="4" secondAttribute="leading" id="e92-SE-X7s"/>
+            </constraints>
+            <point key="canvasLocation" x="139.5" y="154"/>
+        </customView>
+    </objects>
+</document>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector>
+    <group title="Polygon">
+        <group>
+            <slice type="integer" label="# of Sides" minValue="3" maxValue="50" valueKeyPath="controller.selection.inspectedSides" />
+            <slice type="float" label="Star Inset" minValue="0" maxValue="100" valueKeyPath="controller.selection.inspectedStar" />
+            <slice type="float" label="Offset" minValue="-360" maxValue="360"  valueKeyPath="controller.selection.inspectedOffset" />
+        </group>
+    </group>
+</inspector>

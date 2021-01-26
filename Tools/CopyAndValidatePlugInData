@@ -1,0 +1,3 @@
+#!/bin/csh -fx
+
+xmllint "$INPUT_FILE_PATH" >! "$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/$INPUT_FILE_BASE.ajrplugindata"

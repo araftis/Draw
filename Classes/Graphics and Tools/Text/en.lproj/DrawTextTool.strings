@@ -1,0 +1,14 @@
+/* 
+  DrawTextTool.strings
+  Draw
+
+  Created by Alex Raftis on 9/30/11.
+  Copyright (c) 2011 Apple, Inc. All rights reserved.
+*/
+
+"Text" = "Text";
+"Form Entry" = "Form Entry";
+"Add to Graphic" = "Add to Graphic";
+"Make Form Entry" = "Make Form Entry";
+"Make Plain Text" = "Make Plain Text";
+"activationKey" = "t";

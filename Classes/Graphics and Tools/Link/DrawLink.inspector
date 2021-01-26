@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector>
+    <group title="Link">
+        <group>
+            <slice type="choice" valueType="object" label="Style" objectsKeyPath="controller.selection.allPossibleSourceCaps" valueKeyPath="controller.selection.inspectedSourceCap" mergeWithRight="true" />
+            <slice type="choice" valueType="object" objectsKeyPath="controller.selection.allPossibleDestinationCaps" valueKeyPath="controller.selection.inspectedDestinationCap" />
+            <slice type="float" label="Thickness" minValue="1" maxValue="100" mergeWithRight="true" valueKeyPath="controller.selection.sourceCap.thickness" />
+            <slice type="float" minValue="1" maxValue="100"  valueKeyPath="controller.selection.destinationCap.thickness" />
+            <slice type="float" label="Length" minValue="1" maxValue="100" mergeWithRight="true" valueKeyPath="controller.selection.sourceCap.length" />
+            <slice type="float" minValue="1" maxValue="100"  valueKeyPath="controller.selection.destinationCap.length" />
+        </group>
+    </group>
+</inspector>

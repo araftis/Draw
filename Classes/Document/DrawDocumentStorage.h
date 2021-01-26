@@ -1,0 +1,63 @@
+//
+//  DrawDocumentStorage.h
+//  Draw
+//
+//  Created by Alex Raftis on 5/30/14.
+//  Copyright (c) 2014 Apple, Inc. All rights reserved.
+//
+
+#import <AJRFoundation/AJRFoundation.h>
+
+@class DrawGraphic, DrawLayer, DrawPage;
+
+@interface DrawDocumentStorage : NSObject <AJRXMLCoding>
+
+// Print Info
+@property (nonatomic,strong) NSPrintInfo *printInfo;
+
+// Basic Attributes
+@property (nonatomic,strong) NSColor *paperColor;
+
+// Snap Lines
+@property (nonatomic,strong) NSColor *markColor;
+@property (nonatomic,strong) NSMutableArray<NSNumber *> *horizontalMarks;
+@property (nonatomic,strong) NSMutableArray<NSNumber *> *verticalMarks;
+
+// Grid
+@property (nonatomic,strong) NSColor *gridColor;
+@property (nonatomic,assign) CGFloat gridSpacing;
+
+// Pages
+@property (nonatomic,strong) NSMutableArray<DrawPage *> *pages;
+@property (nonatomic,strong) DrawPage *masterPageEven;
+@property (nonatomic,strong) DrawPage *masterPageOdd;
+@property (nonatomic,assign) NSInteger pageNumber;
+@property (nonatomic,assign) NSInteger startingPageNumber;
+
+// Layers
+@property (nonatomic,strong) NSMutableArray<DrawLayer *> *layers;
+@property (nonatomic,strong) DrawLayer *layer;
+
+// Selection
+@property (nonatomic,strong) NSMutableSet<DrawGraphic *> *selection;
+
+// Copy and Paste
+@property (nonatomic,assign) NSPoint copyDelta;
+@property (nonatomic,assign) NSSize copyOffset;
+
+// Groups
+@property (nonatomic,strong) DrawGraphic *group;
+
+// State
+@property (nonatomic,strong) DrawGraphic *templateGraphic;
+
+// Book
+@property (nonatomic,strong) NSString *chapterName;
+
+// Flags
+@property (nonatomic,assign) BOOL gridEnabled;
+@property (nonatomic,assign) BOOL gridVisible;
+@property (nonatomic,assign) BOOL marksEnabled;
+@property (nonatomic,assign) BOOL marksVisible;
+
+@end

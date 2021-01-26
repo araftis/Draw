@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<plugindata owner="com.ajr.framework.AJRFoundation" version="1">
+
+    <!-- Defines link caps -->
+
+    <extension-point name="draw-link-cap" class="DrawLinkTool" registrySelector="registerLinkCap:properties:">
+    </extension-point>
+
+    <draw-link-cap class="DrawLinkCapArrow" />
+    <draw-link-cap class="DrawLinkCapCircle" />
+    <draw-link-cap class="DrawLinkCapDiamond" />
+    <draw-link-cap class="DrawLinkCapDoubleArrow" />
+    <draw-link-cap class="DrawLinkCapSquare" />
+
+    <!-- Defines aspects. Aspects are objects that render bezier paths. -->
+
+    <extension-point name="draw-aspect" class="DrawAspect" registrySelector="registerAspect:properties:">
+        <attribute name="class" type="class" required="YES" />
+        <attribute name="name" type="string" required="YES" />
+        <attribute name="id" type="string" required="YES" />
+        <attribute name="priority" type="string" defaultValue="background" />
+        <attribute name="image" type="string" />
+    </extension-point>
+
+    <!-- Adds the path to the current clip. Useful for objects that contain objects. -->
+    <draw-aspect class="DrawClip" id="clip" name="Clip" />
+    <!-- Draw a shadow. Draws the shadow as if the path is filled. -->
+    <draw-aspect class="DrawShadow" id="shadow" name="Shadow" priority="beforeBackground" />
+    <!-- Sets the opacity of object. Applies to all aspects that render after. -->
+    <draw-aspect class="DrawOpacity" id="opacity" name="Opacity" priority="beforeBackground" />
+    <!-- Draws a reflection of the object, up to the point the reflection renders. -->
+    <draw-aspect class="DrawReflection" id="reflection" name="Reflection" priority="beforeBackground" />
+    <!-- Analyses the path. Not really functional, just something I was playing with to try and recognize basic shapes. -->
+    <draw-aspect class="DrawPathAnalysisAspect" id="pathAnalysis" name="Path Analysis" priority="last" />
+    <!-- Draw text inside the path. -->
+    <draw-aspect class="DrawText" id="text" name="Text" priority="afterBackground" />
+    <!-- Strokes the path. Can apply color, line join, line cap, and dash patterns. -->
+    <draw-aspect class="DrawStroke" id="stroke" name="Stroke" priority="foreground" />
+    <!-- Fills the path. Can apply a color. Follows either even/odd or non-zero winding rules. -->
+    <draw-aspect class="DrawColorFill" id="colorFill" name="Color Fill" image="fillStandard" />
+    <!-- Fills the path. Mostly the superclass of other fills. You don't generally create one directly. -->
+    <draw-aspect class="DrawFill" id="fill" name="Fill" />
+
+    <!-- Defines a tool set. A toolset contains a collection of tools presented to the user as a groups set. -->
+    <extension-point name="draw-tool-set" class="DrawToolSet" registrySelector="registerToolSet:properties:">
+        <attribute name="class" type="class" required="YES" />
+        <attribute name="name" type="string" required="YES" />
+        <attribute name="id" type="string" required="YES" />
+        <attribute name="icon" type="image" />
+    </extension-point>
+
+    <!-- Defines a tool. A tool must belong to a tool set. -->
+    <extension-point name="draw-tool" class="DrawToolSet" registrySelector="registerTool:properties:">
+        <attribute name="class" type="class" required="YES" />
+        <attribute name="name" type="string" required="YES" />
+        <attribute name="id" type="string" required="YES" />
+        <attribute name="toolset" type="string" required="YES" />
+        <attribute name="activationKey" type="string" />
+        <attribute name="displayPriority" type="float" defaultValue="1" />
+        <element name="action" key="actions" type="array">
+            <attribute name="title" type="string" requried="YES" />
+            <attribute name="icon" type="image" required="YES" defaultValue="toolMissingIcon" />
+            <attribute name="cursor" type="cursor" />
+            <attribute name="tag" type="integer" required="YES" />
+            <attribute name="graphicClass" type="class" />
+        </element>
+    </extension-point>
+
+    <!-- Defines the "global" toolset, which will always be displayed. Think carefully before adding something to the global toolset. Current, only the selection tool resides here. -->
+    <draw-tool-set class="Draw.DrawGlobalToolSet" id="global" name="Global" icon="toolSetGlobal" />
+
+    <!-- Defines selection behavior. -->
+    <draw-tool class="DrawSelectionTool" name="Selection" id="selection" toolset="global" activationKey=" ">
+        <action title="Selection" icon="toolSelection" tag="0" />
+    </draw-tool>
+
+    <!-- Defines a tool set of basic graphic objects. -->
+    <draw-tool-set class="DrawGraphicsToolSet" id="graphics" name="Graphics" icon="toolSetGraphics" />
+
+    <!-- Draw rectangles. Rectangles may have a corner radius. -->
+    <draw-tool class="DrawRectangleTool" name="Rectangles" id="rectangle" toolset="graphics" activationKey="r">
+        <action title="Rectangle" icon="toolRectangle" tag="0" />
+        <action title="Rounded Rectangle" icon="toolRectangleRounded" tag="1" />
+        <action title="Pill" icon="toolRectanglePill" tag="2" />
+    </draw-tool>
+    <!-- Draw text or form text. Basically a "rectangle" with a contained text aspect. -->
+    <draw-tool class="DrawTextTool" name="Text" id="text" toolset="graphics" activationKey="t">
+        <action title="Text" icon="toolText" tag="0" />
+        <action title="Form Entry" icon="toolFormText" tag="1" />
+    </draw-tool>
+    <!-- Draw a free form path. Basically a "pen" in common parlance. -->
+    <draw-tool class="DrawSquiggleTool" name="Pen" id="pen" toolset="graphics" activationKey="p" displayPriority="0">
+        <action title="Open Pen" icon="toolSquiggle" tag="0" />
+        <action title="Closed Pen" icon="toolClosedSquiggle" tag="1" />
+        <action title="Smart Pen" icon="toolSmartSquiggle" tag="2" />
+    </draw-tool>
+    <!-- Draws links between graphics. Defiens a head and tail cap. See link caps above. -->
+    <draw-tool class="DrawLinkTool" name="Link" id="link" toolset="graphics" activationKey="l">
+        <action title="Link" icon="toolLink" cursor="cursorLink:{7.0,7.0}" tag="0" />
+    </draw-tool>
+    <!-- Defines pens. These may be lines, opened, or closed. -->
+    <draw-tool class="DrawPenTool" name="Shapes" id="pen" toolset="graphics" activationKey="s">
+        <action title="Lines" icon="toolLine" tag="0" />
+        <action title="Open Pen" icon="toolOpenPen" tag="1" />
+        <action title="Closed Pen" icon="toolClosedPen" tag="2" />
+    </draw-tool>
+    <!-- Defines a cirlce. May also define a "wedge". Other variants might be nice. -->
+    <draw-tool class="DrawCircleTool" name="Ovals" id="circle" toolset="graphics" activationKey="c">
+        <action title="Ellipse" icon="toolCircle" tag="0" />
+        <action title="Elliptical Arc" icon="toolCircleArc" tag="1" />
+    </draw-tool>
+    <!-- Defines a polygon, or a regular shape of n sides. May also be a "star". -->
+    <draw-tool class="Draw.DrawPolygonTool" name="Polygons" id="polygon" toolset="graphics" activationKey="P">
+        <action title="Polygon" tag="0" />
+    </draw-tool>
+
+    <!-- Defines file filters. These are basically tools for reading and writing documents. -->
+    <extension-point name="draw-filter" class="DrawFilter" registrySelector="registerFilter:properties:">
+        <attribute name="class" type="class" required="YES" />
+        <element name="readType" key="readableTypes" type="array">
+            <attribute name="type" type="string" />
+        </element>
+        <element name="writeType" key="writableTypes" type="array">
+            <attribute name="type" type="string" />
+        </element>
+    </extension-point>
+
+    <!-- Defines a filter that reads "papel" documents. This is the default file format. -->
+    <draw-filter class="DrawPapelFilter">
+        <readType type="papel" />
+        <readType type="com.ajr.papel" />
+        <writeType type="papel" />
+        <writeType type="com.ajr.papel" />
+    </draw-filter>
+    <!-- Reads NeXT / Apple's old Draw application files. Note that Draw was the original basis of this framework. -->
+    <draw-filter class="DrawOldDrawFilter">
+        <readType type="draw" />
+    </draw-filter>
+    <!-- Reads and writes to Adobe Illustrator documents. Note that the current version is likely very lossy. -->
+    <draw-filter class="DrawAdobeIllustrator">
+        <readType type="ai" />
+        <writeType type="ai" />
+    </draw-filter>
+
+    <!-- Define inspector groups. Inspector groups appear in the inspector side bar and are generally selected by choosing an option in something like a tab bar. -->
+    <extension-point name="draw-inspector-group" class="Draw.DrawInspectorGroup" registrySelector="registerInspectorGroupWithProperties:">
+        <attribute name="name" type="string" required="YES" /> <!-- A non-localized title of the group. -->
+        <attribute name="icon" type="image" required="YES" /> <!-- A 15x15 representing the group. -->
+        <attribute name="id" type="string" required="YES" /> <!-- Used by inspectors to specify their group. -->
+        <attribute name="priority" type="float" required="YES" /> <!-- Defines the display order. -->
+        <element name="inspected-class" key="inspectedClasses" type="array" required="YES">
+            <attribute name="class" type="class" />
+        </element>
+    </extension-point>
+
+    <draw-inspector-group name="Document" icon="inspectorGroupDocument" id="document" priority="1.0">
+        <inspected-class class="DrawDocument" />
+    </draw-inspector-group>
+    <draw-inspector-group name="Page" icon="inspectorGroupPage" id="page" priority="2.0">
+        <inspected-class class="DrawPage" />
+    </draw-inspector-group>
+    <draw-inspector-group name="Graphic" icon="inspectorGroupGraphic" id="graphic" priority="3.0">
+        <inspected-class class="DrawGraphic" />
+    </draw-inspector-group>
+    <draw-inspector-group name="Styles" icon="inspectorGroupAspects" id="graphic" priority="4.0">
+        <inspected-class class="DrawGraphic" />
+    </draw-inspector-group>
+    <draw-inspector-group name="Help" icon="inspectorGroupHelp" id="help" priority="5.0">
+        <inspected-class class="DrawGraphic" />
+    </draw-inspector-group>
+
+    <!-- Inspectors -->
+
+    <ajr_inspector xml="DrawDocument" identifier="document" />
+    <ajr_inspector xml="DrawGraphic" identifier="graphic" />
+    <ajr_inspector xml="DrawCircle" identifier="circle" />
+    <ajr_inspector xml="DrawRectangle" identifier="rectangle" />
+    <ajr_inspector xml="DrawLink" identifier="link" />
+    <ajr_inspector xml="DrawPen" identifier="pen" />
+    <ajr_inspector xml="DrawPolygon" identifier="polygon" />
+
+</plugindata>

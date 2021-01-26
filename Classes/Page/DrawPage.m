@@ -1,0 +1,529 @@
+/* DrawPage.m created by alex on Thu 17-Sep-1998 */
+
+#import "DrawPage.h"
+
+#import "DrawFunctions.h"
+#import "DrawGraphic.h"
+#import "DrawLayer.h"
+#import "DrawDocument.h"
+#import "AJRXMLCoder-DrawExtensions.h"
+
+#import <AJRInterface/AJRInterface.h>
+
+@implementation DrawPage {
+    NSMutableDictionary<NSString *, DrawGuestDrawer> *_guestDrawers;
+}
+
+static NSDictionary *_pageNumberAttributes = nil;
+
++ (void)initialize {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [style setAlignment:NSTextAlignmentRight];
+        _pageNumberAttributes = @{NSForegroundColorAttributeName:NSColor.disabledControlTextColor,
+                                  NSParagraphStyleAttributeName:style};
+    });
+}
+
+- (id)initWithDocument:(DrawDocument *)document {
+    NSRect frame = {NSZeroPoint, document.printInfo.paperSize};
+
+    if ((self = [super initWithFrame:frame])) {
+        [self setDocument:document];
+        _layers = [[NSMutableDictionary alloc] init];
+
+        // Updating
+        _changedGraphics = [[NSMutableArray alloc] init];
+
+        // Observing myself... I do this so that I can post a single notification that I updated at the end of an event loop.
+//        [AJRObserverCenter addObserver:self forObject:self];
+//        [AJRObserverCenter notifyObserversObjectWillChange:nil];
+
+        // Drag and Drop
+        [self registerForDraggedTypes:[[DrawDocument draggedTypes] allKeys]];
+        [self registerForDraggedTypes:[NSArray arrayWithObject:DrawGraphicPboardType]];
+    }
+    return self;
+}
+
+#pragma mark - Properties
+
+- (NSColor *)paperColor {
+    return _paperColor == nil ? [_document paperColor] : _paperColor;
+}
+
+- (void)setDocument:(DrawDocument *)document {
+    _document = document;
+    // Make sure all of our graphics will not point to the document.
+    [_layers enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSMutableArray<DrawGraphic *> *graphics, BOOL *stop) {
+        for (DrawGraphic *graphic in graphics) {
+            graphic.document = self->_document;
+            graphic.page = self;
+            graphic.layer = [self->_document layerWithName:key];
+        }
+    }];
+}
+
+#pragma mark - Graphics
+
+- (void)addGraphic:(DrawGraphic *)graphic {
+    [self addGraphic:graphic toLayer:nil];
+}
+
+- (void)addGraphic:(DrawGraphic *)graphic toLayer:(DrawLayer *)layer {
+    [self addGraphic:graphic toLayer:layer select:NO byExtendingSelection:NO];
+}
+
+- (void)addGraphic:(DrawGraphic *)graphic select:(BOOL)select byExtendingSelection:(BOOL)byExtension; {
+    [self addGraphic:graphic toLayer:nil select:select byExtendingSelection:byExtension];
+}
+
+- (void)addGraphic:(DrawGraphic *)graphic toLayer:(DrawLayer *)layer select:(BOOL)select byExtendingSelection:(BOOL)byExtension; {
+    NSMutableArray *graphics;
+    DrawGraphic *focused;
+    
+    if (layer == nil) {
+        layer = [_document layer];
+    }
+
+    graphics = [_layers objectForKey:[layer name]];
+    focused = [_document focusedGroup];
+
+    if (focused && ([focused layer] == layer)) {
+        [focused addSubgraphic:graphic];
+        if (![DrawGraphic notificationsAreDisabled]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:DrawDocumentDidAddGraphicNotification object:_document userInfo:[NSDictionary dictionaryWithObjectsAndKeys:graphic, DrawGraphicKey, nil]];
+        }
+        return;
+    }
+    
+    [_document addGraphic:graphic];
+    
+    if (!graphics) {
+        graphics = [[NSMutableArray alloc] init];
+        [_layers setObject:graphics forKey:[layer name]];
+    }
+    
+    [graphic graphicWillAddToPage:self];
+    [graphics addObject:graphic];
+    [graphic graphicDidAddToPage:self];
+    
+    [graphic setLayer:layer];
+    [graphic setPage:self];
+
+    if (select) {
+        if (!byExtension) {
+            [_document clearSelection];
+        }
+        [_document addGraphicToSelection:graphic];
+    }
+}
+
+- (void)removeGraphic:(DrawGraphic *)graphic {
+    DrawLayer *layer = [graphic layer];
+    NSMutableArray *graphics = [_layers objectForKey:[layer name]];
+    
+    if (!graphics) {
+        [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@ because it's layer doesn't exist.", graphic];
+    }
+    
+    [self setGraphicNeedsDisplayInRect:[graphic bounds]];
+    
+    [graphics removeObjectIdenticalTo:graphic];
+}
+
+- (void)replaceGraphic:(DrawGraphic *)oldGraphic withGraphic:(DrawGraphic *)newGraphic; {
+    DrawLayer *layer = [oldGraphic layer];
+    NSMutableArray *graphics = [_layers objectForKey:[layer name]];
+    NSUInteger index;
+    
+    if (!graphics) {
+        [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@ because it's layer doesn't exist.", oldGraphic];
+    }
+    
+    index = [graphics indexOfObjectIdenticalTo:oldGraphic];
+    if (index != NSNotFound) {
+        [graphics replaceObjectAtIndex:index withObject:newGraphic];
+        [newGraphic setLayer:layer];
+        [newGraphic setPage:self];
+        [self setGraphicNeedsDisplayInRect:[oldGraphic bounds]];
+    }
+}
+
+- (void)observeGraphic:(DrawGraphic *)graphic yesNo:(BOOL)yesNo {
+    if (yesNo) {
+    } else {
+    }
+}
+
+#pragma mark - Drawing
+
+- (void)drawPageNumber:(NSInteger)pageNumber inRect:(NSRect)rect {
+    CGFloat pointSize = [NSFont systemFontSize] / _document.scale;
+    NSMutableDictionary *attributes = [_pageNumberAttributes mutableCopy];
+
+    attributes[NSFontAttributeName] = [NSFont boldSystemFontOfSize:pointSize];
+
+    [@(pageNumber).description drawInRect:NSInsetRect(rect, 8.0, 8.0) withAttributes:attributes];
+}
+
+- (void)drawMarksInRect:(NSRect)rect {
+    CGFloat position;
+    NSRect markerRect;
+    CGFloat scale = [self frame].size.width / [self bounds].size.width;
+
+    if ([_document marksVisible]) {
+        [[_document markColor] set];
+
+        markerRect.origin.y = rect.origin.y;
+        markerRect.size.width = 1.0 / scale;
+        markerRect.size.height = rect.size.height;
+        for (NSNumber *marker in [_document horizontalMarks]) {
+            position = [marker doubleValue];
+            if ((position >= rect.origin.x) && (position <= rect.origin.x + rect.size.width)) {
+                markerRect.origin.x = position;
+                markerRect = [self centerScanRect:markerRect];
+                NSRectFill(markerRect);
+            }
+        }
+
+        markerRect.origin.x = rect.origin.x;
+        markerRect.size.width = rect.size.width;
+        markerRect.size.height = 1.0 / scale;
+        for (NSNumber *marker in [_document verticalMarks]) {
+            position = [marker doubleValue];
+            if ((position >= rect.origin.y) && (position <= rect.origin.y + rect.size.height)) {
+                markerRect.origin.y = position;
+                markerRect = [self centerScanRect:markerRect];
+                NSRectFill(markerRect);
+            }
+        }
+    }
+}
+
+- (void)drawPageMarkingsInRect:(NSRect)rect {
+    NSColor *tempColor;
+    NSSize paperSize;
+    NSPrintInfo *printInfo = [_document printInfo];
+    NSRect marginRect;
+    
+    // Draw the margins.
+    tempColor = [[NSUserDefaults standardUserDefaults] colorForKey:DrawMarginColorKey];
+    if (!tempColor) {
+        tempColor = NSColor.gridColor;
+    }
+    [tempColor set];
+    paperSize = [printInfo paperSize];
+    marginRect.origin.x = [printInfo leftMargin];
+    if (self.isFlipped) {
+        marginRect.origin.y = [printInfo topMargin];
+    } else {
+        marginRect.origin.y = [printInfo bottomMargin];
+    }
+    marginRect.size.width = paperSize.width - ([printInfo leftMargin] + [printInfo rightMargin]);
+    marginRect.size.height = paperSize.height - ([printInfo bottomMargin] + [printInfo topMargin]);
+    marginRect = [self backingAlignedRect:marginRect options:NSAlignAllEdgesNearest];
+    NSFrameRect(marginRect);
+
+    // Draw the marks
+    [self drawMarksInRect:rect];
+}
+
+- (BOOL)isFlipped {
+    return YES;
+}
+
+- (void)drawRect:(NSRect)rect {
+    NSRect bounds = [self bounds];
+    BOOL isDrawingToScreen = [[NSGraphicsContext currentContext] isDrawingToScreen];
+    
+    if (isDrawingToScreen) {
+        // Draw the background.
+        [self.paperColor set];
+        NSRectFill([self centerScanRect:rect]);
+        
+        // Draw the Grid
+        [_document drawGridInRect:bounds inView:self];
+        
+        // Draw Page Markings
+        [self drawPageMarkingsInRect:bounds];
+
+        // Draw the page number
+        [self drawPageNumber:[_document pageNumberForPage:self] inRect:bounds];
+    }
+    
+    // Finally, draw our actual graphics.
+    for (DrawLayer *layer in [_document layers]) {
+        if ([layer visible] && (isDrawingToScreen || (!isDrawingToScreen && [layer printable]))) {
+            [self drawLayer:layer inRect:rect isDrawingToScreen:isDrawingToScreen];
+        }
+    }
+
+    // Finally, draw our guest drawers, if we have any.
+    if (isDrawingToScreen) {
+        for (DrawGuestDrawer block in [_guestDrawers objectEnumerator]) {
+            block(self, rect);
+        }
+    }
+}
+
+- (void)drawLayer:(DrawLayer *)layer inRect:(NSRect)rect {
+    [self drawLayer:layer inRect:rect isDrawingToScreen:[[NSGraphicsContext currentContext] isDrawingToScreen]];
+}
+
+- (void)drawLayer:(DrawLayer *)layer inRect:(NSRect)rect isDrawingToScreen:(BOOL)flag {
+    for (DrawGraphic *graphic in _layers[layer.name]) {
+        if ([self needsToDrawRect:graphic.bounds]) {
+            [graphic draw];
+        }
+    }
+    
+    if (flag) {
+        // We don't draw handles when printing.
+        for (DrawGraphic *graphic in [_document sortedSelection]) {
+            if ([self needsToDrawRect:graphic.bounds]) {
+                [graphic drawHandles];
+            }
+        }
+    }
+}
+
+- (NSMutableArray<DrawGraphic *> *)graphicsForLayer:(DrawLayer *)layer {
+    return _layers[layer.name];
+}
+
+- (NSArray<DrawGraphic *> *)graphicsHitByTest:(NSArray<DrawGraphic *> * (^)(DrawGraphic *graphic))graphicTest
+                                   boundsTest:(BOOL (^)(DrawGraphic *graphic))boundsTest {
+    NSArray<DrawGraphic *> *graphics;
+    DrawGraphic *group = [_document focusedGroup];
+    NSMutableArray<DrawGraphic *> *hitGraphics;
+
+    // This prehaps isn't the most efficient method, but we're going to create an array of all the graphic underneath the mouse down. This will allow us to process the current selection in a fairly complex way. See below for details.
+    hitGraphics = [[NSMutableArray alloc] init];
+
+    // If we're drilled into a group, then we want to examine that group only.
+    if (group) {
+        graphics = graphicTest(group);
+        if ([graphics count]) {
+            [hitGraphics addObjectsFromArray:graphics];
+        }
+    } else {
+        for (DrawLayer *layer in [[_document layers] reverseObjectEnumerator]) {
+            if (![layer locked] && [layer visible]) {
+                graphics = [self graphicsForLayer:layer];
+                for (DrawGraphic *graphic in [[self graphicsForLayer:layer] reverseObjectEnumerator]) {
+                    if (boundsTest(graphic)) {
+                        [hitGraphics addObjectsFromArray:graphicTest(graphic)];
+                    }
+                }
+            }
+        }
+    }
+
+    return hitGraphics;
+}
+
+- (NSArray<DrawGraphic *> *)graphicsHitByPoint:(NSPoint)point {
+    CGFloat adjustment = [self error];
+    return [self graphicsHitByTest:^NSArray<DrawGraphic *> *(DrawGraphic *graphic) {
+        return [graphic graphicsHitByPoint:point];
+    } boundsTest:^BOOL(DrawGraphic *graphic) {
+        return NSPointInRect(point, NSInsetRect([graphic bounds], -adjustment, -adjustment));
+    }];
+}
+
+- (NSArray<DrawGraphic *> *)graphicsHitByRect:(NSRect)rect {
+    CGFloat adjustment = [self error];
+    return [self graphicsHitByTest:^NSArray<DrawGraphic *> *(DrawGraphic *graphic) {
+        return [graphic graphicsHitByRect:rect];
+    } boundsTest:^BOOL(DrawGraphic *graphic) {
+        return NSIntersectsRect(rect, NSInsetRect([graphic bounds], -adjustment, -adjustment));
+    }];
+}
+
+- (void)scheduleUpdate {
+    if (!_hasScheduledUpdate) {
+        [self performSelector:@selector(_scheduleUpdate) withObject:nil afterDelay:0.00001];
+        _hasScheduledUpdate = YES;
+    }
+}
+
+- (void)_scheduleUpdate {
+    _hasScheduledUpdate = NO;
+    [[self superview] setNeedsDisplay:YES];
+}
+
+
+- (void)objectWillChange:(id)anObject {
+    if ([anObject isKindOfClass:[DrawLayer class]]) {
+        [self scheduleUpdate];
+    } else if (anObject == self) {
+        if (!_selfDidUpdate) {
+            _selfDidUpdate = YES;
+            [self performSelector:@selector(postUpdateNotification) withObject:nil afterDelay:0.00001];
+        }
+    } else {
+        [self graphicWillChange:anObject];
+    }
+}
+
+- (void)graphicWillChange:(DrawGraphic *)graphic {
+    //AJRPrintf(@"%@\n", NSStringFromRect([graphic bounds]));
+    if (![_changedGraphics count]) {
+        _updateRect = NSIntegralRect([graphic bounds]);
+        [self performSelector:@selector(updateGraphics) withObject:nil afterDelay:0.00001];
+    } else {
+        _updateRect = NSIntegralRect(NSUnionRect(_updateRect, [graphic bounds]));
+    }
+    if ([_changedGraphics indexOfObjectIdenticalTo:graphic] == NSNotFound) {
+        [_changedGraphics addObject:graphic];
+    }
+}
+
+- (void)displayIntermediateResults {
+    if ([_changedGraphics count]) {
+        NSRect newUpdateRect = NSZeroRect;
+        CGFloat adjustment = -3.0 / (self.frame.size.width / self.bounds.size.width);
+        
+        for (NSInteger x = 0; x < (const NSInteger)[_changedGraphics count]; x++) {
+            DrawGraphic *graphic = [_changedGraphics objectAtIndex:x];
+            if (x == 0) {
+                newUpdateRect = [graphic bounds];
+            } else {
+                newUpdateRect = NSUnionRect(newUpdateRect, [graphic bounds]);
+            }
+        }
+        
+        [self displayRect:NSInsetRect(NSUnionRect(_updateRect, newUpdateRect), adjustment, adjustment)];
+    }
+}
+
+- (void)updateGraphics {
+    NSRect newUpdateRect = NSZeroRect;
+
+    for (NSInteger x = 0; x < (const NSInteger)[_changedGraphics count]; x++) {
+        if (x == 0) {
+            newUpdateRect = [[_changedGraphics objectAtIndex:x] bounds];
+        } else {
+            newUpdateRect = NSUnionRect(newUpdateRect, [[_changedGraphics objectAtIndex:x] bounds]);
+        }
+    }
+    
+    [self setNeedsDisplayInRect:[self centerScanRect:NSUnionRect(_updateRect, newUpdateRect)]];
+    
+    [_changedGraphics removeAllObjects];
+}
+
+- (void)displayGraphicRect:(NSRect)rect {
+    [self displayRect:[self centerScanRect:rect]];
+}
+
+- (void)setGraphicNeedsDisplayInRect:(NSRect)rect; {
+    [self setNeedsDisplayInRect:[self centerScanRect:rect]];
+}
+
+- (void)postUpdateNotification {
+    if (_selfDidUpdate) {
+        _selfDidUpdate = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:DrawViewDidUpdateNotification object:self];
+    }
+}
+
+- (CGFloat)scale {
+    return self.frame.size.width / self.bounds.size.width;
+}
+
+- (CGFloat)error {
+    return 3.0 / (self.frame.size.width / self.bounds.size.width);
+}
+
+- (void)setNeedsDisplayInRect:(NSRect)invalidRect {
+    if ([DrawGraphic showsDirtyBounds]) {
+        [super setNeedsDisplayInRect:[self bounds]];
+    } else {
+        [super setNeedsDisplayInRect:invalidRect];
+    }
+}
+
+//- (void)setFrame:(NSRect)frameRect {
+//    [super setFrame:frameRect];
+//    frameRect.origin.y -= 100.0;
+//    [self setBounds:frameRect];
+//}
+
+#pragma mark - Guest drawers
+
+- (DrawDrawingToken)addGuestDrawer:(DrawGuestDrawer)drawer {
+    if (_guestDrawers == nil) {
+        _guestDrawers = [NSMutableDictionary dictionary];
+    }
+
+    NSString *token = NSProcessInfo.processInfo.globallyUniqueString;
+    _guestDrawers[token] = drawer;
+
+    return (__bridge void *)token;
+}
+
+- (void)removeGuestDrawer:(DrawDrawingToken)token {
+    _guestDrawers[(__bridge NSString *)token] = nil;
+}
+
+#pragma mark - AJRXMLCoding
+
+- (id)init {
+    return [super init];
+}
+
++ (NSString *)ajr_nameForXMLArchiving {
+    return @"page";
+}
+
+- (id)decodeWithXMLCoder:(AJRXMLCoder *)coder {
+    [coder decodeRectForKey:@"frame" setter:^(CGRect rect) {
+        [self setFrame:rect];
+    }];
+    [coder decodeObjectForKey:@"layers" setter:^(id  _Nonnull object) {
+        self->_layers = [object mutableCopy];
+    }];
+    [coder decodeObjectForKey:@"paperColor" setter:^(id  _Nonnull object) {
+        self->_paperColor = object;
+    }];
+
+    return self;
+}
+
+- (id)finalizeXMLDecodingWithError:(NSError **)error {
+    _hasScheduledUpdate = NO;
+    _selfDidUpdate = NO;
+
+    // Updating
+    _changedGraphics = [[NSMutableArray alloc] init];
+
+    // Observing myself... I do this so that I can post a single notification that I updated at the end of an event loop.
+    //   [AJRObserverCenter addObserver:self forObject:self];
+    //   [AJRObserverCenter notifyObserversObjectWillChange:nil];
+
+    // Drag and Drop
+    [self registerForDraggedTypes:[[DrawDocument draggedTypes] allKeys]];
+    [self registerForDraggedTypes:@[DrawGraphicPboardType]];
+
+    NSEnumerator *enumerator = [_layers objectEnumerator];
+    NSArray *graphics;
+    while ((graphics = [enumerator nextObject])) {
+        for (NSInteger x = 0; x < (const NSInteger)[graphics count]; x++) {
+            DrawGraphic *graphic = [graphics objectAtIndex:x];
+            [self observeGraphic:graphic yesNo:YES];
+        }
+    }
+
+    return self;
+}
+
+- (void)encodeWithXMLCoder:(AJRXMLCoder *)coder {
+    [coder encodeRect:[self frame] forKey:@"frame"];
+    [coder encodeObject:_layers forKey:@"layers"];
+    [coder encodeObjectIfNotNil:_paperColor forKey:@"paperColor"];
+}
+
+@end

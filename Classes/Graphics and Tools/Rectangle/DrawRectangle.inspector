@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector>
+    <group title="Rectangle">
+        <group>
+            <slice type="float" label="Corner Radius" minValue="0" maxValue="1000000" valueKeyPath="controller.selection.radius" />
+            <slice type="boolean" title="Use Maximum Value" valueKeyPath="controller.selection.isPill" />
+        </group>
+    </group>
+</inspector>

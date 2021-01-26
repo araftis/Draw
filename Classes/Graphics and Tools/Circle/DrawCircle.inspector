@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector>
+    <group title="Circle">
+        <group>
+            <slice type="choice" style="segments" label="Type" valueType="integer" valueKeyPath="controller.selection.type">
+                <choice imageName="circleTypeCircle" bundle="com.ajr.framework.Draw" value="0" />
+                <choice imageName="circleTypePie" bundle="com.ajr.framework.Draw" value="1" />
+                <choice imageName="circleTypeChord" bundle="com.ajr.framework.Draw" value="2" />
+            </slice>
+            <slice type="float" subtitle="Start Angle" minValue="-360" maxValue="360" valueKeyPath="controller.selection.startAngle" />
+            <slice type="float" subtitle="End Angle" minValue="-360" maxValue="360"  valueKeyPath="controller.selection.endAngle" />
+        </group>
+    </group>
+</inspector>

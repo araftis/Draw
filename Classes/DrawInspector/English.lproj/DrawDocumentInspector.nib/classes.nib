@@ -1,0 +1,90 @@
+{
+    IBClasses = (
+        {
+            CLASS = AJRInspectorModule; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                doubleGridSize = id; 
+                halveGridSize = id; 
+                setBottomMargin = id; 
+                setGridActive = id; 
+                setGridColor = id; 
+                setGridSpacing = id; 
+                setGridVisible = id; 
+                setLeftMargin = id; 
+                setMarkActive = id; 
+                setMarkColor = id; 
+                setMarkVisible = id; 
+                setPaperColor = id; 
+                setRightMargin = id; 
+                setTopMargin = id; 
+                setUnitsOfMeasure = id; 
+            }; 
+            CLASS = DrawDocumentInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                bottomMarginCell = id; 
+                gridActiveCheck = id; 
+                gridColorWell = id; 
+                gridSpacingText = id; 
+                gridVisibleCheck = id; 
+                leftMarginCell = id; 
+                marksActiveCheck = id; 
+                marksColorWell = id; 
+                marksVisibleCheck = id; 
+                paperColorWell = id; 
+                rightMarginCell = id; 
+                topMarginCell = id; 
+                unitsOfMeasureButton = id; 
+            }; 
+            SUPERCLASS = DrawInspectorModule; 
+        }, 
+        {
+            CLASS = DrawInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {view = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            CLASS = DrawInspectorModule; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = AJRInspectorModule; 
+        }, 
+        {
+            ACTIONS = {
+                setHeight = id; 
+                setWidth = id; 
+                setX = id; 
+                setY = id; 
+                toggleBottomEdge = id; 
+                toggleHorizontal = id; 
+                toggleLeftEdge = id; 
+                toggleRightEdge = id; 
+                toggleTopEdge = id; 
+                toggleVertical = id; 
+            }; 
+            CLASS = DrawObjectSizeInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                bottomEdgeButton = id; 
+                heightTextField = id; 
+                horizontalButton = id; 
+                leftEdgeButton = id; 
+                objectImage = id; 
+                rightEdgeButton = id; 
+                topEdgeButton = id; 
+                verticalButton = id; 
+                widthTextField = id; 
+                xTextField = id; 
+                yTextField = id; 
+            }; 
+            SUPERCLASS = DrawInspectorModule; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

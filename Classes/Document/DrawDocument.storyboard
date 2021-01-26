@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="19h-0y-fv3">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="NSView safe area layout guides" minToolsVersion="12.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="BoO-vI-vUV">
+            <objects>
+                <windowController id="19h-0y-fv3" customClass="DrawDocumentWindowController" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="qqx-ws-p6D">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="331" y="462" width="824" height="753"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+                        <view key="contentView" id="mLB-f5-PJi">
+                            <rect key="frame" x="0.0" y="0.0" width="824" height="753"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <toolbar key="toolbar" implicitIdentifier="09D11707-F4A3-4FD5-970E-AC5832E91C2B" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="lCH-jY-keG">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="8Gv-5D-79q"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="GhN-mi-dSI"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="mrU-Kg-VXJ"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="7Di-fl-Dz5"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Wzv-hW-JlK"/>
+                                <toolbarItem implicitItemIdentifier="F856E2BD-1F6F-4001-8DA4-89858E249200" explicitItemIdentifier="layers" label="Layers" paletteLabel="Layers" sizingBehavior="auto" id="aAv-jS-gZI">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="RUi-Tr-eXa">
+                                        <rect key="frame" x="4" y="14" width="35" height="23"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="1a9-Vr-tqB">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment image="sideBarLeft"/>
+                                            </segments>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="650C39B7-2C91-4EF1-86A5-19E466C36FEE" explicitItemIdentifier="grid" label="Grid" paletteLabel="Grid" sizingBehavior="auto" id="RPI-Po-aBn">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="UJh-q0-dpR" customClass="AJRSegmentedControl" customModule="AJRInterface">
+                                        <rect key="frame" x="0.0" y="14" width="69" height="23"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="rSa-fL-loW" customClass="AJRSegmentedCell">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment image="grid">
+                                                    <nil key="label"/>
+                                                </segment>
+                                                <segment image="gridEnabled">
+                                                    <nil key="label"/>
+                                                </segment>
+                                            </segments>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="DE054DA9-0B6E-4EC1-ADDE-D20A98193E84" explicitItemIdentifier="globalTools" label="Global Tools" paletteLabel="Global Tools" sizingBehavior="auto" id="y9c-Ud-HJ8">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="TT0-SZ-6UV" customClass="AJRSegmentedControl" customModule="AJRInterface">
+                                        <rect key="frame" x="17" y="14" width="38" height="23"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="3Ef-Cj-hwc" customClass="AJRSegmentedCell">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment image="toolSelection" width="32" selected="YES"/>
+                                            </segments>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="7418BFDE-FFC4-4E0A-AA84-CB42B9AAE4C3" explicitItemIdentifier="toolSets" label="Tool Sets" paletteLabel="Tool Sets" sizingBehavior="auto" id="L2w-t3-iQb">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="HfF-NE-xaY" customClass="AJRSegmentedControl" customModule="AJRInterface">
+                                        <rect key="frame" x="9" y="14" width="38" height="23"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="momentary" id="5cY-Bj-gUz" customClass="AJRSegmentedCell">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment image="toolSetGraphics" width="32"/>
+                                            </segments>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="EAFAA4ED-6FAA-44CB-870B-DCA228D4CFBC" explicitItemIdentifier="tools" label="Tools" paletteLabel="Tools" sizingBehavior="auto" id="z6k-4p-qy4">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="x4U-ZK-XzG" customClass="AJRSegmentedControl" customModule="AJRInterface">
+                                        <rect key="frame" x="0.0" y="14" width="112" height="23"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="Xt6-aQ-1LU" customClass="AJRSegmentedCell">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment image="toolLink" width="32" selected="YES"/>
+                                                <segment image="toolRectangle" width="32" tag="1"/>
+                                                <segment image="toolCircle" width="32">
+                                                    <nil key="label"/>
+                                                </segment>
+                                            </segments>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="700803D5-7BDB-4BFD-AB3C-EA8222EA9E6C" explicitItemIdentifier="inspectors" label="Inspectors" paletteLabel="Inspectors" sizingBehavior="auto" id="YAS-cD-wfp">
+                                    <nil key="toolTip"/>
+                                    <segmentedControl key="view" verticalHuggingPriority="750" id="LUn-RC-QiQ">
+                                        <rect key="frame" x="14" y="14" width="35" height="23"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectAny" id="ajC-H3-Hdz">
+                                            <font key="font" metaFont="system"/>
+                                            <segments>
+                                                <segment image="sideBarRight"/>
+                                            </segments>
+                                        </segmentedCell>
+                                    </segmentedControl>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="aAv-jS-gZI"/>
+                                <toolbarItem reference="Wzv-hW-JlK"/>
+                                <toolbarItem reference="RPI-Po-aBn"/>
+                                <toolbarItem reference="Wzv-hW-JlK"/>
+                                <toolbarItem reference="y9c-Ud-HJ8"/>
+                                <toolbarItem reference="L2w-t3-iQb"/>
+                                <toolbarItem reference="z6k-4p-qy4"/>
+                                <toolbarItem reference="Wzv-hW-JlK"/>
+                                <toolbarItem reference="YAS-cD-wfp"/>
+                            </defaultToolbarItems>
+                        </toolbar>
+                        <connections>
+                            <outlet property="delegate" destination="19h-0y-fv3" id="aob-Eh-gGt"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="8jq-XW-H0m" kind="relationship" relationship="window.shadowedContentViewController" id="XhN-Pq-z7N"/>
+                    </connections>
+                </windowController>
+                <customObject id="6GN-Rr-HXf" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-515" y="200.5"/>
+        </scene>
+        <!--Split View Controller-->
+        <scene sceneID="DPQ-94-W3v">
+            <objects>
+                <splitViewController id="8jq-XW-H0m" sceneMemberID="viewController">
+                    <splitViewItems>
+                        <splitViewItem canCollapse="YES" holdingPriority="260" behavior="sidebar" separatorStyle="line" id="GZF-ts-XMV"/>
+                        <splitViewItem separatorStyle="line" id="5T4-2w-S0a"/>
+                        <splitViewItem canCollapse="YES" holdingPriority="260" behavior="sidebar" separatorStyle="line" id="MGm-HV-nBE"/>
+                    </splitViewItems>
+                    <splitView key="splitView" dividerStyle="thin" vertical="YES" id="W5X-Jk-3mq">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </splitView>
+                    <connections>
+                        <segue destination="iL5-OS-Qc4" kind="relationship" relationship="splitItems" id="Tpi-MW-uZ5"/>
+                        <segue destination="CaG-JD-kNb" kind="relationship" relationship="splitItems" id="Cbl-CG-qPe"/>
+                        <segue destination="LfP-gi-ANY" kind="relationship" relationship="splitItems" id="26h-ed-yEW"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="1j6-fj-A8G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="342" y="200"/>
+        </scene>
+        <!--Draw Layer View Controller-->
+        <scene sceneID="ZHt-eb-fg9">
+            <objects>
+                <viewController id="iL5-OS-Qc4" customClass="DrawLayerViewController" customModule="Draw" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="UT4-DT-Aj9">
+                        <rect key="frame" x="0.0" y="0.0" width="149" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="XKf-eB-8iU"/>
+                        <viewLayoutGuide key="layoutMargins" id="fha-Ya-Zbk"/>
+                    </view>
+                </viewController>
+                <customObject id="Iuv-aS-qKy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="35" y="741"/>
+        </scene>
+        <!--Draw Document View Controller-->
+        <scene sceneID="NRZ-5U-o8I">
+            <objects>
+                <viewController id="CaG-JD-kNb" customClass="DrawDocumentViewController" sceneMemberID="viewController">
+                    <view key="view" id="Ph7-3Q-d0Y">
+                        <rect key="frame" x="0.0" y="0.0" width="302" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Up1-Kc-RMA" customClass="AJRPagedScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="302" height="300"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <clipView key="contentView" id="7lq-kc-1Oa">
+                                    <rect key="frame" x="0.0" y="0.0" width="302" height="300"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view identifier="pagedView" id="G26-lV-BWY" customClass="AJRPagedView">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="285"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Kly-EB-EMm">
+                                    <rect key="frame" x="0.0" y="284" width="302" height="16"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="gUT-yp-7wn">
+                                    <rect key="frame" x="286" y="0.0" width="16" height="300"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CUa-RS-Ucx"/>
+                        <viewLayoutGuide key="layoutMargins" id="8jb-2g-eV5"/>
+                    </view>
+                </viewController>
+                <customObject id="wcb-3c-fMJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="342" y="741"/>
+        </scene>
+        <!--Draw Inspector Groups Controller-->
+        <scene sceneID="3Lp-WD-LKr">
+            <objects>
+                <viewController id="LfP-gi-ANY" customClass="DrawInspectorGroupsController" customModule="Draw" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="KQz-Og-jLg">
+                        <rect key="frame" x="0.0" y="0.0" width="149" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <viewLayoutGuide key="safeArea" id="83A-LQ-xtp"/>
+                        <viewLayoutGuide key="layoutMargins" id="JOw-CR-ada"/>
+                    </view>
+                </viewController>
+                <customObject id="f2N-A4-ITS" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="649" y="741"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="grid" width="25" height="25"/>
+        <image name="gridEnabled" width="25" height="25"/>
+        <image name="sideBarLeft" width="25" height="25"/>
+        <image name="sideBarRight" width="25" height="25"/>
+        <image name="toolCircle" width="24" height="24"/>
+        <image name="toolLink" width="24" height="24"/>
+        <image name="toolRectangle" width="24" height="24"/>
+        <image name="toolSelection" width="28" height="28"/>
+        <image name="toolSetGraphics" width="24" height="24"/>
+    </resources>
+</document>

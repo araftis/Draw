@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {selectInspector = id; showDrawInspectorPanel = id; }; 
+            CLASS = DrawInspectorController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {box = id; buttons = id; window = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {showDrawInspectorPanel = id; }; 
+            CLASS = NSResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

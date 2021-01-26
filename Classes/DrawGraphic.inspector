@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector>
+    <group title="Graphic">
+        <group title="Position">
+            <slice type="rect" valueKeyPath="controller.selection.frame" />
+        </group>
+        <group title="Stroke">
+            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryStroke.active" />
+            <slice type="color" label="Color" valueKeyPath="controller.selection.primaryStroke.color" />
+            <slice type="float" label="Width" valueKeyPath="controller.selection.primaryStroke.width" />
+            <slice type="float" label="Miter Limit" valueKeyPath="controller.selection.primaryStroke.miterLimit" />
+        </group>
+        <group title="Fill">
+            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryFill.active" />
+            <slice type="color" label="Color" valueKeyPath="controller.selection.primaryFill.color" />
+        </group>
+        <group title="Shadow">
+            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryShadow.active" />
+            <slice type="color" label="Color" valueKeyPath="controller.selection.primaryShadow.color" />
+            <slice type="size" label="Offset" valuesCanLink="false" valueKeyPath="controller.selection.primaryShadow.offset" />
+            <slice type="float" label="Blur Radius" valueKeyPath="controller.selection.primaryShadow.blurRadius" />
+        </group>
+    </group>
+</inspector>

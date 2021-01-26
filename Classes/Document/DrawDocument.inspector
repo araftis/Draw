@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector>
+    <group title="Document">
+        <group title="Paper">
+            <slice type="color" label="Color" valueKeyPath="controller.selection.paperColor" />
+        </group>
+        <group title="Grid">
+            <slice type="color" label="Color" valueKeyPath="controller.selection.gridColor" />
+            <slice type="boolean" title="Visible" valueKeyPath="controller.selection.gridVisible" />
+            <slice type="boolean" title="Enabled" valueKeyPath="controller.selection.gridEnabled" />
+        </group>
+        <group title="Guides">
+            <slice type="color" label="Color" valueKeyPath="controller.selection.markColor" />
+            <slice type="boolean" title="Visible" valueKeyPath="controller.selection.marksVisible" />
+            <slice type="boolean" title="Enabled" valueKeyPath="controller.selection.marksEnabled" />
+        </group>
+    </group>
+</inspector>
