@@ -56,7 +56,11 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
 }
 
 + (NSArray *)toolSetIdentifiers {
-    return [_toolSets allKeys];
+    return _toolSets.allKeys;
+}
+
++ (NSArray<DrawToolSet *> *)toolSets {
+    return _toolSets.allValues;
 }
 
 + (DrawToolSet *)toolSetForClass:(Class)toolSetClass {
@@ -184,6 +188,12 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
     }
     
     return result;
+}
+
+#pragma mark - Canvas Menus
+
+- (nullable NSMenu *)menuForEvent:(DrawEvent *)event {
+    return nil;
 }
 
 #pragma mark - Document Querries

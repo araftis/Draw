@@ -227,6 +227,30 @@ typedef BOOL (*DrawMethod)(id, SEL, id);
 
 #pragma mark - Menus
 
+- (void)addCopyOfMenu:(NSMenu *)sourceMenu to:(NSMenu *)menu {
+    if (sourceMenu && [[sourceMenu itemArray] count]) {
+        [menu addItem:[NSMenuItem separatorItem]];
+        for (NSMenuItem *item in [sourceMenu itemArray]) {
+            NSMenuItem *newItem;
+
+            newItem = [menu addItemWithTitle:[item title] action:[item action] keyEquivalent:[item keyEquivalent]];
+            [newItem setTarget:[item target]];
+            [newItem setHidden:[item isHidden]];
+            [newItem setAlternate:[item isAlternate]];
+            [newItem setImage:[item image]];
+            [newItem setOnStateImage:[item onStateImage]];
+            [newItem setOffStateImage:[item offStateImage]];
+            [newItem setMixedStateImage:[item mixedStateImage]];
+            [newItem setTag:[item tag]];
+            [newItem setState:[item state]];
+            [newItem setIndentationLevel:[item indentationLevel]];
+            [newItem setToolTip:[item toolTip]];
+            [newItem setRepresentedObject:[item representedObject]];
+            [newItem setView:[item view]];
+        }
+    }
+}
+
 - (NSMenu *)menuForEvent:(NSEvent *)event {
     DrawEvent *drawEvent = [DrawEvent eventWithOriginalEvent:event document:_document page:self];
     NSMenu *menu = [[NSMenu alloc] initWithTitle:@"Context Menu"];
@@ -239,29 +263,11 @@ typedef BOOL (*DrawMethod)(id, SEL, id);
     }
     item = [menu addItemWithTitle:@"Paste" action:@selector(paste:) keyEquivalent:@""];
 
+    for (DrawToolSet *toolSet in DrawToolSet.toolSets) {
+        [self addCopyOfMenu:[toolSet menuForEvent:drawEvent] to:menu];
+    }
     for (DrawTool *tool in [[_document currentToolSet] tools]) {
-        NSMenu *additionalMenu = [tool menuForEvent:drawEvent];
-        if (additionalMenu && [[additionalMenu itemArray] count]) {
-            [menu addItem:[NSMenuItem separatorItem]];
-            for (NSMenuItem *item in [additionalMenu itemArray]) {
-                NSMenuItem *newItem;
-
-                newItem = [menu addItemWithTitle:[item title] action:[item action] keyEquivalent:[item keyEquivalent]];
-                [newItem setTarget:[item target]];
-                [newItem setHidden:[item isHidden]];
-                [newItem setAlternate:[item isAlternate]];
-                [newItem setImage:[item image]];
-                [newItem setOnStateImage:[item onStateImage]];
-                [newItem setOffStateImage:[item offStateImage]];
-                [newItem setMixedStateImage:[item mixedStateImage]];
-                [newItem setTag:[item tag]];
-                [newItem setState:[item state]];
-                [newItem setIndentationLevel:[item indentationLevel]];
-                [newItem setToolTip:[item toolTip]];
-                [newItem setRepresentedObject:[item representedObject]];
-                [newItem setView:[item view]];
-            }
-        }
+        [self addCopyOfMenu:[tool menuForEvent:drawEvent] to:menu];
     }
 
     return menu;

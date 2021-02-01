@@ -173,7 +173,7 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 - (void)addAspect:(DrawAspect *)aspect withPriority:(DrawAspectPriority)priority;
 - (NSArray *)aspects;
 - (NSArray *)aspectsForPriority:(DrawAspectPriority)priority;
-- (DrawAspect *)firstAspectOfType:(Class)aspectType withPriority:(DrawAspectPriority)priority;
+- (nullable DrawAspect *)firstAspectOfType:(Class)aspectType withPriority:(DrawAspectPriority)priority;
 - (NSArray *)prioritiesForAspect:(DrawAspect *)aspect;
 - (void)removeAllAspects;
 - (void)removeAspect:(DrawAspect *)aspect;
@@ -217,7 +217,7 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 
 #pragma mark - Links
 
-- (NSSet *)relatedGraphics;
+@property (nonatomic,strong,readonly) NSSet<DrawGraphic *> *relatedGraphics;
 - (void)addToRelatedGraphics:(DrawGraphic *)graphic;
 - (void)removeFromRelatedGraphics:(DrawGraphic *)graphic;
 

@@ -112,7 +112,7 @@ NSString * const DrawTextIdentifier = @"text";
     [_textStorage setAttributedString:string];
 }
 
-- (NSAttributedString *)string {
+- (NSAttributedString *)attributedString {
     return _textStorage;
 }
 
@@ -304,7 +304,7 @@ NSString * const DrawTextIdentifier = @"text";
     [coder decodeFloatForKey:@"lineFragmentPadding" setter:^(float value) {
         self->_lineFragmentPadding = value;
     }];
-}
+}o
 
 - (id)finalizeXMLDecodingWithError:(NSError * _Nullable __autoreleasing *)error {
     CGFloat save = _lineFragmentPadding;

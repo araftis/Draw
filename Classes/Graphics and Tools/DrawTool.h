@@ -55,7 +55,7 @@ extern NSString *DrawToolDidBecomeActiveNotification;
 - (BOOL)keyUp:(DrawEvent *)event;
 - (BOOL)flagsChanged:(DrawEvent *)event;
 - (BOOL)helpRequested:(DrawEvent *)event;
-- (NSMenu *)menuForEvent:(DrawEvent *)event;
+- (nullable NSMenu *)menuForEvent:(DrawEvent *)event;
 
 #pragma mark - Activation
 

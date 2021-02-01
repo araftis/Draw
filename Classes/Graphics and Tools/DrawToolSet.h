@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class DrawDocument, DrawTool;
+@class DrawDocument, DrawEvent, DrawTool;
 
 typedef NSString *DrawToolSetId NS_EXTENSIBLE_STRING_ENUM;
 
@@ -21,7 +21,8 @@ typedef NSString *DrawToolSetId NS_EXTENSIBLE_STRING_ENUM;
 + (void)registerToolSet:(Class)toolSetClass properties:(NSDictionary<NSString *, id> *)properties;
 + (void)registerTool:(Class)toolClass properties:(NSDictionary<NSString *, id> *)properties;
 
-+ (NSArray<DrawToolSetId> *)toolSetIdentifiers;
+@property (class,nonatomic,readonly) NSArray<DrawToolSetId> *toolSetIdentifiers;
+@property (class,nonatomic,readonly) NSArray<DrawToolSet *> *toolSets;
 + (DrawToolSet *)toolSetForClass:(Class)toolsetClass;
 + (nullable DrawToolSet *)toolSetForIdentifier:(DrawToolSetId)identifier;
 
@@ -50,6 +51,10 @@ typedef NSString *DrawToolSetId NS_EXTENSIBLE_STRING_ENUM;
 
 - (BOOL)toolSetShouldActivateForDocument:(DrawDocument *)document;
 - (BOOL)toolSetShouldDeactivateForDocument:(DrawDocument *)document;
+
+#pragma mark - Canvas Menus
+
+- (nullable NSMenu *)menuForEvent:(DrawEvent *)event;
 
 #pragma mark - Document Querries
 
