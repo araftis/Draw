@@ -10,6 +10,7 @@
 
 #import "DrawLogging.h"
 #import "DrawTool.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterface/AJRInterface.h>
@@ -121,6 +122,25 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
 
 - (void)setCurrentTool:(DrawTool *)currentTool {
     [[NSUserDefaults standardUserDefaults] setObject:currentTool.identifier forKey:self.currentToolPreferenceKey];
+}
+
+@synthesize accessories = _accessories;
+
+- (NSArray<DrawToolAccessory *> *)accessories {
+    if (_accessories == nil) {
+        NSArray<NSDictionary *> *rawAccessories = [[AJRPlugInManager.sharedPlugInManager extensionPointForName:@"draw-tool-set"] valueForProperty:@"accessories" onExtensionForClass:self.class];
+        NSMutableArray<DrawToolAccessory *> *build = [NSMutableArray array];
+        for (NSDictionary *raw in rawAccessories) {
+            NSUserInterfaceItemIdentifier identifier = raw[@"identifier"];
+            NSString *title = raw[@"title"];
+            NSImage *image = raw[@"image"];
+            Class class = raw[@"controllerClass"];
+            DrawToolAccessory *accessory = [[class alloc] initWithIdentifier:identifier title:title icon:image];
+            [build addObjectIfNotNil:accessory];
+        }
+        _accessories = [build copy];
+    }
+    return _accessories;
 }
 
 #pragma mark - Tools

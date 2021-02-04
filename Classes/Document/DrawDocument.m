@@ -16,6 +16,7 @@
 #import "DrawTool.h"
 #import "DrawToolAction.h"
 #import "DrawToolSet.h"
+#import "DrawViewController.h"
 #import "DrawViewRulerAccessory.h"
 #import <Draw/Draw-Swift.h>
 
@@ -71,7 +72,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
 @implementation DrawDocument {
     DrawDocumentWindowController *_primaryWindowController;
-    NSMutableDictionary<NSString *, id <AJRInvaliation>> *_iconObserverTokens;
+    NSMutableDictionary<NSString *, id <AJRInvalidation>> *_iconObserverTokens;
 }
 
 + (void)initialize {
@@ -137,7 +138,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         DrawPage *page;
 
-        _storage = [[DrawDocumentStorage alloc] init];
+        _storage = [[self.class.storageClass alloc] init];
         _storage.printInfo = self.printInfo;
 
         _storage.paperColor = [defaults colorForKey:DrawPaperColorKey];
@@ -197,7 +198,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:DrawViewWillDeallocateNotification object:self];
 
-    for (id <AJRInvaliation> object in _iconObserverTokens.objectEnumerator) {
+    for (id <AJRInvalidation> object in _iconObserverTokens.objectEnumerator) {
         [object invalidate];
     }
 
@@ -279,6 +280,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 #pragma mark - Properties
+
++ (Class)storageClass {
+    return DrawDocumentStorage.class;
+}
 
 - (void)_setDocumentStorage:(DrawDocumentStorage *)storage {
     if (_storage != nil) {
@@ -453,7 +458,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     if (_primaryWindowController) {
         _splitViewController = AJRObjectIfKindOfClassOrAssert([_primaryWindowController contentViewController], NSSplitViewController);
 
-        DrawDocumentViewController *documentViewController = AJRObjectIfKindOfClass(_splitViewController.childViewControllers[1], DrawDocumentViewController);
+        DrawDocumentViewController *documentViewController = (DrawDocumentViewController *)[_splitViewController ajr_descendantViewControllerOfClass:DrawDocumentViewController.class];
         documentViewController.document = self;
 
         NSArray<NSViewController *> *childControllers = _splitViewController.childViewControllers;
@@ -590,6 +595,18 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [self updateRulers];
 
     [self.inspectorGroupsViewController push:@[self] for:AJRInspectorContentIdentifierAny];
+
+    [self _notifyControllersOfDocumentLoad:_primaryWindowController.contentViewController];
+}
+
+- (void)_notifyControllersOfDocumentLoad:(NSViewController *)viewController {
+    DrawViewController *drawViewController = AJRObjectIfKindOfClass(viewController, DrawViewController);
+    if (drawViewController != nil) {
+        [drawViewController documentDidLoad:self];
+    }
+    for (NSViewController *childViewController in viewController.childViewControllers) {
+        [self _notifyControllersOfDocumentLoad:childViewController];
+    }
 }
 
 - (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {

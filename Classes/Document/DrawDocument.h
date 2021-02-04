@@ -125,6 +125,10 @@ extern NSString * const DrawSavePanelPathKey;
 
 - (void)ping;
 
+/**
+ The type of object to use as the document's storage. By default, this is DrawDocumentStorage, but subclasses may override, and in fact will need to override if the introduce additonal properties.
+ */
+@property (nonatomic,class,readonly) Class storageClass;
 @property (nonatomic,class,readonly) DrawDocument * focusedDocument;
 
 //- (IBAction)toggleSideViews:(NSSegmentedControl *)sender;

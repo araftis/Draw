@@ -23,7 +23,7 @@
     if (storageWrapper == nil) {
         localError = [NSError errorWithDomain:DrawDocumentErrorDomain format:@"File package is corrupt. It does not contain a file named “%@”.", documentFileName];
     } else {
-        DrawDocumentStorage *storage = [AJRXMLUnarchiver unarchivedObjectWithData:storageWrapper.regularFileContents topLevelClass:DrawDocumentStorage.class error:&localError];
+        DrawDocumentStorage *storage = [AJRXMLUnarchiver unarchivedObjectWithData:storageWrapper.regularFileContents topLevelClass:[[document class] storageClass] error:&localError];
 
         if (storage != nil) {
             success = YES;

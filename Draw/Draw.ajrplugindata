@@ -47,6 +47,12 @@
         <attribute name="name" type="string" required="YES" />
         <attribute name="id" type="string" required="YES" />
         <attribute name="icon" type="image" />
+        <element name="accessory" key="accessories" type="array">
+            <attribute name="identifier" type="string" required="true" />
+            <attribute name="title" type="string" />
+            <attribute name="controllerClass" type="class" required="true" />
+            <attribute name="icon" type="image" required="true" />
+        </element>
     </extension-point>
 
     <!-- Defines a tool. A tool must belong to a tool set. -->

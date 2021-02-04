@@ -19,7 +19,7 @@
 
 - (void)setPageNumber:(NSInteger)pageNumber {
     // Do some sanity checking
-    if (pageNumber < 1 || pageNumber >= _pages.count) {
+    if (pageNumber < 1 || pageNumber > _pages.count) {
         AJRLog(DrawDocumentLogDomain, AJRLogLevelWarning, @"Invalid page number: %ld, resetting to 1.", pageNumber);
         _pageNumber = 1;
     } else {

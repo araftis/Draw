@@ -22,16 +22,16 @@ public extension NSUserInterfaceItemIdentifier {
 
 }
 
-@objc open class DrawLayerViewController: DrawViewController, NSTableViewDataSource, NSTableViewDelegate {
+@objcMembers
+open class DrawLayerViewController: DrawViewController, NSTableViewDataSource, NSTableViewDelegate {
 
-    @objc @IBOutlet open var layersTable : NSTableView!
+    @IBOutlet open var layersTable : NSTableView!
 
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
+    open override func documentDidLoad(_ document: DrawDocument) {
+        reload()
     }
 
-    @objc open func reload() -> Void {
+    open func reload() -> Void {
         layersTable.reloadData()
     }
 

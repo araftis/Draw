@@ -164,17 +164,17 @@
                 <splitViewController id="8jq-XW-H0m" sceneMemberID="viewController">
                     <splitViewItems>
                         <splitViewItem canCollapse="YES" holdingPriority="260" behavior="sidebar" separatorStyle="line" id="GZF-ts-XMV"/>
-                        <splitViewItem separatorStyle="line" id="5T4-2w-S0a"/>
-                        <splitViewItem canCollapse="YES" holdingPriority="260" behavior="sidebar" separatorStyle="line" id="MGm-HV-nBE"/>
+                        <splitViewItem id="UfL-pA-R0w"/>
+                        <splitViewItem holdingPriority="260" id="shx-RF-xab"/>
                     </splitViewItems>
                     <splitView key="splitView" dividerStyle="thin" vertical="YES" id="W5X-Jk-3mq">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="93" y="0.0" width="356" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </splitView>
                     <connections>
                         <segue destination="iL5-OS-Qc4" kind="relationship" relationship="splitItems" id="Tpi-MW-uZ5"/>
-                        <segue destination="CaG-JD-kNb" kind="relationship" relationship="splitItems" id="Cbl-CG-qPe"/>
-                        <segue destination="LfP-gi-ANY" kind="relationship" relationship="splitItems" id="26h-ed-yEW"/>
+                        <segue destination="7Ov-m3-9ga" kind="relationship" relationship="splitItems" id="Uec-Ej-9lK"/>
+                        <segue destination="LfP-gi-ANY" kind="relationship" relationship="splitItems" id="vQ2-np-nN1"/>
                     </connections>
                 </splitViewController>
                 <customObject id="1j6-fj-A8G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -233,7 +233,91 @@
                 </viewController>
                 <customObject id="wcb-3c-fMJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="342" y="741"/>
+            <point key="canvasLocation" x="162" y="1241"/>
+        </scene>
+        <!--Draw Tool Accessory View Controller-->
+        <scene sceneID="1CL-qd-aDV">
+            <objects>
+                <viewController id="BZt-cJ-5Gw" customClass="DrawToolAccessoryViewController" customModule="Draw" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="N9R-It-VO3">
+                        <rect key="frame" x="0.0" y="0.0" width="302" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="fLE-56-MXE">
+                                <rect key="frame" x="0.0" y="297" width="302" height="5"/>
+                            </box>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cLH-FU-9kI">
+                                <rect key="frame" x="128" y="273" width="47" height="24"/>
+                                <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="9Hs-BG-yLn">
+                                    <font key="font" metaFont="system"/>
+                                    <segments>
+                                        <segment/>
+                                        <segment selected="YES" tag="1"/>
+                                        <segment>
+                                            <nil key="label"/>
+                                        </segment>
+                                    </segments>
+                                </segmentedCell>
+                                <connections>
+                                    <action selector="selectAccessory:" target="BZt-cJ-5Gw" id="0x2-mI-iLd"/>
+                                </connections>
+                            </segmentedControl>
+                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="4cg-cb-Vrp">
+                                <rect key="frame" x="0.0" y="268" width="302" height="5"/>
+                            </box>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="8R3-iB-KY8">
+                                <rect key="frame" x="0.0" y="0.0" width="302" height="270"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cLH-FU-9kI" firstAttribute="centerX" secondItem="N9R-It-VO3" secondAttribute="centerX" id="8hP-eh-I0Z"/>
+                            <constraint firstAttribute="trailing" secondItem="fLE-56-MXE" secondAttribute="trailing" id="9qf-P5-hjp"/>
+                            <constraint firstItem="fLE-56-MXE" firstAttribute="top" secondItem="N9R-It-VO3" secondAttribute="top" id="HFP-2T-ZMw"/>
+                            <constraint firstItem="4cg-cb-Vrp" firstAttribute="leading" secondItem="N9R-It-VO3" secondAttribute="leading" id="KBz-Bj-con"/>
+                            <constraint firstAttribute="trailing" secondItem="4cg-cb-Vrp" secondAttribute="trailing" id="R5w-El-m6c"/>
+                            <constraint firstItem="cLH-FU-9kI" firstAttribute="top" secondItem="fLE-56-MXE" secondAttribute="bottom" constant="3" id="RzC-ym-zn5"/>
+                            <constraint firstItem="8R3-iB-KY8" firstAttribute="top" secondItem="4cg-cb-Vrp" secondAttribute="bottom" id="TOB-mA-a7j"/>
+                            <constraint firstAttribute="bottom" secondItem="8R3-iB-KY8" secondAttribute="bottom" id="ess-dH-LPs"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="4cg-cb-Vrp" secondAttribute="bottom" id="jJ4-xs-exb"/>
+                            <constraint firstItem="4cg-cb-Vrp" firstAttribute="top" secondItem="cLH-FU-9kI" secondAttribute="bottom" constant="3" id="kqX-H4-FuT"/>
+                            <constraint firstItem="8R3-iB-KY8" firstAttribute="leading" secondItem="N9R-It-VO3" secondAttribute="leading" id="quN-Iu-iO9"/>
+                            <constraint firstAttribute="trailing" secondItem="8R3-iB-KY8" secondAttribute="trailing" id="sKe-om-eQ7"/>
+                            <constraint firstItem="fLE-56-MXE" firstAttribute="leading" secondItem="N9R-It-VO3" secondAttribute="leading" id="xBp-Am-L2q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="accessorySelector" destination="cLH-FU-9kI" id="VAS-KL-f3G"/>
+                        <outlet property="accessoryView" destination="8R3-iB-KY8" id="Hy2-LP-h9L"/>
+                    </connections>
+                </viewController>
+                <customObject id="Io7-9A-K7e" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="531" y="1241"/>
+        </scene>
+        <!--Split View Controller-->
+        <scene sceneID="MH1-7S-aPh">
+            <objects>
+                <splitViewController id="7Ov-m3-9ga" sceneMemberID="viewController">
+                    <splitViewItems>
+                        <splitViewItem id="LUl-Gj-TxR"/>
+                        <splitViewItem canCollapse="YES" holdingPriority="260" id="tvL-vd-BsV"/>
+                    </splitViewItems>
+                    <splitView key="splitView" autosaveName="DrawAccessorySplit" dividerStyle="thin" id="tTN-DC-eCn">
+                        <rect key="frame" x="61" y="0.0" width="301" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <outlet property="delegate" destination="7Ov-m3-9ga" id="6o0-Tw-kyA"/>
+                        </connections>
+                    </splitView>
+                    <connections>
+                        <outlet property="splitView" destination="tTN-DC-eCn" id="aGU-Iu-MHL"/>
+                        <segue destination="CaG-JD-kNb" kind="relationship" relationship="splitItems" id="Ay9-lx-kWq"/>
+                        <segue destination="BZt-cJ-5Gw" kind="relationship" relationship="splitItems" id="elR-CB-xJt"/>
+                    </connections>
+                </splitViewController>
+                <customObject id="f9Z-K5-wc5" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="343" y="741"/>
         </scene>
         <!--Draw Inspector Groups Controller-->
         <scene sceneID="3Lp-WD-LKr">

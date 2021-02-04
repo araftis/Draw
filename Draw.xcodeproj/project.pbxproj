@@ -213,6 +213,8 @@
 		FAAD131D25B65A19005EA73B /* DrawRectangle.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FAAD131C25B65A19005EA73B /* DrawRectangle.inspector */; };
 		FAB34583140D72F00008AF9C /* DrawFillInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB34581140D72F00008AF9C /* DrawFillInspector.xib */; };
 		FAB61A791437AEB2001499FE /* DrawDocument.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAB61A771437AEB1001499FE /* DrawDocument.strings */; };
+		FABD165425C8E14D000294E3 /* DrawToolAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD165325C8E14D000294E3 /* DrawToolAccessory.swift */; };
+		FABD167F25C8F475000294E3 /* DrawToolAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD167E25C8F475000294E3 /* DrawToolAccessoryViewController.swift */; };
 		FABE5170259FECB500552494 /* DrawGlobalToolSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABE516F259FECB500552494 /* DrawGlobalToolSet.swift */; };
 		FABE519B25A1324B00552494 /* DrawDocument.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FABE519A25A1324B00552494 /* DrawDocument.storyboard */; };
 		FAC4B72F25B3A8C000C08B80 /* DrawGraphic.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FAC4B72E25B3A8C000C08B80 /* DrawGraphic.inspector */; };
@@ -501,6 +503,8 @@
 		FAAD131C25B65A19005EA73B /* DrawRectangle.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawRectangle.inspector; sourceTree = "<group>"; };
 		FAB61A781437AEB2001499FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DrawDocument.strings; sourceTree = "<group>"; };
 		FAB61A7B1437AEB7001499FE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DrawDocument.strings; sourceTree = "<group>"; };
+		FABD165325C8E14D000294E3 /* DrawToolAccessory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawToolAccessory.swift; sourceTree = "<group>"; };
+		FABD167E25C8F475000294E3 /* DrawToolAccessoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawToolAccessoryViewController.swift; sourceTree = "<group>"; };
 		FABE516F259FECB500552494 /* DrawGlobalToolSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawGlobalToolSet.swift; sourceTree = "<group>"; };
 		FABE519A25A1324B00552494 /* DrawDocument.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DrawDocument.storyboard; sourceTree = "<group>"; };
 		FAC4B72E25B3A8C000C08B80 /* DrawGraphic.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawGraphic.inspector; sourceTree = "<group>"; };
@@ -1020,6 +1024,8 @@
 				FAC4B72E25B3A8C000C08B80 /* DrawGraphic.inspector */,
 				FA4609D613831AC20051A3B1 /* DrawTool.h */,
 				FA4609D713831AC20051A3B1 /* DrawTool.m */,
+				FABD165325C8E14D000294E3 /* DrawToolAccessory.swift */,
+				FABD167E25C8F475000294E3 /* DrawToolAccessoryViewController.swift */,
 				FACF545913B562B90056AADE /* DrawToolAction.h */,
 				FACF545A13B562B90056AADE /* DrawToolAction.m */,
 				FACF545E13B564260056AADE /* DrawToolSet.h */,
@@ -1372,6 +1378,7 @@
 				FA460A2313831AC30051A3B1 /* DrawGraphic.m in Sources */,
 				FA18B44725ABCBCC000DEF0C /* DrawLayerViewController.swift in Sources */,
 				FA460A2E13831AC30051A3B1 /* DrawImage.m in Sources */,
+				FABD165425C8E14D000294E3 /* DrawToolAccessory.swift in Sources */,
 				FA460A3313831AC30051A3B1 /* DrawImageTool.m in Sources */,
 				FA18B45D25ABD310000DEF0C /* DrawViewController.m in Sources */,
 				FA460A7A13831AC30051A3B1 /* DrawAdobeIllustrator.m in Sources */,
@@ -1392,6 +1399,7 @@
 				FA460AB713831AC40051A3B1 /* DrawPage-Rulers.m in Sources */,
 				FA460AB913831AC40051A3B1 /* DrawPage.m in Sources */,
 				FA460ABB13831AC40051A3B1 /* DrawPageLayout.m in Sources */,
+				FABD167F25C8F475000294E3 /* DrawToolAccessoryViewController.swift in Sources */,
 				FA460ACB13831AC40051A3B1 /* DrawPen.m in Sources */,
 				FA460ACD13831AC40051A3B1 /* DrawPenBezierAspect.m in Sources */,
 				FA460AD113831AC40051A3B1 /* DrawPenTool.m in Sources */,

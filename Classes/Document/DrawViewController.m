@@ -43,4 +43,14 @@
     }
 }
 
+#pragma mark - Life Cycle
+
+- (void)documentDidLoad:(DrawDocument *)document {
+    // We don't do anything by default.
+}
+
+- (void)documentWillClose:(DrawDocument *)document {
+    // We don't do anything by default.
+}
+
 @end

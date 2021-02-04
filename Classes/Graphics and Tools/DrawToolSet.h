@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class DrawDocument, DrawEvent, DrawTool;
+@class DrawDocument, DrawEvent, DrawTool, DrawToolAccessory;
 
 typedef NSString *DrawToolSetId NS_EXTENSIBLE_STRING_ENUM;
 
@@ -39,6 +39,7 @@ typedef NSString *DrawToolSetId NS_EXTENSIBLE_STRING_ENUM;
 @property (nonatomic,readonly) BOOL isGlobal;
 @property (class,nonatomic,readonly) DrawToolSet *globalToolSet;
 @property (nonatomic,strong) DrawTool *currentTool;
+@property (nonatomic,readonly) NSArray<DrawToolAccessory *> *accessories;
 
 #pragma mark - Tools
 
