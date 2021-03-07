@@ -53,6 +53,13 @@ NSString * const DrawLeftViewExpandedWidthKey = @"LeftViewExpandedWidth";
 NSString * const DrawRightViewExpandedWidthKey = @"RightViewExpandedWidth";
 NSString * const DrawMarginColorKey = @"MarginColor";
 
+// Standard Document Info Keys
+NSString * const DrawDocumentInfoAuthorKey = @"author";
+NSString * const DrawDocumentInfoCreationDateKey = @"creationDate";
+NSString * const DrawDocumentInfoCommentsKey = @"comments";
+NSString * const DrawDocumentInfoCopyrightKey = @"copyright";
+NSString * const DrawDocumentInfoLicenseKey = @"license";
+
 const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
 @interface DrawDocument (Private)
@@ -73,6 +80,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 @implementation DrawDocument {
     DrawDocumentWindowController *_primaryWindowController;
     NSMutableDictionary<NSString *, id <AJRInvalidation>> *_iconObserverTokens;
+    NSMutableArray<id <AJRInvalidation>> *_documentInfoObserverTokens;
 }
 
 + (void)initialize {
@@ -196,6 +204,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
         // Belonging
         [self setChapterName:@"Untitled"];
+
+        // Initial Document Info
+        [self setDocumentInfo:NSFullUserName() forKey:@"author"];
+        [self setDocumentInfo:[NSDate date] forKey:@"creationDate"];
     }
     return self;
 }
@@ -627,6 +639,18 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [self.inspectorGroupsViewController push:@[self] for:AJRInspectorContentIdentifierAny];
 
     [self _notifyControllersOfDocumentLoad:_primaryWindowController.contentViewController];
+
+    _documentInfoObserverTokens = [NSMutableArray array];
+    for (NSString *key in @[DrawDocumentInfoAuthorKey, DrawDocumentInfoCreationDateKey, DrawDocumentInfoCommentsKey, DrawDocumentInfoCopyrightKey, DrawDocumentInfoLicenseKey]) {
+        __weak DrawDocument *weakSelf = self;
+        [_documentInfoObserverTokens addObject:[[self documentInfo] addObserver:self forKeyPath:key options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld block:^(id object, NSString *keyPath, NSDictionary<NSKeyValueChangeKey,id> *change) {
+            DrawDocument *strongSelf = weakSelf;
+            if (strongSelf != nil) {
+                id previousValue = change[NSKeyValueChangeOldKey];
+                [[strongSelf prepareUndoWithInvocation] setDocumentInfo:previousValue forKey:keyPath];
+            }
+        }]];
+    }
 }
 
 - (void)_notifyControllersOfDocumentLoad:(NSViewController *)viewController {
@@ -838,6 +862,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 #pragma mark - Document Info
+
+- (NSMutableDictionary<NSString *, id> *)documentInfo {
+    return _storage.documentInfo;
+}
 
 - (void)setDocumentInfo:(id)value forKey:(nullable NSString *)key {
     [[self prepareWithInvocationTarget:self] setDocumentInfo:[self documentInfoForKey:key] forKey:key];

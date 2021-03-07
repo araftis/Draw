@@ -14,5 +14,12 @@
             <slice type="boolean" title="Visible" valueKeyPath="controller.selection.marksVisible" />
             <slice type="boolean" title="Enabled" valueKeyPath="controller.selection.marksEnabled" />
         </group>
+        <group title="Info">
+            <slice type="string" label="Author" valueKeyPath="controller.selection.documentInfo.author" />
+            <slice type="date" label="Created" valueKeyPath="controller.selection.documentInfo.creationDate" />
+            <slice type="string" label="Comments" valueKeyPath="controller.selection.documentInfo.comments" />
+            <slice type="string" label="Copyright" valueKeyPath="controller.selection.documentInfo.copyright" />
+            <slice type="string" label="License" valueKeyPath="controller.selection.documentInfo.license" />
+        </group>
     </group>
 </inspector>

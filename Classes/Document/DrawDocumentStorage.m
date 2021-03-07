@@ -21,16 +21,21 @@
 
 @implementation DrawDocumentStorage
 
+- (id)init {
+    if ((self = [super init])) {
+        _documentInfo = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
 #pragma mark - User Info
 
 - (void)setDocumentInfo:(id)value forKey:(NSString *)key {
-    if (_documentInfo == nil) {
-        _documentInfo = [NSMutableDictionary dictionary];
-    }
-    if (key == nil) {
+    if (value == nil) {
         [_documentInfo removeObjectForKey:key];
+    } else {
+        [_documentInfo setObject:value forKey:key];
     }
-    [_documentInfo setObject:value forKey:key];
 }
 
 - (nullable id)documentInfoForKey:(NSString *)key {

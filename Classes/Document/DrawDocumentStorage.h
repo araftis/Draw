@@ -15,8 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DrawDocumentStorage : NSObject <AJRXMLCoding>
 
 // User Info
-@property (nonatomic,readonly) NSDictionary<NSString *, id> *documentInfo;
-- (void)setDocumentInfo:(id)value forKey:(nullable NSString *)key;
+@property (nonatomic,readonly) NSMutableDictionary<NSString *, id> *documentInfo;
+- (void)setDocumentInfo:(nullable id)value forKey:(nullable NSString *)key;
 - (nullable id)documentInfoForKey:(NSString *)key;
 
 // Print Info

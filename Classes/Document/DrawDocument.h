@@ -51,6 +51,13 @@ extern NSString * const DrawLeftViewExpandedWidthKey;
 extern NSString * const DrawRightViewExpandedWidthKey;
 extern NSString * const DrawMarginColorKey;
 
+// Standard Document Info Keys
+extern NSString * const DrawDocumentInfoAuthorKey;
+extern NSString * const DrawDocumentInfoCreationDateKey;
+extern NSString * const DrawDocumentInfoCommentsKey;
+extern NSString * const DrawDocumentInfoCopyrightKey;
+extern NSString * const DrawDocumentInfoLicenseKey;
+
 // Panels
 extern NSString * const DrawOpenPanelPathKey;
 extern NSString * const DrawSavePanelPathKey;
@@ -139,6 +146,7 @@ extern NSString * const DrawSavePanelPathKey;
 
 #pragma mark - Document Info
 
+@property (nonatomic,readonly) NSMutableDictionary<NSString *, id> *documentInfo;
 - (void)setDocumentInfo:(id)value forKey:(nullable NSString *)key;
 - (nullable id)documentInfoForKey:(NSString *)key;
 
