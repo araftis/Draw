@@ -55,6 +55,8 @@ extern NSString * const DrawMarginColorKey;
 extern NSString * const DrawOpenPanelPathKey;
 extern NSString * const DrawSavePanelPathKey;
 
+@protocol DrawDocumentGraphicObserver;
+
 @interface DrawDocument : NSDocument {
     // Current Tools
     DrawToolSet *_currentToolSet;   // The active tool set.
@@ -79,6 +81,8 @@ extern NSString * const DrawSavePanelPathKey;
     NSString *_lastUndoAction; // Doesn't archive
     NSDate *_lastUndoTime; // Doesn't archive
     id _lastUndoTarget; // Doesn't archive
+    AJREditingContext *_editingContext; // Used to track changes on our objects. Only partially implemented.
+    NSMutableArray<id <DrawDocumentGraphicObserver>> *_graphicObservers;
 
     // Flags
     BOOL _isPrinting;
@@ -106,6 +110,8 @@ extern NSString * const DrawSavePanelPathKey;
 @property (nonatomic,strong) DrawGraphic *templateGraphic;
 @property (nonatomic,strong) DrawDocumentStorage *storage;
 @property (nonatomic,strong) NSSplitViewController *splitViewController;
+/** The document's editing context, used to track changes to its graphics. */
+@property (nonatomic,readonly) AJREditingContext *editingContext;
 
 @property (nonatomic,readonly) DrawLayerViewController *layersViewController;
 @property (nonatomic,readonly) DrawInspectorGroupsController *inspectorGroupsViewController;
@@ -113,8 +119,8 @@ extern NSString * const DrawSavePanelPathKey;
 // Returns the current scale (frame.size.width / bounds.size.width)
 - (CGFloat)scale;
 
-- (void)addGraphic:(DrawGraphic *)aGraphic;
-- (void)removeGraphic:(DrawGraphic *)aGraphic;
+- (void)addGraphic:(DrawGraphic *)graphic;
+- (void)removeGraphic:(DrawGraphic *)graphic;
 - (void)replaceGraphic:(DrawGraphic *)oldGraphic withGraphic:(DrawGraphic *)newGraphic;
 
 @property (nonatomic,readonly) BOOL useShallowEncode;
@@ -131,7 +137,10 @@ extern NSString * const DrawSavePanelPathKey;
 @property (nonatomic,class,readonly) Class storageClass;
 @property (nonatomic,class,readonly) DrawDocument * focusedDocument;
 
-//- (IBAction)toggleSideViews:(NSSegmentedControl *)sender;
+#pragma mark - Document Info
+
+- (void)setDocumentInfo:(id)value forKey:(nullable NSString *)key;
+- (nullable id)documentInfoForKey:(NSString *)key;
 
 @end
 
@@ -267,6 +276,8 @@ extern NSString * const DrawSavePanelPathKey;
 
 - (void)setPagesNeedDisplay:(BOOL)flag;
 
+- (void)enumerateGraphicsUsing:(void (^)(DrawGraphic *graphic, BOOL *stop))block;
+
 @end
 
 
@@ -341,7 +352,16 @@ extern NSString * const DrawSavePanelPathKey;
 @end
 
 
-@interface DrawDocument (Undo)
+@protocol DrawDocumentGraphicObserver <NSObject>
+
+- (void)graphic:(DrawGraphic *)graphic didEditKeys:(NSSet<NSString *> *)keys;
+
+@end
+
+@interface DrawDocument (Undo) <AJREditingContextDelegate>
+
+- (void)addGraphicObserver:(id <DrawDocumentGraphicObserver>)observer NS_SWIFT_NAME(addGraphicObserver(_:));
+- (void)removeGraphicObserver:(id <DrawDocumentGraphicObserver>)observer NS_SWIFT_NAME(removeGraphicObserver(_:));
 
 - (void)registerUndoWithTarget:(id)target selector:(SEL)aSelector object:(id)anObject;
 - (void)registerUndoWithTarget:(id)target handler:(void (^)(id target))undoHandler;

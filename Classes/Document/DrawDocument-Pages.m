@@ -151,4 +151,31 @@
     }
 }
 
+- (BOOL)_enumerateGraphicsInPage:(DrawPage *)page using:(void (^)(DrawGraphic *graphic, BOOL *stop))block {
+    for (DrawLayer *layer in _storage.layers) {
+        for (DrawGraphic *graphic in [page graphicsForLayer:layer]) {
+            BOOL stop = NO;
+            block(graphic, &stop);
+            if (stop) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
+- (void)enumerateGraphicsUsing:(void (^)(DrawGraphic *graphic, BOOL *stop))block {
+    for (DrawPage *page in _storage.pages) {
+        if ([self _enumerateGraphicsInPage:page using:block]) {
+            return;
+        }
+    }
+    if ([self _enumerateGraphicsInPage:_storage.masterPageOdd using:block]) {
+        return;
+    }
+    if ([self _enumerateGraphicsInPage:_storage.masterPageEven using:block]) {
+        return;
+    }
+}
+
 @end

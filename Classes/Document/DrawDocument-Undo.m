@@ -2,6 +2,7 @@
 
 #import "DrawDocument.h"
 
+#import "DrawGraphic.h"
 #import "DrawDocumentStorage.h"
 
 @implementation DrawDocument (Undo)
@@ -55,6 +56,25 @@
       [[self undoManager] redo];
       [[NSNotificationCenter defaultCenter] postNotificationName:DrawViewDidChangeSelectionNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:_storage.selection, DrawViewSelectionKey, nil]];
    }
+}
+
+- (void)addGraphicObserver:(id <DrawDocumentGraphicObserver>)observer {
+    [_graphicObservers addObject:observer];
+}
+
+- (void)removeGraphicObserver:(id <DrawDocumentGraphicObserver>)observer {
+    [_graphicObservers removeObjectIdenticalTo:observer];
+}
+
+#pragma mark - AJREditingContextDelegate
+
+- (void)editingContext:(AJREditingContext *)editingContext didObserveEditsForKeys:(NSSet *)keys onObject:(id)object {
+    DrawGraphic *graphic = AJRObjectIfKindOfClass(object, DrawGraphic);
+    if (graphic != nil) {
+        for (id <DrawDocumentGraphicObserver> observer in _graphicObservers) {
+            [observer graphic:object didEditKeys:keys];
+        }
+    }
 }
 
 @end

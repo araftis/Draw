@@ -13,7 +13,29 @@
 
 #import <AJRInterface/AJRInterface.h>
 
+@interface DrawDocumentStorage ()
+
+@property (nonatomic,strong) NSMutableDictionary<NSString *, id> *documentInfo;
+
+@end
+
 @implementation DrawDocumentStorage
+
+#pragma mark - User Info
+
+- (void)setDocumentInfo:(id)value forKey:(NSString *)key {
+    if (_documentInfo == nil) {
+        _documentInfo = [NSMutableDictionary dictionary];
+    }
+    if (key == nil) {
+        [_documentInfo removeObjectForKey:key];
+    }
+    [_documentInfo setObject:value forKey:key];
+}
+
+- (nullable id)documentInfoForKey:(NSString *)key {
+    return [_documentInfo objectForKey:key];
+}
 
 #pragma mark - Properties
 
@@ -34,6 +56,12 @@
 }
 
 - (void)decodeWithXMLCoder:(AJRXMLCoder *)coder {
+    // Document Info
+    [coder decodeObjectForKey:@"info" setter:^(id  _Nullable object) {
+        NSDictionary *raw = AJRObjectIfKindOfClass(object, NSDictionary);
+        self->_documentInfo = [raw mutableCopy];
+    }];
+
     // Print Info
     [coder decodeObjectForKey:@"printInfo" setter:^(id _Nullable object) {
         self->_printInfo = object;
@@ -150,6 +178,11 @@
 }
 
 - (void)encodeWithXMLCoder:(AJRXMLCoder *)coder {
+    // Document Info
+    if (_documentInfo != nil) {
+        [coder encodeObject:_documentInfo forKey:@"info"];
+    }
+
     // Print Info
     [coder encodeObject:_printInfo forKey:@"printInfo"];
 

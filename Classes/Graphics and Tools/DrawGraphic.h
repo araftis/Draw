@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, DrawAspectPriority) {
 typedef void (^DrawGraphicCompletionBlock)(void);
 typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority priority);
 
-@interface DrawGraphic : NSObject <NSCopying, AJRXMLCoding> {
+@interface DrawGraphic : AJREditableObject <NSCopying, AJRXMLCoding> {
     // The Path
     AJRBezierPath *_path;
 

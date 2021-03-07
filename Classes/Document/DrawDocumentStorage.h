@@ -8,9 +8,16 @@
 
 #import <AJRFoundation/AJRFoundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class DrawGraphic, DrawLayer, DrawPage;
 
 @interface DrawDocumentStorage : NSObject <AJRXMLCoding>
+
+// User Info
+@property (nonatomic,readonly) NSDictionary<NSString *, id> *documentInfo;
+- (void)setDocumentInfo:(id)value forKey:(nullable NSString *)key;
+- (nullable id)documentInfoForKey:(NSString *)key;
 
 // Print Info
 @property (nonatomic,strong) NSPrintInfo *printInfo;
@@ -46,7 +53,7 @@
 @property (nonatomic,assign) NSSize copyOffset;
 
 // Groups
-@property (nonatomic,strong) DrawGraphic *group;
+@property (nullable,nonatomic,strong) DrawGraphic *group;
 
 // State
 @property (nonatomic,strong) DrawGraphic *templateGraphic;
@@ -61,3 +68,5 @@
 @property (nonatomic,assign) BOOL marksVisible;
 
 @end
+
+NS_ASSUME_NONNULL_END

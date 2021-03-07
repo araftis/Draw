@@ -129,6 +129,14 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 - (id)init {
     if ((self = [super init])) {
         _iconObserverTokens = [NSMutableDictionary dictionary];
+
+        // Editing
+        _editingContext = [[AJREditingContext alloc] init];
+        _editingContext.delegate = self;
+        // TODO: Add this in
+        //_editingContext.undoManager = self.undoManager;
+        _graphicObservers = [NSMutableArray array];
+
     }
     return self;
 }
@@ -292,6 +300,12 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
             layer.document = nil;
         }
         for (DrawPage *page in _storage.pages) {
+            // We need to remove all the objects from our editing context
+            [self enumerateGraphicsUsing:^(DrawGraphic * _Nonnull graphic, BOOL * _Nonnull stop) {
+                if (graphic.editingContext == self->_editingContext) {
+                    [self->_editingContext forgetObject:graphic];
+                }
+            }];
             page.document = nil;
         }
         _storage.masterPageOdd.document = nil;
@@ -311,6 +325,19 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     for (DrawPage *page in _storage.pages) {
         page.document = self;
     }
+
+    // And now we need to add all our graphics back in.
+    [self enumerateGraphicsUsing:^(DrawGraphic * _Nonnull graphic, BOOL * _Nonnull stop) {
+        // We do this check, because a graphic might get passed to us twice.
+        if (graphic.editingContext != self->_editingContext) {
+            if (graphic.editingContext != nil) {
+                // Steal ownership
+                [[graphic editingContext] forgetObject:graphic];
+            }
+            [self->_editingContext addObject:graphic];
+            [graphic startTrackingEdits];
+        }
+    }];
 
     _storage.masterPageOdd.document = self;
     _storage.masterPageEven.document = self;
@@ -445,6 +472,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     return AJRObjectIfKindOfClass([_primaryWindowController.contentViewController ajr_descendantViewControllerOfClass:DrawInspectorGroupsController.class], DrawInspectorGroupsController);
 }
 
+- (AJREditingContext *)editingContext {
+    return _editingContext;
+}
 
 #pragma mark - NSDocument
 
@@ -687,7 +717,13 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [graphic graphicWillAddToView:self];
     [graphic setDocument:self];
     [graphic graphicDidAddToView:self];
-    if ([graphic supergraphic]) [graphic removeFromSupergraphic];
+    if ([graphic supergraphic]) {
+        [graphic removeFromSupergraphic];
+    }
+
+    // Add the graphic to our editing context, so we can watch it.
+    [_editingContext addObject:graphic];
+    [graphic startTrackingEdits];
 
     if (![DrawGraphic notificationsAreDisabled]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:DrawDocumentDidAddGraphicNotification object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:graphic, DrawGraphicKey, nil]];
@@ -703,6 +739,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [graphic graphicWillRemoveFromView:self];
     [[graphic page] removeGraphic:graphic];
     [graphic graphicDidRemoveFromView:self];
+
+    // And since we no longer own the object, forget about it.
+    [_editingContext forgetObject:graphic];
 }
 
 - (void)replaceGraphic:(DrawGraphic *)oldGraphic withGraphic:(DrawGraphic *)newGraphic {
@@ -796,6 +835,17 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     NSSplitViewItem *item = _splitViewController.splitViewItems[0];
     item.animator.collapsed = !item.isCollapsed;
     [sender setSelected:!item.isCollapsed forSegment:0];
+}
+
+#pragma mark - Document Info
+
+- (void)setDocumentInfo:(id)value forKey:(nullable NSString *)key {
+    [[self prepareWithInvocationTarget:self] setDocumentInfo:[self documentInfoForKey:key] forKey:key];
+    [_storage setDocumentInfo:value forKey:key];
+}
+
+- (nullable id)documentInfoForKey:(NSString *)key {
+    return [_storage documentInfoForKey:key];
 }
 
 @end
