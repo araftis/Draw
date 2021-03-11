@@ -13,8 +13,6 @@
 
 @interface DrawDocument (Private)
 
-- (void)_setDocumentStorage:(DrawDocumentStorage *)storage;
-
 @end
 
 #endif /* DrawDocumentP_h */

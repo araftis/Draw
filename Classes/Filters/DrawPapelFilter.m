@@ -27,7 +27,7 @@
 
         if (storage != nil) {
             success = YES;
-            [document _setDocumentStorage:storage];
+            [document setStorage:storage];
         }
     }
 

@@ -305,7 +305,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     return DrawDocumentStorage.class;
 }
 
-- (void)_setDocumentStorage:(DrawDocumentStorage *)storage {
+- (void)setStorage:(DrawDocumentStorage *)storage {
     if (_storage != nil) {
         // We're reverting to our saved state.
         for (DrawLayer *layer in _storage.layers) {

@@ -115,6 +115,9 @@ extern NSString * const DrawSavePanelPathKey;
 @property (nonatomic,strong) DrawTool *currentTool;
 @property (nonatomic,strong) NSColor *paperColor;
 @property (nonatomic,strong) DrawGraphic *templateGraphic;
+/**
+ Defines the actualy storage for the document. This includes all data associated with the document that "comprise" the document, but not the UI portions of the document. While the attribute is writable, it should be extremely rare that you ever need to assign to it.
+ */
 @property (nonatomic,strong) DrawDocumentStorage *storage;
 @property (nonatomic,strong) NSSplitViewController *splitViewController;
 /** The document's editing context, used to track changes to its graphics. */
