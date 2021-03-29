@@ -1,4 +1,3 @@
-/* DrawView-Undo.m created by alex on Tue 27-Oct-1998 */
 
 #import "DrawDocument.h"
 

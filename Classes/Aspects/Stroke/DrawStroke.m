@@ -1,4 +1,3 @@
-/* DrawStroke.m created by alex on Thu 15-Oct-1998 */
 
 #import "DrawStroke.h"
 

@@ -1,4 +1,3 @@
-/* DrawStrokeDash.h created by alex on Tue 09-Mar-1999 */
 
 #import <AppKit/AppKit.h>
 #import <AJRFoundation/AJRFoundation.h>

@@ -1,4 +1,3 @@
-/* DrawPenTool.m created by alex on Fri 16-Oct-1998 */
 
 #import "DrawPenTool.h"
 

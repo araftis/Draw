@@ -1,10 +1,3 @@
-//
-//  DrawReflection.m
-//  Draw
-//
-//  Created by Alex Raftis on 9/9/11.
-//  Copyright (c) 2011 Apple, Inc. All rights reserved.
-//
 
 #import "DrawReflection.h"
 

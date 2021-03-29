@@ -1,4 +1,3 @@
-/* DrawGraphic-Subgraphics.m created by alex on Mon 25-Jan-1999 */
 
 #import "DrawGraphic.h"
 

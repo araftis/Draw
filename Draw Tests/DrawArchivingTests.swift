@@ -1,10 +1,3 @@
-//
-//  DrawArchivingTests.swift
-//  Draw Tests
-//
-//  Created by AJ Raftis on 12/22/20.
-//  Copyright © 2020 Apple, Inc. All rights reserved.
-//
 
 import XCTest
 import AJRFoundation

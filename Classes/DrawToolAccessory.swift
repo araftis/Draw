@@ -1,10 +1,3 @@
-//
-//  DrawToolAccessory.swift
-//  Draw
-//
-//  Created by AJ Raftis on 2/1/21.
-//  Copyright © 2021 Apple, Inc. All rights reserved.
-//
 
 import Cocoa
 

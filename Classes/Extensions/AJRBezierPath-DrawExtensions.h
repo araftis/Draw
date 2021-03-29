@@ -1,4 +1,3 @@
-/* AJRBezierPath-DrawExtensions.h created by alex on Thu 14-Jan-1999 */
 
 #import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>
 

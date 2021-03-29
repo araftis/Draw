@@ -1,4 +1,3 @@
-/* DrawImage.m created by alex on Wed 28-Oct-1998 */
 
 #import "DrawImage.h"
 

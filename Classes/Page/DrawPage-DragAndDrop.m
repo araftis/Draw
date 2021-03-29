@@ -1,4 +1,3 @@
-/* DrawPage-DragAndDrop.m created by alex on Fri 06-Nov-1998 */
 
 #import "DrawPage.h"
 

@@ -1,4 +1,3 @@
-/* DrawClip.h created by alex on Tue 26-Jan-1999 */
 
 #import <Draw/DrawAspect.h>
 

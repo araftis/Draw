@@ -1,10 +1,3 @@
-//
-//  DrawPoint.swift
-//  Draw
-//
-//  Created by AJ Raftis on 12/19/20.
-//  Copyright © 2020 Apple, Inc. All rights reserved.
-//
 
 import AJRFoundation
 

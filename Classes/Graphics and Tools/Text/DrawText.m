@@ -1,4 +1,3 @@
-/* DrawText.m created by alex on Fri 30-Oct-1998 */
 
 #import "DrawText.h"
 

@@ -1,4 +1,3 @@
-/* DrawAdobeIllustrator.h created by alex on Sun 10-Jan-1999 */
 
 #import <Draw/DrawFilter.h>
 

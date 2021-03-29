@@ -1,4 +1,3 @@
-/* DrawView-Layers.m created by alex on Tue 06-Oct-1998 */
 
 #import "DrawDocument.h"
 

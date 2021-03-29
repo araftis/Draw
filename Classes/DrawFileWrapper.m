@@ -1,4 +1,3 @@
-/* DrawFileWrapper.m created by alex on Wed 24-Feb-1999 */
 
 #import "DrawFileWrapper.h"
 

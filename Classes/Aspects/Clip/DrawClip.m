@@ -1,4 +1,3 @@
-/* DrawClip.m created by alex on Tue 26-Jan-1999 */
 
 #import "DrawClip.h"
 

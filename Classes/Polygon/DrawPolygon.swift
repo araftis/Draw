@@ -1,10 +1,3 @@
-//
-//  DrawPolygon.swift
-//  Draw
-//
-//  Created by AJ Raftis on 1/23/21.
-//  Copyright © 2021 Apple, Inc. All rights reserved.
-//
 
 import Cocoa
 

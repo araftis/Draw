@@ -1,4 +1,3 @@
-/* DrawOldDrawFilter.m created by alex on Mon 09-Nov-1998 */
 
 #import "DrawOldDrawFilter.h"
 

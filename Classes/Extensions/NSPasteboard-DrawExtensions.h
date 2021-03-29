@@ -1,4 +1,3 @@
-/* NSPasteboard-DrawExtensions.h created by alex on Wed 21-Oct-1998 */
 
 #import <AppKit/AppKit.h>
 

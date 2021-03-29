@@ -1,0 +1,68 @@
+#!/bin/csh -f
+
+if ( ! -e LICENSE.md ) then
+    echo "ERROR: LICENSE.md was not foudn. $argv[0]:t is expected to be run from the project root."
+    exit 1
+endif
+
+set temp = `mktemp "$TMPDIR"/files.csh.XXXXXX`
+echo "set files = ( \" >! "$temp"
+find . \( -name "*.h" -o -name "*.m" -o -name "*.swift" -o -name "*.strings" \) | sed -e 's/^/    "/g' -e 's/$/" \\/g' >> "$temp"
+echo "    )" >> "$temp"
+
+source "$temp"
+rm -f "$temp"
+
+while ( $#files > 0 )
+    set file = "$files[1]"
+    echo -n "Processing $file..."
+    set line = `head -1 "$file"`
+    set possibleFile = `head -2 "$file" | tail -1`
+
+    # Build the license. We'll assume we always have a license, since we have few classes that completely borrow from other projects.
+    set temp = `mktemp "$TMPDIR"/license.XXXXXX`
+    echo "/*" >! "$temp"
+    echo "$file:t" >> "$temp"
+    echo "$cwd:t" >> "$temp"
+    echo "" >> "$temp"
+    echo "Copyright © `date +%Y`, AJ Raftis and AJRFoundation authors" >> "$temp"
+    echo "All rights reserved." >> "$temp"
+    echo "" >> "$temp"
+    tail +6 LICENSE.md >> "$temp"
+    echo "*/" >> "$temp"
+
+    set copyIfNeeded = false
+    # If the first line is /* and the second line is the name of the file, we assume it's our copyright / license.
+    if ( "$line" == "/*" ) then
+        if ( "$possibleFile" == "$file:t" ) then
+            echo -n "Replacing License..."
+            set line = `grep -n "*/" "$file" | sed 's/:\*\///g' | head -1`
+            set line = `expr $line + 1`
+            tail +$line "$file" >> "$temp"
+            set copyIfNeeded = true
+        else
+            echo -n "Skipping License..."
+        endif
+    else
+        echo -n "Adding License..."
+        cat "$file" >> "$temp"
+        set copyIfNeeded = true
+    endif
+
+    if ( $copyIfNeeded == "true" ) then
+        diff -q "$file" "$temp" >& /dev/null
+        set result = $status
+        if ( $result == 0 ) then
+            echo -n "Same..."
+        else
+            echo -n "Copying..."
+            cp "$temp" "$file"
+        endif
+    endif
+    
+    rm -f "$temp"
+
+    echo "done."
+
+    shift files
+end

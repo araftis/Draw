@@ -1,10 +1,3 @@
-//
-//  DrawToolAction.m
-//  Draw
-//
-//  Created by Alex Raftis on 6/24/11.
-//  Copyright 2011 Apple, Inc. All rights reserved.
-//
 
 #import "DrawToolAction.h"
 

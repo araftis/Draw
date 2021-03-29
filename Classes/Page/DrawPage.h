@@ -1,4 +1,3 @@
-/* DrawPage.h created by alex on Thu 17-Sep-1998 */
 
 #import <AppKit/AppKit.h>
 

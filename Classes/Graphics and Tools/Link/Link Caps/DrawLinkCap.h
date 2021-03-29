@@ -1,4 +1,3 @@
-/* DrawLinkCap.h created by alex on Thu 18-Feb-1999 */
 
 #import <AppKit/AppKit.h>
 #import <AJRFoundation/AJRFoundation.h>

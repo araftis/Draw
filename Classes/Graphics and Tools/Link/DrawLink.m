@@ -1,4 +1,3 @@
-/* DrawLink.m created by alex on Thu 12-Nov-1998 */
 
 #import "DrawLink.h"
 
@@ -98,7 +97,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
         [fill setColor:[NSColor blackColor]];
         [self addAspect:fill withPriority:DrawAspectPriorityBackground];
 
-        headClass = [userDefaults classForKey:DrawLinkCapHeadStyleKey defaultValue:[DrawLinkCapArrow class]];
+        headClass = [userDefaults classForKey:DrawLinkCapHeadStyleKey defaultValue:nil];
         tailClass = [userDefaults classForKey:DrawLinkCapTailStyleKey defaultValue:[DrawLinkCapArrow class]];
         headCap = [[headClass alloc] initWithType:DrawLinkCapTypeHead];
         tailCap = [[tailClass alloc] initWithType:DrawLinkCapTypeTail];

@@ -1,4 +1,3 @@
-/* DrawFunctions.h created by alex on Fri 09-Oct-1998 */
 
 #import <AppKit/AppKit.h>
 

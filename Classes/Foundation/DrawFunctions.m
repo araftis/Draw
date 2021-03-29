@@ -1,4 +1,3 @@
-/* DrawFunctions.m created by alex on Fri 09-Oct-1998 */
 
 #import "DrawFunctions.h"
 

@@ -1,4 +1,3 @@
-/* DrawTextContainer.m created by alex on Sat 31-Oct-1998 */
 
 #import "DrawTextContainer.h"
 

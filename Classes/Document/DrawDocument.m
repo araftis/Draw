@@ -1,4 +1,3 @@
-/* DrawView.m created by alex on Tue 28-Apr-1998 */
 
 #import "DrawDocument.h"
 

@@ -1,4 +1,3 @@
-/* DrawStroke.h created by alex on Thu 15-Oct-1998 */
 
 #import <Draw/DrawAspect.h>
 

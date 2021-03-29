@@ -1,10 +1,3 @@
-//
-//  DrawDocumentStorage.h
-//  Draw
-//
-//  Created by Alex Raftis on 5/30/14.
-//  Copyright (c) 2014 Apple, Inc. All rights reserved.
-//
 
 #import <AJRFoundation/AJRFoundation.h>
 

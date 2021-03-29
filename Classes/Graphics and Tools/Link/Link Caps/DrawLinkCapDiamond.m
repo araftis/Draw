@@ -1,4 +1,3 @@
-/* DrawLinkCapDiamond.m created by alex on Thu 18-Feb-1999 */
 
 #import "DrawLinkCapDiamond.h"
 

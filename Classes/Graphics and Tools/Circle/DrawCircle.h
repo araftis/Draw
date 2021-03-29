@@ -1,4 +1,3 @@
-/* RectangleTool.h created by alex on Thu 23-Apr-1998 */
 
 #import <Draw/DrawGraphic.h>
 

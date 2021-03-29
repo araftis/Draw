@@ -1,4 +1,3 @@
-/* DrawSelectionTool.h created by alex on Wed 29-Apr-1998 */
 
 #import <Draw/DrawTool.h>
 

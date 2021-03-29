@@ -1,10 +1,3 @@
-//
-//  DrawFillRibbonInspector.m
-//  Draw
-//
-//  Created by Alex Raftis on 8/13/11.
-//  Copyright (c) 2011 Apple, Inc. All rights reserved.
-//
 
 #import "DrawFillRibbonInspector.h"
 

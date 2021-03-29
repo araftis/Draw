@@ -1,4 +1,3 @@
-/* DrawView-EPS.m created by alex on Tue 10-Nov-1998 */
 
 #import "DrawDocument.h"
 

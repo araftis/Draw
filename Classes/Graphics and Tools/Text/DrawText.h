@@ -1,4 +1,3 @@
-/* DrawText.h created by alex on Fri 30-Oct-1998 */
 
 #import <Draw/DrawAspect.h>
 

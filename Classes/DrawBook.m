@@ -1,4 +1,3 @@
-/* DrawBook.m created by alex on Wed 24-Feb-1999 */
 
 #import "DrawBook.h"
 

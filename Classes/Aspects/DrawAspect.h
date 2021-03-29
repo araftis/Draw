@@ -1,4 +1,3 @@
-/* DrawAspect.h created by alex on Mon 19-Oct-1998 */
 
 #import <Draw/DrawGraphic.h>
 

@@ -1,4 +1,3 @@
-/* DrawPenBezierAspect.m created by alex on Fri 23-Oct-1998 */
 
 #import "DrawPenBezierAspect.h"
 

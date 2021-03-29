@@ -1,4 +1,3 @@
-/* DrawDocument.h created by alex on Tue 28-Apr-1998 */
 
 #import <AppKit/AppKit.h>
 

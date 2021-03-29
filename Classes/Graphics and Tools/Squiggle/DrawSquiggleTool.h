@@ -1,4 +1,3 @@
-/* DrawSquiggleTool.h created by alex on Fri 16-Oct-1998 */
 
 #import <Draw/DrawTool.h>
 

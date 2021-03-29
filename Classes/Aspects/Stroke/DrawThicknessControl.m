@@ -1,4 +1,3 @@
-/* DrawThicknessControl.m created by alex on Sun 18-Oct-1998 */
 
 #import "DrawThicknessControl.h"
 

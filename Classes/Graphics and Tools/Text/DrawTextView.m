@@ -1,4 +1,3 @@
-/* DrawTextView.m created by alex on Sat 31-Oct-1998 */
 
 #import "DrawTextView.h"
 

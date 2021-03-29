@@ -1,4 +1,3 @@
-/* DrawLayer.h created by alex on Tue 06-Oct-1998 */
 
 #import <AppKit/AppKit.h>
 #import <AJRFoundation/AJRFoundation.h>

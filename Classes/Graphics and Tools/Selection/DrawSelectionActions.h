@@ -1,10 +1,3 @@
-//
-//  DrawSelectionActions.h
-//  Draw
-//
-//  Created by Alex Raftis on 7/7/11.
-//  Copyright 2011 Apple, Inc. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 

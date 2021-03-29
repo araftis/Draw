@@ -1,4 +1,3 @@
-/* AJRXMLCoder-DrawExtensions.m created by alex on Thu 04-Feb-1999 */
 
 #import "AJRXMLCoder-DrawExtensions.h"
 

@@ -1,4 +1,3 @@
-/* DrawView-ToolBar.m created by alex on Mon 23-Jul-2001 */
 
 #import "DrawDocument.h"
 

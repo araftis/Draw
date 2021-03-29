@@ -1,4 +1,3 @@
-/* NSPasteboard-DrawExtensions.m created by alex on Wed 21-Oct-1998 */
 
 #import "NSPasteboard-DrawExtensions.h"
 

@@ -1,4 +1,3 @@
-/* DrawRectangleTool.m created by alex on Thu 08-Oct-1998 */
 
 #import "DrawRectangleTool.h"
 

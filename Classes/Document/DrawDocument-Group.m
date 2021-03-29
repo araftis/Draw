@@ -1,4 +1,3 @@
-/* DrawGroup.m created by alex on Wed 20-Jan-1999 */
 
 #import "DrawDocument.h"
 

@@ -1,4 +1,3 @@
-/* AJRBezierPath-DrawExtensions.m created by alex on Thu 14-Jan-1999 */
 
 #import "AJRBezierPath-DrawExtensions.h"
 

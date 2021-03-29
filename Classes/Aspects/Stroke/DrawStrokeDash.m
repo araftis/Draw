@@ -1,4 +1,3 @@
-/* DrawStrokeDash.m created by alex on Tue 09-Mar-1999 */
 
 #import "DrawStrokeDash.h"
 

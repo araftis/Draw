@@ -1,4 +1,3 @@
-/* DrawRulerView.h created by alex on Thu 12-Nov-1998 */
 
 #import <AppKit/AppKit.h>
 
