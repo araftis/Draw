@@ -47,6 +47,10 @@ extern NSString * const DrawTextIdentifier;
 
 - (void)setupTextView:(NSTextView *)textView;
 
+/*!
+ Makes sure the layout manager is setup and layed out.
+ */
+- (void)prepareTextInLayoutManager NS_SWIFT_NAME(prepareTextInLayoutManager());
 @property (nonatomic,readonly) NSLayoutManager *layoutManager;
 @property (nonatomic,readonly) DrawTextView *textView;
 @property (nullable,nonatomic,readonly) DrawTextContainer *textContainer;

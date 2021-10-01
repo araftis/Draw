@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Drawing
 
-- (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
+- (_Nullable DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
 - (AJRBezierPath *)renderPathForPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
 
 - (BOOL)isPoint:(NSPoint)point inPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;

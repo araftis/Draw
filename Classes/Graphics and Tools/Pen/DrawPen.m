@@ -324,7 +324,6 @@ static NSCursor *cursor = nil; \
     deltaAngle = AJRArctan(handleLeft.y - center.y, handleLeft.x - center.x) - AJRArctan(point.y - center.y, point.x - center.x);
     deltaRadius = AJRDistanceBetweenPoints(point, center) - AJRDistanceBetweenPoints(handleLeft, center);
 
-#warning Validate, since I made 0 degrees always be up.
     handleRight = AJRPolarToEuclidean(center, AJRArctan(handleRight.y - center.y, handleRight.x - center.x) - deltaAngle, AJRDistanceBetweenPoints(center, handleRight) + deltaRadius);
     [_path setPointAtIndex:rightIndex toPoint:handleRight];
 }

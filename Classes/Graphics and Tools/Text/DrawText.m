@@ -116,6 +116,11 @@ NSString * const DrawTextIdentifier = @"text";
     return self;
 }
 
+- (void)prepareTextInLayoutManager {
+    NSLayoutManager *layoutManager = [self layoutManager];
+    NSRange range = [layoutManager glyphRangeForTextContainer:[self textContainer]];
+    [layoutManager ensureLayoutForGlyphRange:range];
+}
 
 - (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {
     if (!_editing) {

@@ -60,7 +60,7 @@ NSString * const DrawFillWindingRuleKey = @"DrawFillWindingRuleKey";
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    DrawFill	*aspect = [super copyWithZone:nil];
+    DrawFill *aspect = [super copyWithZone:nil];
 
     aspect->_windingRule = _windingRule;
 
