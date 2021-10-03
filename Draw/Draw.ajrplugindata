@@ -57,7 +57,8 @@
 
     <!-- Defines a tool. A tool must belong to a tool set. -->
     <extension-point name="draw-tool" class="DrawToolSet" registrySelector="registerTool:properties:">
-        <attribute name="class" type="class" required="YES" />
+        <attribute name="class" type="class" required="NO" />
+        <attribute name="alias" type="string" required="NO" />
         <attribute name="name" type="string" required="YES" />
         <attribute name="id" type="string" required="YES" />
         <attribute name="toolset" type="string" required="YES" />
@@ -100,7 +101,7 @@
         <action title="Closed Pen" icon="toolClosedSquiggle" tag="1" />
         <action title="Smart Pen" icon="toolSmartSquiggle" tag="2" />
     </draw-tool>
-    <!-- Draws links between graphics. Defiens a head and tail cap. See link caps above. -->
+    <!-- Draws links between graphics. Defines a head and tail cap. See link caps above. -->
     <draw-tool class="DrawLinkTool" name="Link" id="link" toolset="graphics" activationKey="l">
         <action title="Link" icon="toolLink" cursor="cursorLink:{7.0,7.0}" tag="0" />
     </draw-tool>

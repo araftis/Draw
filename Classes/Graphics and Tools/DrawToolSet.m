@@ -169,8 +169,34 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
 #pragma mark - Tools
 
 - (void)registerToolClass:(Class)toolClass properties:(NSDictionary<NSString *, id> *)properties {
-    AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Tool: %C in %@", toolClass, self.class);
-    [_toolClasses setObject:toolClass forKey:properties[@"id"]];
+    NSString *alias = properties[@"alias"];
+    if (alias) {
+        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Tool Alias: \"%@\" in %C", alias, self.class);
+        NSArray<NSString *> *components = [alias componentsSeparatedByString:@":"];
+        if (components.count == 2) {
+            NSString *toolSetId = components[0];
+            DrawToolSet *toolSet = [DrawToolSet toolSetForIdentifier:toolSetId];
+            if (toolSet != nil) {
+                NSString *toolId = components[1];
+                DrawTool *tool = [toolSet toolForIdentifier:toolId];
+                if (tool != nil) {
+                    // Normally tools are created lazily, but in our case, we want to avoid creating an additional instance of the tool.
+                    _toolClasses[toolId] = tool.class;
+                    _tools[toolId] = tool;
+                    [tool addAliasedToolSet:self];
+                } else {
+                    AJRLog(DrawPlugInLogDomain, AJRLogLevelError, @"Tool set \"%@\" contains no tool \"%@\".", toolSetId, toolId);
+                }
+            } else {
+                AJRLog(DrawPlugInLogDomain, AJRLogLevelError, @"No tool set \"%@\".", toolSetId);
+            }
+        } else {
+            AJRLog(DrawPlugInLogDomain, AJRLogLevelError, @"The \"alias\" property of a tool must contain a string in the form \"<tool set id>:<tool id>\", but we received \"%@\" instead.", alias);
+        }
+    } else {
+        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Tool: %C in %C", toolClass, self.class);
+        [_toolClasses setObject:toolClass forKey:properties[@"id"]];
+    }
 }
 
 - (NSArray<DrawTool *> *)tools {

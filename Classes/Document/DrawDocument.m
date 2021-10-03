@@ -283,8 +283,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
                 AJRPrintf(@"update!\n");
                 DrawDocument *strongSelf = weakSelf;
                 if (strongSelf != nil) {
-                    if (strongSelf.displayedToolSet == tool.toolSet) {
-                        if (!tool.toolSet.isGlobal) {
+                    if ([tool isUsedByToolSet:strongSelf.displayedToolSet]) {
+                        if (!tool.primaryToolSet.isGlobal) {
                             [strongSelf _setImageIn:strongSelf->_toolSegments forSegment:index tool:tool action:nil];
                         }
                     }
@@ -459,8 +459,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     if (currentTool) {
         if ((!_currentTool || (_currentTool && [_currentTool toolShouldDeactivateForDocument:self]))
             && (!currentTool || (currentTool && [currentTool toolShouldActivateForDocument:self]))) {
-            if (_currentToolSet != [currentTool toolSet]) {
-                self.currentToolSet = [currentTool toolSet];
+            if (![_currentTool isUsedByToolSet:_currentToolSet]) {
+                self.currentToolSet = [currentTool primaryToolSet];
             }
             
             // This makes sure the segments are nominally setup.
@@ -478,7 +478,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
                 NSInteger globalIndex = NSNotFound;
                 NSInteger index = NSNotFound;
 
-                if (currentTool.toolSet.isGlobal) {
+                if (currentTool.primaryToolSet.isGlobal) {
                     globalIndex = foundIndex;
                 } else {
                     index = foundIndex;
@@ -492,7 +492,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
                 }
 
                 if (_currentTool) {
-                    if (_currentTool.toolSet.isGlobal) {
+                    if (_currentTool.primaryToolSet.isGlobal) {
                         [_globalToolSegments setImage:_currentTool.currentAction.icon forSegment:globalIndex];
                     } else {
                         [self _setImageIn:_toolSegments forSegment:index tool:_currentTool action:_currentTool.currentAction];

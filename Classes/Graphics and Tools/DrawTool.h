@@ -51,7 +51,7 @@ extern NSString *DrawToolDidBecomeActiveNotification;
 
 #pragma mark - Properties
 
-@property (nonatomic,readonly,weak) DrawToolSet *toolSet;
+@property (nonatomic,readonly,readonly) NSArray<DrawToolSet *> *toolSets;
 @property (nonatomic,readonly) NSString *identifier;
 @property (nonatomic,readonly) NSString *name;
 @property (nonatomic,readonly,strong) NSArray<DrawToolAction *> *actions;
@@ -62,6 +62,29 @@ extern NSString *DrawToolDidBecomeActiveNotification;
 - (NSString *)activationKey;
 
 - (NSCursor *)cursor;
+
+#pragma mark - Aliasing
+
+/*!
+ @discussion Normally a tool only belongs to one tool set, but tool sets can alias to a tool in another tool set. When that happens, the tool will belong to more than one tool set. You add that additional tool set by calling this method. Normally, this is called by using the "alias" property in the ajrplugindata for the aliasing tool.
+ 
+ @param additionalToolSet The additional tool set that will display the tool.
+ */
+- (void)addAliasedToolSet:(DrawToolSet *)additionalToolSet;
+
+/*!
+ @discussion Checks to see if the receiver is used by toolSet.
+ 
+ @param toolSet The tool set to check membership in.
+ 
+ @return YES if the tool is used by toolSet, otherwise, NO.
+ */
+- (BOOL)isUsedByToolSet:(DrawToolSet *)toolSet;
+
+/*!
+ The primary tool set. Generally, this is the first toolset to instantiate the tool.
+ */
+@property (nonatomic,readonly) DrawToolSet *primaryToolSet;
 
 #pragma mark - Creation
 
@@ -98,7 +121,7 @@ extern NSString *DrawToolDidBecomeActiveNotification;
 #pragma mark - Icon
 
 /*!
- Represents the icon to display in the tool bar. This only displays the "current" icon, and is generally used when the tool's action doesn't have an icon. This may return nil to indicate that only the action's icon be used. The default is to return nil. The returned icon should be 25x25 points and have 1x and 2x representations.
+ @discussion Represents the icon to display in the tool bar. This only displays the "current" icon, and is generally used when the tool's action doesn't have an icon. This may return nil to indicate that only the action's icon be used. The default is to return nil. The returned icon should be 25x25 points and have 1x and 2x representations.
 
  @return An image to display for the tools.
  */

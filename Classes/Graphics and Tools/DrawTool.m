@@ -46,6 +46,7 @@ static NSMutableDictionary *_tools = nil;
 @interface DrawTool ()
 
 @property (nonatomic,strong) NSArray<DrawToolAction *> *actions;
+@property (nonatomic,strong) NSMutableArray<DrawToolSet *> *toolSets;
 
 @end
 
@@ -88,6 +89,20 @@ static NSMutableDictionary *_tools = nil;
     return actions;
 }
 
+#pragma mark - Aliasing
+
+- (void)addAliasedToolSet:(DrawToolSet *)additionalToolSet {
+    [_toolSets addObject:additionalToolSet];
+}
+
+- (BOOL)isUsedByToolSet:(DrawToolSet *)toolSet {
+    return [_toolSets containsObjectIdenticalTo:toolSet];
+}
+
+- (DrawToolSet *)primaryToolSet {
+    return [_toolSets firstObject];
+}
+
 #pragma mark - Creation
 
 - (id)init {
@@ -97,7 +112,9 @@ static NSMutableDictionary *_tools = nil;
 
 - (id)initWithToolSet:(DrawToolSet *)toolSet {
     if ((self = [super init])) {
-        _toolSet = toolSet;
+        // NOTE: Techinically, we should be using an NSPointerArray with weak object pointers, because we're creating a retain cycle here. However, in this case, we don't really care, because these objects never get freed, as in they're alive for the entire life span of the owning process.
+        _toolSets = [NSMutableArray array];
+        [_toolSets addObject:toolSet];
     }
     return self;
 }
