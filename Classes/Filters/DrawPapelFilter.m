@@ -63,15 +63,20 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     return AJRAssertOrPropagateError(success, error, localError);
 }
 
-- (NSFileWrapper *)fileWrapperForDocument:(DrawDocument *)document error:(NSError **)error {
+- (NSFileWrapper *)updateFileWrapper:(nullable NSFileWrapper *)fileWrapper forDocument:(DrawDocument *)document error:(NSError **)error {
+    NSFileWrapper *newFileWrapper = fileWrapper;
+    NSError *localError = nil;
     NSData *data = [AJRXMLArchiver archivedDataWithRootObject:document.storage forKey:@"document"];
 
     AJRLogDebug(DrawDocumentLogDomain, AJRLogLevelDebug, @"%@\n", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 
-    NSFileWrapper *childWrapper = [[NSFileWrapper alloc] initRegularFileWithContents:data];
-    NSFileWrapper *fileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{[@"document" stringByAppendingPathExtension:self.documentFileExtension]:childWrapper}];
+    NSString *childName = [@"document" stringByAppendingPathExtension:self.documentFileExtension];
+    if (newFileWrapper == nil) {
+        newFileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
+    }
+    [newFileWrapper replaceOrAddRegularFileWithContents:data preferredFilename:childName];
     
-    return fileWrapper;
+    return AJRAssertOrPropagateError(newFileWrapper, error, localError);
 }
 
 @end

@@ -109,7 +109,7 @@ static NSMutableDictionary<NSString *, DrawFilter *> *_writeFilters = nil;
     return NO;
 }
 
-- (nullable NSFileWrapper *)fileWrapperForDocument:(DrawDocument *)document error:(NSError **)error {
+- (nullable NSFileWrapper *)updateFileWrapper:(nullable NSFileWrapper *)fileWrapper forDocument:(DrawDocument *)document error:(NSError **)error {
     NSError *localError = [NSError errorWithDomain:DrawDocumentErrorDomain format:@"%C cannot write files.", self];
     AJRSetOutParameter(error, localError);
     return nil;

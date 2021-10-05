@@ -104,6 +104,7 @@ extern NSString * const DrawSavePanelPathKey;
 
     // Document Storage
     DrawDocumentStorage *_storage;
+    NSFileWrapper *_fileWrapper;
 
     // Belonging
     DrawBook * __weak _book;

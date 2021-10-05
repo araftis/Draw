@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - I/O
 
 - (BOOL)readDocument:(DrawDocument *)document fromFileWrapper:(NSFileWrapper *)fileWrapper error:(NSError **)error;
-- (nullable NSFileWrapper *)fileWrapperForDocument:(DrawDocument *)document error:(NSError **)error;
+- (nullable NSFileWrapper *)updateFileWrapper:(nullable NSFileWrapper *)fileWrapper forDocument:(DrawDocument *)document error:(NSError **)error;
 
 @end
 

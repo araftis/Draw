@@ -73,31 +73,42 @@ NSString * const DrawViewNewURLKey = @"DrawViewNewURLKey";
 #pragma mark - NSDocument
 
 - (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError **)outError {
-    DrawFilter *filter = [DrawFilter readFilterForType:typeName];
-    if (!filter) {
-        if (outError) {
-            *outError = [NSError errorWithDomain:DrawDocumentErrorDomain code:-1 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"There is no registered input filter for the file type '%@'.", typeName], NSLocalizedDescriptionKey, nil]];
+    // This is a bit of a "workaround". It seems that in general, but often for us, after we write
+    // a new file wrapper out, the document sees the on disk version as having changed, which then
+    // leads us to re-reading the on contents disk. In some ways that's not harmful, but if can
+    // interrupt certain editing operations, which is annoying.
+    if (![_fileWrapper contentsAreSameAs:fileWrapper]) {
+        DrawFilter *filter = [DrawFilter readFilterForType:typeName];
+        if (!filter) {
+            if (outError) {
+                *outError = [NSError errorWithDomain:DrawDocumentErrorDomain code:-1 userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"There is no registered input filter for the file type '%@'.", typeName], NSLocalizedDescriptionKey, nil]];
+            }
+            return NO;
         }
-        return NO;
-    }
-    
-    [DrawGraphic disableNotifications];
-    [[self undoManager] disableUndoRegistration];
 
-    if (![filter readDocument:self fromFileWrapper:fileWrapper error:outError]) {
-        return NO;
+        [DrawGraphic disableNotifications];
+        [[self undoManager] disableUndoRegistration];
+
+        if (![filter readDocument:self fromFileWrapper:fileWrapper error:outError]) {
+            return NO;
+        }
+        
+        [[self undoManager] enableUndoRegistration];
+        [DrawGraphic enableNotifications];
     }
 
-    [[self undoManager] enableUndoRegistration];
-    [DrawGraphic enableNotifications];
+    // Whether we've read a new wrapper, or whether we're just referencing a new wrapper, go a
+    // ahead and save the new wrapper. In the latter case, this'll make sure we have all the current,
+    // up-to-date modification times.
+    _fileWrapper = fileWrapper;
 
     return YES;
 }
 
-- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError {
-    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Reading from %@", url.path);
-    return [super readFromURL:url ofType:typeName error:outError];
-}
+//- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError {
+//    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Reading from %@", url.path);
+//    return [super readFromURL:url ofType:typeName error:outError];
+//}
 
 - (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError * _Nullable *)error {
     NSError *localError = nil;
@@ -108,16 +119,19 @@ NSString * const DrawViewNewURLKey = @"DrawViewNewURLKey";
     if (filter == nil) {
         localError = [NSError errorWithDomain:DrawDocumentErrorDomain format:@"There is not registered output filter for the file type '%@'.", typeName];
     } else {
-        fileWrapper = [filter fileWrapperForDocument:self error:&localError];
+        fileWrapper = [filter updateFileWrapper:_fileWrapper forDocument:self error:&localError];
+        if (fileWrapper != _fileWrapper) {
+            _fileWrapper = fileWrapper;
+        }
     }
 
     return AJRAssertOrPropagateError(fileWrapper, error, localError);
 }
 
-- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError *__autoreleasing  _Nullable *)outError {
-    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Writing to %@", url.path);
-    return [super writeToURL:url ofType:typeName forSaveOperation:NSSaveOperation originalContentsURL:absoluteOriginalContentsURL error:outError];
-}
+//- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError *__autoreleasing  _Nullable *)outError {
+//    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Writing to %@", url.path);
+//    return [super writeToURL:url ofType:typeName forSaveOperation:NSSaveOperation originalContentsURL:absoluteOriginalContentsURL error:outError];
+//}
 
 #pragma mark - AJRXMLCoding
 
