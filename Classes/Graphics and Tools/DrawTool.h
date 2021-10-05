@@ -41,9 +41,11 @@ extern NSString *DrawToolDidBecomeActiveNotification;
 
 #pragma mark - Factory
 
-+ (NSString *)identifier;
-+ (NSString *)name;
-- (NSArray<DrawToolAction *> *)createActions;
+@property (nonatomic,class,readonly) NSString *identifier;
+@property (nonatomic,class,readonly) NSString *name;
+@property (nonatomic,class,readonly) BOOL addsViaDrag;
+@property (nonatomic,class,readonly) NSSize newGraphicSize;
+@property (nonatomic,readonly) NSArray<DrawToolAction *> *createActions;
 
 #pragma mark - Creation
 
@@ -59,9 +61,9 @@ extern NSString *DrawToolDidBecomeActiveNotification;
 @property (nonatomic,readonly) CGFloat displayPriority;
 @property (nullable,nonatomic,strong) DrawGraphic *graphic;
 
-- (NSString *)activationKey;
+@property (nonatomic,readonly) NSString *activationKey;
 
-- (NSCursor *)cursor;
+@property (nonatomic,readonly) NSCursor *cursor;
 
 #pragma mark - Aliasing
 

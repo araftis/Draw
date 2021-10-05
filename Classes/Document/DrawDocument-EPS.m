@@ -79,16 +79,18 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     return [self imageForGraphicsArray:[self sortedSelection]];
 }
 
-- (NSImage *)imageForGraphicsArray:(NSArray *)graphics {
+- (NSImage *)imageForGraphicsArray:(NSArray<DrawGraphic *> *)graphics {
     NSData *data = [self PDFForGraphics:graphics];
     NSImage *image = nil;
 
-    if (data) image = [[NSImage alloc] initWithData:data];
+    if (data) {
+        image = [[NSImage alloc] initWithData:data];
+    }
 
     return image;
 }
 
-- (NSData *)PDFForGraphics:(NSArray *)graphics {
+- (NSData *)PDFForGraphics:(NSArray<DrawGraphic *> *)graphics {
     NSWindow *temp;
     _drawMiniView *miniView;
     NSRect bounds = NSZeroRect;

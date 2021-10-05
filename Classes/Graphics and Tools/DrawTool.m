@@ -53,6 +53,11 @@ static NSMutableDictionary *_tools = nil;
 @implementation DrawTool {
     NSCursor *_cursor;
     DrawGraphic *_graphic;
+
+    NSImage *_newGraphicImage; // Used when the tool adds via a new graphic template, rather than drag.
+    DrawDrawingToken _newGraphicToken;
+    NSRect _newGraphicRect;
+    NSPoint _newGraphicOffset;
 }
 
 + (void)initialize {
@@ -65,11 +70,19 @@ static NSMutableDictionary *_tools = nil;
 #pragma mark - Factory
 
 + (NSString *)identifier {
-    return [[[AJRPlugInManager sharedPlugInManager] extensionPointForName:@"draw-tool"] valueForProperty:@"id" onExtensionForClass:[self class]];
+    return [[[AJRPlugInManager sharedPlugInManager] extensionPointForName:@"draw-tool"] valueForProperty:@"id" onExtensionForClass:self];
 }
 
 + (NSString *)name {
-    return [[[AJRPlugInManager sharedPlugInManager] extensionPointForName:@"draw-tool"] valueForProperty:@"name" onExtensionForClass:[self class]];
+    return [[[AJRPlugInManager sharedPlugInManager] extensionPointForName:@"draw-tool"] valueForProperty:@"name" onExtensionForClass:self];
+}
+
++ (BOOL)addsViaDrag {
+    return [[[AJRPlugInManager.sharedPlugInManager extensionPointForName:@"draw-tool"] valueForProperty:@"addsViaDrag" onExtensionForClass:self] boolValue];
+}
+
++ (CGSize)newGraphicSize {
+    return [[[AJRPlugInManager.sharedPlugInManager extensionPointForName:@"draw-tool"] valueForProperty:@"newGraphicSize" onExtensionForClass:self.class] sizeValue];
 }
 
 - (NSArray<DrawToolAction *> *)createActions {
@@ -180,14 +193,20 @@ static NSMutableDictionary *_tools = nil;
                                          untilDate:[NSDate distantFuture]
                                             inMode:NSDefaultRunLoopMode
                                            dequeue:NO];
-    if ([event type] == NSEventTypeLeftMouseDragged) return YES;
+    if ([event type] == NSEventTypeLeftMouseDragged) {
+        return YES;
+    }
 
     return NO;
 }
 
 - (BOOL)mouseDown:(DrawEvent *)event {
-    if (![self waitForMouseDrag:event]) return NO;
-    if ([event layerIsLockedOrNotVisible]) return NO;
+    if (![self waitForMouseDrag:event]) {
+        return NO;
+    }
+    if ([event layerIsLockedOrNotVisible]) {
+        return NO;
+    }
 
     if (_graphic) {
         _graphic = nil;
@@ -213,14 +232,55 @@ static NSMutableDictionary *_tools = nil;
 }
 
 - (BOOL)mouseMoved:(DrawEvent *)event {
+    if (_newGraphicImage) {
+        NSRect oldRect = _newGraphicRect;
+        _newGraphicRect = (NSRect){event.locationOnPageSnappedToGrid, _newGraphicImage.size};
+        _newGraphicRect.origin.x += _newGraphicOffset.x;
+        _newGraphicRect.origin.y += _newGraphicOffset.y;
+        if (!NSEqualRects(oldRect, _newGraphicRect)) {
+            [event.page setNeedsDisplayInRect:oldRect];
+            [event.page setNeedsDisplayInRect:_newGraphicRect];
+        }
+    }
     return NO;
 }
 
 - (BOOL)mouseEntered:(DrawEvent *)event {
+    //AJRPrintf(@"graphic: %@\n", self.class.addsViaDrag ? @"don't add" : @"add");
+
+    if (!self.class.addsViaDrag && _newGraphicImage == nil) {
+        NSSize size = self.class.newGraphicSize;
+        DrawGraphic *tempGraphic = [self graphicWithPoint:NSZeroPoint document:event.document page:event.page];
+        [tempGraphic setFrameSize:size];
+        [event.page addGraphic:tempGraphic];
+        _newGraphicImage = [event.document imageForGraphicsArray:@[tempGraphic]];
+        _newGraphicOffset = tempGraphic.dirtyBounds.origin;
+        [event.page removeGraphic:tempGraphic];
+
+        _newGraphicRect = (NSRect){event.locationOnPageSnappedToGrid, _newGraphicImage.size};
+        _newGraphicRect.origin.x += _newGraphicOffset.x;
+        _newGraphicRect.origin.y += _newGraphicOffset.y;
+        _newGraphicToken = [event.page addGuestDrawer:^(DrawPage * _Nonnull page, NSRect dirtyRect) {
+            [self->_newGraphicImage drawInRect:self->_newGraphicRect fromRect:(NSRect){NSZeroPoint, self->_newGraphicImage.size} operation:NSCompositingOperationSourceOver fraction:0.5 respectFlipped:YES hints:nil];
+        }];
+
+        [event.page setNeedsDisplayInRect:_newGraphicRect];
+
+        return YES;
+    }
     return NO;
 }
 
 - (BOOL)mouseExited:(DrawEvent *)event {
+    if (_newGraphicImage != nil) {
+        [event.page removeGuestDrawer:_newGraphicToken];
+        _newGraphicToken = nil;
+        _newGraphicImage = nil;
+        [event.page setNeedsDisplayInRect:_newGraphicRect];
+        _newGraphicRect = NSZeroRect;
+
+        return YES;
+    }
     return NO;
 }
 

@@ -66,6 +66,16 @@ typedef BOOL (*DrawMethod)(id, SEL, id);
 
 #pragma mark - Left Mouse
 
+- (void)updateTrackingAreas {
+    NSArray<NSTrackingArea *> *areas = [self.trackingAreas copy];
+    for (NSTrackingArea *area in areas) {
+        [self removeTrackingArea:area];
+    }
+
+    NSTrackingArea *area = [[NSTrackingArea alloc] initWithRect:self.bounds options:NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingActiveInActiveApp owner:self userInfo:NULL];
+    [self addTrackingArea:area];
+}
+
 - (void)mouseDown:(NSEvent *)event {
     DrawEvent *drawEvent = [DrawEvent eventWithOriginalEvent:event document:_document page:self];
 
