@@ -325,6 +325,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         segmentIndex++;
     }
 
+    if (segments == _toolSegments) {
+        _toolSetInToolsSegment = toolSet;
+    }
+
     [segments sizeToFit];
 }
 
@@ -455,52 +459,51 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
 }
 
-- (void)setCurrentTool:(DrawTool *)currentTool {
-    if (currentTool) {
+- (void)setCurrentTool:(DrawTool *)newTool {
+    if (newTool) {
         if ((!_currentTool || (_currentTool && [_currentTool toolShouldDeactivateForDocument:self]))
-            && (!currentTool || (currentTool && [currentTool toolShouldActivateForDocument:self]))) {
-            if (![_currentTool isUsedByToolSet:_currentToolSet]) {
-                self.currentToolSet = [currentTool primaryToolSet];
+            && (!newTool || (newTool && [newTool toolShouldActivateForDocument:self]))) {
+            // The new tool set, which may be the old tool set.
+            DrawToolSet *newToolSet = self.currentToolSet;
+            if (![newTool isUsedByToolSet:_currentToolSet]) {
+                if (_toolSetInToolsSegment != nil && [newTool isUsedByToolSet:_toolSetInToolsSegment]) {
+                    newToolSet = _toolSetInToolsSegment;
+                } else {
+                    newToolSet = [newTool primaryToolSet];
+                }
             }
             
             // This makes sure the segments are nominally setup.
-            NSArray *tools = [_currentToolSet tools];
-            NSUInteger foundIndex = [tools indexOfObjectIdenticalTo:currentTool];
-            DrawTool *tempTool;
-            
-            tempTool = _currentTool;
+            NSInteger globalIndex = NSNotFound;
+            NSInteger index = NSNotFound;
+
+            if (newToolSet.isGlobal) {
+                globalIndex = [newToolSet.tools indexOfObjectIdenticalTo:newTool];
+            } else {
+                index = [newToolSet.tools indexOfObjectIdenticalTo:newTool];
+            }
+
+            DrawTool *tempTool = _currentTool;
             _currentTool = nil;
             [tempTool toolDidDeactivateForDocument:self];
             
-            if (foundIndex != NSNotFound) {
-                _currentTool = currentTool;
-
-                NSInteger globalIndex = NSNotFound;
-                NSInteger index = NSNotFound;
-
-                if (currentTool.primaryToolSet.isGlobal) {
-                    globalIndex = foundIndex;
-                } else {
-                    index = foundIndex;
-                }
-
-                for (NSInteger x = 0; x < [_globalToolSegments segmentCount]; x++) {
-                    [_globalToolSegments setSelected:x == globalIndex forSegment:x];
-                }
-                for (NSInteger x = 0; x < [_toolSegments segmentCount]; x++) {
-                    [_toolSegments setSelected:x == index forSegment:x];
-                }
-
-                if (_currentTool) {
-                    if (_currentTool.primaryToolSet.isGlobal) {
-                        [_globalToolSegments setImage:_currentTool.currentAction.icon forSegment:globalIndex];
-                    } else {
-                        [self _setImageIn:_toolSegments forSegment:index tool:_currentTool action:_currentTool.currentAction];
-                    }
-                    [_currentTool toolDidActivateForDocument:self];
-                }
-            }
+            _currentTool = newTool;
+            self.currentToolSet = newToolSet;
             _currentToolSet.currentTool = _currentTool;
+
+            for (NSInteger x = 0; x < [_globalToolSegments segmentCount]; x++) {
+                [_globalToolSegments setSelected:x == globalIndex forSegment:x];
+            }
+            for (NSInteger x = 0; x < [_toolSegments segmentCount]; x++) {
+                [_toolSegments setSelected:x == index forSegment:x];
+            }
+
+            if (_currentToolSet.isGlobal) {
+                [_globalToolSegments setImage:_currentTool.currentAction.icon forSegment:globalIndex];
+            } else {
+                [self _setImageIn:_toolSegments forSegment:index tool:_currentTool action:_currentTool.currentAction];
+            }
+            [_currentTool toolDidActivateForDocument:self];
         }
     }
 }
