@@ -136,6 +136,8 @@ typedef BOOL (*DrawMethod)(id, SEL, id);
     } else {
         [[self window] makeFirstResponder:self];
     }
+
+    _mouseInPage = YES;
 }
 
 - (void)mouseExited:(NSEvent *)event {
@@ -148,6 +150,12 @@ typedef BOOL (*DrawMethod)(id, SEL, id);
     } else {
         [[self window] makeFirstResponder:self];
     }
+
+    _mouseInPage = NO;
+}
+
+- (BOOL)mouseInPage {
+    return _mouseInPage;
 }
 
 #pragma mark - Right Mouse
@@ -188,16 +196,38 @@ typedef BOOL (*DrawMethod)(id, SEL, id);
 
 #pragma mark - Keyboard
 
-- (DrawTool *)findToolMatchingKeyString:(NSString *)keyString {
-    DrawToolSet *toolSet = [_document currentToolSet];
+- (DrawTool *)findToolMatchingKeyString:(NSString *)keyString inToolSet:(DrawToolSet *)toolSet {
+    DrawTool *found = nil;
 
     for (DrawTool *tool in [toolSet tools]) {
         if ([keyString isEqualToString:[tool activationKey]]) {
-            return tool;
+            found = tool;
+            break;
         }
     }
 
-    return nil;
+    return found;
+}
+
+- (DrawToolSet *)findToolSetMatchingKeyString:(NSString *)keyString {
+    DrawToolSet *found = nil;
+
+    for (DrawToolSet *toolSet in [DrawToolSet toolSets]) {
+        if ([keyString isEqualToString:[toolSet activationKey]]) {
+            found = toolSet;
+            break;
+        }
+    }
+
+    return found;
+}
+
+- (DrawTool *)findToolMatchingKeyString:(NSString *)keyString {
+    DrawTool *tool = [self findToolMatchingKeyString:keyString inToolSet:_document.displayedToolSet];
+    if (tool == nil) {
+        tool = [self findToolMatchingKeyString:keyString inToolSet:DrawToolSet.globalToolSet];
+    }
+    return tool;
 }
 
 - (void)keyDown:(NSEvent *)event {
@@ -212,7 +242,14 @@ typedef BOOL (*DrawMethod)(id, SEL, id);
             // So none of our tools did anything with the key event, maybe we can.
             DrawTool *tool = [self findToolMatchingKeyString:[event characters]];
             if (tool == nil) {
-                NSBeep();
+                DrawToolSet *toolSet = [self findToolSetMatchingKeyString:[event characters]];
+                if (toolSet == nil) {
+                    NSBeep();
+                } else {
+                    if (_document.currentToolSet != toolSet) {
+                        _document.currentToolSet = toolSet;
+                    }
+                }
             } else {
                 NSArray *actions = [tool actions];
                 if ([_document currentTool] == tool && [actions count] > 1) {

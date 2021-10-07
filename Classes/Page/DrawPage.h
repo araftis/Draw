@@ -54,6 +54,9 @@ typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
     DrawTool *_draggingTool;
     NSUInteger _draggingOperation;
 
+    // Events
+    BOOL _mouseInPage; // Toggles in response to monuseEntered: and mouseExited: events.
+
     BOOL _hasScheduledUpdate:1;
     BOOL _selfDidUpdate:1;
 }
@@ -134,6 +137,8 @@ typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
 
 - (BOOL)makeSelectionPerformSelector:(SEL)selector withObject:(id)anObject shortCircuit:(BOOL)shortCircuit;
 - (void)mouseDown:(NSEvent *)anEvent;
+
+@property (nonatomic,readonly) BOOL mouseInPage;
 
 @end
 

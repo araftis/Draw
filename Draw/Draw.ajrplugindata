@@ -47,6 +47,7 @@
         <attribute name="name" type="string" required="YES" />
         <attribute name="id" type="string" required="YES" />
         <attribute name="icon" type="image" />
+        <attribute name="activationKey" type="string" />
         <element name="accessory" key="accessories" type="array">
             <attribute name="identifier" type="string" required="true" />
             <attribute name="title" type="string" />
@@ -84,7 +85,7 @@
     </draw-tool>
 
     <!-- Defines a tool set of basic graphic objects. -->
-    <draw-tool-set class="DrawGraphicsToolSet" id="graphics" name="Graphics" icon="toolSetGraphics" />
+    <draw-tool-set class="DrawGraphicsToolSet" id="graphics" name="Graphics" icon="toolSetGraphics" activationKey="G" />
 
     <!-- Draw rectangles. Rectangles may have a corner radius. -->
     <draw-tool class="DrawRectangleTool" name="Rectangles" id="rectangle" toolset="graphics" activationKey="r">

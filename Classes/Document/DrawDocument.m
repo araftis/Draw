@@ -110,6 +110,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     DrawDocumentWindowController *_primaryWindowController;
     NSMutableDictionary<NSString *, id <AJRInvalidation>> *_iconObserverTokens;
     NSMutableArray<id <AJRInvalidation>> *_documentInfoObserverTokens;
+    NSMutableArray<id <AJRInvalidation>> *_toolSetObserverTokens;
 }
 
 + (void)initialize {
@@ -166,6 +167,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 - (id)init {
     if ((self = [super init])) {
         _iconObserverTokens = [NSMutableDictionary dictionary];
+        _toolSetObserverTokens = [NSMutableArray array];
 
         // Editing
         _editingContext = [[AJREditingContext alloc] init];
@@ -247,9 +249,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] postNotificationName:DrawViewWillDeallocateNotification object:self];
 
-    for (id <AJRInvalidation> object in _iconObserverTokens.objectEnumerator) {
-        [object invalidate];
-    }
+    [_iconObserverTokens invalidateObjects];
+    [_toolSetObserverTokens invalidateObjects];
 
     _storage.group = nil;
 }
@@ -326,7 +327,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
 
     if (segments == _toolSegments) {
-        _toolSetInToolsSegment = toolSet;
+        self.displayedToolSet = toolSet;
     }
 
     [segments sizeToFit];
@@ -442,6 +443,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
             if ([toolSet toolSetShouldActivateForDocument:self]) {
                 BOOL newIsGlobal = toolSet.isGlobal;
 
+                if (_currentToolSet != nil) {
+                    [_toolSetObserverTokens invalidateObjects];
+                }
+
                 _currentToolSet = toolSet;
                 if (!newIsGlobal) {
                     self.displayedToolSet = _currentToolSet;
@@ -453,6 +458,22 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
                 if (!newIsGlobal) {
                     [self _setupToolSegmentsIn:_toolSegments for:_currentToolSet];
+                }
+
+                if (_currentToolSet != nil) {
+                    for (DrawTool *tool in _currentToolSet.tools) {
+                        // Avoid possible retain cycles.
+                        __weak DrawDocument *weakSelf = self;
+                        [_toolSetObserverTokens addObject:[tool addObserver:self forKeyPath:@"currentAction" options:0 block:^(id object, NSString *keyPath, NSDictionary<NSKeyValueChangeKey,id> *change) {
+                            DrawDocument *strongSelf = weakSelf;
+                            if (strongSelf != nil) {
+                                NSInteger index = [strongSelf->_currentToolSet.tools indexOfObjectIdenticalTo:strongSelf->_currentToolSet.currentTool];
+                                if (index != NSNotFound) {
+                                    [strongSelf _setImageIn:strongSelf->_toolSegments forSegment:index tool:strongSelf->_currentTool action:strongSelf->_currentTool.currentAction];
+                                }
+                            }
+                        }]];
+                    }
                 }
             }
         }
@@ -466,8 +487,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
             // The new tool set, which may be the old tool set.
             DrawToolSet *newToolSet = self.currentToolSet;
             if (![newTool isUsedByToolSet:_currentToolSet]) {
-                if (_toolSetInToolsSegment != nil && [newTool isUsedByToolSet:_toolSetInToolsSegment]) {
-                    newToolSet = _toolSetInToolsSegment;
+                if (self.displayedToolSet != nil && [newTool isUsedByToolSet:self.displayedToolSet]) {
+                    newToolSet = self.displayedToolSet;
                 } else {
                     newToolSet = [newTool primaryToolSet];
                 }
@@ -488,6 +509,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
             [tempTool toolDidDeactivateForDocument:self];
             
             _currentTool = newTool;
+            // This is a little jinky, but setting the currentToolSet will cause it to select it's remembered currentTool, which is likely to be different from what we're selecting. As such, make sure it's current tool is the tool we want.
+            newToolSet.currentTool = newTool;
             self.currentToolSet = newToolSet;
             _currentToolSet.currentTool = _currentTool;
 

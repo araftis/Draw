@@ -60,6 +60,7 @@ typedef NSString *DrawToolSetId NS_EXTENSIBLE_STRING_ENUM;
 @property (nonatomic,readonly) DrawToolSetId identifier;
 @property (nullable,nonatomic,readonly) NSImage *icon;
 @property (nonatomic,readonly) BOOL isGlobal;
+@property (nonatomic,readonly,nullable) NSString *activationKey;
 @property (class,nonatomic,readonly) DrawToolSet *globalToolSet;
 @property (nonatomic,strong) DrawTool *currentTool;
 @property (nonatomic,readonly) NSArray<DrawToolAccessory *> *accessories;

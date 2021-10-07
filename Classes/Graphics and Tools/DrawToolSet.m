@@ -123,6 +123,10 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
     return image;
 }
 
+- (NSString *)activationKey {
+    return [[[AJRPlugInManager sharedPlugInManager] extensionPointForName:@"draw-tool-set"] valueForProperty:@"activationKey" onExtensionForClass:[self class]];
+}
+
 - (BOOL)isGlobal {
     return [self.identifier isEqualToString:@"global"];
 }

@@ -99,7 +99,7 @@ extern NSString * const DrawSavePanelPathKey;
     // This represents the tools being displayed in the not-global tool set. This is needed
     // mostly because tools can now belong to more than one tool set. When this is the case,
     // we need to make sure that the tools in the tools segment stay on the same tool set.
-    DrawToolSet *_toolSetInToolsSegment;
+    //DrawToolSet *_toolSetInToolsSegment;
     DrawTool *_currentTool;
 
     // Document Storage

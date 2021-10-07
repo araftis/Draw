@@ -58,6 +58,7 @@ static NSMutableDictionary *_tools = nil;
     DrawDrawingToken _newGraphicToken;
     NSRect _newGraphicRect;
     NSPoint _newGraphicOffset;
+    DrawPage *_newGraphicPage; // Needed so that we can manipulate the image outside the event cycle. For example, if our tool deactivates.
 }
 
 + (void)initialize {
@@ -157,6 +158,9 @@ static NSMutableDictionary *_tools = nil;
 - (void)setCurrentAction:(DrawToolAction *)currentAction {
     [self actions];
     _currentAction = currentAction;
+    if (_newGraphicImage != nil) {
+        [self _createOrUpdateNewGraphicImageIn:_newGraphicPage display:YES];
+    }
 }
 
 - (DrawToolAction *)currentAction {
@@ -264,45 +268,62 @@ static NSMutableDictionary *_tools = nil;
     return NO;
 }
 
+- (void)_createOrUpdateNewGraphicImageIn:(DrawPage *)page display:(BOOL)needsDisplay {
+    [page.document editWithoutUndoTracking:^{
+        NSSize size = self.class.newGraphicSize;
+        DrawGraphic *tempGraphic = [self graphicWithPoint:NSZeroPoint document:page.document page:page];
+        [tempGraphic setFrameSize:size];
+        [page addGraphic:tempGraphic];
+        self->_newGraphicImage = [page.document imageForGraphicsArray:@[tempGraphic]];
+        self->_newGraphicOffset = tempGraphic.dirtyBounds.origin;
+        [page removeGraphic:tempGraphic];
+    }];
+    if (needsDisplay) {
+        [_newGraphicPage setNeedsDisplayInRect:_newGraphicRect];
+    }
+}
+
+- (void)_setupNewGraphicIn:(DrawPage *)page location:(NSPoint)where {
+    [self _createOrUpdateNewGraphicImageIn:page display:NO];
+
+    _newGraphicPage = page;
+    _newGraphicRect = (NSRect){where, _newGraphicImage.size};
+    _newGraphicRect.origin.x += _newGraphicOffset.x;
+    _newGraphicRect.origin.y += _newGraphicOffset.y;
+    __weak DrawTool *weakSelf = self;
+    _newGraphicToken = [_newGraphicPage addGuestDrawer:^(DrawPage * _Nonnull page, NSRect dirtyRect) {
+        DrawTool *strongSelf = weakSelf;
+        if (strongSelf != nil) {
+            [strongSelf->_newGraphicImage drawInRect:strongSelf->_newGraphicRect fromRect:(NSRect){NSZeroPoint, strongSelf->_newGraphicImage.size} operation:NSCompositingOperationSourceOver fraction:0.5 respectFlipped:YES hints:nil];
+        }
+    }];
+    [_newGraphicPage setNeedsDisplayInRect:_newGraphicRect];
+}
+
 - (BOOL)mouseEntered:(DrawEvent *)event {
     //AJRPrintf(@"graphic: %@\n", self.class.addsViaDrag ? @"don't add" : @"add");
 
     if (!self.class.addsViaDrag && _newGraphicImage == nil) {
-        NSSize size = self.class.newGraphicSize;
-        DrawGraphic *tempGraphic = [self graphicWithPoint:NSZeroPoint document:event.document page:event.page];
-        [tempGraphic setFrameSize:size];
-        [event.document editWithoutUndoTracking:^{
-            [event.page addGraphic:tempGraphic];
-            self->_newGraphicImage = [event.document imageForGraphicsArray:@[tempGraphic]];
-            self->_newGraphicOffset = tempGraphic.dirtyBounds.origin;
-            [event.page removeGraphic:tempGraphic];
-        }];
+        [self _setupNewGraphicIn:event.page location:event.locationOnPageSnappedToGrid];
+        return YES;
+    }
+    return NO;
+}
 
-        _newGraphicRect = (NSRect){event.locationOnPageSnappedToGrid, _newGraphicImage.size};
-        _newGraphicRect.origin.x += _newGraphicOffset.x;
-        _newGraphicRect.origin.y += _newGraphicOffset.y;
-        _newGraphicToken = [event.page addGuestDrawer:^(DrawPage * _Nonnull page, NSRect dirtyRect) {
-            [self->_newGraphicImage drawInRect:self->_newGraphicRect fromRect:(NSRect){NSZeroPoint, self->_newGraphicImage.size} operation:NSCompositingOperationSourceOver fraction:0.5 respectFlipped:YES hints:nil];
-        }];
-
-        [event.page setNeedsDisplayInRect:_newGraphicRect];
-
+- (BOOL)_removeTemporaryGraphic {
+    if (_newGraphicImage != nil) {
+        [_newGraphicPage removeGuestDrawer:_newGraphicToken];
+        _newGraphicToken = nil;
+        _newGraphicImage = nil;
+        [_newGraphicPage setNeedsDisplayInRect:_newGraphicRect];
+        _newGraphicRect = NSZeroRect;
         return YES;
     }
     return NO;
 }
 
 - (BOOL)mouseExited:(DrawEvent *)event {
-    if (_newGraphicImage != nil) {
-        [event.page removeGuestDrawer:_newGraphicToken];
-        _newGraphicToken = nil;
-        _newGraphicImage = nil;
-        [event.page setNeedsDisplayInRect:_newGraphicRect];
-        _newGraphicRect = NSZeroRect;
-
-        return YES;
-    }
-    return NO;
+    return [self _removeTemporaryGraphic];
 }
 
 - (BOOL)rightMouseDown:(DrawEvent *)event {
@@ -362,6 +383,17 @@ static NSMutableDictionary *_tools = nil;
 
 - (void)toolDidActivateForDocument:(DrawDocument *)document {
     [[[document pagedView] enclosingScrollView] setDocumentCursor:[self cursor]];
+    if (!self.class.addsViaDrag && _newGraphicImage == nil && document.page.mouseInPage) {
+        NSPoint where = [NSEvent mouseLocation];
+        DrawPage *page = document.page;
+        NSWindow *window = page.window;
+
+        where = [window convertPointFromScreen:where];
+        where = [page convertPoint:where fromView:nil];
+        where = [document snapPointToGrid:where];
+        AJRPrintf(@"location: %P\n", where);
+        [self _setupNewGraphicIn:document.page location:where];
+    }
 }
 
 - (BOOL)toolShouldDeactivateForDocument:(DrawDocument *)document {
@@ -369,6 +401,7 @@ static NSMutableDictionary *_tools = nil;
 }
 
 - (void)toolDidDeactivateForDocument:(DrawDocument *)document {
+    [self _removeTemporaryGraphic];
     [[[document pagedView] enclosingScrollView] setDocumentCursor:nil];
 }
 
