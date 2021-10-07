@@ -405,6 +405,16 @@ extern NSString * const DrawSavePanelPathKey;
 
 @interface DrawDocument (Undo) <AJREditingContextDelegate>
 
+/**
+ @discussion Calls the provided block with undo registration disabled. This is the preferred way to do  something with the document without tracking undo / redo events, however, you might need to call  -[disableUndoRegistration] or -[enableUndoRegistation] if you cannot perform your actions in one block.  That being said, if you call these two methods, you must make sure you always pair the calls, or bad things  will happen to the document going forward.
+
+ @param block A block to call, surrounded by calls to disableUndoRegistration and enableUndoRegistration.
+ */
+- (void)editWithoutUndoTracking:(void (^)(void))block;
+
+- (void)disableUndoRegistration;
+- (void)enableUndoRegistration;
+
 - (void)addGraphicObserver:(id <DrawDocumentGraphicObserver>)observer NS_SWIFT_NAME(addGraphicObserver(_:));
 - (void)removeGraphicObserver:(id <DrawDocumentGraphicObserver>)observer NS_SWIFT_NAME(removeGraphicObserver(_:));
 

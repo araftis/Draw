@@ -108,7 +108,7 @@ static NSDictionary *_pageNumberAttributes = nil;
     [self addGraphic:graphic toLayer:nil select:select byExtendingSelection:byExtension];
 }
 
-- (void)addGraphic:(DrawGraphic *)graphic toLayer:(DrawLayer *)layer select:(BOOL)select byExtendingSelection:(BOOL)byExtension; {
+- (void)addGraphic:(DrawGraphic *)graphic toLayer:(DrawLayer *)layer select:(BOOL)select byExtendingSelection:(BOOL)byExtension {
     NSMutableArray *graphics;
     DrawGraphic *focused;
     

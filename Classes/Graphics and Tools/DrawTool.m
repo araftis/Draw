@@ -201,26 +201,45 @@ static NSMutableDictionary *_tools = nil;
 }
 
 - (BOOL)mouseDown:(DrawEvent *)event {
-    if (![self waitForMouseDrag:event]) {
-        return NO;
-    }
+    // Let's do this first, since we can have multiple possibilities of what
+    // happens on mouse down.
     if ([event layerIsLockedOrNotVisible]) {
         return NO;
     }
 
-    if (_graphic) {
+    if (_newGraphicImage) {
+        // This means that we're creating a new graphic as a "stamp" action, so
+        // we want to just add the graphic, at it's default size and be done
+        // with it.
+        NSSize size = self.class.newGraphicSize;
+        DrawGraphic *graphic = [self graphicWithPoint:event.locationOnPageSnappedToGrid document:event.document page:event.page];
+        [graphic setFrameSize:size];
+        [event.page addGraphic:graphic toLayer:nil select:YES byExtendingSelection:NO];
+
+        return YES;
+    } else {
+        // We don't actually want to create the graphic until the user drags
+        // the mouse, so we'll wait for that. If anything else happens, we'll
+        // abort and not create the new graphic.
+        if (![self waitForMouseDrag:event]) {
+            return NO;
+        }
+
+        // Just in case we had an old graphic.
+        if (_graphic) {
+            _graphic = nil;
+        }
+
+        _graphic = [self graphicWithPoint:event.locationOnPageSnappedToGrid document:event.document page:event.page];
+
+        [[event page] addGraphic:_graphic select:YES byExtendingSelection:NO];
+
+        [_graphic trackMouse:event];
+
         _graphic = nil;
+
+        return YES;
     }
-
-    _graphic = [self graphicWithPoint:event.locationOnPageSnappedToGrid document:event.document page:event.page];
-
-    [[event page] addGraphic:_graphic select:YES byExtendingSelection:NO];
-
-    [_graphic trackMouse:event];
-
-    _graphic = nil;
-
-    return YES;
 }
 
 - (BOOL)mouseDragged:(DrawEvent *)event {
@@ -252,10 +271,12 @@ static NSMutableDictionary *_tools = nil;
         NSSize size = self.class.newGraphicSize;
         DrawGraphic *tempGraphic = [self graphicWithPoint:NSZeroPoint document:event.document page:event.page];
         [tempGraphic setFrameSize:size];
-        [event.page addGraphic:tempGraphic];
-        _newGraphicImage = [event.document imageForGraphicsArray:@[tempGraphic]];
-        _newGraphicOffset = tempGraphic.dirtyBounds.origin;
-        [event.page removeGraphic:tempGraphic];
+        [event.document editWithoutUndoTracking:^{
+            [event.page addGraphic:tempGraphic];
+            self->_newGraphicImage = [event.document imageForGraphicsArray:@[tempGraphic]];
+            self->_newGraphicOffset = tempGraphic.dirtyBounds.origin;
+            [event.page removeGraphic:tempGraphic];
+        }];
 
         _newGraphicRect = (NSRect){event.locationOnPageSnappedToGrid, _newGraphicImage.size};
         _newGraphicRect.origin.x += _newGraphicOffset.x;

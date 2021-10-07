@@ -36,6 +36,28 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation DrawDocument (Undo)
 
+- (void)editWithoutUndoTracking:(void (^)(void))block {
+    [self disableUndoRegistration];
+    NSException *exception = nil;
+    @try {
+        block();
+    } @catch (NSException *localException) {
+        exception = localException;
+    }
+    [self enableUndoRegistration];
+    if (exception != nil) {
+        @throw exception;
+    }
+}
+
+- (void)disableUndoRegistration {
+    [self.undoManager disableUndoRegistration];
+}
+
+- (void)enableUndoRegistration {
+    [self.undoManager enableUndoRegistration];
+}
+
 - (void)registerUndoWithTarget:(id)target selector:(SEL)aSelector object:(id)anObject {
    if (![[self undoManager] isUndoing] && ![[self undoManager] isRedoing]) {
       NSDate *newTime = [NSDate date];
