@@ -105,10 +105,10 @@ NSString * const DrawViewNewURLKey = @"DrawViewNewURLKey";
     return YES;
 }
 
-//- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError {
-//    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Reading from %@", url.path);
-//    return [super readFromURL:url ofType:typeName error:outError];
-//}
+- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError **)outError {
+    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Reading from %@", url.path);
+    return [super readFromURL:url ofType:typeName error:outError];
+}
 
 - (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError * _Nullable *)error {
     NSError *localError = nil;
