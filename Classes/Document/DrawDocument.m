@@ -931,4 +931,22 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     return [_storage documentInfoForKey:key];
 }
 
+#pragma mark - Editing Context
+
+- (void)addObjectToEditingContext:(AJREditableObject *)object {
+    if (object.editingContext != nil) {
+        // Steal ownership
+        [object.editingContext forgetObject:object];
+    }
+    [_editingContext addObject:object];
+    [object startTrackingEdits];
+}
+
+- (void)removeObjectFromEditingContext:(AJREditableObject *)object {
+    // Only actually remove the object if we already own the object.
+    if (object.editingContext == self.editingContext) {
+        [object.editingContext forgetObject:object];
+    }
+}
+
 @end

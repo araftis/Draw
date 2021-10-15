@@ -187,6 +187,11 @@ extern NSString * const DrawSavePanelPathKey;
 - (void)setDocumentInfo:(id)value forKey:(nullable NSString *)key;
 - (nullable id)documentInfoForKey:(NSString *)key;
 
+#pragma mark - Editing Context
+
+- (void)addObjectToEditingContext:(AJREditableObject *)object;
+- (void)removeObjectFromEditingContext:(AJREditableObject *)object;
+
 @end
 
 
