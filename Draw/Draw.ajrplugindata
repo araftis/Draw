@@ -67,6 +67,7 @@
         <attribute name="displayPriority" type="float" defaultValue="1" />
         <attribute name="addsViaDrag" type="boolean" required="YES" defaultValue="YES" /> <!-- If YES, indicates that the tool adds to the document when the user clicks and then drags out the tool. If NO, then a "template" of the tool is show at the current cursor location, and clicking adds the tool's action to the document. -->
         <attribute name="newGraphicSize" type="size" defaultValue="{100,100}" />
+        <attribute name="framework" type="bundle" />
         <element name="action" key="actions" type="array">
             <attribute name="title" type="string" requried="YES" />
             <attribute name="icon" type="image" required="YES" defaultValue="toolMissingIcon" />

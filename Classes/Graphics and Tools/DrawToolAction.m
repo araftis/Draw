@@ -73,7 +73,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 - (Class)graphicClass {
-    AJRPrintf(@"Returning: %C\n", _graphicClass);\
     return _graphicClass;
 }
 
