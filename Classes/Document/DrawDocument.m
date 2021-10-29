@@ -148,6 +148,17 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
 #pragma mark - Creation
 
+- (void)_initializeTemplateGraphic:(DrawGraphic *)templateGraphic {
+    for (Class aspectClass in [DrawAspect aspects]) {
+        if ([templateGraphic primaryAspectOfType:aspectClass create:NO] == nil) {
+            DrawAspect *aspect = [aspectClass defaultAspectForGraphic:_storage.templateGraphic];
+            if (aspect != nil) {
+                [templateGraphic addAspect:aspect withPriority:[aspectClass defaultPriority]];
+            }
+        }
+    }
+}
+
 - (void)_initializeTemplateGraphic {
     NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:DrawTemplateGraphicKey];
     if (data) {
@@ -155,12 +166,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
     if (_storage.templateGraphic == nil) {
         _storage.templateGraphic = [[DrawGraphic alloc] initWithFrame:NSZeroRect];
-        for (Class aspectClass in [DrawAspect aspects]) {
-            DrawAspect *aspect = [aspectClass defaultAspectForGraphic:_storage.templateGraphic];
-            if (aspect != nil) {
-                [_storage.templateGraphic addAspect:aspect withPriority:[aspectClass defaultPriority]];
-            }
-        }
+        [self _initializeTemplateGraphic:_storage.templateGraphic];
     }
 }
 
@@ -360,6 +366,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
     // Does this need to do some sort notifications? I'm assuming no to start with, because this should only be called during document unarchiving.
     _storage = storage;
+
+    // Make sure, in case we added a new default aspect, that it gets initialized. This is just future proofing
+    [self _initializeTemplateGraphic:_storage.templateGraphic];
 
     self.printInfo = _storage.printInfo;
 

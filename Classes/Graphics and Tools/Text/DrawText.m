@@ -306,7 +306,13 @@ NSString * const DrawTextIdentifier = @"text";
     //NSLog(@"Change\n");
 }
 
-#pragma mark NSCopying
+#pragma mark - DrawAspect
+
++ (DrawAspect *)defaultAspectForGraphic:(DrawGraphic *)graphic {
+    return [[self alloc] initWithGraphic:graphic];
+}
+
+#pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
     DrawText *new = [super copyWithZone:zone];
@@ -318,7 +324,7 @@ NSString * const DrawTextIdentifier = @"text";
     return new;
 }
 
-#pragma mark NSCoding
+#pragma mark - AJRXMLArchiving
 
 + (NSString *)ajr_nameForXMLArchiving {
     return @"text";

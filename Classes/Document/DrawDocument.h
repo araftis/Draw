@@ -33,7 +33,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>
-#import <AJRInterface/AJRPagedView.h>
+#import <AJRInterface/AJRInterface.h>
 #import <Draw/DrawSelectionTool.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -92,6 +92,8 @@ extern NSString * const DrawOpenPanelPathKey;
 extern NSString * const DrawSavePanelPathKey;
 
 @protocol DrawDocumentGraphicObserver;
+
+@class AJRBlockDrawingView;
 
 @interface DrawDocument : NSDocument {
     // Current Tools

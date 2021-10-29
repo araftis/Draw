@@ -37,12 +37,12 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation NSPasteboard (DrawExtensions)
 
-- (void)setDrawGraphicsAsNative:(NSArray *)graphics {
+- (void)setDrawGraphicsAsNative:(NSArray<DrawGraphic *> *)graphics {
     NSMutableArray *array = [graphics mutableCopyWithZone:NSDefaultMallocZone()];
     [self setData:[NSKeyedArchiver ajr_archivedObject:array error:NULL] forType:DrawGraphicPboardType];
 }
 
-- (void)setDrawGraphicsAsPDF:(NSArray *)graphics {
+- (void)setDrawGraphicsAsPDF:(NSArray<DrawGraphic *> *)graphics {
     NSData *data;
 
     data = [[[[graphics lastObject] page] document] PDFForGraphics:graphics];
@@ -52,7 +52,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
 }
 
-- (void)setDrawGraphics:(NSArray *)graphics forType:(NSString *)dataType {
+- (void)setDrawGraphics:(NSArray<DrawGraphic *> *)graphics forType:(NSString *)dataType {
     if ([dataType isEqualToString:DrawGraphicPboardType]) {
         [self setDrawGraphicsAsNative:graphics];
     } else if ([dataType isEqualToString:NSPasteboardTypePDF]) {

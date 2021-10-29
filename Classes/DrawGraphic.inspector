@@ -4,6 +4,10 @@
         <group title="Position">
             <slice type="rect" valueKeyPath="controller.selection.frame" />
         </group>
+        <group title="Text">
+            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryText.active" />
+            <slice type="attributedString" label="Text" valueKeyPath="controller.selection.primaryText.attributedString" />
+        </group>
         <group title="Stroke">
             <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryStroke.active" />
             <slice type="color" label="Color" valueKeyPath="controller.selection.primaryStroke.color" />

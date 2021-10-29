@@ -71,20 +71,31 @@ open class DrawToolAccessoryViewController: DrawViewController {
         let selectedAccessory = UserDefaults[.selectedAccessoryView]
 
         accessorySelector.segmentCount = accessories.count
-        for (index, accessory) in accessories.enumerated() {
-            if let title = accessory.title {
-                accessorySelector.setLabel(title, forSegment: index)
+        if accessories.count > 0 {
+            for (index, accessory) in accessories.enumerated() {
+                if let title = accessory.title {
+                    accessorySelector.setLabel(title, forSegment: index)
+                }
+                accessorySelector.setImage(accessory.icon, forSegment: index)
+                if let selectedAccessory = selectedAccessory {
+                    if NSUserInterfaceItemIdentifier(selectedAccessory) == accessory.identifier {
+                        indexToSelect = index
+                    }
+                }
             }
-            accessorySelector.setImage(accessory.icon, forSegment: index)
-            if let selectedAccessory = selectedAccessory {
-                if NSUserInterfaceItemIdentifier(selectedAccessory) == accessory.identifier {
-                    indexToSelect = index
+            accessorySelector.sizeToFit()
+            accessorySelector.setSelected(true, forSegment: indexToSelect)
+            self.selectAccessory(accessorySelector)
+        } else {
+            // Make us zero height.
+            if let split = self.view.enclosingView(type: NSSplitView.self) {
+                // NOTE: This is a little dangerous, because we don't absolutely know our position in the split view, but the NSSplitView API doesn't allow us to determine our position. As such, if we ever add additional views to the central split, we could wind up collapsing the wrong split. That being said, we're going to maybe be a little safer, because we're unlikely to be anything other than the last view. Famous last words and all.
+                let index = split.arrangedSubviews.count - 2
+                if index >= 0 {
+                    split.setPosition(split.maxPossiblePositionOfDivider(at: index), ofDividerAt: index)
                 }
             }
         }
-        accessorySelector.sizeToFit()
-        accessorySelector.setSelected(true, forSegment: indexToSelect)
-        self.selectAccessory(accessorySelector)
     }
 
     // MARK: - Actions

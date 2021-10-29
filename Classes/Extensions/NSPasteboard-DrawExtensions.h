@@ -31,9 +31,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import <AppKit/AppKit.h>
 
+@class DrawGraphic;
+
 @interface NSPasteboard (DrawExtensions)
 
-- (void)setDrawGraphics:(NSArray *)graphics forType:(NSString *)dataType;
+- (void)setDrawGraphics:(NSArray<DrawGraphic *> *)graphics forType:(NSString *)dataType;
 - (NSArray *)drawGraphicsForType:(NSString *)dataType;
 
 @end

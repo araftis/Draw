@@ -36,7 +36,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class DrawAspect, DrawEvent, DrawFill, DrawGraphic, DrawInspectorModule, DrawLayer, DrawPage, DrawStroke, DrawColorFill, DrawShadow, DrawDocument, AJRBezierPath;
+@class DrawAspect, DrawEvent, DrawFill, DrawGraphic, DrawInspectorModule, DrawLayer, DrawPage, DrawStroke, DrawColorFill, DrawShadow, DrawText, DrawDocument, AJRBezierPath;
 
 extern NSString *DrawGraphicDidInitNotification;
 extern NSString *DrawGraphicDidChangeFrameNotification;
@@ -222,12 +222,16 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 - (NSArray<DrawGraphic *> *)graphicsHitByPoint:(NSPoint)point;
 - (NSArray<DrawGraphic *> *)graphicsHitByRect:(NSRect)rect;
 
+- (DrawAspect *)primaryAspectOfType:(Class)aspectClass create:(BOOL)createFlag;
+
 /*! Returns the object's primary stroke, creating it if it doesn't already exist. While graphics may have more than one stroke, all graphics have at least one stroke. It can be set to be inactive if you do not want it visible.*/
 @property (nonatomic,readonly) DrawStroke *primaryStroke;
 /*! Returns the object's primary fill, creating it if it doesn't already exist. While graphics may have more than one fill, all graphics have at least one fill. It can be set to be inactive if you do not want it visible.*/
 @property (nonatomic,readonly) DrawFill *primaryFill;
 /*! Returns the object's primary shadow, creating it if it doesn't already exist. While graphics may have more than one shadow, all graphics have at least one shadow. It can be set to be inactive if you do not want it visible.*/
 @property (nonatomic,readonly) DrawShadow *primaryShadow;
+/*! Returns the object's primary text aspect, creating it if it doesn't already exist. */
+@property (nonatomic,readonly) DrawText *primaryText;
 
 #pragma mark - Event Handling
 

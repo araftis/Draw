@@ -33,6 +33,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "AJRBezierPath-DrawExtensions.h"
 #import "DrawAspect.h"
+#import "DrawDocument.h"
 #import "DrawEvent.h"
 #import "DrawFill.h"
 #import "DrawFunctions.h"
@@ -40,7 +41,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawPage.h"
 #import "DrawShadow.h"
 #import "DrawStroke.h"
-#import "DrawDocument.h"
+#import "DrawText.h"
 #import "AJRXMLCoder-DrawExtensions.h"
 
 #import <AJRInterface/AJRInterface.h>
@@ -1089,9 +1090,9 @@ static BOOL _showsDirtyBounds = NO;
     return NO;
 }
 
-- (DrawAspect *)primaryAspectOfType:(Class)aspectClass {
+- (DrawAspect *)primaryAspectOfType:(Class)aspectClass create:(BOOL)createFlag {
     DrawAspect *aspect = [self firstAspectOfType:aspectClass withPriority:[aspectClass defaultPriority]];
-    if (aspect == nil) {
+    if (aspect == nil && createFlag) {
         aspect = [[[[self document] templateGraphic] firstAspectOfType:aspectClass withPriority:[aspectClass defaultPriority]] copy];
         [self addAspect:aspect withPriority:[aspectClass defaultPriority]];
     }
@@ -1099,15 +1100,19 @@ static BOOL _showsDirtyBounds = NO;
 }
 
 - (DrawStroke *)primaryStroke {
-    return (DrawStroke *)[self primaryAspectOfType:DrawStroke.class];
+    return (DrawStroke *)[self primaryAspectOfType:DrawStroke.class create:YES];
 }
 
 - (DrawFill *)primaryFill {
-    return (DrawFill *)[self primaryAspectOfType:DrawFill.class];
+    return (DrawFill *)[self primaryAspectOfType:DrawFill.class create:YES];
 }
 
 - (DrawShadow *)primaryShadow {
-    return (DrawShadow *)[self primaryAspectOfType:DrawShadow.class];
+    return (DrawShadow *)[self primaryAspectOfType:DrawShadow.class create:YES];
+}
+
+- (DrawText *)primaryText {
+    return (DrawText *)[self primaryAspectOfType:DrawText.class create:YES];
 }
 
 #pragma mark - NSCopying
