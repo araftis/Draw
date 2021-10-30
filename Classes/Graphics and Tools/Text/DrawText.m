@@ -31,6 +31,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawText.h"
 
+#import "DrawEvent.h"
 #import "DrawFunctions.h"
 #import "DrawPage.h"
 #import "DrawTextContainer.h"
@@ -42,17 +43,17 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NSString * const DrawTextIdentifier = @"text";
 
-//#if !defined (UseDrawTextContainer)
-//#define DrawTextContainer NSTextContainer
-//@interface NSTextContainer (Extensions)
-//- (void)setGraphic:(DrawGraphic *)graphic;
-//- (void)graphicDidChangeShape:(DrawGraphic *)graphic;
-//@end
-//@implementation NSTextContainer (Extensions)
-//- (void)setGraphic:(DrawGraphic *)graphic { }
-//- (void)graphicDidChangeShape:(DrawGraphic *)graphic { }
-//@end
-//#endif
+#if !defined (UseDrawTextContainer)
+#define DrawTextContainer NSTextContainer
+@interface NSTextContainer (Extensions)
+- (void)setGraphic:(DrawGraphic *)graphic;
+- (void)graphicDidChangeShape:(DrawGraphic *)graphic;
+@end
+@implementation NSTextContainer (Extensions)
+- (void)setGraphic:(DrawGraphic *)graphic { }
+- (void)graphicDidChangeShape:(DrawGraphic *)graphic { }
+@end
+#endif
 
 @implementation DrawText {
     NSTextStorage *_textStorage;
@@ -124,7 +125,7 @@ NSString * const DrawTextIdentifier = @"text";
 
 - (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {
     if (!_editing) {
-        NSLayoutManager *layoutManager = [self layoutManager];
+        NSLayoutManager *layoutManager = self.layoutManager;
         NSRect frame = [self.graphic frame];
         NSRange range = [layoutManager glyphRangeForTextContainer:[self textContainer]];
         
@@ -142,8 +143,9 @@ NSString * const DrawTextIdentifier = @"text";
 }
 
 - (void)setAttributedString:(NSAttributedString *)string {
-    [[self.graphic document] registerUndoWithTarget:self selector:@selector(setAttributedString:) object:string];
+    [self.graphic.document registerUndoWithTarget:self selector:@selector(setAttributedString:) object:[_textStorage copy]];
     [_textStorage setAttributedString:string];
+    [self.graphic setNeedsDisplay];
 }
 
 - (NSAttributedString *)attributedString {
@@ -175,7 +177,7 @@ NSString * const DrawTextIdentifier = @"text";
 }
 
 - (DrawTextContainer *)textContainer {
-    return AJRObjectIfKindOfClass([[[[_textStorage layoutManagers] lastObject] textContainers] lastObject], DrawTextContainer);
+    return AJRObjectIfKindOfClass(_textStorage.layoutManagers.lastObject.textContainers.lastObject, DrawTextContainer);
 }
 
 - (void)setGraphic:(DrawGraphic *)graphic {
@@ -254,7 +256,7 @@ NSString * const DrawTextIdentifier = @"text";
     [textView sizeToFit];
 }
 
-- (BOOL)beginEditingFromEvent:(NSEvent *)anEvent {
+- (BOOL)beginEditingFromEvent:(DrawEvent *)event {
     DrawTextView *textView = [self textView];
     NSLayoutManager *layoutManager = [self layoutManager];
     NSPoint point, origin;
@@ -268,7 +270,7 @@ NSString * const DrawTextIdentifier = @"text";
     [[self.graphic page] addSubview:textView];
     [[textView window] makeFirstResponder:textView];
     origin = [self.graphic frame].origin;
-    point = [[self.graphic page] convertPoint:[anEvent locationInWindow] fromView:nil];
+    point = event.locationOnPage;
     point.x -= origin.x;
     point.y -= origin.y;
     range.location = [layoutManager glyphIndexForPoint:point inTextContainer:[self textContainer] fractionOfDistanceThroughGlyph:&distance];
@@ -314,10 +316,28 @@ NSString * const DrawTextIdentifier = @"text";
 
 #pragma mark - NSCopying
 
+- (NSTextStorage *)_createTextStorageWithString:(NSAttributedString *)string {
+    return [self _finishInitializingTextStorage:[[NSTextStorage alloc] init] with:string];
+}
+
+- (NSTextStorage *)_finishInitializingTextStorage:(NSTextStorage *)storage with:(NSAttributedString *)string {
+    [storage setAttributedString:string];
+    NSLayoutManager *manager = [[NSLayoutManager alloc] init];
+    [storage addLayoutManager:manager];
+    DrawTextContainer *container = [[DrawTextContainer alloc] initWithContainerSize:(NSSize){100, 100}];
+    [container setLineFragmentPadding:_lineFragmentPadding];
+    [container setHeightTracksTextView:YES];
+    [container setWidthTracksTextView:YES];
+    [manager addTextContainer:container];
+    
+    return storage;
+}
+
 - (id)copyWithZone:(NSZone *)zone {
     DrawText *new = [super copyWithZone:zone];
     
-    new->_textStorage = [_textStorage copyWithZone:zone];
+    // NOTE: Apparently copying an NSTextStorage produces an attributed string, not a text storage.
+    new->_textStorage = [self _createTextStorageWithString:[_textStorage copy]];
     new->_editing = _editing;
     new->_lineFragmentPadding = _lineFragmentPadding;
     
@@ -334,9 +354,13 @@ NSString * const DrawTextIdentifier = @"text";
     [super decodeWithXMLCoder:coder];
 
     [coder decodeObjectForKey:@"text" setter:^(id  _Nonnull object) {
-        self->_textStorage = [[NSTextStorage alloc] init];
-        [self->_textStorage setAttributedString:object];
-        [self->_textStorage addLayoutManager:[[NSLayoutManager alloc] init]];
+        // Make sure the input is actually an attributed string, since it might not be if someone fiddled with the document.
+        NSAttributedString *string = AJRObjectIfKindOfClass(object, NSAttributedString);
+        if (string != nil) {
+            self->_textStorage = [self _createTextStorageWithString:string];
+        } else {
+            self->_textStorage = [self _createTextStorageWithString:[[NSAttributedString alloc] init]];
+        }
     }];
     [coder decodeBoolForKey:@"editing" setter:^(BOOL value) {
         self->_editing = value;

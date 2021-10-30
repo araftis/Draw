@@ -36,7 +36,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawPage.h"
 #import "NSPasteboard-DrawExtensions.h"
 
-NSString * const DrawGraphicPboardType = @"DrawGraphicPboardType";
+NSString * const DrawGraphicPboardType = @"com.ajr.draw.graphic";
 
 @interface DrawDocument (Private)
 
@@ -62,10 +62,10 @@ NSString * const DrawGraphicPboardType = @"DrawGraphicPboardType";
         NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
         NSArray *selection = [self sortedSelection];
 
-        [pasteboard declareTypes:[NSArray arrayWithObjects:DrawGraphicPboardType, @"com.adobe.encapsulated-postscript", nil] owner:nil];
+        [pasteboard declareTypes:[NSArray arrayWithObjects:DrawGraphicPboardType, NSPasteboardTypePDF, nil] owner:nil];
         _useShallowEncode = YES;
         [pasteboard setDrawGraphics:selection forType:DrawGraphicPboardType];
-        [pasteboard setDrawGraphics:selection forType:@"com.adobe.encapsulated-postscript"];
+        [pasteboard setDrawGraphics:selection forType:NSPasteboardTypePDF];
         _useShallowEncode = NO;
 
         [self _resetCopyParameters];
@@ -79,10 +79,10 @@ NSString * const DrawGraphicPboardType = @"DrawGraphicPboardType";
         NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
         NSArray *selection = [self sortedSelection];
 
-        [pasteboard declareTypes:[NSArray arrayWithObjects:DrawGraphicPboardType, @"com.adobe.encapsulated-postscript", nil] owner:nil];
+        [pasteboard declareTypes:[NSArray arrayWithObjects:DrawGraphicPboardType, NSPasteboardTypePDF, nil] owner:nil];
         _useShallowEncode = YES;
         [pasteboard setDrawGraphics:selection forType:DrawGraphicPboardType];
-        [pasteboard setDrawGraphics:selection forType:@"com.adobe.encapsulated-postscript"];
+        [pasteboard setDrawGraphics:selection forType:NSPasteboardTypePDF];
         _useShallowEncode = NO;
 
         [self deleteSelection];
@@ -100,17 +100,14 @@ NSString * const DrawGraphicPboardType = @"DrawGraphicPboardType";
     type = [pasteboard availableTypeFromArray:[NSArray arrayWithObjects:DrawGraphicPboardType, nil]];
 
     if ([type isEqualToString:DrawGraphicPboardType]) {
-        NSArray *graphics;
-        DrawGraphic *graphic;
-        NSInteger x;
+        NSArray<DrawGraphic *> *graphics;
         NSPoint origin;
-        DrawPage *page = [self page];
+        DrawPage *page = self.page;
 
         graphics = [pasteboard drawGraphicsForType:DrawGraphicPboardType];
 
         if ([graphics count]) {
-            for (x = 0; x < (const NSInteger)[graphics count]; x++) {
-                graphic = [graphics objectAtIndex:x];
+            for (DrawGraphic *graphic in graphics) {
                 origin = [graphic frame].origin;
                 origin.x += _storage.copyOffset.width;
                 origin.y += _storage.copyOffset.height;

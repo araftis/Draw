@@ -223,7 +223,7 @@ extern NSString * const DrawSavePanelPathKey;
 @end
 
 
-@interface DrawDocument (Event) <DrawSelectionDragger>
+@interface DrawDocument (Event) <DrawSelectionDragger, NSDraggingSource>
 
 - (BOOL)dragSelection:(NSArray<DrawGraphic *> *)aSelection withLastHitGraphic:(DrawGraphic *)graphic fromEvent:(DrawEvent *)event;
 

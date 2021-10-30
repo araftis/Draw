@@ -117,7 +117,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     [[temp contentView] addSubview:miniView];
 
     data = [[NSMutableData alloc] init];
-    operation = [NSPrintOperation EPSOperationWithView:[temp contentView] insideRect:[[temp contentView] bounds] toData:data];
+    operation = [NSPrintOperation PDFOperationWithView:temp.contentView insideRect:temp.contentView.bounds toData:data];
     [operation setShowsPrintPanel:NO];
     [operation runOperation];
 

@@ -35,17 +35,16 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawGraphic.h"
 #import "DrawPage.h"
 
+#import <AJRFoundation/AJRFoundation.h>
+
 @implementation NSPasteboard (DrawExtensions)
 
 - (void)setDrawGraphicsAsNative:(NSArray<DrawGraphic *> *)graphics {
-    NSMutableArray *array = [graphics mutableCopyWithZone:NSDefaultMallocZone()];
-    [self setData:[NSKeyedArchiver ajr_archivedObject:array error:NULL] forType:DrawGraphicPboardType];
+    [self setData:[AJRXMLArchiver archivedDataWithRootObject:graphics] forType:DrawGraphicPboardType];
 }
 
 - (void)setDrawGraphicsAsPDF:(NSArray<DrawGraphic *> *)graphics {
-    NSData *data;
-
-    data = [[[[graphics lastObject] page] document] PDFForGraphics:graphics];
+    NSData *data = [[[[graphics lastObject] page] document] PDFForGraphics:graphics];
 
     if (data) {
         [self setData:data forType:NSPasteboardTypePDF];
@@ -62,24 +61,30 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
 }
 
-- (NSArray *)drawGraphicsFromNative {
-    NSData *data;
+- (NSArray<DrawGraphic *> *)drawGraphicsFromNative {
+    NSData *data = [self dataForType:DrawGraphicPboardType];
+    NSArray<DrawGraphic *> *graphics = nil;
 
-    data = [self dataForType:DrawGraphicPboardType];
-    if (!data) return nil;
+    if (data != nil) {
+        NSError *localError = nil;
+        graphics = [AJRXMLUnarchiver unarchivedObjectWithData:data error:&localError];
+        if (graphics == nil) {
+            AJRLogError(@"Failed to unarchive objects from paste board: %@", localError.localizedDescription);
+        }
+    }
 
-    return [NSKeyedUnarchiver ajr_unarchivedObjectWithData:data error:NULL];
+    return graphics;
 }
 
-- (NSArray *)drawGraphicsFromEPS {
+- (NSArray<DrawGraphic *> *)drawGraphicsFromPDF {
     return nil;
 }
 
 - (NSArray *)drawGraphicsForType:(NSString *)dataType {
     if ([dataType isEqualToString:DrawGraphicPboardType]) {
         return [self drawGraphicsFromNative];
-    } else if ([dataType isEqualToString:@"com.adobe.encapsulated-postscript"]) {
-        [self drawGraphicsFromEPS];
+    } else if ([dataType isEqualToString:NSPasteboardTypePDF]) {
+        return [self drawGraphicsFromPDF];
     } else {
         [NSException raise:NSInvalidArgumentException format:@"An array of draw graphics cannot be represented as %@.", dataType];
     }

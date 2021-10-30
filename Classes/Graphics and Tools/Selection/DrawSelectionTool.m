@@ -224,7 +224,7 @@ static NSMutableDictionary *registeredDraggers = nil;
     NSPoint origin;
     NSArray *selection = [document sortedSelection];
     NSInteger x;
-    DrawGraphic *aGraphic = nil;
+    DrawGraphic *hitGraphic = nil;
     BOOL isFirstDrag = NO;
 
     // First we need to see if there's any overlap between our selection and hitGraphics. If there is, then we just drag. Otherwise we add the top graphic to selection and drag it. We only do this the first time.
@@ -233,27 +233,27 @@ static NSMutableDictionary *registeredDraggers = nil;
 
         // First, and easy check. If [selection count] == 0, we have nothing selected, so just add the top graphic.
         if ([selection count] == 0) {
-            aGraphic = [_hitGraphics objectAtIndex:0];
-            [document addGraphicToSelection:aGraphic];
+            hitGraphic = [_hitGraphics objectAtIndex:0];
+            [document addGraphicToSelection:hitGraphic];
             [self computeSelectionBoundsForSelection:[document selection]];
         } else {
             // Nope, we're going to have to do this the hard way. First, let's see if we have any overlap.
             for (x = 0; x < (const NSInteger)[selection count]; x++) {
-                aGraphic = [selection objectAtIndex:x];
-                if ([_hitGraphics indexOfObjectIdenticalTo:aGraphic] != NSNotFound) {
+                hitGraphic = [selection objectAtIndex:x];
+                if ([_hitGraphics indexOfObjectIdenticalTo:hitGraphic] != NSNotFound) {
                     break;
                 }
             }
             // If we don't have overlap, then we'll basically do what we did above. Add the top hitGraphic to selection and drag it.
             if (x == [selection count]) {
                 // This only happens if we didn't find anything above.
-                aGraphic = [_hitGraphics objectAtIndex:0];
+                hitGraphic = [_hitGraphics objectAtIndex:0];
                 // However replace selection if the shift key isn't held, otherwise add.
                 if (!([event modifierFlags] & NSEventModifierFlagShift)) {
                     // It's safe to remove everything, because none of our hit graphics are in the selection.
                     [document clearSelection];
                 }
-                [document addGraphicToSelection:aGraphic];
+                [document addGraphicToSelection:hitGraphic];
             }
 
             // Finally, in either case, compute the bounds we're working with...
@@ -274,17 +274,17 @@ static NSMutableDictionary *registeredDraggers = nil;
         enumerator = [registeredDraggers keyEnumerator];
         while ((maskKey = [enumerator nextObject])) {
             if ([maskKey intValue] == mask) {
-                if ([[registeredDraggers objectForKey:maskKey] dragSelection:selection withLastHitGraphic:aGraphic fromEvent:_mouseDown]) {
+                if ([[registeredDraggers objectForKey:maskKey] dragSelection:selection withLastHitGraphic:hitGraphic fromEvent:_mouseDown]) {
                     return YES;
                 }
             }
         }
 
         // Now that we've done whatever is necessary to our selection, if the shift key is held down, drag it.
-        //if ([event modifierFlags] & NSEventModifierFlagShift) {
-        //   [[page drawView] dragSelectionFromEvent:mouseDown];
-        //   return YES;
-        //}
+        if ([event modifierFlags] & NSEventModifierFlagShift) {
+            [page.document dragSelection:selection withLastHitGraphic:hitGraphic fromEvent:event];
+            return YES;
+        }
     }
 
     point = [document snapPointToGrid:point];
@@ -297,14 +297,14 @@ static NSMutableDictionary *registeredDraggers = nil;
         [page setNeedsDisplayInRect:_selectionBounds];
 
         for (x = 0; x < (const NSInteger)[selection count]; x++) {
-            aGraphic = [selection objectAtIndex:x];
+            hitGraphic = [selection objectAtIndex:x];
             if (isFirstDrag) {
                 //[(NSView *)[document prepareWithInvocationTarget:aGraphic] setFrame:[aGraphic frame]];
             }
-            origin = [aGraphic frame].origin;
+            origin = [hitGraphic frame].origin;
             origin.x += delta.x;
             origin.y += delta.y;
-            [aGraphic setFrameOrigin:origin];
+            [hitGraphic setFrameOrigin:origin];
         }
 
         _selectionBounds.origin.x += delta.x;

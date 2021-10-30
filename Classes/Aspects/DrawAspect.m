@@ -206,7 +206,7 @@ static NSMutableDictionary  *_aspects = nil;
 - (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {
 }
 
-- (BOOL)beginEditingFromEvent:(NSEvent *)anEvent {
+- (BOOL)beginEditingFromEvent:(DrawEvent *)anEvent {
     return NO;
 }
 

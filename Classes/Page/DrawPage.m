@@ -464,7 +464,7 @@ static NSDictionary *_pageNumberAttributes = nil;
 }
 
 - (CGFloat)error {
-    return 3.0 / (self.frame.size.width / self.bounds.size.width);
+    return 0.5 / (self.frame.size.width / self.bounds.size.width);
 }
 
 - (void)setNeedsDisplayInRect:(NSRect)invalidRect {

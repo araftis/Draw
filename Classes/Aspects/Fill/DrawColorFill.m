@@ -90,7 +90,7 @@ NSString * const DrawFillColorKey = @"FillColor";
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-    DrawColorFill	*aspect = [super copyWithZone:nil];
+    DrawColorFill *aspect = [super copyWithZone:nil];
     
     aspect->_color = [_color copyWithZone:zone];
     

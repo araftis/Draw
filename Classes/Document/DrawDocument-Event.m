@@ -37,12 +37,56 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawInspector.h"
 #import "DrawPage.h"
 
+@interface DrawGraphicPasteboardWriter : NSObject <NSPasteboardWriting>
+
++ (id)writerWithPDFData:(NSData *)pdfData selection:(NSArray<DrawGraphic *> *)selection;
+- (id)initWithPDFData:(NSData *)pdfData selection:(NSArray<DrawGraphic *> *)selection;
+
+@property (nonatomic,strong) NSData *pdfData;
+@property (nonatomic,strong) NSArray<DrawGraphic *> *selection;
+
+@end
+
+@implementation DrawGraphicPasteboardWriter
+
++ (id)writerWithPDFData:(NSData *)pdfData selection:(NSArray<DrawGraphic *> *)selection {
+    return [[self alloc] initWithPDFData:pdfData selection:selection];
+}
+
+- (id)initWithPDFData:(NSData *)pdfData selection:(NSArray<DrawGraphic *> *)selection {
+    if ((self = [super init])) {
+        _pdfData = pdfData;
+        _selection = selection;
+    }
+    return self;
+}
+
+- (nullable id)pasteboardPropertyListForType:(nonnull NSPasteboardType)type {
+    NSData *data = nil;
+    
+    if ([type isEqualToString:DrawGraphicPboardType]) {
+        data = [AJRXMLArchiver archivedDataWithRootObject:_selection];
+    } else if ([type isEqualToString:NSPasteboardTypePDF]) {
+        DrawDocument *document = _selection.lastObject.document;
+        if (document != nil) {
+            data = [document PDFForGraphics:_selection];
+        }
+    }
+    return data;
+}
+
+- (nonnull NSArray<NSPasteboardType> *)writableTypesForPasteboard:(nonnull NSPasteboard *)pasteboard {
+    return @[NSPasteboardTypePDF,
+             DrawGraphicPboardType];
+}
+
+@end
+
 @implementation DrawDocument (Event)
 
-- (BOOL)dragSelection:(NSArray *)selection withLastHitGraphic:(DrawGraphic *)graphic fromEvent:(DrawEvent *)event {
+- (BOOL)dragSelection:(NSArray<DrawGraphic *> *)selection withLastHitGraphic:(DrawGraphic *)graphic fromEvent:(DrawEvent *)event {
     DrawPage *actualView = [[selection lastObject] page];
     NSSize offset;
-    NSPasteboard *pasteboard;
     NSData *data;
     NSImage *image;
     NSPoint where;
@@ -50,26 +94,33 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     NSInteger x;
 
     for (x = 0; x < (const NSInteger)[selection count]; x++) {
-        if ([[selection objectAtIndex:x] editing]) return NO;
+        if ([[selection objectAtIndex:x] editing]) {
+            return NO;
+        }
     }
 
     data = [[event document] PDFForGraphics:[[event document] sortedSelection]];
 
-    if (data) {
+    if (data != nil) {
         image = [[NSImage alloc] initWithData:data];
-
-        pasteboard = [NSPasteboard pasteboardWithName:NSPasteboardNameDrag];
-        [pasteboard declareTypes:[NSArray arrayWithObjects:@"com.adobe.encapsulated-postscript", DrawGraphicPboardType, nil] owner:actualView];
-        [pasteboard setData:data forType:@"com.adobe.encapsulated-postscript"];
-        [pasteboard setData:[NSKeyedArchiver ajr_archivedObject:selection error:NULL] forType:DrawGraphicPboardType];
 
         where = [event locationOnPage];
         bounds = DrawBoundsForGraphics(selection);
         where.x -= (where.x - bounds.origin.x);
         where.y -= (where.y - bounds.origin.y);
         offset = (NSSize){0.0, 0.0};
+        NSRect draggingFrame = (NSRect){where, image.size};
 
-        [actualView dragImage:image at:where offset:offset event:[event event] pasteboard:pasteboard source:actualView slideBack:YES];
+        NSDraggingItem *item = [[NSDraggingItem alloc] initWithPasteboardWriter:[DrawGraphicPasteboardWriter writerWithPDFData:data selection:selection]];
+        item.draggingFrame = draggingFrame;
+        item.imageComponentsProvider = ^NSArray<NSDraggingImageComponent *> * _Nonnull{
+            NSDraggingImageComponent *component = [NSDraggingImageComponent draggingImageComponentWithKey:@"Test"];
+            component.contents = image;
+            component.frame = draggingFrame;
+            return @[component];
+        };
+
+        [actualView beginDraggingSessionWithItems:@[item] event:event.event source:self];
 
         return YES;
     }
@@ -77,7 +128,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     return NO;
 }
 
-- (NSUInteger)draggingSourceOperationMaskForLocal:(BOOL)flag {
+- (NSDragOperation)draggingSession:(nonnull NSDraggingSession *)session sourceOperationMaskForDraggingContext:(NSDraggingContext)context {
     return NSDragOperationCopy;
 }
 

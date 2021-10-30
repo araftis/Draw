@@ -684,7 +684,7 @@ static BOOL _showsDirtyBounds = NO;
     }
 }
 
-- (BOOL)beginAspectEditingFromEvent:(NSEvent *)anEvent {
+- (BOOL)beginAspectEditingFromEvent:(DrawEvent *)event {
     NSArray *subaspects;
     NSInteger x, y;
     DrawAspect *aspect;
@@ -693,7 +693,7 @@ static BOOL _showsDirtyBounds = NO;
         subaspects = [_aspects objectAtIndex:x];
         for (y = [subaspects count] - 1; y >= 0; y--) {
             aspect = [subaspects objectAtIndex:y];
-            if ([aspect beginEditingFromEvent:anEvent]) {
+            if ([aspect beginEditingFromEvent:event]) {
                 return YES;
             }
         }

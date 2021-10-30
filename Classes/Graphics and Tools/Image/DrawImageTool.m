@@ -45,7 +45,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (id)init {
     self = [super init];
 
-    [DrawDocument registerTool:self forDraggedTypes:@[NSPasteboardTypeTIFF, @"com.adobe.encapsulated-postscript", NSPasteboardTypeFileURL]];
+    [DrawDocument registerTool:self forDraggedTypes:@[NSPasteboardTypeTIFF, NSPasteboardTypePDF, NSPasteboardTypeFileURL]];
 
     return self;
 }
@@ -63,9 +63,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             return NSDragOperationCopy;
         }
     }
-    if ([[pasteboard types] indexOfObject:@"com.adobe.encapsulated-postscript"] != NSNotFound) {
+    if ([[pasteboard types] indexOfObject:NSPasteboardTypePDF] != NSNotFound) {
         if (sourceDragMask & NSDragOperationCopy) {
-            _dragSourceType = @"com.adobe.encapsulated-postscript";
+            _dragSourceType = NSPasteboardTypePDF;
             return NSDragOperationCopy;
         }
     }
@@ -143,7 +143,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     pasteboard = [sender draggingPasteboard];
 
-    if ([[pasteboard types] indexOfObject:@"com.adobe.encapsulated-postscript"] != NSNotFound) {
+    if ([[pasteboard types] indexOfObject:NSPasteboardTypePDF] != NSNotFound) {
         return YES;
     } else if ([[pasteboard types] indexOfObject:NSPasteboardTypeTIFF] != NSNotFound) {
         NSData *data;

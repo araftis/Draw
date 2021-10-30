@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)graphicDidRemoveFromView:(DrawDocument *)aView;
 - (void)graphicDidChangeShape:(DrawGraphic *)aGraphic;
 
-- (BOOL)beginEditingFromEvent:(NSEvent *)anEvent;
+- (BOOL)beginEditingFromEvent:(DrawEvent *)anEvent;
 - (void)endEditing;
 
 #pragma mark - Equality
