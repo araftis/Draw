@@ -156,7 +156,7 @@
     <!-- Define inspector groups. Inspector groups appear in the inspector side bar and are generally selected by choosing an option in something like a tab bar. -->
     <extension-point name="draw-inspector-group" class="Draw.DrawInspectorGroup" registrySelector="registerInspectorGroupWithProperties:">
         <attribute name="name" type="string" required="YES" /> <!-- A non-localized title of the group. -->
-        <attribute name="icon" type="image" required="YES" /> <!-- A 15x15 representing the group. -->
+        <attribute name="icon" type="image" required="YES" /> <!-- A 24x24 representing the group. -->
         <attribute name="id" type="string" required="YES" /> <!-- Used by inspectors to specify their group. -->
         <attribute name="priority" type="float" required="YES" /> <!-- Defines the display order. -->
         <element name="inspected-class" key="inspectedClasses" type="array" required="YES">
@@ -189,5 +189,21 @@
     <ajr_inspector xml="DrawLink" identifier="link" />
     <ajr_inspector xml="DrawPen" identifier="pen" />
     <ajr_inspector xml="DrawPolygon" identifier="polygon" />
+
+    <!-- ———————————————————————————————————— -->
+    <!-- Define structure inspector. Structure inspector appear on the structure inspector side bar and are generally selected by choosing an option in something like a tab bar. Note that these are different from the other inspectors, as they're not "inspectors" in the AJRInspector sense, but actual view controllers that are also used to inspect the document. As such, they're a bit heavier weight than the inspectors groups. -->
+    <!-- ———————————————————————————————————— -->
+
+    <extension-point name="draw-structure-inspector" class="Draw.DrawStructureInspector" registrySelector="registerStructureInspector:">
+        <attribute name="name" type="string" required="YES" />    <!-- A non-localized title of the inspector. -->
+        <attribute name="icon" type="image" required="YES" />     <!-- A 24x24 representing the group. -->
+        <attribute name="id" type="string" required="YES" />      <!-- Used by inspectors to specify their inspector. -->
+        <attribute name="priority" type="float" required="YES" /> <!-- Defines the display order. -->
+        <attribute name="inspectorClass" type="class" required="YES" /> <!-- The view controller -->
+    </extension-point>
+    
+    <!-- Structure Inspectors -->
+    <draw-structure-inspector name="Layers" icon="inspectorLayers" id="layers" priority="1.0" inspectorClass="Draw.DrawLayerViewController" />
+    <draw-structure-inspector name="Objects" icon="inspectorObjectStructure" id="objects" priority="2.0" inspectorClass="Draw.DrawObjectStructureInspector" />
 
 </plugindata>

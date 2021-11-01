@@ -46,7 +46,7 @@ public extension NSUserInterfaceItemIdentifier {
 }
 
 @objcMembers
-open class DrawLayerViewController: DrawViewController, NSTableViewDataSource, NSTableViewDelegate {
+open class DrawLayerViewController: DrawStructureInspector, NSTableViewDataSource, NSTableViewDelegate {
 
     @IBOutlet open var layersTable : NSTableView!
 
@@ -55,7 +55,7 @@ open class DrawLayerViewController: DrawViewController, NSTableViewDataSource, N
     }
 
     open func reload() -> Void {
-        layersTable.reloadData()
+        layersTable?.reloadData()
     }
 
     open func numberOfRows(in tableView: NSTableView) -> Int {

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210F8F812730960C004A939D /* DrawStructureInspectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210F8F7F2730960C004A939D /* DrawStructureInspectors.swift */; };
+		210F8F822730960C004A939D /* DrawStructureInspectors.xib in Resources */ = {isa = PBXBuildFile; fileRef = 210F8F802730960C004A939D /* DrawStructureInspectors.xib */; };
+		210F8F8427309715004A939D /* DrawStructureInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210F8F8327309715004A939D /* DrawStructureInspector.swift */; };
+		210F8F872730A6E0004A939D /* DrawObjectStructureInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210F8F852730A6E0004A939D /* DrawObjectStructureInspector.swift */; };
+		210F8F882730A6E0004A939D /* DrawObjectStructureInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 210F8F862730A6E0004A939D /* DrawObjectStructureInspector.xib */; };
 		FA02BFD025BCFABF001EFBBA /* DrawPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02BFCF25BCFABF001EFBBA /* DrawPolygon.swift */; };
 		FA02BFD425BCFB00001EFBBA /* DrawPolygonTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02BFD325BCFB00001EFBBA /* DrawPolygonTool.swift */; };
 		FA05DFB3140D5E8200AA161A /* DrawStrokeInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA05DFB1140D5E8200AA161A /* DrawStrokeInspector.xib */; };
@@ -283,6 +288,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		210F8F7F2730960C004A939D /* DrawStructureInspectors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawStructureInspectors.swift; sourceTree = "<group>"; };
+		210F8F802730960C004A939D /* DrawStructureInspectors.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawStructureInspectors.xib; sourceTree = "<group>"; };
+		210F8F8327309715004A939D /* DrawStructureInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawStructureInspector.swift; sourceTree = "<group>"; };
+		210F8F852730A6E0004A939D /* DrawObjectStructureInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawObjectStructureInspector.swift; sourceTree = "<group>"; };
+		210F8F862730A6E0004A939D /* DrawObjectStructureInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawObjectStructureInspector.xib; sourceTree = "<group>"; };
 		FA02BFCF25BCFABF001EFBBA /* DrawPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawPolygon.swift; sourceTree = "<group>"; };
 		FA02BFD325BCFB00001EFBBA /* DrawPolygonTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawPolygonTool.swift; sourceTree = "<group>"; };
 		FA05DFBF140D5EF500AA161A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DrawStrokeRibbonInspector.strings; sourceTree = "<group>"; };
@@ -557,6 +567,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		210F8F7E273095E8004A939D /* Structure Inspectors */ = {
+			isa = PBXGroup;
+			children = (
+				210F8F8327309715004A939D /* DrawStructureInspector.swift */,
+				210F8F7F2730960C004A939D /* DrawStructureInspectors.swift */,
+				210F8F802730960C004A939D /* DrawStructureInspectors.xib */,
+				210F8F852730A6E0004A939D /* DrawObjectStructureInspector.swift */,
+				210F8F862730A6E0004A939D /* DrawObjectStructureInspector.xib */,
+			);
+			path = "Structure Inspectors";
+			sourceTree = "<group>";
+		};
 		FA02BFCE25BCFAA3001EFBBA /* Polygon */ = {
 			isa = PBXGroup;
 			children = (
@@ -724,6 +746,7 @@
 				FA1BE5C21443DF1B0065BF7F /* Layers */,
 				FA4CD82313BE88D200EF1ECF /* Page */,
 				FA9B926013D788920096EEFB /* Ruler */,
+				210F8F7E273095E8004A939D /* Structure Inspectors */,
 				FA58066613F35A6F00910987 /* Styles */,
 				FABF842D13B2D7990032D0F4 /* Views */,
 				FA46086A13831AC20051A3B1 /* DrawBook.h */,
@@ -1313,10 +1336,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				210F8F882730A6E0004A939D /* DrawObjectStructureInspector.xib in Resources */,
 				FA460860138318CD0051A3B1 /* InfoPlist.strings in Resources */,
 				FA460A1813831AC30051A3B1 /* DrawFillInspector.tiff in Resources */,
 				FABE519B25A1324B00552494 /* DrawDocument.storyboard in Resources */,
 				FA2C17DB258ED3CB007FD1B2 /* Draw.ajrplugindata in Resources */,
+				210F8F822730960C004A939D /* DrawStructureInspectors.xib in Resources */,
 				FAC4B72F25B3A8C000C08B80 /* DrawGraphic.inspector in Resources */,
 				FA7DC9B525B687C700B16CDB /* DrawLink.inspector in Resources */,
 				FA8E366625BD201600EB554F /* DrawPolygon.inspector in Resources */,
@@ -1390,12 +1415,14 @@
 				FA460A3313831AC30051A3B1 /* DrawImageTool.m in Sources */,
 				FA18B45D25ABD310000DEF0C /* DrawViewController.m in Sources */,
 				FA460A7A13831AC30051A3B1 /* DrawAdobeIllustrator.m in Sources */,
+				210F8F872730A6E0004A939D /* DrawObjectStructureInspector.swift in Sources */,
 				FA460A7C13831AC30051A3B1 /* DrawFilter.m in Sources */,
 				FA460A7E13831AC30051A3B1 /* DrawOldDrawFilter.m in Sources */,
 				FA460A8013831AC30051A3B1 /* DrawPapelFilter.m in Sources */,
 				FA460A9413831AC40051A3B1 /* DrawLink.m in Sources */,
 				FA460A9613831AC40051A3B1 /* DrawLinkCap.m in Sources */,
 				FA460A9813831AC40051A3B1 /* DrawLinkCapArrow.m in Sources */,
+				210F8F812730960C004A939D /* DrawStructureInspectors.swift in Sources */,
 				FA460A9A13831AC40051A3B1 /* DrawLinkCapCircle.m in Sources */,
 				FA460A9C13831AC40051A3B1 /* DrawLinkCapDiamond.m in Sources */,
 				FA460A9E13831AC40051A3B1 /* DrawLinkCapDoubleArrow.m in Sources */,
@@ -1437,6 +1464,7 @@
 				FA49843313B2A40C00CE9495 /* DrawDocument-EPS.m in Sources */,
 				FA49843413B2A40C00CE9495 /* DrawDocument-Event.m in Sources */,
 				FA49843513B2A40C00CE9495 /* DrawDocument-Grid.m in Sources */,
+				210F8F8427309715004A939D /* DrawStructureInspector.swift in Sources */,
 				FA49843613B2A40C00CE9495 /* DrawDocument-Group.m in Sources */,
 				FA49843713B2A40C00CE9495 /* DrawDocument-IO.m in Sources */,
 				FA49843813B2A40C00CE9495 /* DrawDocument-Layers.m in Sources */,

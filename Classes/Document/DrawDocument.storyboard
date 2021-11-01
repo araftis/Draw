@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="19h-0y-fv3">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="19h-0y-fv3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="NSView safe area layout guides" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -181,10 +182,10 @@
             </objects>
             <point key="canvasLocation" x="342" y="200"/>
         </scene>
-        <!--Draw Layer View Controller-->
+        <!--Draw Structure Inspectors-->
         <scene sceneID="ZHt-eb-fg9">
             <objects>
-                <viewController id="iL5-OS-Qc4" customClass="DrawLayerViewController" customModule="Draw" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iL5-OS-Qc4" customClass="DrawStructureInspectors" customModule="Draw" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="UT4-DT-Aj9">
                         <rect key="frame" x="0.0" y="0.0" width="149" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>

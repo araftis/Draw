@@ -56,7 +56,7 @@ open class DrawInspectorGroupsController : NSViewController {
 */
     @IBOutlet open var managedView : NSView!
     @IBOutlet open var buttonBar : AJRButtonBar!
-    open var groups  = [DrawInspectorGroup]()
+    open var groups = [DrawInspectorGroup]()
     open var groupsByID = [String:DrawInspectorGroup]()
     open var selectedGroup : DrawInspectorGroup?
 
@@ -177,20 +177,5 @@ open class DrawInspectorGroupsController : NSViewController {
     @IBAction open func selectInspectorGroup(_ sender: Any?) -> Void {
         selectInspectorGroup(at: buttonBar.selectedButton)
     }
-
-//- (void)loadView {
-//    NSView	*view = [[NSView alloc] initWithFrame:(NSRect){NSZeroPoint, {100.0, 100.0}}];
-//
-//    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
-//
-//    _buttonBar = [[AJRButtonBar alloc] initWithFrame:(NSRect){NSZeroPoint, {100.0, 26.0}}];
-//    [_buttonBar setTranslatesAutoresizingMaskIntoConstraints:NO];
-//    [view addSubview:_buttonBar];
-//
-//    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_buttonBar]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_buttonBar)]];
-//    [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_buttonBar(==26)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_buttonBar)]];
-//
-//    [self setView:view];
-//}
 
 }
