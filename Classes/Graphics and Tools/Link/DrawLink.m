@@ -159,7 +159,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     BOOL isFilling = [aspect isKindOfClass:[DrawFill class]];
 
     if (![aspect isKindOfClass:[DrawPenBezierAspect class]]) {
-        AJRBezierPath	*path = [[AJRBezierPath alloc] init];
+        AJRBezierPath *path = [[AJRBezierPath alloc] init];
 
         if (_sourceCap && (!isFilling || [_sourceCap filled])) {
             [path appendBezierPath:[_sourceCap path]];
@@ -175,7 +175,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
         }
 
         completionBlock = [aspect drawPath:path withPriority:DrawAspectPriorityBackground];
-        if (completionBlock) [drawingCompletionBlocks addObject:completionBlock];
+        if (completionBlock) {
+            [drawingCompletionBlocks addObject:completionBlock];
+        }
     }
 
     return didDraw;
@@ -348,7 +350,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
         [self.document registerUndoWithTarget:self selector:@selector(setSourceCap:) object:_sourceCap];
 
         if (_sourceCap) {
-            id		save = _sourceCap;
+            DrawLinkCap *save = _sourceCap;
             [_sourceCap linkCapWillRemoveFromLink:self];
             _sourceCap = nil;
             [save linkCapDidRemoveFromLink:self];
@@ -673,6 +675,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
 - (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
     NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiers] mutableCopy];
     [identifiers addObject:AJRInspectorIdentifierLink];
+    [identifiers removeObjectIdenticalTo:AJRInspectorIdentifierPen];
     return identifiers;
 }
 
