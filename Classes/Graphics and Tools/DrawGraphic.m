@@ -522,23 +522,20 @@ static BOOL _showsDirtyBounds = NO;
                 [path stroke];
             }
 
-            if ([self drawAspectsWithPriority:DrawAspectPriorityFirst path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityBeforeBackground path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityBackground path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityAfterBackground path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityBeforeChildren path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            [context saveGraphicsState];
-            [path addClip];
-            for (DrawGraphic *subgraphic in _subgraphics) {
-                [subgraphic drawWithAspectFilter:filter];
+            for (DrawAspectPriority priority = DrawAspectPriorityFirst; priority <= DrawAspectPriorityLast; priority += 1) {
+                // We do something special for this, which is we draw our children before the aspects.
+                if (priority == DrawAspectPriorityChildren) {
+                    [context drawWithSavedGraphicsState:^(NSGraphicsContext *context) {
+                        [path addClip];
+                        for (DrawGraphic *subgraphic in self->_subgraphics) {
+                            [subgraphic drawWithAspectFilter:filter];
+                        }
+                    }];
+                }
+                if ([self drawAspectsWithPriority:priority path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) {
+                    didDraw = YES;
+                }
             }
-            [context restoreGraphicsState];
-            if ([self drawAspectsWithPriority:DrawAspectPriorityChildren path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityAfterChildren path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityBeforeForeground path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityForeground path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityAfterForeground path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
-            if ([self drawAspectsWithPriority:DrawAspectPriorityLast path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) didDraw = YES;
 
             // This will be called when we have no aspects capable of drawing anything, at which point we display a "ghost" image of ourself, but only when drawing to the screen.
             if (!didDraw && [context isDrawingToScreen]) {
