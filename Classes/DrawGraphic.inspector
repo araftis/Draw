@@ -7,6 +7,7 @@
         <group title="Text">
             <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryText.active" />
             <slice type="attributedString" label="Text" valueKeyPath="controller.selection.primaryText.attributedString" />
+            <slice type="float" label="Padding" valueKeyPath="controller.selection.primaryText.lineFragmentPadding" />
         </group>
         <group title="Stroke">
             <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryStroke.active" />

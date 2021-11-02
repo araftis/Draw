@@ -165,6 +165,7 @@ NSString * const DrawTextIdentifier = @"text";
             container = [textContainers objectAtIndex:x];
             [container setLineFragmentPadding:_lineFragmentPadding];
         }
+        [self.graphic setNeedsDisplay];
     }
 }
 
