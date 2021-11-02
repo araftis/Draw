@@ -42,9 +42,6 @@ NSString * const DrawFillWindingRuleKey = @"DrawFillWindingRuleKey";
 @implementation DrawFill
 
 - (id)initWithGraphic:(DrawGraphic *)aGraphic {
-    if (self.class == DrawFill.class) {
-        AJRPrintf(@"break here\n");
-    }
     if ((self = [super initWithGraphic:aGraphic])) {
         _windingRule = (AJRWindingRule)[[NSUserDefaults standardUserDefaults] integerForKey:DrawFillWindingRuleKey];
     }

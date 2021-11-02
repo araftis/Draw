@@ -43,6 +43,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawStroke.h"
 #import "DrawText.h"
 #import "AJRXMLCoder-DrawExtensions.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
 
@@ -479,7 +480,7 @@ static BOOL _showsDirtyBounds = NO;
         [drawingCompletionBlocks addObject:completionBlock];
     }
 
-    return YES;
+    return [aspect rendersToCanvas];
 }
 
 - (BOOL)drawAspectsWithPriority:(DrawAspectPriority)priority path:(AJRBezierPath *)path aspectFilter:(DrawGraphicAspectFilter)filter completionBlocks:(NSMutableArray *)drawingCompletionBlocks; {
@@ -503,79 +504,78 @@ static BOOL _showsDirtyBounds = NO;
 
 - (void)drawWithAspectFilter:(DrawGraphicAspectFilter)filter {
     if (!_ignore) {
-        AJRBezierPath *path = [self path];
-
         if (!((_frame.size.width == 0.0) && (_frame.size.height == 0.0))) {
-            BOOL didDraw = NO;
             NSGraphicsContext *context = [NSGraphicsContext currentContext];
-            NSMutableArray *drawingCompletionBlocks = [[NSMutableArray alloc] init];
 
-            [context saveGraphicsState];
-            [_supergraphic addClip];
-            if (_editing && [_subgraphics count]) {
-                [[NSColor lightGrayColor] set];
-                [path setLineWidth:0.0];
-                [path setLineJoinStyle:0];
-                [path setLineCapStyle:0];
-                [path setMiterLimit:11.0];
-                [path setFlatness:1.0];
-                [path stroke];
-            }
+            [context drawWithSavedGraphicsState:^(NSGraphicsContext *context) {
+                AJRBezierPath *path = [self path];
+                NSMutableArray *drawingCompletionBlocks = [[NSMutableArray alloc] init];
+                BOOL didDraw = NO;
 
-            for (DrawAspectPriority priority = DrawAspectPriorityFirst; priority <= DrawAspectPriorityLast; priority += 1) {
-                // We do something special for this, which is we draw our children before the aspects.
-                if (priority == DrawAspectPriorityChildren) {
-                    [context drawWithSavedGraphicsState:^(NSGraphicsContext *context) {
-                        [path addClip];
-                        for (DrawGraphic *subgraphic in self->_subgraphics) {
-                            [subgraphic drawWithAspectFilter:filter];
-                        }
-                    }];
+                [self.supergraphic addClip];
+                if (self.editing && self.subgraphics.count) {
+                    [[NSColor lightGrayColor] set];
+                    [path setLineWidth:0.0];
+                    [path setLineJoinStyle:0];
+                    [path setLineCapStyle:0];
+                    [path setMiterLimit:11.0];
+                    [path setFlatness:1.0];
+                    [path stroke];
                 }
-                if ([self drawAspectsWithPriority:priority path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) {
-                    didDraw = YES;
-                }
-            }
 
-            // This will be called when we have no aspects capable of drawing anything, at which point we display a "ghost" image of ourself, but only when drawing to the screen.
-            if (!didDraw && [context isDrawingToScreen]) {
-                AJRBezierPathPointTransform savedTransform = [path strokePointTransform];
-
-                [[NSColor lightGrayColor] set];
-                [path setLineWidth:AJRHairLineWidth];
-                DrawGraphic * __weak weakSelf = self;
-                [path setStrokePointTransform:^(NSPoint point) {
-                    DrawGraphic *strongSelf = weakSelf;
-                    if (strongSelf != nil) {
-                        NSRect rect = (NSRect){point, {1.0, 1.0}};
-                        CGFloat offset = (1.0 / [strongSelf->_page scale]) / 2.0;
-                        rect = [strongSelf->_page centerScanRect:rect];
-                        return (NSPoint){rect.origin.x - offset, rect.origin.y - offset};
+                for (DrawAspectPriority priority = DrawAspectPriorityFirst; priority <= DrawAspectPriorityLast; priority += 1) {
+                    // We do something special for this, which is we draw our children before the aspects.
+                    if (priority == DrawAspectPriorityChildren) {
+                        [context drawWithSavedGraphicsState:^(NSGraphicsContext *context) {
+                            [path addClip];
+                            for (DrawGraphic *subgraphic in self->_subgraphics) {
+                                [subgraphic drawWithAspectFilter:filter];
+                            }
+                        }];
                     }
-                    return point;
-                }];
-                [path stroke];
+                    if ([self drawAspectsWithPriority:priority path:path aspectFilter:filter completionBlocks:drawingCompletionBlocks]) {
+                        didDraw = YES;
+                    }
+                }
 
-                [path setStrokePointTransform:savedTransform];
-            }
+                // This will be called when we have no aspects capable of drawing anything, at which point we display a "ghost" image of ourself, but only when drawing to the screen.
+                if (!didDraw && [context isDrawingToScreen]) {
+                    AJRBezierPathPointTransform savedTransform = [path strokePointTransform];
 
-            for (DrawGraphicCompletionBlock completionBlock in [drawingCompletionBlocks reverseObjectEnumerator]) {
-                completionBlock();
-            }
+                    [[NSColor lightGrayColor] set];
+                    [path setLineWidth:AJRHairLineWidth];
+                    DrawGraphic * __weak weakSelf = self;
+                    [path setStrokePointTransform:^(NSPoint point) {
+                        DrawGraphic *strongSelf = weakSelf;
+                        if (strongSelf != nil) {
+                            NSRect rect = (NSRect){point, {1.0, 1.0}};
+                            CGFloat offset = (1.0 / [strongSelf->_page scale]) / 2.0;
+                            rect = [strongSelf->_page centerScanRect:rect];
+                            return (NSPoint){rect.origin.x - offset, rect.origin.y - offset};
+                        }
+                        return point;
+                    }];
+                    [path stroke];
 
-            if (filter == NULL && [DrawGraphic showsDirtyBounds]) {
-                CGFloat scale = [_page scale];
-                CGFloat inset = (1.0 / scale) / 2.0;
-                AJRBezierPath *path = [AJRBezierPath bezierPathWithRect:NSInsetRect([_page centerScanRect:[self dirtyBounds]], -inset, -inset)];
-                CGFloat dash[2] = { 1.0, 2.0 };
+                    [path setStrokePointTransform:savedTransform];
+                }
 
-                [[NSColor lightGrayColor] set];
-                [path setLineDash:dash count:2 phase:0];
-                [path setLineWidth:1.0 / scale];
-                [path stroke];
-            }
+                for (DrawGraphicCompletionBlock completionBlock in [drawingCompletionBlocks reverseObjectEnumerator]) {
+                    completionBlock();
+                }
 
-            [context restoreGraphicsState];
+                if (filter == NULL && [DrawGraphic showsDirtyBounds]) {
+                    CGFloat scale = self.page.scale;
+                    CGFloat inset = (1.0 / scale) / 2.0;
+                    AJRBezierPath *path = [AJRBezierPath bezierPathWithRect:NSInsetRect([self.page centerScanRect:self.dirtyBounds], -inset, -inset)];
+                    CGFloat dash[2] = { 1.0, 2.0 };
+
+                    [[NSColor lightGrayColor] set];
+                    [path setLineDash:dash count:2 phase:0];
+                    [path setLineWidth:AJRHairLineWidth];
+                    [path stroke];
+                }
+            }];
         }
     }
 }

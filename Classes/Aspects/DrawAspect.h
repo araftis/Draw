@@ -63,6 +63,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Drawing
 
+/**
+ This flag indicates that the aspect will actually cause pixels to be rendered on the canvas. Most aspects will return YES, in fact that's the default value, however some aspects will return NO if they on do something like affect the settings in the current context rather than creating pixels of their own. For example, the opacity aspect.
+ 
+ This flag can be dynamic if, for example, the current combination of properties on an aspect would result in nothing being drawn, then this method should return NO. For example, a fill aspect that was entirely transparent could return NO.
+ 
+ It's somewhat important that aspects correctly return YES or NO for this value, because it's used by the canvas to know when to draw a "ghost" image on the canvas. As such, if an aspect returned YES, when it didn't actually draw anything to the screen, then the user might not be able to find the image on the canvas, because nothing would be visible.
+ */
+@property (nonatomic,readonly) BOOL rendersToCanvas;
+
 - (_Nullable DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
 - (AJRBezierPath *)renderPathForPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
 

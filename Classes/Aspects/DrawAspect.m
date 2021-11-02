@@ -110,6 +110,10 @@ static NSMutableDictionary  *_aspects = nil;
     }
 }
 
+- (BOOL)rendersToCanvas {
+    return YES;
+}
+
 #pragma mark - Drawing
 
 - (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {

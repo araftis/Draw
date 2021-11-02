@@ -55,6 +55,10 @@ NSString * const DrawOpacityIdentifier = @"opacity";
 
 #pragma mark - DrawAspect
 
+- (BOOL)rendersToCanvas {
+    return NO;
+}
+
 - (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {
     CGContextSetAlpha([[NSGraphicsContext currentContext] CGContext], _opacity);
     CGContextBeginTransparencyLayerWithRect([[NSGraphicsContext currentContext] CGContext], [self.graphic dirtyBounds], NULL);
