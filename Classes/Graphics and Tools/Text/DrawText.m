@@ -378,7 +378,6 @@ NSString * const DrawTextIdentifier = @"text";
 - (void)encodeWithXMLCoder:(AJRXMLCoder *)encoder {
     [super encodeWithXMLCoder:encoder];
 
-    AJRPrintf(@"%C: encode text: %@\n", self, _textStorage.string);
     [encoder encodeObject:_textStorage forKey:@"text"];
 	[encoder encodeBool:_editing forKey:@"editing"];
     [encoder encodeFloat:_lineFragmentPadding forKey:@"lineFragmentPadding"];
