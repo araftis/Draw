@@ -987,10 +987,10 @@ static BOOL _showsDirtyBounds = NO;
         AJRPrintf(@"break here!\n");
     }
     if ([subaspects indexOfObjectIdenticalTo:aspect] == NSNotFound) {
-        [aspect graphicWillAddToView:_document];
+        [aspect graphicWillAddToDocument:_document];
         [[_aspects objectAtIndex:priority] addObject:aspect];
         [aspect setGraphic:self];
-        [aspect graphicDidAddToView:_document];
+        [aspect graphicDidAddToDocument:_document];
         [self updateBounds];
         [self setNeedsDisplay];
     }
@@ -1041,11 +1041,11 @@ static BOOL _showsDirtyBounds = NO;
     NSInteger x;
 
 
-    [aspect graphicWillRemoveFromView:_document];
+    [aspect graphicWillRemoveFromDocument:_document];
     for (x = 0; x < (const NSInteger)[_aspects count]; x++) {
         [[_aspects objectAtIndex:x] removeObjectIdenticalTo:aspect];
     }
-    [aspect graphicDidRemoveFromView:_document];
+    [aspect graphicDidRemoveFromDocument:_document];
 
 
     [self updateBounds];
@@ -1062,9 +1062,9 @@ static BOOL _showsDirtyBounds = NO;
         for (DrawAspect *aspect in otherSubaspects) {
             DrawAspect *copy = [aspect copy];
             [copy setGraphic:self];
-            [aspect graphicWillAddToView:_document];
+            [aspect graphicWillAddToDocument:_document];
             [subaspects addObject:copy];
-            [aspect graphicDidAddToView:_document];
+            [aspect graphicDidAddToDocument:_document];
         }
     }
 
@@ -1341,15 +1341,15 @@ static BOOL _showsDirtyBounds = NO;
 
 #pragma mark - Notifications
 
-- (void)graphicWillAddToView:(DrawDocument *)view {
+- (void)graphicWillAddToDocument:(DrawDocument *)view {
     [self enumerateAspectsWithBlock:^(DrawAspect *aspect) {
-        [aspect graphicWillAddToView:view];
+        [aspect graphicWillAddToDocument:view];
     }];
 }
 
-- (void)graphicDidAddToView:(DrawDocument *)view {
+- (void)graphicDidAddToDocument:(DrawDocument *)view {
     [self enumerateAspectsWithBlock:^(DrawAspect *aspect) {
-        [aspect graphicDidAddToView:view];
+        [aspect graphicDidAddToDocument:view];
     }];
 }
 
@@ -1365,18 +1365,18 @@ static BOOL _showsDirtyBounds = NO;
     }];
 }
 
-- (void)graphicWillRemoveFromView:(DrawDocument *)view {
+- (void)graphicWillRemoveFromDocument:(DrawDocument *)view {
     [self enumerateAspectsWithBlock:^(DrawAspect *aspect) {
-        [aspect graphicWillRemoveFromView:view];
+        [aspect graphicWillRemoveFromDocument:view];
     }];
 }
 
-- (void)graphicDidRemoveFromView:(DrawDocument *)view {
+- (void)graphicDidRemoveFromDocument:(DrawDocument *)view {
     _document = nil;
     _page = nil;
     _layer = nil;
     [self enumerateAspectsWithBlock:^(DrawAspect *aspect) {
-        [aspect graphicDidRemoveFromView:view];
+        [aspect graphicDidRemoveFromDocument:view];
     }];
 }
 

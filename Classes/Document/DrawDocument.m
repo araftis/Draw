@@ -804,9 +804,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 - (void)addGraphic:(DrawGraphic *)graphic {
     [[self undoManager] registerUndoWithTarget:self selector:@selector(removeGraphic:) object:graphic];
 
-    [graphic graphicWillAddToView:self];
+    [graphic graphicWillAddToDocument:self];
     [graphic setDocument:self];
-    [graphic graphicDidAddToView:self];
+    [graphic graphicDidAddToDocument:self];
     if ([graphic supergraphic]) {
         [graphic removeFromSupergraphic];
     }
@@ -832,9 +832,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         }
 
         [[self undoManager] registerUndoWithTarget:self selector:@selector(addGraphic:) object:graphic];
-        [graphic graphicWillRemoveFromView:self];
+        [graphic graphicWillRemoveFromDocument:self];
         [[graphic page] removeGraphic:graphic];
-        [graphic graphicDidRemoveFromView:self];
+        [graphic graphicDidRemoveFromDocument:self];
 
         // And since we no longer own the object, forget about it.
         [_editingContext forgetObject:graphic];
@@ -848,11 +848,11 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [newGraphic setDocument:self];
     [newGraphic setLayer:[oldGraphic layer]];
 
-    [oldGraphic graphicWillRemoveFromView:self];
-    [newGraphic graphicWillAddToView:self];
+    [oldGraphic graphicWillRemoveFromDocument:self];
+    [newGraphic graphicWillAddToDocument:self];
     [[oldGraphic page] replaceGraphic:oldGraphic withGraphic:newGraphic];
-    [newGraphic graphicDidAddToView:self];
-    [oldGraphic graphicDidRemoveFromView:self];
+    [newGraphic graphicDidAddToDocument:self];
+    [oldGraphic graphicDidRemoveFromDocument:self];
 
     if ([_storage.selection containsObject:oldGraphic]) {
         [self removeGraphicFromSelection:oldGraphic];

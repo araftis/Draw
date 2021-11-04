@@ -189,10 +189,10 @@ static NSMutableDictionary  *_aspects = nil;
 
 #pragma mark - Notification
 
-- (void)graphicWillAddToView:(DrawDocument *)view {
+- (void)graphicWillAddToDocument:(DrawDocument *)view {
 }
 
-- (void)graphicDidAddToView:(DrawDocument *)aView {
+- (void)graphicDidAddToDocument:(DrawDocument *)aView {
 }
 
 - (void)graphicWillAddToPage:(DrawPage *)page {
@@ -201,10 +201,10 @@ static NSMutableDictionary  *_aspects = nil;
 - (void)graphicDidAddToPage:(DrawPage *)page {
 }
 
-- (void)graphicWillRemoveFromView:(DrawDocument *)aView {
+- (void)graphicWillRemoveFromDocument:(DrawDocument *)aView {
 }
 
-- (void)graphicDidRemoveFromView:(DrawDocument *)aView {
+- (void)graphicDidRemoveFromDocument:(DrawDocument *)aView {
 }
 
 - (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {

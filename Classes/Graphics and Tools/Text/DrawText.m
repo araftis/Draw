@@ -197,11 +197,11 @@ NSString * const DrawTextIdentifier = @"text";
     [textView setMaxSize:maxSize];
 }
 
-- (void)graphicDidAddToView:(DrawDocument *)aView {
+- (void)graphicDidAddToDocument:(DrawDocument *)aView {
     [self updateMaxSize];
 }
 
-- (void)graphicWillRemoveFromView:(DrawDocument *)aView {
+- (void)graphicWillRemoveFromDocument:(DrawDocument *)aView {
 }
 
 - (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {
