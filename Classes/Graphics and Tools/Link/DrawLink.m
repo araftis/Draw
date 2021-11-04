@@ -383,20 +383,6 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     }
 }
 
-- (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {
-    if (aGraphic == _source) {
-        [self updateSourcePoint];
-        if ([self isLine]) {
-            [self updateDestinationPoint];
-        }
-    } else if (aGraphic == _destination) {
-        [self updateDestinationPoint];
-        if ([self isLine]) {
-            [self updateSourcePoint];
-        }
-    }
-}
-
 - (DrawGraphic *)topGraphicAtPoint:(NSPoint)point exclude:(DrawGraphic *)exclusionGraphic {
     NSArray *layers = [self.document layers];
     NSInteger x, y;
@@ -564,6 +550,32 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     }
 
     return angle;
+}
+
+#pragma mark - DrawGraphic
+
+- (void)graphicDidRemoveFromDocument:(DrawDocument *)document {
+    [super graphicDidRemoveFromDocument:document];
+
+    // Since we've been removed from the document, we need to disconnect from our source and destination.
+    [_source removeFromRelatedGraphics:self];
+    _source = nil;
+    [_destination removeFromRelatedGraphics:self];
+    _destination = nil;
+}
+
+- (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {
+    if (aGraphic == _source) {
+        [self updateSourcePoint];
+        if ([self isLine]) {
+            [self updateDestinationPoint];
+        }
+    } else if (aGraphic == _destination) {
+        [self updateDestinationPoint];
+        if ([self isLine]) {
+            [self updateSourcePoint];
+        }
+    }
 }
 
 #pragma mark - NSCopying
