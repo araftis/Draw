@@ -158,4 +158,6 @@ public class DrawPoint : DrawGraphic {
         coder.encode(radius, forKey: "radius")
     }
 */
+
+    public override class var ajr_nameForXMLArchiving: String { return "point" }
 }

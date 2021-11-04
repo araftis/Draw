@@ -150,7 +150,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
 - (void)_initializeTemplateGraphic:(DrawGraphic *)templateGraphic {
     for (Class aspectClass in [DrawAspect aspects]) {
-        if ([templateGraphic primaryAspectOfType:aspectClass create:NO] == nil) {
+        // We only want to include aspects that actually override defaultAspectForGraphic: If we take others, then we can pick up subclasses that aren't meant to be added as defaults.
+        if ([templateGraphic primaryAspectOfType:aspectClass create:NO] == nil
+            && [aspectClass overridesSelector:@selector(defaultAspectForGraphic:)]) {
             DrawAspect *aspect = [aspectClass defaultAspectForGraphic:_storage.templateGraphic];
             if (aspect != nil) {
                 [templateGraphic addAspect:aspect withPriority:[aspectClass defaultPriority]];
@@ -819,17 +821,24 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 - (void)removeGraphic:(DrawGraphic *)graphic {
-    if ([graphic document] != self) {
-        [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@, because I don't contain it.", graphic];
+    if (graphic.document == nil) {
+        // This happens when an object is somehow archived, but shouldn't have been. Normally it's a bug with related graphics. We're just going to try and remove it from everything.
+        for (DrawPage *page in self.pages) {
+            [page removeGraphic:graphic];
+        }
+    } else {
+        if ([graphic document] != self) {
+            [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@, because I don't contain it.", graphic];
+        }
+
+        [[self undoManager] registerUndoWithTarget:self selector:@selector(addGraphic:) object:graphic];
+        [graphic graphicWillRemoveFromView:self];
+        [[graphic page] removeGraphic:graphic];
+        [graphic graphicDidRemoveFromView:self];
+
+        // And since we no longer own the object, forget about it.
+        [_editingContext forgetObject:graphic];
     }
-
-    [[self undoManager] registerUndoWithTarget:self selector:@selector(addGraphic:) object:graphic];
-    [graphic graphicWillRemoveFromView:self];
-    [[graphic page] removeGraphic:graphic];
-    [graphic graphicDidRemoveFromView:self];
-
-    // And since we no longer own the object, forget about it.
-    [_editingContext forgetObject:graphic];
 }
 
 - (void)replaceGraphic:(DrawGraphic *)oldGraphic withGraphic:(DrawGraphic *)newGraphic {

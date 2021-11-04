@@ -53,4 +53,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     return completionBlock;
 }
 
+#pragma mark - AJRXMLCoding
+
++ (NSString *)ajr_nameForXMLArchiving {
+    return @"formEntry";
+}
+
 @end

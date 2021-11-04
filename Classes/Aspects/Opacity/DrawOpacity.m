@@ -87,6 +87,10 @@ NSString * const DrawOpacityIdentifier = @"opacity";
     [coder encodeFloat:_opacity forKey:@"opacity"];
 }
 
++ (NSString *)ajr_nameForXMLArchiving {
+    return @"opacity";
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {

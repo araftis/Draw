@@ -126,17 +126,11 @@ NSString * const DrawTextIdentifier = @"text";
 - (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {
     if (!_editing) {
         NSLayoutManager *layoutManager = self.layoutManager;
-        NSRect frame = [self.graphic frame];
-        NSRange range = [layoutManager glyphRangeForTextContainer:[self textContainer]];
+        NSRect frame = self.graphic.frame;
+        NSRange range = [layoutManager glyphRangeForTextContainer:self.textContainer];
         
         [layoutManager drawBackgroundForGlyphRange:range atPoint:frame.origin];
         [layoutManager drawGlyphsForGlyphRange:range atPoint:frame.origin];
-
-//        [[NSColor.systemRedColor colorWithAlphaComponent:0.5] set];
-//        NSBezierPath *newPath = [NSBezierPath bezierPathWithRect:self.graphic.bounds];
-//        [newPath appendBezierPath:(NSBezierPath *)path];
-//        [newPath setWindingRule:NSWindingRuleEvenOdd];
-//        [newPath fill];
     }
 	
 	return NULL;
@@ -383,7 +377,8 @@ NSString * const DrawTextIdentifier = @"text";
 
 - (void)encodeWithXMLCoder:(AJRXMLCoder *)encoder {
     [super encodeWithXMLCoder:encoder];
-    
+
+    AJRPrintf(@"%C: encode text: %@\n", self, _textStorage.string);
     [encoder encodeObject:_textStorage forKey:@"text"];
 	[encoder encodeBool:_editing forKey:@"editing"];
     [encoder encodeFloat:_lineFragmentPadding forKey:@"lineFragmentPadding"];

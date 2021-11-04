@@ -112,6 +112,10 @@ NSString * const DrawShadowIdentifier = @"shadow";
 
 #pragma mark - AJRXMLCoding
 
++ (NSString *)ajr_nameForXMLArchiving {
+    return @"shadow";
+}
+
 - (void)decodeWithXMLCoder:(AJRXMLCoder *)coder {
     [super decodeWithXMLCoder:coder];
 

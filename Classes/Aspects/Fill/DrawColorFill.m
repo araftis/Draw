@@ -99,6 +99,10 @@ NSString * const DrawFillColorKey = @"FillColor";
 
 #pragma mark - AJRXMLCoding
 
++ (NSString *)ajr_nameForXMLArchiving {
+    return @"colorFill";
+}
+
 - (void)decodeWithXMLCoder:(AJRXMLCoder *)coder {
     [super decodeWithXMLCoder:coder];
 

@@ -150,16 +150,23 @@ static NSDictionary *_pageNumberAttributes = nil;
 }
 
 - (void)removeGraphic:(DrawGraphic *)graphic {
-    DrawLayer *layer = [graphic layer];
-    NSMutableArray *graphics = [_layers objectForKey:[layer name]];
-    
-    if (!graphics) {
-        [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@ because it's layer doesn't exist.", graphic];
+    if (graphic.layer == nil) {
+        // This happens when an abandoned graphic, usually due to an error in related graphics, gets left around.
+        for (NSString *layerName in _layers.keyEnumerator) {
+            [_layers[layerName] removeObjectIdenticalTo:graphic];
+        }
+    } else {
+        DrawLayer *layer = [graphic layer];
+        NSMutableArray *graphics = [_layers objectForKey:[layer name]];
+
+        if (!graphics) {
+            [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@ because it's layer doesn't exist.", graphic];
+        }
+
+        [self setGraphicNeedsDisplayInRect:[graphic bounds]];
+
+        [graphics removeObjectIdenticalTo:graphic];
     }
-    
-    [self setGraphicNeedsDisplayInRect:[graphic bounds]];
-    
-    [graphics removeObjectIdenticalTo:graphic];
 }
 
 - (void)replaceGraphic:(DrawGraphic *)oldGraphic withGraphic:(DrawGraphic *)newGraphic; {
