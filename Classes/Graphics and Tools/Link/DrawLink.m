@@ -638,8 +638,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
 - (void)encodeWithXMLCoder:(AJRXMLCoder *)coder {
     [super encodeWithXMLCoder:coder];
 
-    [coder encodeObject:_source forKey:@"source"];
-    [coder encodeObject:_destination forKey:@"destination"];
+    [coder encodeObjectReference:_source forKey:@"source"];
+    [coder encodeObjectReference:_destination forKey:@"destination"];
     [coder encodeDrawHandle:_sourceHandle forKey:@"sourceHandle"];
     [coder encodeDrawHandle:_destinationHandle forKey:@"destinationHandle"];
     [coder encodePoint:_sourcePoint forKey:@"sourcePoint"];

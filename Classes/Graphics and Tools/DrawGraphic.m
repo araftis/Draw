@@ -983,9 +983,6 @@ static BOOL _showsDirtyBounds = NO;
 - (void)addAspect:(DrawAspect *)aspect withPriority:(DrawAspectPriority)priority {
     NSMutableArray *subaspects = [_aspects objectAtIndex:priority];
 
-    if (self.document.templateGraphic == self && [aspect isKindOfClass:DrawText.class]) {
-        AJRPrintf(@"break here!\n");
-    }
     if ([subaspects indexOfObjectIdenticalTo:aspect] == NSNotFound) {
         [aspect graphicWillAddToDocument:_document];
         [[_aspects objectAtIndex:priority] addObject:aspect];
