@@ -128,4 +128,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
 }
 
+- (BOOL)editingContext:(AJREditingContext *)editingContext shouldRegisterUndoOfValue:(id)value forKey:(NSString *)key onObject:(id)object {
+    [self registerUndoWithTarget:object handler:^(AJREditableObject *target) {
+        [target undoValue:value forKey:key];
+    }];
+    return NO;
+}
+
 @end

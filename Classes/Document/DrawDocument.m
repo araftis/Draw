@@ -180,7 +180,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         // Editing
         _editingContext = [[AJREditingContext alloc] init];
         _editingContext.delegate = self;
-        _editingContext.undoManager = self.undoManager;
+        // We don't want the editing context to have an undo manager, because we want to manage the undo events via the delegate callback.
+        _editingContext.undoManager = nil;
         // TODO: Add this in
         //_editingContext.undoManager = self.undoManager;
         _graphicObservers = [NSMutableArray array];
