@@ -31,6 +31,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawAspect.h"
 
+#import "DrawDocument.h"
 #import "DrawGraphic.h"
 #import "DrawLogging.h"
 
@@ -193,6 +194,7 @@ static NSMutableDictionary  *_aspects = nil;
 }
 
 - (void)didAddToDocument:(DrawDocument *)document {
+    [document addObjectToEditingContext:self];
 }
 
 - (void)willAddToPage:(DrawPage *)page {
@@ -205,6 +207,7 @@ static NSMutableDictionary  *_aspects = nil;
 }
 
 - (void)didRemoveFromDocument:(DrawDocument *)document {
+    [document removeObjectFromEditingContext:self];
 }
 
 - (void)graphicDidChangeShape:(DrawGraphic *)graphic {

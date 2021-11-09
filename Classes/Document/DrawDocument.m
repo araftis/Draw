@@ -180,6 +180,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         // Editing
         _editingContext = [[AJREditingContext alloc] init];
         _editingContext.delegate = self;
+        _editingContext.undoManager = self.undoManager;
         // TODO: Add this in
         //_editingContext.undoManager = self.undoManager;
         _graphicObservers = [NSMutableArray array];
@@ -356,9 +357,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         for (DrawPage *page in _storage.pages) {
             // We need to remove all the objects from our editing context
             [self enumerateGraphicsUsing:^(DrawGraphic * _Nonnull graphic, BOOL * _Nonnull stop) {
-                if (graphic.editingContext == self->_editingContext) {
-                    [self->_editingContext forgetObject:graphic];
-                }
+                [graphic enumerateAspectsWithBlock:^(DrawAspect * _Nonnull aspect) {
+                    [self removeObjectFromEditingContext:aspect];
+                }];
+                [self removeObjectFromEditingContext:graphic];
             }];
             page.document = nil;
         }
@@ -384,16 +386,12 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
 
     // And now we need to add all our graphics back in.
-    [self enumerateGraphicsUsing:^(DrawGraphic * _Nonnull graphic, BOOL * _Nonnull stop) {
+    [self enumerateGraphicsUsing:^(DrawGraphic *graphic, BOOL *stop) {
         // We do this check, because a graphic might get passed to us twice.
-        if (graphic.editingContext != self->_editingContext) {
-            if (graphic.editingContext != nil) {
-                // Steal ownership
-                [[graphic editingContext] forgetObject:graphic];
-            }
-            [self->_editingContext addObject:graphic];
-            [graphic startTrackingEdits];
-        }
+        [self addObjectToEditingContext:graphic];
+        [graphic enumerateAspectsWithBlock:^(DrawAspect *aspect) {
+            [self addObjectToEditingContext:aspect];
+        }];
     }];
 
     _storage.masterPageOdd.document = self;
@@ -952,12 +950,15 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 #pragma mark - Editing Context
 
 - (void)addObjectToEditingContext:(AJREditableObject *)object {
-    if (object.editingContext != nil) {
-        // Steal ownership
-        [object.editingContext forgetObject:object];
+    // Only do this if the object isn't already in our editing context.
+    if (object.editingContext != self->_editingContext) {
+        if (object.editingContext != nil) {
+            // Steal ownership
+            [object.editingContext forgetObject:object];
+        }
+        [_editingContext addObject:object];
+        [object startTrackingEdits];
     }
-    [_editingContext addObject:object];
-    [object startTrackingEdits];
 }
 
 - (void)removeObjectFromEditingContext:(AJREditableObject *)object {

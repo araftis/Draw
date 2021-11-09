@@ -36,7 +36,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DrawAspect : NSObject <NSCopying, AJRXMLCoding>
+@interface DrawAspect : AJREditableObject <NSCopying, AJRXMLCoding>
 
 #pragma mark - Factory
 
