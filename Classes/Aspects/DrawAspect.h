@@ -84,13 +84,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)boundsExpandsGraphicBounds;
 - (NSRect)boundsForGraphicBounds:(NSRect)graphicBounds;
 
-- (void)graphicWillAddToDocument:(DrawDocument *)view;
-- (void)graphicDidAddToDocument:(DrawDocument *)aView;
-- (void)graphicWillAddToPage:(DrawPage *)page;
-- (void)graphicDidAddToPage:(DrawPage *)page;
-- (void)graphicWillRemoveFromDocument:(DrawDocument *)aView;
-- (void)graphicDidRemoveFromDocument:(DrawDocument *)aView;
+#pragma mark - Life Cycle
+
+- (void)willAddToDocument:(DrawDocument *)document;
+- (void)didAddToDocument:(DrawDocument *)document;
+- (void)willAddToPage:(DrawPage *)page;
+- (void)didAddToPage:(DrawPage *)page;
+- (void)willRemoveFromDocument:(DrawDocument *)document;
+- (void)didRemoveFromDocument:(DrawDocument *)document;
 - (void)graphicDidChangeShape:(DrawGraphic *)aGraphic;
+
+#pragma mark - Editing
 
 - (BOOL)beginEditingFromEvent:(DrawEvent *)anEvent;
 - (void)endEditing;

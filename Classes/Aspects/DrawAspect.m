@@ -187,28 +187,30 @@ static NSMutableDictionary  *_aspects = nil;
     return self == object || ([object isKindOfClass:DrawAspect.class] && [self isEqualToAspect:object]);
 }
 
-#pragma mark - Notification
+#pragma mark - Life Cycle
 
-- (void)graphicWillAddToDocument:(DrawDocument *)view {
+- (void)willAddToDocument:(DrawDocument *)document {
 }
 
-- (void)graphicDidAddToDocument:(DrawDocument *)aView {
+- (void)didAddToDocument:(DrawDocument *)document {
 }
 
-- (void)graphicWillAddToPage:(DrawPage *)page {
+- (void)willAddToPage:(DrawPage *)page {
 }
 
-- (void)graphicDidAddToPage:(DrawPage *)page {
+- (void)didAddToPage:(DrawPage *)page {
 }
 
-- (void)graphicWillRemoveFromDocument:(DrawDocument *)aView {
+- (void)willRemoveFromDocument:(DrawDocument *)document {
 }
 
-- (void)graphicDidRemoveFromDocument:(DrawDocument *)aView {
+- (void)didRemoveFromDocument:(DrawDocument *)document {
 }
 
-- (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {
+- (void)graphicDidChangeShape:(DrawGraphic *)graphic {
 }
+
+#pragma mark - Editing
 
 - (BOOL)beginEditingFromEvent:(DrawEvent *)anEvent {
     return NO;
