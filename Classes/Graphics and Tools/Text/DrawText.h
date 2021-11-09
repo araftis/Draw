@@ -37,6 +37,15 @@ extern NSString * const DrawTextIdentifier;
 
 @class DrawTextView, DrawTextContainer;
 
+typedef NS_ENUM(NSInteger, DrawVerticalTextAlignment) {
+    DrawVerticalTextAlignmentTop = 0,
+    DrawVerticalTextAlignmentMiddle,
+    DrawVerticalTextAlignmentBottom
+};
+
+extern DrawVerticalTextAlignment DrawVerticalTextAlignmentFromString(NSString *string);
+extern NSString *DrawStringFromVerticalTextAlignment(DrawVerticalTextAlignment alignment);
+
 @interface DrawText : DrawAspect
 
 - (id)initWithGraphic:(nullable DrawGraphic *)graphic;
@@ -44,6 +53,7 @@ extern NSString * const DrawTextIdentifier;
 
 @property (nonatomic,strong) NSAttributedString *attributedString;
 @property (nonatomic,assign) CGFloat lineFragmentPadding;
+@property (nonatomic,assign) DrawVerticalTextAlignment verticalAlignment;
 
 - (void)setupTextView:(NSTextView *)textView;
 

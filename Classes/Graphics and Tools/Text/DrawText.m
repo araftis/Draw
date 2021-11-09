@@ -123,14 +123,31 @@ NSString * const DrawTextIdentifier = @"text";
     [layoutManager ensureLayoutForGlyphRange:range];
 }
 
+- (CGFloat)yOffsetInTextFrame:(NSRect)textFrame {
+    NSRect frame = self.graphic.frame;
+    switch (self.verticalAlignment) {
+        case DrawVerticalTextAlignmentTop:
+            // Do nothing, we're automatically aligned to the top.
+            return 0.0;
+        case DrawVerticalTextAlignmentMiddle:
+            return (frame.size.height - textFrame.size.height) / 2.0;
+        case DrawVerticalTextAlignmentBottom:
+            return frame.size.height - textFrame.size.height;
+    }
+    // Just in case we fallthrough, which we shouldn't, unless we change the enumeration and ignore warnings.
+    return 0.0;
+}
+
 - (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {
     if (!_editing) {
         NSLayoutManager *layoutManager = self.layoutManager;
-        NSRect frame = self.graphic.frame;
+        NSPoint point = self.graphic.frame.origin;
         NSRange range = [layoutManager glyphRangeForTextContainer:self.textContainer];
         
-        [layoutManager drawBackgroundForGlyphRange:range atPoint:frame.origin];
-        [layoutManager drawGlyphsForGlyphRange:range atPoint:frame.origin];
+        point.y += [self yOffsetInTextFrame:[layoutManager usedRectForTextContainer:self.textContainer]];
+        
+        [layoutManager drawBackgroundForGlyphRange:range atPoint:point];
+        [layoutManager drawGlyphsForGlyphRange:range atPoint:point];
     }
 	
 	return NULL;
@@ -161,6 +178,11 @@ NSString * const DrawTextIdentifier = @"text";
         }
         [self.graphic setNeedsDisplay];
     }
+}
+
+- (void)setVerticalAlignment:(DrawVerticalTextAlignment)verticalAlignment {
+    _verticalAlignment = verticalAlignment;
+    [self.graphic setNeedsDisplay];
 }
 
 - (NSLayoutManager *)layoutManager {
@@ -305,7 +327,7 @@ NSString * const DrawTextIdentifier = @"text";
     NSRect graphicFrame = self.graphic.frame;
     NSRect rect = [manager usedRectForTextContainer:self.textContainer];
     rect.origin.x += graphicFrame.origin.x;
-    rect.origin.y += graphicFrame.origin.y;
+    rect.origin.y += graphicFrame.origin.y + [self yOffsetInTextFrame:rect];
 
     return NSMouseInRect(point, rect, YES);
 }
@@ -355,6 +377,17 @@ NSString * const DrawTextIdentifier = @"text";
     return @"text";
 }
 
+- (void)encodeWithXMLCoder:(AJRXMLCoder *)encoder {
+    [super encodeWithXMLCoder:encoder];
+
+    [encoder encodeObject:_textStorage forKey:@"text"];
+    [encoder encodeBool:_editing forKey:@"editing"];
+    [encoder encodeFloat:_lineFragmentPadding forKey:@"lineFragmentPadding"];
+    if (_verticalAlignment != DrawVerticalTextAlignmentTop) {
+        [encoder encodeString:DrawStringFromVerticalTextAlignment(_verticalAlignment) forKey:@"verticalAlignment"];
+    }
+}
+
 - (void)decodeWithXMLCoder:(AJRXMLCoder *)coder {
     [super decodeWithXMLCoder:coder];
 
@@ -373,6 +406,9 @@ NSString * const DrawTextIdentifier = @"text";
     [coder decodeFloatForKey:@"lineFragmentPadding" setter:^(float value) {
         self->_lineFragmentPadding = value;
     }];
+    [coder decodeStringForKey:@"verticalAlignment" setter:^(NSString * _Nonnull string) {
+        self->_verticalAlignment = DrawVerticalTextAlignmentFromString(string);
+    }];
 }
 
 - (id)finalizeXMLDecodingWithError:(NSError * _Nullable __autoreleasing *)error {
@@ -385,12 +421,26 @@ NSString * const DrawTextIdentifier = @"text";
     return self;
 }
 
-- (void)encodeWithXMLCoder:(AJRXMLCoder *)encoder {
-    [super encodeWithXMLCoder:encoder];
+@end
 
-    [encoder encodeObject:_textStorage forKey:@"text"];
-	[encoder encodeBool:_editing forKey:@"editing"];
-    [encoder encodeFloat:_lineFragmentPadding forKey:@"lineFragmentPadding"];
+#pragma mark - Enumeration Functions
+
+DrawVerticalTextAlignment DrawVerticalTextAlignmentFromString(NSString *string) {
+    if ([string caseInsensitiveCompare:@"top"] == NSOrderedSame) {
+        return DrawVerticalTextAlignmentTop;
+    } else if ([string caseInsensitiveCompare:@"middle"] == NSOrderedSame) {
+        return DrawVerticalTextAlignmentMiddle;
+    } else if ([string caseInsensitiveCompare:@"bottom"] == NSOrderedSame) {
+        return DrawVerticalTextAlignmentBottom;
+    }
+    return DrawVerticalTextAlignmentTop;
 }
 
-@end
+NSString *DrawStringFromVerticalTextAlignment(DrawVerticalTextAlignment alignment) {
+    switch (alignment) {
+        case DrawVerticalTextAlignmentTop: return @"top";
+        case DrawVerticalTextAlignmentMiddle: return @"middle";
+        case DrawVerticalTextAlignmentBottom: return @"bottom";
+    }
+    return nil;
+}
