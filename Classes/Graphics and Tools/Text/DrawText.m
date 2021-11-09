@@ -295,12 +295,22 @@ NSString * const DrawTextIdentifier = @"text";
     }
 }
 
-- (BOOL)isPoint:(NSPoint)aPoint inPath:(AJRBezierPath *)path {
-    return [path isHitByPoint:aPoint];
+- (BOOL)isPoint:(NSPoint)point inPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {
+    NSLayoutManager *manager = self.layoutManager;
+
+    // Make sure we're ready to use.
+    [self prepareTextInLayoutManager];
+    
+    // Get the frame for our graphic, but remember to offset it by our frame.
+    NSRect graphicFrame = self.graphic.frame;
+    NSRect rect = [manager usedRectForTextContainer:self.textContainer];
+    rect.origin.x += graphicFrame.origin.x;
+    rect.origin.y += graphicFrame.origin.y;
+
+    return NSMouseInRect(point, rect, YES);
 }
 
 - (void)textViewFrameDidChange:(NSNotification *)notification {
-    //NSLog(@"Change\n");
 }
 
 #pragma mark - DrawAspect
