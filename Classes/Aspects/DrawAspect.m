@@ -87,6 +87,10 @@ static NSMutableDictionary  *_aspects = nil;
     return DrawAspectPriorityFromString([[[AJRPlugInManager sharedPlugInManager] extensionPointForName:@"draw-aspect"] valueForProperty:@"priority" onExtensionForClass:self.class]);
 }
 
++ (BOOL)shouldArchive {
+    return YES;
+}
+
 #pragma mark - Creation
 
 + (DrawAspect *)defaultAspectForGraphic:(DrawGraphic *)graphic {

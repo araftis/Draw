@@ -1194,6 +1194,13 @@ static BOOL _showsDirtyBounds = NO;
     return priorityNames;
 }
 
+/// Returns `YES` if aspects count > 0 and at least one aspect returns `YES` to should encode.
+- (BOOL)shouldEncodeAspects:(NSArray<DrawAspect *> *)aspects {
+    return aspects.count > 0 && [aspects ajr_firstObjectPassingTest:^BOOL(DrawAspect *object) {
+        return [[object class] shouldArchive];
+    }] != nil;
+}
+
 - (void)encodeWithXMLCoder:(AJRXMLCoder *)encoder {
     [encoder encodeRect:_frame forKey:@"frame"];
     if (self.shouldEncodePath) {
@@ -1201,17 +1208,17 @@ static BOOL _showsDirtyBounds = NO;
     }
 
     NSArray<NSString *> *names = [self.class priorityNames];
-    BOOL hasAspects = NO;
+    BOOL hasAspectsToEncode = NO;
     for (NSInteger x = 0; x < names.count; x++) {
-        if (_aspects[x].count > 0) {
-            hasAspects = YES;
+        if ([self shouldEncodeAspects:_aspects[x]]) {
+            hasAspectsToEncode = YES;
             break;
         }
     }
-    if (hasAspects) {
+    if (hasAspectsToEncode) {
         [encoder encodeGroupForKey:@"aspects" usingBlock:^{
             for (NSInteger x = 0; x < names.count; x++) {
-                if (self->_aspects[x].count != 0) {
+                if ([self shouldEncodeAspects:self->_aspects[x]]) {
                     [encoder encodeObject:self->_aspects[x] forKey:names[x]];
                 }
             }

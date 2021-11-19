@@ -69,7 +69,7 @@ typedef NSString *DrawToolSetId NS_EXTENSIBLE_STRING_ENUM;
 
 - (void)registerToolClass:(Class)toolClass properties:(NSDictionary<NSString *, id> *)properties;
 
-- (NSArray<DrawTool *> *)tools;
+@property (nonatomic,strong,readonly) NSArray<DrawTool *> *tools;
 - (nullable DrawTool *)toolForIdentifier:(DrawToolSetId)identifier;
 
 #pragma mark - Activation

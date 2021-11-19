@@ -100,6 +100,7 @@ open class DrawStructureInspectors: DrawViewController {
             buttonBar.setTarget(self, for: index)
             buttonBar.setAction(#selector(selectInspector(_:)), for: index)
         }
+        //buttonBar.border.bottomColor = AJRGradientColor(color: .tertiaryLabelColor)
 
         if let selectedInspectorIndex = indexOfGroup(for: UserDefaults[.selectedStructureInspector]!) {
             selectInspector(at: selectedInspectorIndex)

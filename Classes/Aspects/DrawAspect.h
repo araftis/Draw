@@ -49,6 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,readonly,class) NSString *name;
 @property (nonatomic,readonly,class) NSImage *image;
 @property (nonatomic,readonly,class) DrawAspectPriority defaultPriority;
+/// If `NO`, then the aspect will not archive. This is `YES` by default, but your custom aspect might not wish to archive. For example, a transient aspect, like warning badges.
+@property (nonatomic,readonly,class) BOOL shouldArchive;
 
 #pragma mark - Creation
 
