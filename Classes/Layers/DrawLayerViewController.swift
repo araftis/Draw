@@ -53,6 +53,11 @@ open class DrawLayerViewController: DrawStructureInspector, NSTableViewDataSourc
     open override func documentDidLoad(_ document: DrawDocument) {
         reload()
     }
+    
+    open override func viewDidLayout() {
+        // I'm not sure why this doesn't happen automatically, but...
+        layersTable.sizeLastColumnToFit()
+    }
 
     open func reload() -> Void {
         layersTable?.reloadData()

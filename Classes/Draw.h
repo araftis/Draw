@@ -67,7 +67,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawInspectorController.h>
 #import <Draw/DrawInspectorController.h>
 #import <Draw/DrawLayer.h>
-#import <Draw/DrawLayerInspector.h>
 #import <Draw/DrawLayerInspectorController.h>
 #import <Draw/DrawLink.h>
 #import <Draw/DrawLinkCap.h>
