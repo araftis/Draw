@@ -73,6 +73,15 @@ open class DrawStructureInspector: DrawViewController {
     open var name : String
     open var icon : NSImage
     open var priority : Double
+    /// This property is observed, and if it changes, the UI element that controls selecting this panel may add a badge.
+    open var badge : NSImage? {
+        willSet {
+            willChangeValue(forKey: "badge")
+        }
+        didSet {
+            didChangeValue(forKey: "badge")
+        }
+    }
 
     // MARK: - Creation
 

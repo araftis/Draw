@@ -46,6 +46,7 @@ open class DrawStructureInspectors: DrawViewController {
     open var inspectors = [DrawStructureInspector]()
     open var inspectorsByID = [NSUserInterfaceItemIdentifier:DrawStructureInspector]()
     open var selectedInspector : DrawStructureInspector?
+    open var structureBadgeTokens = [AJRInvalidation]()
 
     // MARK: - Creation
 
@@ -55,6 +56,10 @@ open class DrawStructureInspectors: DrawViewController {
 
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    deinit {
+        structureBadgeTokens.invalidateObjects()
     }
 
     // MARK: - Inspectors
@@ -72,8 +77,14 @@ open class DrawStructureInspectors: DrawViewController {
     // MARK: - DrawViewController
     
     open override func documentDidLoad(_ document: DrawDocument) {
-        for inspector in inspectors {
+        for (index, inspector) in inspectors.enumerated() {
             inspector.documentDidLoad(document)
+            weak var weakSelf = self
+            structureBadgeTokens.append(inspector.add(observer:self, forKeyPath: "badge", options: .initial, block: { object, KeyPath, options in
+                if let strongSelf = weakSelf, let object = object as? DrawStructureInspector {
+                    strongSelf.buttonBar.setBadge(object.badge, for: index)
+                }
+            }))
         }
     }
 
