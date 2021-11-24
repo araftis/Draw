@@ -984,9 +984,11 @@ static BOOL _showsDirtyBounds = NO;
     NSMutableArray *subaspects = [_aspects objectAtIndex:priority];
 
     if ([subaspects indexOfObjectIdenticalTo:aspect] == NSNotFound) {
+        [aspect willAddToGraphic:self];
         [aspect willAddToDocument:_document];
         [[_aspects objectAtIndex:priority] addObject:aspect];
         [aspect setGraphic:self];
+        [aspect didAddToGraphic:self];
         [aspect didAddToDocument:_document];
         [self updateBounds];
         [self setNeedsDisplay];
@@ -1002,10 +1004,26 @@ static BOOL _showsDirtyBounds = NO;
 }
 
 - (DrawAspect *)firstAspectOfType:(Class)aspectType withPriority:(DrawAspectPriority)priority {
+    return [self firstAspectOfType:aspectType withPriority:priority create:NO];
+}
+
+- (nullable DrawAspect *)firstAspectOfType:(Class)aspectType withPriority:(DrawAspectPriority)priority create:(BOOL)flag {
+    DrawAspect *foundAspect = nil;
+
     for (DrawAspect *aspect in [_aspects objectAtIndex:priority]) {
-        if ([aspect isKindOfClass:aspectType]) return aspect;
+        if ([aspect isKindOfClass:aspectType]) {
+            foundAspect = aspect;
+            break;
+        }
     }
-    return nil;
+
+    if (foundAspect == nil && flag) {
+        // NOTE: Could still return nil, since not all aspect will provide a default. However, it's generally a contract between the aspect and the caller that if they're asking for an aspect to create itself, it'll be passing in an aspect type that will return an object.
+        foundAspect = [aspectType defaultAspectForGraphic:self];
+        [self addAspect:foundAspect withPriority:priority];
+    }
+
+    return foundAspect;
 }
 
 - (NSArray *)prioritiesForAspect:(DrawAspect *)aspect {
@@ -1037,20 +1055,19 @@ static BOOL _showsDirtyBounds = NO;
 - (void)removeAspect:(DrawAspect *)aspect {
     NSInteger x;
 
-
     [aspect willRemoveFromDocument:_document];
+    [aspect willRemoveFromGraphic:self];
     for (x = 0; x < (const NSInteger)[_aspects count]; x++) {
         [[_aspects objectAtIndex:x] removeObjectIdenticalTo:aspect];
     }
+    [aspect didRemoveFromGraphic:self];
     [aspect didRemoveFromDocument:_document];
-
 
     [self updateBounds];
     [self setNeedsDisplay];
 }
 
 - (void)takeAspectsFromGraphic:(DrawGraphic *)otherGraphic {
-
     _aspects = [[NSMutableArray alloc] initWithCapacity:DrawAspectPriorityLast - DrawAspectPriorityFirst];
     for (NSArray *otherSubaspects in otherGraphic->_aspects) {
         NSMutableArray *subaspects = [[NSMutableArray alloc] init];
@@ -1059,8 +1076,10 @@ static BOOL _showsDirtyBounds = NO;
         for (DrawAspect *aspect in otherSubaspects) {
             DrawAspect *copy = [aspect copy];
             [copy setGraphic:self];
+            [aspect willAddToGraphic:self];
             [aspect willAddToDocument:_document];
             [subaspects addObject:copy];
+            [aspect didRemoveFromGraphic:self];
             [aspect didAddToDocument:_document];
         }
     }
@@ -1146,6 +1165,9 @@ static BOOL _showsDirtyBounds = NO;
         NSArray<NSString *> *names = [self.class priorityNames];
         for (NSInteger x = 0; x < names.count; x++) {
             [coder decodeObjectForKey:names[x] setter:^(id  _Nonnull object) {
+                for (DrawAspect *aspect in object) {
+                    [aspect willAddToGraphic:self];
+                }
                 self->_aspects[x] = object;
             }];
         }
@@ -1243,6 +1265,7 @@ static BOOL _showsDirtyBounds = NO;
     for (NSArray<DrawAspect *> *subaspects in _aspects) {
         for (DrawAspect *aspect in subaspects) {
             aspect.graphic = self;
+            [aspect didAddToGraphic:self];
         }
     }
     // Make sure to mark this, because if we're reading from a document, we're definitely dirty.

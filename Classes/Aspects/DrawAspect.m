@@ -214,6 +214,18 @@ static NSMutableDictionary  *_aspects = nil;
     [document removeObjectFromEditingContext:self];
 }
 
+- (void)willAddToGraphic:(DrawGraphic *)graphic {
+}
+
+- (void)didAddToGraphic:(DrawGraphic *)graphic {
+}
+
+- (void)willRemoveFromGraphic:(DrawGraphic *)graphic {
+}
+
+- (void)didRemoveFromGraphic:(DrawGraphic *)graphic {
+}
+
 - (void)graphicDidChangeShape:(DrawGraphic *)graphic {
 }
 

@@ -203,6 +203,7 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 - (NSArray *)aspects;
 - (NSArray *)aspectsForPriority:(DrawAspectPriority)priority;
 - (nullable DrawAspect *)firstAspectOfType:(Class)aspectType withPriority:(DrawAspectPriority)priority;
+- (nullable DrawAspect *)firstAspectOfType:(Class)aspectType withPriority:(DrawAspectPriority)priority create:(BOOL)flag;
 - (NSArray *)prioritiesForAspect:(DrawAspect *)aspect;
 - (void)removeAllAspects;
 - (void)removeAspect:(DrawAspect *)aspect;

@@ -94,7 +94,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didAddToPage:(DrawPage *)page;
 - (void)willRemoveFromDocument:(DrawDocument *)document;
 - (void)didRemoveFromDocument:(DrawDocument *)document;
-- (void)graphicDidChangeShape:(DrawGraphic *)aGraphic;
+- (void)willAddToGraphic:(DrawGraphic *)graphic;
+- (void)didAddToGraphic:(DrawGraphic *)graphic;
+- (void)willRemoveFromGraphic:(DrawGraphic *)graphic;
+- (void)didRemoveFromGraphic:(DrawGraphic *)graphic;
+- (void)graphicDidChangeShape:(DrawGraphic *)graphic;
 
 #pragma mark - Editing
 
