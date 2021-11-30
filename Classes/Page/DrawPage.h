@@ -67,6 +67,7 @@ typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
 
 @property (nonatomic,weak) DrawDocument *document;
 @property (nonatomic,strong,null_resettable) NSColor *paperColor;
+@property (nonatomic,readonly) BOOL isPrinting;
 
 #pragma mark - Graphics
 
@@ -81,8 +82,7 @@ typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
 
 #pragma mark - Layers
 
-- (void)drawLayer:(DrawLayer *)aLayer inRect:(NSRect)rect;
-- (void)drawLayer:(DrawLayer *)layer inRect:(NSRect)rect isDrawingToScreen:(BOOL)flag;
+- (void)drawLayer:(DrawLayer *)layer inRect:(NSRect)rect;
 - (void)drawPageNumber:(NSInteger)aPageNumber inRect:(NSRect)rect;
 - (void)drawMarksInRect:(NSRect)rect;
 - (void)drawPageMarkingsInRect:(NSRect)rect;

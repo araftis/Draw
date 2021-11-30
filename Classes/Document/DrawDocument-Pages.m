@@ -41,22 +41,23 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation DrawDocument (Pages)
 
-- (BOOL)knowsPageRange:(NSRange *)range {
-    range->location = _storage.startingPageNumber;
-    range->length = [_storage.pages count];
-    
-    return YES;
-}
-
-- (NSRect)rectForPage:(NSInteger)aPageNumber {
-    if (_storage.pageNumber <= [_storage.pages count]) {
-        if (![[NSGraphicsContext currentContext] isDrawingToScreen]) {
-            _storage.pageNumber = aPageNumber;
-        }
-    }
-    
-    return (NSRect){{0.0, 0.0}, [[self printInfo] paperSize]};
-}
+// TODO: Candidate for deletion
+//- (BOOL)knowsPageRange:(NSRange *)range {
+//    range->location = _storage.startingPageNumber;
+//    range->length = [_storage.pages count];
+//
+//    return YES;
+//}
+//
+//- (NSRect)rectForPage:(NSInteger)aPageNumber {
+//    if (_storage.pageNumber <= [_storage.pages count]) {
+//        if (self.isPrinting) {
+//            _storage.pageNumber = aPageNumber;
+//        }
+//    }
+//
+//    return (NSRect){{0.0, 0.0}, [[self printInfo] paperSize]};
+//}
 
 - (NSView *)viewForPage:(NSInteger)aPageNumber {
     return [_storage.pages objectAtIndex:aPageNumber - _storage.startingPageNumber];
@@ -145,7 +146,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         NSInteger savedPageNumber = _storage.pageNumber;
         
         _isPrinting = YES;
-        [[NSPrintOperation printOperationWithView:self.pagedView printInfo:[self printInfo]] runOperation];
+        [[NSPrintOperation printOperationWithView:self.pagedView printInfo:self.printInfo] runOperation];
         _isPrinting = NO;
         _storage.pageNumber = savedPageNumber;
     }

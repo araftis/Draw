@@ -270,11 +270,15 @@ static NSDictionary *_pageNumberAttributes = nil;
     return YES;
 }
 
+- (BOOL)isPrinting {
+    return [NSPrintInfo.sharedPrintInfo.dictionary[@"AJRIsPrinting"] boolValue];
+}
+
 - (void)drawRect:(NSRect)rect {
     NSRect bounds = [self bounds];
-    BOOL isDrawingToScreen = [[NSGraphicsContext currentContext] isDrawingToScreen];
+    BOOL isPrinting = [self.enclosingPagedView prepareViewForPrinting:self];
     
-    if (isDrawingToScreen) {
+    if (!isPrinting) {
         // Draw the background.
         [self.paperColor set];
         NSRectFill([self centerScanRect:rect]);
@@ -291,31 +295,34 @@ static NSDictionary *_pageNumberAttributes = nil;
     
     // Finally, draw our actual graphics.
     for (DrawLayer *layer in [_document layers]) {
-        if ([layer visible] && (isDrawingToScreen || (!isDrawingToScreen && [layer printable]))) {
-            [self drawLayer:layer inRect:rect isDrawingToScreen:isDrawingToScreen];
+        if ([layer visible] && (!isPrinting || (isPrinting && [layer printable]))) {
+            [self drawLayer:layer inRect:rect];
         }
     }
 
+    if (isPrinting) {
+        [NSColor.blackColor set];
+        [[AJRBezierPath bezierPathWithRect:self.bounds] stroke];
+    }
+    
     // Finally, draw our guest drawers, if we have any.
-    if (isDrawingToScreen) {
+    if (!isPrinting) {
         for (DrawGuestDrawer block in [_guestDrawers objectEnumerator]) {
             block(self, rect);
         }
     }
+    
+    [self.enclosingPagedView concludePrintingInView:self];
 }
 
 - (void)drawLayer:(DrawLayer *)layer inRect:(NSRect)rect {
-    [self drawLayer:layer inRect:rect isDrawingToScreen:[[NSGraphicsContext currentContext] isDrawingToScreen]];
-}
-
-- (void)drawLayer:(DrawLayer *)layer inRect:(NSRect)rect isDrawingToScreen:(BOOL)flag {
     for (DrawGraphic *graphic in _layers[layer.name]) {
         if ([self needsToDrawRect:graphic.bounds]) {
             [graphic draw];
         }
     }
     
-    if (flag) {
+    if (!self.isPrinting) {
         // We don't draw handles when printing.
         for (DrawGraphic *graphic in [_document sortedSelection]) {
             if ([self needsToDrawRect:graphic.bounds]) {
@@ -481,12 +488,6 @@ static NSDictionary *_pageNumberAttributes = nil;
         [super setNeedsDisplayInRect:invalidRect];
     }
 }
-
-//- (void)setFrame:(NSRect)frameRect {
-//    [super setFrame:frameRect];
-//    frameRect.origin.y -= 100.0;
-//    [self setBounds:frameRect];
-//}
 
 #pragma mark - Guest drawers
 

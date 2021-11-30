@@ -539,7 +539,7 @@ static BOOL _showsDirtyBounds = NO;
                 }
 
                 // This will be called when we have no aspects capable of drawing anything, at which point we display a "ghost" image of ourself, but only when drawing to the screen.
-                if (!didDraw && [context isDrawingToScreen]) {
+                if (!didDraw && !self.document.isPrinting) {
                     AJRBezierPathPointTransform savedTransform = [path strokePointTransform];
 
                     [[NSColor lightGrayColor] set];

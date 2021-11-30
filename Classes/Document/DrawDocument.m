@@ -585,6 +585,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         // Set up our "outlets". We can't do this directly in IB, because the outlets would have to cross scene boundaries.
         _pagedView = AJRObjectIfKindOfClassOrAssert([_primaryWindowController.window.contentView findViewWithIdentifier:@"pagedView"], AJRPagedView);
         _pagedView.pageDataSource = self;
+        _pagedView.delegate = self;
         _toolSetSegments = AJRObjectIfKindOfClassOrAssert([_primaryWindowController.window.toolbar toolbarItemForItemIdentifier:@"toolSets"].view, NSSegmentedControl);
         _toolSetSegments.target = self;
         _toolSetSegments.action = @selector(selectToolSet:);
