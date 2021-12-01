@@ -559,6 +559,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     return YES;
 }
 
++ (BOOL)preservesVersions {
+    return YES;
+}
+
 - (void)makeWindowControllers {
     NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"DrawDocument" bundle:[NSBundle bundleForClass:DrawDocument.class]];
     _primaryWindowController = [storyboard instantiateInitialController];

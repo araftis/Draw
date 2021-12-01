@@ -128,10 +128,13 @@ NSString * const DrawViewNewURLKey = @"DrawViewNewURLKey";
     return AJRAssertOrPropagateError(fileWrapper, error, localError);
 }
 
-//- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError *__autoreleasing  _Nullable *)outError {
-//    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Writing to %@", url.path);
-//    return [super writeToURL:url ofType:typeName forSaveOperation:NSSaveOperation originalContentsURL:absoluteOriginalContentsURL error:outError];
-//}
+- (BOOL)writeToURL:(NSURL *)url ofType:(NSString *)typeName forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)absoluteOriginalContentsURL error:(NSError *__autoreleasing  _Nullable *)outError {
+    AJRLog(DrawDocumentLogDomain, AJRLogLevelDebug, @"Writing to %@", url.path);
+    BOOL result = [super writeToURL:url ofType:typeName forSaveOperation:NSSaveOperation originalContentsURL:absoluteOriginalContentsURL error:outError];
+    AJRPrintf(@"attributes: %@\n", _fileWrapper.fileWrappers[@"document.nn"].fileAttributes);
+    AJRPrintf(@"   -> %@\n", [NSFileManager.defaultManager attributesOfItemAtPath:@"/Users/AJ/Documents/MNIST Test.nn/document.nn" error:nil]);
+    return result;
+}
 
 #pragma mark - AJRXMLCoding
 

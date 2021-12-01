@@ -300,6 +300,11 @@ static NSDictionary *_pageNumberAttributes = nil;
         }
     }
 
+    if (isPrinting) {
+        [NSColor.blackColor set];
+        [[AJRBezierPath bezierPathWithRect:self.bounds] stroke];
+    }
+    
     // Finally, draw our guest drawers, if we have any.
     if (!isPrinting) {
         for (DrawGuestDrawer block in [_guestDrawers objectEnumerator]) {
