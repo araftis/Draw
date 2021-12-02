@@ -502,6 +502,10 @@ static BOOL _showsDirtyBounds = NO;
     [self drawWithAspectFilter:NULL];
 }
 
+- (BOOL)isPrinting {
+    return NSPrintOperation.currentOperation.printInfo.isPrinting;
+}
+
 - (void)drawWithAspectFilter:(DrawGraphicAspectFilter)filter {
     if (!_ignore) {
         if (!((_frame.size.width == 0.0) && (_frame.size.height == 0.0))) {
@@ -539,7 +543,7 @@ static BOOL _showsDirtyBounds = NO;
                 }
 
                 // This will be called when we have no aspects capable of drawing anything, at which point we display a "ghost" image of ourself, but only when drawing to the screen.
-                if (!didDraw && !self.document.isPrinting) {
+                if (!didDraw && !self.isPrinting) {
                     AJRBezierPathPointTransform savedTransform = [path strokePointTransform];
 
                     [[NSColor lightGrayColor] set];

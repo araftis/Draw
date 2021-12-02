@@ -153,6 +153,8 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 @property (nonatomic,readonly) NSRect dirtyBounds;
 @property (nonatomic,readonly) NSRect dirtyBoundsWithRelatedObjects;
 @property (nonatomic,readonly) NSPoint centroid;
+/// This is a convenience for graphics to check if they're currently printing.
+@property (nonatomic,readonly) BOOL isPrinting;
 
 #pragma mark - Handles
 
