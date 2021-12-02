@@ -974,4 +974,41 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
 }
 
+#pragma mark - Global Actions
+
+- (void)makeVisiblePageFirstResponderAndScrollToVisible:(BOOL)scrollToVisible {
+    NSIndexSet *visiblePages = [_pagedView visiblePageIndexes];
+    NSInteger index = visiblePages.firstIndex;
+    if (index != NSNotFound) {
+        [self makePageFirstResponder:_storage.pages[index] andScrollToVisible:scrollToVisible];
+    }
+}
+
+- (void)makePageFirstResponder:(DrawPage *)page andScrollToVisible:(BOOL)scrollToVisible {
+    [page.window makeFirstResponder:page];
+    if (scrollToVisible) {
+        NSInteger index = [_storage.pages indexOfObjectIdenticalTo:page];
+        if (index != NSNotFound) {
+            [_pagedView scrollPageToVisible:index];
+        }
+    }
+}
+
+- (void)makePageAtIndexFirstResponder:(NSInteger)index andScrollToVisible:(BOOL)scrollToVisible {
+    [self makePageFirstResponder:_storage.pages[index] andScrollToVisible:scrollToVisible];
+}
+
+- (void)makeSelectionOrVisiblePageFirstResponderAndScrollToVisible:(BOOL)scrollToVisible {
+    DrawGraphic *graphic = _storage.selection.anyObject;
+    if (graphic != nil) {
+        [self makeGraphicFirstResponder:graphic andScrollToVisible:scrollToVisible];
+    } else {
+        [self makeVisiblePageFirstResponderAndScrollToVisible:scrollToVisible];
+    }
+}
+
+- (void)makeGraphicFirstResponder:(DrawGraphic *)graphic andScrollToVisible:(BOOL)scrollToVisible {
+    [self makePageFirstResponder:graphic.page andScrollToVisible:scrollToVisible];
+}
+
 @end

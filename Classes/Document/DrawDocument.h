@@ -194,6 +194,14 @@ extern NSString * const DrawSavePanelPathKey;
 - (void)addObjectToEditingContext:(AJREditableObject *)object;
 - (void)removeObjectFromEditingContext:(AJREditableObject *)object;
 
+#pragma mark - Global Actions
+
+- (void)makeVisiblePageFirstResponderAndScrollToVisible:(BOOL)scrollToVisible;
+- (void)makePageFirstResponder:(DrawPage *)page andScrollToVisible:(BOOL)scrollToVisible;
+- (void)makePageAtIndexFirstResponder:(NSInteger)index andScrollToVisible:(BOOL)scrollToVisible;
+- (void)makeSelectionOrVisiblePageFirstResponderAndScrollToVisible:(BOOL)scrollToVisible;
+- (void)makeGraphicFirstResponder:(DrawGraphic *)grpahic andScrollToVisible:(BOOL)scrollToVisible;
+
 @end
 
 
