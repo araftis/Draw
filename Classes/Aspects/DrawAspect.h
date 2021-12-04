@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Creation
 
-+ (DrawAspect *)defaultAspectForGraphic:(DrawGraphic *)graphic;
++ (nullable DrawAspect *)defaultAspectForGraphic:(DrawGraphic *)graphic;
 
 - (id)initWithGraphic:(nullable DrawGraphic *)aGraphic;
 

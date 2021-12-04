@@ -186,15 +186,15 @@ NSString * const DrawTextIdentifier = @"text";
 }
 
 - (NSLayoutManager *)layoutManager {
-    return [[_textStorage layoutManagers] lastObject];
+    return _textStorage.layoutManagers.lastObject;
 }
 
 - (DrawTextView *)textView {
-    return (DrawTextView *)[(NSTextContainer *)[[[[_textStorage layoutManagers] lastObject] textContainers] lastObject] textView];
+    return (DrawTextView *)[self.layoutManager.textContainers.lastObject textView];
 }
 
 - (DrawTextContainer *)textContainer {
-    return AJRObjectIfKindOfClass(_textStorage.layoutManagers.lastObject.textContainers.lastObject, DrawTextContainer);
+    return AJRObjectIfKindOfClass(self.layoutManager.textContainers.lastObject, DrawTextContainer);
 }
 
 - (void)setGraphic:(DrawGraphic *)graphic {
@@ -226,7 +226,7 @@ NSString * const DrawTextIdentifier = @"text";
 - (void)willRemoveFromDocument:(DrawDocument *)aView {
 }
 
-- (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {
+- (void)graphicDidChangeShape:(DrawGraphic *)graphic {
     if (!_ignoreGraphicShapeChange) {
         DrawTextView *textView = [self textView];
         DrawTextContainer *textContainer = [self textContainer];
@@ -240,7 +240,7 @@ NSString * const DrawTextIdentifier = @"text";
         }
         
         if (![textContainer isSimpleRectangularTextContainer]) {
-            [textContainer graphicDidChangeShape:aGraphic];
+            [textContainer graphicDidChangeShape:graphic];
         }
         if (!NSEqualSizes(textFrame.size, graphicFrame.size)) {
             NSSize size = graphicFrame.size;

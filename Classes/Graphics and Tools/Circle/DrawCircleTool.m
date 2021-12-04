@@ -51,17 +51,16 @@ typedef NS_ENUM(uint8_t, DrawCircleToolTag) {
 #pragma mark - DrawTool
 
 - (DrawGraphic *)graphicWithPoint:(NSPoint)point document:(DrawDocument *)document page:(DrawPage *)page {
-    DrawCircle	*aGraphic;
+    DrawCircle	*newGraphic = [[DrawCircle alloc] initWithFrame:(NSRect){point, {0.0, 0.0}}];
 
-    aGraphic = [[DrawCircle alloc] initWithFrame:(NSRect){point, {0.0, 0.0}}];
-    [aGraphic takeAspectsFromGraphic:[document templateGraphic]];
+    [newGraphic takeAspectsFromGraphic:document.templateGraphic];
 
     if ([[self currentAction] tag] == DrawCircleToolTagWedge) {
-        [aGraphic setStartAngle:0.0];
-        [aGraphic setEndAngle:0.0];
+        [newGraphic setStartAngle:0.0];
+        [newGraphic setEndAngle:0.0];
     }
 
-    return aGraphic;
+    return newGraphic;
 }
 
 - (void)toolDidActivateForDocument:(DrawDocument *)document {
