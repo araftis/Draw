@@ -707,6 +707,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [self updateRulers];
 
     [self.inspectorGroupsViewController push:@[self] for:AJRInspectorContentIdentifierAny];
+    [self.inspectorGroupsViewController push:@[_storage.templateGraphic] for:AJRInspectorContentIdentifierAny];
 
     [self _notifyControllersOfDocumentLoad:_primaryWindowController.contentViewController];
 

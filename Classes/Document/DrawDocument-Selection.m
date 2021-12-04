@@ -109,6 +109,8 @@ static NSComparisonResult _compareGraphics(DrawGraphic *first, DrawGraphic *seco
     }
     if (_storage.selection.count > 0) {
         [self.inspectorGroupsViewController push:_storage.selection.allObjects for:AJRInspectorContentIdentifierAny];
+    } else {
+        [self.inspectorGroupsViewController push:@[_storage.templateGraphic] for:AJRInspectorContentIdentifierAny];
     }
     [self didChangeValueForKey:@"selection"];
 }
