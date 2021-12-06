@@ -506,6 +506,10 @@ static BOOL _showsDirtyBounds = NO;
     return NSPrintOperation.currentOperation.printInfo.isPrinting;
 }
 
+- (BOOL)isTemplateGraphic {
+    return self == self.document.templateGraphic;
+}
+
 - (void)drawWithAspectFilter:(DrawGraphicAspectFilter)filter {
     if (!_ignore) {
         if (!((_frame.size.width == 0.0) && (_frame.size.height == 0.0))) {

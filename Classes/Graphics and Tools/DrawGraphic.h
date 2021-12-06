@@ -156,6 +156,8 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 /// This is a convenience for graphics to check if they're currently printing.
 @property (nonatomic,readonly) BOOL isPrinting;
 
+@property (nonatomic,readonly) BOOL isTemplateGraphic;
+
 #pragma mark - Handles
 
 - (DrawHandle)setHandle:(DrawHandle)handle toLocation:(NSPoint)point;

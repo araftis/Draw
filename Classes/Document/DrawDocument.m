@@ -367,6 +367,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         }
         _storage.masterPageOdd.document = nil;
         _storage.masterPageEven.document = nil;
+        _storage.templateGraphic.document = nil;
     }
 
     // Does this need to do some sort notifications? I'm assuming no to start with, because this should only be called during document unarchiving.
@@ -394,6 +395,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
             [self addObjectToEditingContext:aspect];
         }];
     }];
+    _storage.templateGraphic.document = self;
 
     _storage.masterPageOdd.document = self;
     _storage.masterPageEven.document = self;

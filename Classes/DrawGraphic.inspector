@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <inspector>
     <group title="Graphic">
-        <group title="Position">
+        <group title="Position" hiddenKeyPath="controller.selection.isTemplateGraphic">
             <slice type="rect" valueKeyPath="controller.selection.frame" />
         </group>
         <group title="Text">
