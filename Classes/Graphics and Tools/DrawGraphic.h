@@ -75,6 +75,8 @@ typedef struct {
 	NSUInteger subindex;    // The subindex of the element hit. For example, a curve has three points, so elementIndex is the index of the curve, and subindex is c0, c1, or endPoint.
 } DrawHandle;
 
+extern const DrawHandle DrawHandleMissed;
+
 typedef NS_ENUM(NSInteger, DrawAspectPriority) {
 	DrawAspectPriorityFirst            = 0,
 	DrawAspectPriorityBeforeBackground = 0,

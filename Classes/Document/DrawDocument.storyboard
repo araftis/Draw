@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="19h-0y-fv3">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="19h-0y-fv3">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="NSView safe area layout guides" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -102,7 +102,7 @@
                                 <toolbarItem implicitItemIdentifier="EAFAA4ED-6FAA-44CB-870B-DCA228D4CFBC" explicitItemIdentifier="tools" label="Tools" paletteLabel="Tools" sizingBehavior="auto" id="z6k-4p-qy4">
                                     <nil key="toolTip"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="x4U-ZK-XzG" customClass="AJRSegmentedControl" customModule="AJRInterface">
-                                        <rect key="frame" x="0.0" y="14" width="112" height="23"/>
+                                        <rect key="frame" x="0.0" y="14" width="214" height="23"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="Xt6-aQ-1LU" customClass="AJRSegmentedCell">
                                             <font key="font" metaFont="system"/>
@@ -110,6 +110,15 @@
                                                 <segment image="toolLink" width="32" selected="YES"/>
                                                 <segment image="toolRectangle" width="32" tag="1"/>
                                                 <segment image="toolCircle" width="32">
+                                                    <nil key="label"/>
+                                                </segment>
+                                                <segment image="toolLine">
+                                                    <nil key="label"/>
+                                                </segment>
+                                                <segment image="toolLine">
+                                                    <nil key="label"/>
+                                                </segment>
+                                                <segment image="toolLine">
                                                     <nil key="label"/>
                                                 </segment>
                                             </segments>
@@ -342,6 +351,7 @@
         <image name="sideBarLeft" width="25" height="25"/>
         <image name="sideBarRight" width="25" height="25"/>
         <image name="toolCircle" width="24" height="24"/>
+        <image name="toolLine" width="24" height="24"/>
         <image name="toolLink" width="24" height="24"/>
         <image name="toolRectangle" width="24" height="24"/>
         <image name="toolSelection" width="28" height="28"/>

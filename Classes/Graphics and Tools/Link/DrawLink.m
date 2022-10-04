@@ -476,6 +476,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     return NO;
 }
 
+- (DrawHandle)handleForPoint:(NSPoint)point {
+    return [self initializePositionForHandle:[self pathHandleForPoint:point]];
+}
+
 - (DrawHandle)setHandle:(DrawHandle)handle toLocation:(NSPoint)point {
     if (handle.type == DrawHandleTypeIndexed) {
         if (self.creating) {

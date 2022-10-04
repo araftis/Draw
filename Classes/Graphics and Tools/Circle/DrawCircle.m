@@ -183,10 +183,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierCircle = @"circle";
         if (_type == DrawCircleTypePie) {
             [_path moveToPoint:_origin];
         } else {
-            NSPoint start;
-            start.x = NSMidX(_arcBounds) + AJRCos(_startAngle) * _arcBounds.size.width / 2.0;
-            start.y = NSMidY(_arcBounds) + AJRSin(_startAngle) * _arcBounds.size.height / 2.0;
-            [_path moveToPoint:start];
+            //[_path moveToPoint:[self locationForAngle:_startAngle]];
+            [_path moveToPoint:AJRRectMidpoint(_arcBounds)];
         }
         [_path appendBezierPathWithArcBoundedByRect:_arcBounds startAngle:_startAngle endAngle:_endAngle clockwise:NO];
         [_path closePath];
@@ -245,12 +243,12 @@ const AJRInspectorIdentifier AJRInspectorIdentifierCircle = @"circle";
     }
 }
 
-- (NSPoint)locationForAngle:(double)anAngle {
-    NSPoint	point = AJRPolarToEuclidean(_origin, anAngle, _radius);
-    
-    point.x = ((point.x - _origin.x) * ((_arcBounds.size.width / 2.0) / _radius)) + _origin.x;
-    point.y = ((point.y - _origin.y) * ((_arcBounds.size.height / 2.0) / _radius)) + _origin.y;
-    
+- (NSPoint)locationForAngle:(double)angle {
+    NSPoint	point = NSZeroPoint;
+
+    point.x = NSMidX(_arcBounds) + AJRCos(angle) * _arcBounds.size.width / 2.0;
+    point.y = NSMidY(_arcBounds) + AJRSin(angle) * _arcBounds.size.height / 2.0;
+
     return point;
 }
 
@@ -328,7 +326,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierCircle = @"circle";
         } else if ([self isPoint:aPoint inHandleAt:[self locationForAngle:_endAngle]]) {
             return DrawHandleMake(DrawHandleTypeIndexed, DrawCircleHandleEndAngle, 0);
         }
-        return DrawHandleMake(DrawHandleTypeMissed, 0, 0);
+        return DrawHandleMissed;
     }
     return [super handleForPoint:aPoint];
 }
@@ -351,17 +349,17 @@ const AJRInspectorIdentifier AJRInspectorIdentifierCircle = @"circle";
     return [super trackMouse:event fromHandle:DrawHandleMake(DrawHandleTypeBottomRight, 0, 0)];
 }
 
-- (NSPoint)intersectionWithLineEndingAtPoint:(NSPoint)aPoint found:(BOOL *)found {
+- (NSPoint)intersectionWithLineEndingAtPoint:(NSPoint)point found:(BOOL *)found {
     CGFloat angle;
     
-    if ((aPoint.y - _origin.y == 0) && (aPoint.x - _origin.x == 0)) {
+    if ((point.y - _origin.y == 0) && (point.x - _origin.x == 0)) {
         return _origin;
     } else {
-        angle = AJRArctan((aPoint.y - _origin.y) / (_arcBounds.size.height / 2.0), (aPoint.x - _origin.x) / (_arcBounds.size.width / 2.0));
+        angle = AJRArctan((point.y - _origin.y) / (_arcBounds.size.height / 2.0), (point.x - _origin.x) / (_arcBounds.size.width / 2.0));
     }
     
     if (fabs(_startAngle - _endAngle) != 360.0) {
-        return [super intersectionWithLineEndingAtPoint:aPoint found:found];
+        return [super intersectionWithLineEndingAtPoint:point found:found];
     }
     
     *found = YES;

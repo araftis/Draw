@@ -244,6 +244,13 @@ static NSCursor *cursor = nil; \
     }
 }
 
+- (DrawHandle)initializePositionForHandle:(DrawHandle)handle {
+    if (handle.type != DrawHandleTypeMissed) {
+        _position = [self _positionInformationForHandle:handle];
+    }
+    return handle;
+}
+
 - (_DrawPolyPos)_positionInformationForHandle:(DrawHandle)handle {
     _DrawPolyPos position;
 
@@ -279,8 +286,7 @@ static NSCursor *cursor = nil; \
             return handle;
         }
 
-        _position = [self _positionInformationForHandle:handle];
-        return handle;
+        return [self initializePositionForHandle:handle];
     }
     
     if (![self isLine]) {

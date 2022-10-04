@@ -341,6 +341,11 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
 
     [segments sizeToFit];
+    if (tools.count > 4) {
+        NSRect frame = segments.frame;
+        frame.size.width *= 2.0;
+        segments.frame = frame;
+    }
 }
 
 #pragma mark - Properties

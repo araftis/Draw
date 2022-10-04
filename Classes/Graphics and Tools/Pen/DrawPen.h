@@ -64,6 +64,8 @@ extern const AJRInspectorIdentifier AJRInspectorIdentifierPen;
 
 - (BOOL)isLine;
 
+- (DrawHandle)initializePositionForHandle:(DrawHandle)handle;
+
 @property (nonatomic,assign) BOOL closed;
 @property (nonatomic,assign) BOOL creating;
 

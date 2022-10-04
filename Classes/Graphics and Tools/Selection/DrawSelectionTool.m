@@ -142,6 +142,7 @@ static NSMutableDictionary *registeredDraggers = nil;
         graphic = [selection objectAtIndex:x];
         if (NSPointInRect(_lastMouseLocation, NSInsetRect(graphic.bounds, -adjustment, -adjustment)) && (group == graphic.supergraphic)) {
             hitLocation = [graphic handleForPoint:_lastMouseLocation];
+            AJRPrintf(@"hit: %@: %@\n", graphic, DrawStringFromHandle(hitLocation));
             // This means that we hit a handle of a selected graphic. In this event, we're just going to track it in a manner similar to having just created the graphic.
             if ((hitLocation.type != DrawHandleTypeMissed) && (hitLocation.type != DrawHandleTypeCenter)) {
                 [graphic trackMouse:event fromHandle:hitLocation];

@@ -51,6 +51,7 @@ NSString *DrawGraphicDidInitNotification = @"DrawGraphicDidInitNotification";
 NSString *DrawGraphicDidChangeFrameNotification = @"DrawGraphicDidChangeFrameNotification";
 NSString *DrawFlatnessKey = @"DrawFlatnessKey";
 const AJRInspectorIdentifier AJRInspectorIdentifierGraphic = @"graphic";
+const DrawHandle DrawHandleMissed = (DrawHandle){DrawHandleTypeMissed, 0, 0};
 
 static BOOL _notificationsAreDisabled = NO;
 
@@ -775,13 +776,13 @@ static BOOL _showsDirtyBounds = NO;
 }
 
 - (BOOL)isPoint:(NSPoint)aPoint inHandleAt:(NSPoint)otherPoint {
-    CGFloat adjustment = [_page error];
+    CGFloat adjustment = 3.0; //[_page error];
 
     return (aPoint.x > otherPoint.x - adjustment) && (aPoint.x < otherPoint.x + adjustment) && (aPoint.y > otherPoint.y - adjustment) && (aPoint.y < otherPoint.y + adjustment);
 }
 
-- (DrawHandle)pathHandleForPoint:(NSPoint)aPoint {
-    return [_path drawHandleForPoint:aPoint error:[_page error]];
+- (DrawHandle)pathHandleForPoint:(NSPoint)point {
+    return [_path drawHandleForPoint:point error:3.0/*[_page error]*/];
 }
 
 - (DrawHandle)pathHandleFromEvent:(NSEvent *)anEvent {
@@ -851,8 +852,8 @@ static BOOL _showsDirtyBounds = NO;
 }
 
 - (DrawHandle)handleForPoint:(NSPoint)point {
-    DrawHandle location = DrawHandleMake(DrawHandleTypeMissed, 0, 0);
-    CGFloat adjustment = [_page error];
+    DrawHandle location = DrawHandleMissed;
+    CGFloat adjustment = 3.0;//[_page error];
 
     // We only check for a hit of a _handle if we are drawing them. Otherwise, we only care if we hit the stroke to fill of the graphic.
     if ((point.x > (_frame.origin.x - adjustment)) && (point.x < (_frame.origin.x + adjustment))) {
