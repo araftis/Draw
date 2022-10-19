@@ -144,6 +144,7 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 @property (nonatomic,weak) DrawDocument *document;
 @property (nonatomic,weak) DrawPage *page;
 @property (nonatomic,weak) DrawLayer *layer;
+@property (nonatomic,strong) AJRStore *variableStore;
 
 #pragma mark - Frame
 

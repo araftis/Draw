@@ -120,6 +120,8 @@ static BOOL _showsDirtyBounds = NO;
     _autosizeSubgraphics = YES;
     _autosizingMask = DrawGraphicAllSizable;
     _subgraphics = [[NSMutableArray alloc] init];
+
+    _variableStore = [AJRStore store];
 }
 
 - (id)init {
@@ -1157,6 +1159,7 @@ static BOOL _showsDirtyBounds = NO;
     new->_subgraphics = [_subgraphics copyWithZone:aZone];
     new->_supergraphic = _supergraphic;
     [new->_subgraphics setValue:new forKey:@"supergraphic"];
+    new->_variableStore = [_variableStore copyWithZone:aZone];
 
     return new;
 }
@@ -1205,6 +1208,13 @@ static BOOL _showsDirtyBounds = NO;
     }];
     [coder decodeUIntegerForKey:@"seed" setter:^(NSUInteger value) {
         self->_seed = value;
+    }];
+    [coder decodeObjectForKey:@"variableStore" setter:^(id object) {
+        if (object == nil) {
+            self->_variableStore = [AJRStore store];
+        } else {
+            self->_variableStore = object;
+        }
     }];
 }
 
@@ -1267,6 +1277,9 @@ static BOOL _showsDirtyBounds = NO;
     [encoder encodeBool:_autosizeSubgraphics forKey:@"autosizeSubgraphics"];
     [encoder encodeInteger:_autosizingMask forKey:@"autosizingMask"];
     [encoder encodeUInteger:_seed forKey:@"seed"];
+    if (_variableStore.count > 0) {
+        [encoder encodeObject:_variableStore forKey:@"variableStore"];
+    }
 }
 
 - (id)finalizeXMLDecodingWithError:(NSError * _Nullable __autoreleasing *)error {
@@ -1297,7 +1310,8 @@ static BOOL _showsDirtyBounds = NO;
             && AJREqual(_subgraphics, other->_subgraphics)
             && AJREqual(_supergraphic, other->_supergraphic)
             && _autosizeSubgraphics == other->_autosizeSubgraphics
-            && _autosizingMask == other->_autosizingMask);
+            && _autosizingMask == other->_autosizingMask
+            && AJREqual(_variableStore, other->_variableStore));
 }
 
 - (BOOL)isEqual:(id)other {

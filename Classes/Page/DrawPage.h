@@ -30,6 +30,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import <AppKit/AppKit.h>
+#import <AJRFoundation/AJRFoundation.h>
 
 @class DrawGraphic, DrawLayer, DrawTool, DrawDocument;
 
@@ -65,6 +66,7 @@ typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
 
 #pragma mark - Properties
 
+@property (nonatomic,strong) AJRStore *variableStore;
 @property (nonatomic,weak) DrawDocument *document;
 @property (nonatomic,strong,null_resettable) NSColor *paperColor;
 @property (nonatomic,readonly) BOOL isPrinting;

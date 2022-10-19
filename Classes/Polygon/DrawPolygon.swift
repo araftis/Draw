@@ -137,7 +137,7 @@ open class DrawPolygon: DrawGraphic {
 
     // MARK: - Creation
 
-    public override init() {
+    public required init() {
         super.init()
     }
 

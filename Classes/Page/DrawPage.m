@@ -38,6 +38,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "AJRXMLCoder-DrawExtensions.h"
 
 #import <AJRInterface/AJRInterface.h>
+#import <Draw/Draw-Swift.h>
 
 @implementation DrawPage {
     NSMutableDictionary<NSString *, DrawGuestDrawer> *_guestDrawers;
@@ -61,6 +62,7 @@ static NSDictionary *_pageNumberAttributes = nil;
     if ((self = [super initWithFrame:frame])) {
         [self setDocument:document];
         _layers = [[NSMutableDictionary alloc] init];
+        _variableStore = [[AJRStore alloc] init];
 
         // Updating
         _changedGraphics = [[NSMutableArray alloc] init];
@@ -90,6 +92,13 @@ static NSDictionary *_pageNumberAttributes = nil;
             graphic.document = self->_document;
             graphic.page = self;
             graphic.layer = [self->_document layerWithName:key];
+        }
+    }];
+    [_variableStore enumerate:^(NSString *name, id <AJREvaluation> value, BOOL *stop) {
+        DrawVariable *variable = AJRObjectIfKindOfClass(value, DrawVariable);
+        if (variable != nil) {
+            variable.document = document;
+            variable.page = self;
         }
     }];
 }
@@ -526,6 +535,13 @@ static NSDictionary *_pageNumberAttributes = nil;
     [coder decodeObjectForKey:@"paperColor" setter:^(id  _Nonnull object) {
         self->_paperColor = object;
     }];
+    [coder decodeObjectForKey:@"variableStore" setter:^(id  _Nullable object) {
+        if (object == nil) {
+            self->_variableStore = [[AJRStore alloc] init];
+        } else {
+            self->_variableStore = object;
+        }
+    }];
 
     return self;
 }
@@ -561,6 +577,10 @@ static NSDictionary *_pageNumberAttributes = nil;
     [coder encodeRect:[self frame] forKey:@"frame"];
     [coder encodeObject:_layers forKey:@"layers"];
     [coder encodeObjectIfNotNil:_paperColor forKey:@"paperColor"];
+    if (_variableStore.count > 0) {
+        // Let's only encode this if it matters, since it usually won't.
+        [coder encodeObject:_variableStore forKey:@"variableStore"];
+    }
 }
 
 @end

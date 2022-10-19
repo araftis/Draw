@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) BOOL locked;
 @property (nonatomic,assign) BOOL visible;
 @property (nonatomic,assign) BOOL printable;
+@property (nonatomic,strong) AJRStore *variableStore;
 
 - (NSDictionary<NSString *, id> *)snapshot;
 - (void)restoreFromSnapshot:(NSDictionary<NSString *, id> *)snapshot;

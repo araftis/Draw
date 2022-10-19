@@ -191,6 +191,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     [coder decodeBoolForKey:@"marksVisible" setter:^(BOOL value) {
         self->_marksVisible = value;
     }];
+
+    // Store
+    [coder decodeObjectForKey:@"variableStore" setter:^(id  _Nullable object) {
+        self->_variableStore = object;
+    }];
 }
 
 - (id)finalizeXMLDecodingWithError:(NSError * _Nullable __autoreleasing *)error {
@@ -202,6 +207,8 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     if (_pageNumber < 0 || _pageNumber >= _pages.count) {
         _pageNumber = 1;
     }
+    // Make sure we have a variable store
+    _variableStore = [[AJRStore alloc] init];
     return self;
 }
 
@@ -259,6 +266,12 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     [coder encodeBool:_gridVisible forKey:@"gridVisible"];
     [coder encodeBool:_marksEnabled forKey:@"marksEnabled"];
     [coder encodeBool:_marksVisible forKey:@"marksVisible"];
+
+    // Variables
+    if (_variableStore.count > 0) {
+        // Let's only encode this if it matters, since it usually won't.
+        [coder encodeObject:_variableStore forKey:@"variableStore"];
+    }
 }
 
 @end

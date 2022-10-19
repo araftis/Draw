@@ -37,58 +37,61 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DrawDocumentStorage : NSObject <AJRXMLCoding>
 
-// User Info
+// MARK: - User Info
 @property (nonatomic,readonly) NSMutableDictionary<NSString *, id> *documentInfo;
 - (void)setDocumentInfo:(nullable id)value forKey:(nullable NSString *)key;
 - (nullable id)documentInfoForKey:(NSString *)key;
 
-// Print Info
+// MARK: - Print Info
 @property (nonatomic,strong) NSPrintInfo *printInfo;
 
-// Basic Attributes
+// MARK: - Basic Attributes
 @property (nonatomic,strong) NSColor *paperColor;
 
-// Snap Lines
+// MARK: - Snap Lines
 @property (nonatomic,strong) NSColor *markColor;
 @property (nonatomic,strong) NSMutableArray<NSNumber *> *horizontalMarks;
 @property (nonatomic,strong) NSMutableArray<NSNumber *> *verticalMarks;
 
-// Grid
+// MARK: - Grid
 @property (nonatomic,strong) NSColor *gridColor;
 @property (nonatomic,assign) CGFloat gridSpacing;
 
-// Pages
+// MARK: - Pages
 @property (nonatomic,strong) NSMutableArray<DrawPage *> *pages;
 @property (nonatomic,strong) DrawPage *masterPageEven;
 @property (nonatomic,strong) DrawPage *masterPageOdd;
 @property (nonatomic,assign) NSInteger pageNumber;
 @property (nonatomic,assign) NSInteger startingPageNumber;
 
-// Layers
+// MARK: - Layers
 @property (nonatomic,strong) NSMutableArray<DrawLayer *> *layers;
 @property (nonatomic,strong) DrawLayer *layer;
 
-// Selection
+// MARK: - Selection
 @property (nonatomic,strong) NSMutableSet<DrawGraphic *> *selection;
 
-// Copy and Paste
+// MARK: - Copy and Paste
 @property (nonatomic,assign) NSPoint copyDelta;
 @property (nonatomic,assign) NSSize copyOffset;
 
-// Groups
+// MARK: - Groups
 @property (nullable,nonatomic,strong) DrawGraphic *group;
 
-// State
+// MARK: - State
 @property (nonatomic,strong) DrawGraphic *templateGraphic;
 
-// Book
+// MARK: - Book
 @property (nonatomic,strong) NSString *chapterName;
 
-// Flags
+// MARK: - Flags
 @property (nonatomic,assign) BOOL gridEnabled;
 @property (nonatomic,assign) BOOL gridVisible;
 @property (nonatomic,assign) BOOL marksEnabled;
 @property (nonatomic,assign) BOOL marksVisible;
+
+// MARK: - Variables
+@property (nonatomic,strong) AJRStore *variableStore;
 
 @end
 

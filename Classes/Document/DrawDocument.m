@@ -375,6 +375,11 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         _storage.templateGraphic.document = nil;
     }
 
+    // Make sure our variables point to us.
+    [_storage.variableStore enumerate:^(NSString *key, id <AJREvaluation> object, BOOL *stop) {
+        AJRObjectIfKindOfClass(object, DrawVariable).document = self;
+    }];
+
     // Does this need to do some sort notifications? I'm assuming no to start with, because this should only be called during document unarchiving.
     _storage = storage;
 
@@ -440,6 +445,14 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
 - (DrawGraphic *)templateGraphic {
     return _storage.templateGraphic;
+}
+
+- (void)setVariableStore:(AJRStore *)variableStore {
+    _storage.variableStore = variableStore;
+}
+
+- (AJRStore *)variableStore {
+    return _storage.variableStore;
 }
 
 - (void)setDisplayedToolSet:(DrawToolSet *)toolSet {

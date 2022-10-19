@@ -151,6 +151,7 @@ extern NSString * const DrawSavePanelPathKey;
 @property (nonatomic,strong) DrawTool *currentTool;
 @property (nonatomic,strong) NSColor *paperColor;
 @property (nonatomic,strong) DrawGraphic *templateGraphic;
+@property (nonatomic,strong) AJRStore *variableStore;
 /**
  Defines the actualy storage for the document. This includes all data associated with the document that "comprise" the document, but not the UI portions of the document. While the attribute is writable, it should be extremely rare that you ever need to assign to it.
  */
@@ -442,6 +443,12 @@ extern NSString * const DrawSavePanelPathKey;
 
 - (IBAction)undo:(id)sender;
 - (IBAction)redo:(id)sender;
+
+@end
+
+@interface DrawDocument (Variables)
+
+
 
 @end
 

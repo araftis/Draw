@@ -32,6 +32,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawLayer.h"
 
 #import "DrawDocument.h"
+#import <Draw/Draw-Swift.h>
 #import "AJRXMLCoder-DrawExtensions.h"
 
 @interface DrawDocument (PrivateLayer)
@@ -46,6 +47,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (id)initWithName:(NSString *)aName document:(DrawDocument *)aDocumentView {
     if ((self = [super init])) {
         // Set should be done before setDrawView, since once we do that we'll have an undo manager.
+        _variableStore = [[AJRStore alloc] init];
         [self setName:aName];
         [self setVisible:YES];
         [self setPrintable:YES];
@@ -89,6 +91,17 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
 }
 
+- (void)setDocument:(DrawDocument *)document {
+    // Make sure our variables points to our document.
+    [_variableStore enumerate:^(NSString *name, id <AJREvaluation> value, BOOL *stop) {
+        DrawVariable *variable = AJRObjectIfKindOfClass(value, DrawVariable);
+        if (variable != nil) {
+            variable.document = document;
+            variable.layer = self;
+        }
+    }];
+}
+
 #pragma mark - Snapshotting
 
 - (NSDictionary *)snapshot {
@@ -121,6 +134,13 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     [coder decodeBoolForKey:@"printable" setter:^(BOOL value) {
         self->_printable = value;
     }];
+    [coder decodeObjectForKey:@"variableStore" setter:^(id object) {
+        if (object == nil) {
+            self->_variableStore = [[AJRStore alloc] init];
+        } else {
+            self->_variableStore = object;
+        }
+    }];
 }
 
 - (void)encodeWithXMLCoder:(AJRXMLCoder *)coder {
@@ -128,6 +148,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     [coder encodeBool:_locked forKey:@"locked"];
     [coder encodeBool:_visible forKey:@"visible"];
     [coder encodeBool:_printable forKey:@"printable"];
+    if (_variableStore.count > 0) {
+        // Let's only encode this if it matters, since it usually won't.
+        [coder encodeObject:_variableStore forKey:@"variableStore"];
+    }
 }
 
 @end

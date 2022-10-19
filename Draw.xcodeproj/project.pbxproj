@@ -195,6 +195,8 @@
 		FA58066913F35BFF00910987 /* stylesTemplate.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA58066813F35BFF00910987 /* stylesTemplate.tiff */; };
 		FA7DC9B525B687C700B16CDB /* DrawLink.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA7DC9B425B687C700B16CDB /* DrawLink.inspector */; };
 		FA80BF6F2592DA9F00ABF3CD /* DrawArchivingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80BF6E2592DA9F00ABF3CD /* DrawArchivingTests.swift */; };
+		FA8B8FE428FF7C2700650F23 /* DrawDocument-Variables.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8B8FE328FF7C2700650F23 /* DrawDocument-Variables.m */; };
+		FA8B8FE628FF7C7A00650F23 /* DrawVariable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8B8FE528FF7C7A00650F23 /* DrawVariable.swift */; };
 		FA8E366225BD066100EB554F /* DrawDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8E366125BD066100EB554F /* DrawDocument.swift */; };
 		FA8E366625BD201600EB554F /* DrawPolygon.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA8E366525BD201600EB554F /* DrawPolygon.inspector */; };
 		FA8F41CC143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA8F41CB143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff */; };
@@ -489,6 +491,8 @@
 		FA7DC9B425B687C700B16CDB /* DrawLink.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawLink.inspector; sourceTree = "<group>"; };
 		FA80BF6D2592DA9F00ABF3CD /* Draw Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Draw Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA80BF6E2592DA9F00ABF3CD /* DrawArchivingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawArchivingTests.swift; sourceTree = "<group>"; };
+		FA8B8FE328FF7C2700650F23 /* DrawDocument-Variables.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "DrawDocument-Variables.m"; sourceTree = "<group>"; };
+		FA8B8FE528FF7C7A00650F23 /* DrawVariable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawVariable.swift; sourceTree = "<group>"; };
 		FA8E366125BD066100EB554F /* DrawDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawDocument.swift; sourceTree = "<group>"; };
 		FA8E366525BD201600EB554F /* DrawPolygon.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawPolygon.inspector; sourceTree = "<group>"; };
 		FA8F41CB143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DrawFillSwapGradientTemplate.tiff; sourceTree = "<group>"; };
@@ -1086,6 +1090,7 @@
 				FA49842C13B2A40C00CE9495 /* DrawDocument-Selection.m */,
 				FA49842D13B2A40C00CE9495 /* DrawDocument-ToolBar.m */,
 				FA49842E13B2A40C00CE9495 /* DrawDocument-Undo.m */,
+				FA8B8FE328FF7C2700650F23 /* DrawDocument-Variables.m */,
 				FA49842F13B2A40C00CE9495 /* DrawDocument.h */,
 				FA49843013B2A40C00CE9495 /* DrawDocument.m */,
 				FA8E366125BD066100EB554F /* DrawDocument.swift */,
@@ -1101,6 +1106,7 @@
 				FA473945144F8F1D00962AA3 /* DrawDocumentWindowController.m */,
 				FA4CD82513BE898400EF1ECF /* DrawEvent.h */,
 				FA4CD82613BE898400EF1ECF /* DrawEvent.m */,
+				FA8B8FE528FF7C7A00650F23 /* DrawVariable.swift */,
 				FA18B45925ABD310000DEF0C /* DrawViewController.h */,
 				FA18B45A25ABD310000DEF0C /* DrawViewController.m */,
 			);
@@ -1402,6 +1408,7 @@
 				FA460A2013831AC30051A3B1 /* DrawFunctions.m in Sources */,
 				FA460A2113831AC30051A3B1 /* DrawGraphic-Subgraphics.m in Sources */,
 				FA460A2313831AC30051A3B1 /* DrawGraphic.m in Sources */,
+				FA8B8FE428FF7C2700650F23 /* DrawDocument-Variables.m in Sources */,
 				FA18B44725ABCBCC000DEF0C /* DrawLayerViewController.swift in Sources */,
 				FA460A2E13831AC30051A3B1 /* DrawImage.m in Sources */,
 				FABD165425C8E14D000294E3 /* DrawToolAccessory.swift in Sources */,
@@ -1440,6 +1447,7 @@
 				FA460AF613831AC40051A3B1 /* DrawSquiggleTool.m in Sources */,
 				FA460B0F13831AC40051A3B1 /* DrawStroke.m in Sources */,
 				FA460B1113831AC40051A3B1 /* DrawStrokeDash.m in Sources */,
+				FA8B8FE628FF7C7A00650F23 /* DrawVariable.swift in Sources */,
 				FA460B1313831AC40051A3B1 /* DrawStrokeInspector.m in Sources */,
 				FA02BFD025BCFABF001EFBBA /* DrawPolygon.swift in Sources */,
 				FA460B1613831AC40051A3B1 /* DrawThicknessCell.m in Sources */,
