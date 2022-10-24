@@ -31,7 +31,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawLink.h"
 
-#import "DrawColorFill.h"
 #import "DrawEvent.h"
 #import "DrawLayer.h"
 #import "DrawLinkCap.h"
@@ -42,6 +41,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawStroke.h"
 #import "DrawDocument.h"
 #import "AJRXMLCoder-DrawExtensions.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterface/AJRInterface.h>

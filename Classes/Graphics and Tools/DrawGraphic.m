@@ -1120,7 +1120,7 @@ static BOOL _showsDirtyBounds = NO;
 - (DrawAspect *)primaryAspectOfType:(Class)aspectClass create:(BOOL)createFlag {
     DrawAspect *aspect = [self firstAspectOfType:aspectClass withPriority:[aspectClass defaultPriority]];
     if (aspect == nil && createFlag) {
-        aspect = [[[[self document] templateGraphic] firstAspectOfType:aspectClass withPriority:[aspectClass defaultPriority]] copy];
+        aspect = [[[[self document] templateGraphic] firstAspectOfType:aspectClass withPriority:[aspectClass defaultPriority] create:YES] copy];
         [self addAspect:aspect withPriority:[aspectClass defaultPriority]];
     }
     return aspect;
@@ -1136,6 +1136,10 @@ static BOOL _showsDirtyBounds = NO;
 
 - (DrawShadow *)primaryShadow {
     return (DrawShadow *)[self primaryAspectOfType:DrawShadow.class create:YES];
+}
+
+- (DrawReflection *)primaryReflection {
+    return (DrawReflection *)[self primaryAspectOfType:DrawReflection.class create:YES];
 }
 
 - (DrawText *)primaryText {

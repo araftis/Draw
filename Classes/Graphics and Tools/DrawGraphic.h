@@ -238,6 +238,8 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 @property (nonatomic,readonly) DrawFill *primaryFill;
 /*! Returns the object's primary shadow, creating it if it doesn't already exist. While graphics may have more than one shadow, all graphics have at least one shadow. It can be set to be inactive if you do not want it visible.*/
 @property (nonatomic,readonly) DrawShadow *primaryShadow;
+/*! Returns the object's primary shadow, creating it if it doesn't already exist. While graphics may have more than one shadow, all graphics have at least one shadow. It can be set to be inactive if you do not want it visible.*/
+@property (nonatomic,readonly) DrawShadow *primaryReflection;
 /*! Returns the object's primary text aspect, creating it if it doesn't already exist. */
 @property (nonatomic,readonly) DrawText *primaryText;
 
@@ -292,7 +294,7 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 - (NSArray *)subgraphics;
 
 - (DrawGraphic *)ancestorSharedWithView:(DrawGraphic *)subgraphic;
-- (BOOL)isDescendantOf:(DrawGraphic *)subgraphic;
+- (BOOL)isDescendantOf:(nullable DrawGraphic *)subgraphic;
 
 - (nullable DrawGraphic *)supergraphic;
 - (void)removeFromSupergraphic;

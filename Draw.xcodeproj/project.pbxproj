@@ -86,8 +86,7 @@
 		FA460A1613831AC30051A3B1 /* DrawFillInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46089A13831AC20051A3B1 /* DrawFillInspector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460A1713831AC30051A3B1 /* DrawFillInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46089B13831AC20051A3B1 /* DrawFillInspector.m */; };
 		FA460A1813831AC30051A3B1 /* DrawFillInspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA46089C13831AC20051A3B1 /* DrawFillInspector.tiff */; };
-		FA460A1913831AC30051A3B1 /* DrawColorFill.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46089D13831AC20051A3B1 /* DrawColorFill.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA460A1A13831AC30051A3B1 /* DrawColorFill.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46089E13831AC20051A3B1 /* DrawColorFill.m */; };
+		FA460A1A13831AC30051A3B1 /* DrawColorFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46089E13831AC20051A3B1 /* DrawColorFill.swift */; };
 		FA460A1F13831AC30051A3B1 /* DrawFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4608A513831AC20051A3B1 /* DrawFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460A2013831AC30051A3B1 /* DrawFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4608A613831AC20051A3B1 /* DrawFunctions.m */; };
 		FA460A2113831AC30051A3B1 /* DrawGraphic-Subgraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4608A713831AC20051A3B1 /* DrawGraphic-Subgraphics.m */; };
@@ -205,8 +204,7 @@
 		FA98048913C653ED00C0F6F5 /* DrawSelectionActions.h in Headers */ = {isa = PBXBuildFile; fileRef = FA98048713C653ED00C0F6F5 /* DrawSelectionActions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA98048A13C653ED00C0F6F5 /* DrawSelectionActions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98048813C653ED00C0F6F5 /* DrawSelectionActions.m */; };
 		FA98048B13C65A5700C0F6F5 /* DrawDocument-Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98048413C6500600C0F6F5 /* DrawDocument-Menu.m */; };
-		FA9C342D141AE75800815A1A /* DrawReflection.h in Headers */ = {isa = PBXBuildFile; fileRef = FA9C342B141AE75800815A1A /* DrawReflection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA9C342E141AE75800815A1A /* DrawReflection.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9C342C141AE75800815A1A /* DrawReflection.m */; };
+		FA9C342E141AE75800815A1A /* DrawReflection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C342C141AE75800815A1A /* DrawReflection.swift */; };
 		FA9E6AEB141970360027B8A1 /* DrawOpacity.h in Headers */ = {isa = PBXBuildFile; fileRef = FA9E6AE9141970360027B8A1 /* DrawOpacity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA9E6AEC141970360027B8A1 /* DrawOpacity.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9E6AEA141970360027B8A1 /* DrawOpacity.m */; };
 		FA9E6AF7141973300027B8A1 /* DrawORSRibbonInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = FA9E6AF5141973300027B8A1 /* DrawORSRibbonInspector.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -378,10 +376,9 @@
 		FA46089813831AC20051A3B1 /* DrawFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFill.h; sourceTree = "<group>"; usesTabs = 1; };
 		FA46089913831AC20051A3B1 /* DrawFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFill.m; sourceTree = "<group>"; usesTabs = 0; };
 		FA46089A13831AC20051A3B1 /* DrawFillInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFillInspector.h; sourceTree = "<group>"; };
-		FA46089B13831AC20051A3B1 /* DrawFillInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFillInspector.m; sourceTree = "<group>"; usesTabs = 1; };
+		FA46089B13831AC20051A3B1 /* DrawFillInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFillInspector.m; sourceTree = "<group>"; usesTabs = 0; };
 		FA46089C13831AC20051A3B1 /* DrawFillInspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DrawFillInspector.tiff; sourceTree = "<group>"; };
-		FA46089D13831AC20051A3B1 /* DrawColorFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawColorFill.h; sourceTree = "<group>"; };
-		FA46089E13831AC20051A3B1 /* DrawColorFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawColorFill.m; sourceTree = "<group>"; };
+		FA46089E13831AC20051A3B1 /* DrawColorFill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawColorFill.swift; sourceTree = "<group>"; };
 		FA4608A513831AC20051A3B1 /* DrawFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFunctions.h; sourceTree = "<group>"; };
 		FA4608A613831AC20051A3B1 /* DrawFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFunctions.m; sourceTree = "<group>"; usesTabs = 0; };
 		FA4608A713831AC20051A3B1 /* DrawGraphic-Subgraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DrawGraphic-Subgraphics.m"; path = "Graphics and Tools/DrawGraphic-Subgraphics.m"; sourceTree = "<group>"; };
@@ -501,8 +498,7 @@
 		FA98048413C6500600C0F6F5 /* DrawDocument-Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DrawDocument-Menu.m"; sourceTree = "<group>"; usesTabs = 0; };
 		FA98048713C653ED00C0F6F5 /* DrawSelectionActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSelectionActions.h; sourceTree = "<group>"; };
 		FA98048813C653ED00C0F6F5 /* DrawSelectionActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSelectionActions.m; sourceTree = "<group>"; };
-		FA9C342B141AE75800815A1A /* DrawReflection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawReflection.h; sourceTree = "<group>"; };
-		FA9C342C141AE75800815A1A /* DrawReflection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawReflection.m; sourceTree = "<group>"; };
+		FA9C342C141AE75800815A1A /* DrawReflection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawReflection.swift; sourceTree = "<group>"; };
 		FA9E6AE9141970360027B8A1 /* DrawOpacity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawOpacity.h; sourceTree = "<group>"; };
 		FA9E6AEA141970360027B8A1 /* DrawOpacity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawOpacity.m; sourceTree = "<group>"; };
 		FA9E6AF5141973300027B8A1 /* DrawORSRibbonInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawORSRibbonInspector.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -807,8 +803,7 @@
 				FA092AAB13F7116800689484 /* DrawFillRibbonInspector.h */,
 				FA092AAC13F7116800689484 /* DrawFillRibbonInspector.m */,
 				FA092AAF13F7117A00689484 /* DrawFillRibbonInspector.xib */,
-				FA46089D13831AC20051A3B1 /* DrawColorFill.h */,
-				FA46089E13831AC20051A3B1 /* DrawColorFill.m */,
+				FA46089E13831AC20051A3B1 /* DrawColorFill.swift */,
 				FA8F41CB143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff */,
 				FA8F41CE143FF27600AA47E7 /* DrawFillGradient0.tiff */,
 				FA8F41CF143FF27600AA47E7 /* DrawFillGradient270.tiff */,
@@ -1001,8 +996,7 @@
 		FA9C3429141AE72400815A1A /* Reflection */ = {
 			isa = PBXGroup;
 			children = (
-				FA9C342B141AE75800815A1A /* DrawReflection.h */,
-				FA9C342C141AE75800815A1A /* DrawReflection.m */,
+				FA9C342C141AE75800815A1A /* DrawReflection.swift */,
 			);
 			path = Reflection;
 			sourceTree = "<group>";
@@ -1173,7 +1167,6 @@
 				FA460A0B13831AC30051A3B1 /* DrawFileWrapper.h in Headers */,
 				FA460A1413831AC30051A3B1 /* DrawFill.h in Headers */,
 				FA460A1613831AC30051A3B1 /* DrawFillInspector.h in Headers */,
-				FA460A1913831AC30051A3B1 /* DrawColorFill.h in Headers */,
 				FA460A2213831AC30051A3B1 /* DrawGraphic.h in Headers */,
 				FA460A2D13831AC30051A3B1 /* DrawImage.h in Headers */,
 				FA460A3213831AC30051A3B1 /* DrawImageTool.h in Headers */,
@@ -1234,7 +1227,6 @@
 				FADD9F7F140E9B9E0042A8B6 /* DrawShadow.h in Headers */,
 				FA9E6AEB141970360027B8A1 /* DrawOpacity.h in Headers */,
 				FA9E6AF7141973300027B8A1 /* DrawORSRibbonInspector.h in Headers */,
-				FA9C342D141AE75800815A1A /* DrawReflection.h in Headers */,
 				FAD16A7E14229EDB00FCEB04 /* DrawLinkRibbonInspector.h in Headers */,
 				FA473946144F8F1D00962AA3 /* DrawDocumentWindowController.h in Headers */,
 				FA0B40E71469EEFC009DCCA4 /* DrawPathAnalysisAspect.h in Headers */,
@@ -1404,7 +1396,7 @@
 				FA460A1513831AC30051A3B1 /* DrawFill.m in Sources */,
 				FA8E366225BD066100EB554F /* DrawDocument.swift in Sources */,
 				FA460A1713831AC30051A3B1 /* DrawFillInspector.m in Sources */,
-				FA460A1A13831AC30051A3B1 /* DrawColorFill.m in Sources */,
+				FA460A1A13831AC30051A3B1 /* DrawColorFill.swift in Sources */,
 				FA460A2013831AC30051A3B1 /* DrawFunctions.m in Sources */,
 				FA460A2113831AC30051A3B1 /* DrawGraphic-Subgraphics.m in Sources */,
 				FA460A2313831AC30051A3B1 /* DrawGraphic.m in Sources */,
@@ -1498,7 +1490,7 @@
 				FADD9F80140E9B9E0042A8B6 /* DrawShadow.m in Sources */,
 				FA9E6AEC141970360027B8A1 /* DrawOpacity.m in Sources */,
 				FA9E6AF8141973300027B8A1 /* DrawORSRibbonInspector.m in Sources */,
-				FA9C342E141AE75800815A1A /* DrawReflection.m in Sources */,
+				FA9C342E141AE75800815A1A /* DrawReflection.swift in Sources */,
 				FAD16A7F14229EDB00FCEB04 /* DrawLinkRibbonInspector.m in Sources */,
 				FAA6ED8B1440171300111271 /* DrawInspectorGroupsController.swift in Sources */,
 				FA1BE5C71443DF650065BF7F /* DrawLayer.m in Sources */,

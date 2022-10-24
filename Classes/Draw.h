@@ -44,7 +44,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawCircle.h>
 #import <Draw/DrawCircleTool.h>
 #import <Draw/DrawClip.h>
-#import <Draw/DrawColorFill.h>
 #import <Draw/DrawDocument.h>
 #import <Draw/DrawDocumentStorage.h>
 #import <Draw/DrawDocumentViewController.h>
@@ -91,7 +90,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawPenTool.h>
 #import <Draw/DrawRectangle.h>
 #import <Draw/DrawRectangleTool.h>
-#import <Draw/DrawReflection.h>
 #import <Draw/DrawRibbonInspectorController.h>
 #import <Draw/DrawRulerMarker.h>
 #import <Draw/DrawRulerView.h>

@@ -37,10 +37,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawPage.h"
 #import "DrawPen.h"
 #import "DrawRectangle.h"
-#import "DrawColorFill.h"
 #import "DrawStroke.h"
 #import "DrawText.h"
 #import "DrawDocument.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterface/AJRInterface.h>
@@ -117,7 +117,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     NSString *value;
 
     fill = [[DrawColorFill alloc] initWithGraphic:graphic];
-    [fill setColor:[self colorFromPropertyList:[source objectForKey:@"FillColor"]]];
+    fill.color = [self colorFromPropertyList:[source objectForKey:@"FillColor"]];
     if ([fillType isEqualToString:@"Non-ZeroWindingRule"]) {
         [fill setWindingRule:AJRWindingRuleNonZero];
     } else {

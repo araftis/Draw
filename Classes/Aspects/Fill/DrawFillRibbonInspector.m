@@ -32,9 +32,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawFillRibbonInspector.h"
 
 #import "DrawDocument.h"
-#import "DrawColorFill.h"
 #import "DrawGraphic.h"
 #import "DrawRibbonInspectorController.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
 

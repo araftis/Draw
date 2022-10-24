@@ -30,5 +30,8 @@
             <slice type="size" label="Offset" valuesCanLink="false" valueKeyPath="controller.selection.primaryShadow.offset" />
             <slice type="float" label="Blur Radius" valueKeyPath="controller.selection.primaryShadow.blurRadius" />
         </group>
+        <group title="Reflection">
+            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryReflection.active" />
+        </group>
     </group>
 </inspector>

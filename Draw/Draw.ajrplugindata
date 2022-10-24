@@ -29,7 +29,7 @@
     <!-- Sets the opacity of object. Applies to all aspects that render after. -->
     <draw-aspect class="DrawOpacity" id="opacity" name="Opacity" priority="beforeBackground" />
     <!-- Draws a reflection of the object, up to the point the reflection renders. -->
-    <draw-aspect class="DrawReflection" id="reflection" name="Reflection" priority="beforeBackground" />
+    <draw-aspect class="Draw.DrawReflection" id="reflection" name="Reflection" priority="beforeBackground" />
     <!-- Analyses the path. Not really functional, just something I was playing with to try and recognize basic shapes. -->
     <draw-aspect class="DrawPathAnalysisAspect" id="pathAnalysis" name="Path Analysis" priority="last" />
     <!-- Draw text inside the path. -->
@@ -37,7 +37,7 @@
     <!-- Strokes the path. Can apply color, line join, line cap, and dash patterns. -->
     <draw-aspect class="DrawStroke" id="stroke" name="Stroke" priority="foreground" />
     <!-- Fills the path. Can apply a color. Follows either even/odd or non-zero winding rules. -->
-    <draw-aspect class="DrawColorFill" id="colorFill" name="Color Fill" image="fillStandard" />
+    <draw-aspect class="Draw.DrawColorFill" id="colorFill" name="Color Fill" image="fillStandard" />
     <!-- Fills the path. Mostly the superclass of other fills. You don't generally create one directly. -->
     <draw-aspect class="DrawFill" id="fill" name="Fill" />
 

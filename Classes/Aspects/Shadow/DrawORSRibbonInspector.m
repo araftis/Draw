@@ -35,9 +35,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawGraphic.h"
 #import "DrawInspector.h"
 #import "DrawOpacity.h"
-#import "DrawReflection.h"
 #import "DrawRibbonInspectorController.h"
 #import "DrawShadow.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 
