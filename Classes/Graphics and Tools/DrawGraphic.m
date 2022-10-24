@@ -35,7 +35,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawAspect.h"
 #import "DrawDocument.h"
 #import "DrawEvent.h"
-#import "DrawFill.h"
 #import "DrawFunctions.h"
 #import "DrawLayer.h"
 #import "DrawPage.h"

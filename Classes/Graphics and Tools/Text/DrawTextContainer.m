@@ -31,11 +31,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawTextContainer.h"
 
-#import "DrawFill.h"
-#import "DrawFillInspector.h"
 #import "DrawFunctions.h"
 #import "DrawGraphic.h"
 #import "DrawRectangle.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>
 

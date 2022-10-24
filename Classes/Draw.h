@@ -50,9 +50,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawDocumentWindowController.h>
 #import <Draw/DrawEvent.h>
 #import <Draw/DrawFileWrapper.h>
-#import <Draw/DrawFill.h>
-#import <Draw/DrawFillInspector.h>
-#import <Draw/DrawFillRibbonInspector.h>
 #import <Draw/DrawFilter.h>
 #import <Draw/DrawFormEntry.h>
 #import <Draw/DrawFunctions.h>

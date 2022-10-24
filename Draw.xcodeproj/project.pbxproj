@@ -28,9 +28,6 @@
 		FA092AA713F63F7500689484 /* DrawStrokeRibbonInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = FA092AA513F63F7500689484 /* DrawStrokeRibbonInspector.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA092AA813F63F7500689484 /* DrawStrokeRibbonInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = FA092AA613F63F7500689484 /* DrawStrokeRibbonInspector.m */; };
 		FA092AAA13F63FCB00689484 /* DrawStrokeRibbonInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA092AA913F63FCB00689484 /* DrawStrokeRibbonInspector.xib */; };
-		FA092AAD13F7116900689484 /* DrawFillRibbonInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = FA092AAB13F7116800689484 /* DrawFillRibbonInspector.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA092AAE13F7116900689484 /* DrawFillRibbonInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = FA092AAC13F7116800689484 /* DrawFillRibbonInspector.m */; };
-		FA092AB013F7117A00689484 /* DrawFillRibbonInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA092AAF13F7117A00689484 /* DrawFillRibbonInspector.xib */; };
 		FA0B40E71469EEFC009DCCA4 /* DrawPathAnalysisAspect.h in Headers */ = {isa = PBXBuildFile; fileRef = FA0B40E51469EEFC009DCCA4 /* DrawPathAnalysisAspect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA0B40E81469EEFC009DCCA4 /* DrawPathAnalysisAspect.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0B40E61469EEFC009DCCA4 /* DrawPathAnalysisAspect.m */; };
 		FA18A794142A969C00B21053 /* DrawLinkRibbonInspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA18A796142A969C00B21053 /* DrawLinkRibbonInspector.strings */; };
@@ -81,11 +78,7 @@
 		FA460A0A13831AC30051A3B1 /* NSPasteboard-DrawExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46088D13831AC20051A3B1 /* NSPasteboard-DrawExtensions.m */; };
 		FA460A0B13831AC30051A3B1 /* DrawFileWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46088E13831AC20051A3B1 /* DrawFileWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460A0C13831AC30051A3B1 /* DrawFileWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46088F13831AC20051A3B1 /* DrawFileWrapper.m */; };
-		FA460A1413831AC30051A3B1 /* DrawFill.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46089813831AC20051A3B1 /* DrawFill.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA460A1513831AC30051A3B1 /* DrawFill.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46089913831AC20051A3B1 /* DrawFill.m */; };
-		FA460A1613831AC30051A3B1 /* DrawFillInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46089A13831AC20051A3B1 /* DrawFillInspector.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA460A1713831AC30051A3B1 /* DrawFillInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46089B13831AC20051A3B1 /* DrawFillInspector.m */; };
-		FA460A1813831AC30051A3B1 /* DrawFillInspector.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA46089C13831AC20051A3B1 /* DrawFillInspector.tiff */; };
+		FA460A1513831AC30051A3B1 /* DrawFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46089913831AC20051A3B1 /* DrawFill.swift */; };
 		FA460A1A13831AC30051A3B1 /* DrawColorFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46089E13831AC20051A3B1 /* DrawColorFill.swift */; };
 		FA460A1F13831AC30051A3B1 /* DrawFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4608A513831AC20051A3B1 /* DrawFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460A2013831AC30051A3B1 /* DrawFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4608A613831AC20051A3B1 /* DrawFunctions.m */; };
@@ -216,7 +209,6 @@
 		FAA6ED8B1440171300111271 /* DrawInspectorGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA6ED881440171300111271 /* DrawInspectorGroupsController.swift */; };
 		FAA6ED8C1440171300111271 /* DrawInspectorGroupsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA6ED891440171300111271 /* DrawInspectorGroupsController.xib */; };
 		FAAD131D25B65A19005EA73B /* DrawRectangle.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FAAD131C25B65A19005EA73B /* DrawRectangle.inspector */; };
-		FAB34583140D72F00008AF9C /* DrawFillInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAB34581140D72F00008AF9C /* DrawFillInspector.xib */; };
 		FAB61A791437AEB2001499FE /* DrawDocument.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAB61A771437AEB1001499FE /* DrawDocument.strings */; };
 		FABD165425C8E14D000294E3 /* DrawToolAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD165325C8E14D000294E3 /* DrawToolAccessory.swift */; };
 		FABD167F25C8F475000294E3 /* DrawToolAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD167E25C8F475000294E3 /* DrawToolAccessoryViewController.swift */; };
@@ -308,9 +300,6 @@
 		FA092AA513F63F7500689484 /* DrawStrokeRibbonInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawStrokeRibbonInspector.h; sourceTree = "<group>"; usesTabs = 1; };
 		FA092AA613F63F7500689484 /* DrawStrokeRibbonInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawStrokeRibbonInspector.m; sourceTree = "<group>"; usesTabs = 0; };
 		FA092AA913F63FCB00689484 /* DrawStrokeRibbonInspector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawStrokeRibbonInspector.xib; sourceTree = "<group>"; };
-		FA092AAB13F7116800689484 /* DrawFillRibbonInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFillRibbonInspector.h; sourceTree = "<group>"; };
-		FA092AAC13F7116800689484 /* DrawFillRibbonInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFillRibbonInspector.m; sourceTree = "<group>"; };
-		FA092AAF13F7117A00689484 /* DrawFillRibbonInspector.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawFillRibbonInspector.xib; sourceTree = "<group>"; };
 		FA0B40E51469EEFC009DCCA4 /* DrawPathAnalysisAspect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPathAnalysisAspect.h; sourceTree = "<group>"; };
 		FA0B40E61469EEFC009DCCA4 /* DrawPathAnalysisAspect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPathAnalysisAspect.m; sourceTree = "<group>"; usesTabs = 0; };
 		FA18A795142A969C00B21053 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DrawLinkRibbonInspector.strings; sourceTree = "<group>"; };
@@ -333,7 +322,6 @@
 		FA1D8F1A1939490F008690DD /* DrawDocumentTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawDocumentTests.m; sourceTree = "<group>"; };
 		FA2877022611726C00F5BBE8 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		FA2877032611726C00F5BBE8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		FA2C17CD258EC3AB007FD1B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DrawFillInspector.xib; sourceTree = "<group>"; };
 		FA2C17CE258EC3AB007FD1B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DrawStrokeInspector.xib; sourceTree = "<group>"; };
 		FA2C17DA258ED3CB007FD1B2 /* Draw.ajrplugindata */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Draw.ajrplugindata; sourceTree = "<group>"; };
 		FA2C17E6258EF5BE007FD1B2 /* DrawPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawPoint.swift; sourceTree = "<group>"; };
@@ -373,11 +361,7 @@
 		FA46088D13831AC20051A3B1 /* NSPasteboard-DrawExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSPasteboard-DrawExtensions.m"; sourceTree = "<group>"; usesTabs = 0; };
 		FA46088E13831AC20051A3B1 /* DrawFileWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFileWrapper.h; sourceTree = "<group>"; };
 		FA46088F13831AC20051A3B1 /* DrawFileWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFileWrapper.m; sourceTree = "<group>"; };
-		FA46089813831AC20051A3B1 /* DrawFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFill.h; sourceTree = "<group>"; usesTabs = 1; };
-		FA46089913831AC20051A3B1 /* DrawFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFill.m; sourceTree = "<group>"; usesTabs = 0; };
-		FA46089A13831AC20051A3B1 /* DrawFillInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFillInspector.h; sourceTree = "<group>"; };
-		FA46089B13831AC20051A3B1 /* DrawFillInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFillInspector.m; sourceTree = "<group>"; usesTabs = 0; };
-		FA46089C13831AC20051A3B1 /* DrawFillInspector.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DrawFillInspector.tiff; sourceTree = "<group>"; };
+		FA46089913831AC20051A3B1 /* DrawFill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawFill.swift; sourceTree = "<group>"; usesTabs = 0; };
 		FA46089E13831AC20051A3B1 /* DrawColorFill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawColorFill.swift; sourceTree = "<group>"; };
 		FA4608A513831AC20051A3B1 /* DrawFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFunctions.h; sourceTree = "<group>"; };
 		FA4608A613831AC20051A3B1 /* DrawFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFunctions.m; sourceTree = "<group>"; usesTabs = 0; };
@@ -794,15 +778,7 @@
 		FA46089013831AC20051A3B1 /* Fill */ = {
 			isa = PBXGroup;
 			children = (
-				FA46089813831AC20051A3B1 /* DrawFill.h */,
-				FA46089913831AC20051A3B1 /* DrawFill.m */,
-				FA46089A13831AC20051A3B1 /* DrawFillInspector.h */,
-				FA46089B13831AC20051A3B1 /* DrawFillInspector.m */,
-				FAB34581140D72F00008AF9C /* DrawFillInspector.xib */,
-				FA46089C13831AC20051A3B1 /* DrawFillInspector.tiff */,
-				FA092AAB13F7116800689484 /* DrawFillRibbonInspector.h */,
-				FA092AAC13F7116800689484 /* DrawFillRibbonInspector.m */,
-				FA092AAF13F7117A00689484 /* DrawFillRibbonInspector.xib */,
+				FA46089913831AC20051A3B1 /* DrawFill.swift */,
 				FA46089E13831AC20051A3B1 /* DrawColorFill.swift */,
 				FA8F41CB143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff */,
 				FA8F41CE143FF27600AA47E7 /* DrawFillGradient0.tiff */,
@@ -1165,8 +1141,6 @@
 				FA460A0513831AC30051A3B1 /* AJRXMLCoder-DrawExtensions.h in Headers */,
 				FA460A0913831AC30051A3B1 /* NSPasteboard-DrawExtensions.h in Headers */,
 				FA460A0B13831AC30051A3B1 /* DrawFileWrapper.h in Headers */,
-				FA460A1413831AC30051A3B1 /* DrawFill.h in Headers */,
-				FA460A1613831AC30051A3B1 /* DrawFillInspector.h in Headers */,
 				FA460A2213831AC30051A3B1 /* DrawGraphic.h in Headers */,
 				FA460A2D13831AC30051A3B1 /* DrawImage.h in Headers */,
 				FA460A3213831AC30051A3B1 /* DrawImageTool.h in Headers */,
@@ -1220,7 +1194,6 @@
 				FA092A9113F630B500689484 /* DrawInspectorController.h in Headers */,
 				FA092A9913F6316F00689484 /* DrawGraphicsInspectorController.h in Headers */,
 				FA092AA713F63F7500689484 /* DrawStrokeRibbonInspector.h in Headers */,
-				FA092AAD13F7116900689484 /* DrawFillRibbonInspector.h in Headers */,
 				FA460A1F13831AC30051A3B1 /* DrawFunctions.h in Headers */,
 				FAD0BBE82599570E00346E67 /* DrawDocumentP.h in Headers */,
 				FA1D8EF919390FF3008690DD /* DrawDocumentStorage.h in Headers */,
@@ -1329,7 +1302,6 @@
 			files = (
 				210F8F882730A6E0004A939D /* DrawObjectStructureInspector.xib in Resources */,
 				FA460860138318CD0051A3B1 /* InfoPlist.strings in Resources */,
-				FA460A1813831AC30051A3B1 /* DrawFillInspector.tiff in Resources */,
 				FABE519B25A1324B00552494 /* DrawDocument.storyboard in Resources */,
 				FA2C17DB258ED3CB007FD1B2 /* Draw.ajrplugindata in Resources */,
 				210F8F822730960C004A939D /* DrawStructureInspectors.xib in Resources */,
@@ -1340,11 +1312,9 @@
 				FAD38A5025B2927600383EA3 /* DrawDocument.inspector in Resources */,
 				FA092AAA13F63FCB00689484 /* DrawStrokeRibbonInspector.xib in Resources */,
 				FA2877042611726C00F5BBE8 /* LICENSE.md in Resources */,
-				FA092AB013F7117A00689484 /* DrawFillRibbonInspector.xib in Resources */,
 				FA05DFB3140D5E8200AA161A /* DrawStrokeInspector.xib in Resources */,
 				FA05DFC0140D5EF500AA161A /* DrawStrokeRibbonInspector.strings in Resources */,
 				FAC4B73525B3E2E800C08B80 /* DrawCircle.inspector in Resources */,
-				FAB34583140D72F00008AF9C /* DrawFillInspector.xib in Resources */,
 				FA4040C825B77724003CFF53 /* DrawPen.inspector in Resources */,
 				FA9E6AFA141973500027B8A1 /* DrawORSRibbonInspector.xib in Resources */,
 				FA9E6AFD141984670027B8A1 /* DrawORSRibbonInspector.strings in Resources */,
@@ -1393,9 +1363,8 @@
 				FA460A0A13831AC30051A3B1 /* NSPasteboard-DrawExtensions.m in Sources */,
 				FAD9256525AFBAE600079DAB /* DrawInspectorGroup.swift in Sources */,
 				FA460A0C13831AC30051A3B1 /* DrawFileWrapper.m in Sources */,
-				FA460A1513831AC30051A3B1 /* DrawFill.m in Sources */,
+				FA460A1513831AC30051A3B1 /* DrawFill.swift in Sources */,
 				FA8E366225BD066100EB554F /* DrawDocument.swift in Sources */,
-				FA460A1713831AC30051A3B1 /* DrawFillInspector.m in Sources */,
 				FA460A1A13831AC30051A3B1 /* DrawColorFill.swift in Sources */,
 				FA460A2013831AC30051A3B1 /* DrawFunctions.m in Sources */,
 				FA460A2113831AC30051A3B1 /* DrawGraphic-Subgraphics.m in Sources */,
@@ -1485,7 +1454,6 @@
 				FAD9256B25AFBE9A00079DAB /* DrawInspectorGroupController.swift in Sources */,
 				FA092A9A13F6316F00689484 /* DrawGraphicsInspectorController.m in Sources */,
 				FA092AA813F63F7500689484 /* DrawStrokeRibbonInspector.m in Sources */,
-				FA092AAE13F7116900689484 /* DrawFillRibbonInspector.m in Sources */,
 				FAA326381405BA4500A620E8 /* DrawMeasurementUnit.m in Sources */,
 				FADD9F80140E9B9E0042A8B6 /* DrawShadow.m in Sources */,
 				FA9E6AEC141970360027B8A1 /* DrawOpacity.m in Sources */,
@@ -1580,14 +1548,6 @@
 				FA9E6B00141984730027B8A1 /* es */,
 			);
 			name = DrawORSRibbonInspector.strings;
-			sourceTree = "<group>";
-		};
-		FAB34581140D72F00008AF9C /* DrawFillInspector.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA2C17CD258EC3AB007FD1B2 /* Base */,
-			);
-			name = DrawFillInspector.xib;
 			sourceTree = "<group>";
 		};
 		FAB61A771437AEB1001499FE /* DrawDocument.strings */ = {
