@@ -35,21 +35,6 @@ import AJRFoundation
 
 class DrawArchivingTests: XCTestCase {
 
-    func testDrawStrokeDash() throws {
-        let dash = DrawStrokeDash(string: "1 1 2 1")
-
-        let data = AJRXMLArchiver.archivedData(withRootObject: dash)
-        XCTAssert(data != nil)
-        if let data = data {
-            if let string = String(data: data, encoding: .utf8) {
-                print(string)
-            }
-            let newDash = try? AJRXMLUnarchiver.unarchivedObject(with: data)
-            XCTAssert(newDash != nil)
-            XCTAssert(dash.isEqual(to: newDash))
-        }
-    }
-
     func testDrawLinkCap() throws {
         let linkCaps = [DrawLinkCapArrow(), DrawLinkCapCircle(), DrawLinkCapDiamond(), DrawLinkCapDoubleArrow(), DrawLinkCapSquare()]
 
@@ -108,7 +93,7 @@ class DrawArchivingTests: XCTestCase {
 
     func testDrawText() throws {
         let graphic = DrawCircle(frame: NSRect(x: 10, y: 10, width: 100, height: 100))
-        let text = DrawTextAspect(graphic: graphic, text: NSAttributedString(string: "Now is the time for all good men to die."))
+        let text = DrawText(graphic: graphic, text: NSAttributedString(string: "Now is the time for all good men to die."))
 
         graphic.addAspect(text, with: .afterBackground)
 

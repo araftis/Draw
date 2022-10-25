@@ -33,7 +33,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawDocument.h"
 #import "DrawLink.h"
-#import "DrawStroke.h"
 #import <Draw/Draw-Swift.h>
 
 #import "AJRBezierPath-DrawExtensions.h"

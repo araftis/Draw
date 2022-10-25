@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,readonly,class) NSString *identifier;
 @property (nonatomic,readonly,class) NSString *name;
-@property (nonatomic,readonly,class) NSImage *image;
+@property (nonatomic,readonly,class,nullable) NSImage *image;
 @property (nonatomic,readonly,class) DrawAspectPriority defaultPriority;
 /// If `NO`, then the aspect will not archive. This is `YES` by default, but your custom aspect might not wish to archive. For example, a transient aspect, like warning badges.
 @property (nonatomic,readonly,class) BOOL shouldArchive;
@@ -56,7 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable DrawAspect *)defaultAspectForGraphic:(DrawGraphic *)graphic;
 
-- (id)initWithGraphic:(nullable DrawGraphic *)aGraphic;
+- (id)init NS_DESIGNATED_INITIALIZER;
+- (id)initWithGraphic:(nullable DrawGraphic *)aGraphic NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Properties
 
@@ -81,9 +82,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)doesRect:(NSRect)rect intersectPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
 - (BOOL)aspectAcceptsEdit;
 
-- (AJRRectAdjustment)boundsAdjustment;
+@property (nonatomic,assign,readonly) AJRRectAdjustment boundsAdjustment;
 - (NSRect)boundsForPath:(AJRBezierPath *)path;
-- (BOOL)boundsExpandsGraphicBounds;
+@property (nonatomic,assign,readonly) BOOL boundsExpandsGraphicBounds;
 - (NSRect)boundsForGraphicBounds:(NSRect)graphicBounds;
 
 #pragma mark - Life Cycle
@@ -107,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Equality
 
-- (BOOL)isEqualToAspect:(DrawAspect *)aspect;
+- (BOOL)isEqualToAspect:(nullable DrawAspect *)aspect NS_SWIFT_NAME(isEqual(toAspect:));
 
 @end
 

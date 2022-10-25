@@ -95,10 +95,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawShadow.h>
 #import <Draw/DrawSquiggle.h>
 #import <Draw/DrawSquiggleTool.h>
-#import <Draw/DrawStroke.h>
-#import <Draw/DrawStrokeDash.h>
-#import <Draw/DrawStrokeInspector.h>
-#import <Draw/DrawStrokeRibbonInspector.h>
 #import <Draw/DrawText.h>
 #import <Draw/DrawTextContainer.h>
 #import <Draw/DrawTextTool.h>

@@ -38,7 +38,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawLinkTool.h"
 #import "DrawPage.h"
 #import "DrawPenBezierAspect.h"
-#import "DrawStroke.h"
 #import "DrawDocument.h"
 #import "AJRXMLCoder-DrawExtensions.h"
 #import <Draw/Draw-Swift.h>

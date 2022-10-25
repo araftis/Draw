@@ -33,7 +33,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawEvent.h"
 #import "DrawFunctions.h"
-#import "DrawStroke.h"
 #import "DrawDocument.h"
 
 #import <AJRInterface/AJRInterface.h>
