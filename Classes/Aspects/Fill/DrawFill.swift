@@ -47,7 +47,7 @@ open class DrawFill : DrawAspect {
     
     open var windingRule : AJRWindingRule = .nonZero
     
-    required public override init() {
+    required public init() {
         super.init()
     }
 
