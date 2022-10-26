@@ -14,6 +14,9 @@
             <slice type="boolean" title="Visible" valueKeyPath="controller.selection.marksVisible" />
             <slice type="boolean" title="Enabled" valueKeyPath="controller.selection.marksEnabled" />
         </group>
+        <group title="Variables">
+            <slice type="store" valueKeyPath="controller.selection.variableStore" fullWidth="true" />
+        </group>
         <group title="Info">
             <slice type="string" label="Author" valueKeyPath="controller.selection.documentInfo.author" />
             <slice type="date" label="Created" valueKeyPath="controller.selection.documentInfo.creationDate" />

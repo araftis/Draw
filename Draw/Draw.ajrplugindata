@@ -39,7 +39,7 @@
     <!-- Fills the path. Can apply a color. Follows either even/odd or non-zero winding rules. -->
     <draw-aspect class="Draw.DrawColorFill" id="colorFill" name="Color Fill" image="fillStandard" />
     <!-- Fills the path. Mostly the superclass of other fills. You don't generally create one directly. -->
-    <draw-aspect class="DrawFill" id="fill" name="Fill" />
+    <draw-aspect class="Draw.DrawFill" id="fill" name="Fill" />
 
     <!-- Defines a tool set. A toolset contains a collection of tools presented to the user as a groups set. -->
     <extension-point name="draw-tool-set" class="DrawToolSet" registrySelector="registerToolSet:properties:">
