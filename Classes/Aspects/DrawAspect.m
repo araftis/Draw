@@ -97,9 +97,13 @@ static NSMutableDictionary  *_aspects = nil;
     return nil;
 }
 
-- (id)initWithGraphic:(DrawGraphic *)aGraphic {
+- (id)init {
+    return [super init];
+}
+
+- (id)initWithGraphic:(DrawGraphic *)graphic {
     if ((self = [super init])) {
-        [self setGraphic:aGraphic];
+        [self setGraphic:graphic];
         _active = YES;
     }
     return self;

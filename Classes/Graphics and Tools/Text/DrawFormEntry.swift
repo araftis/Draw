@@ -1,5 +1,5 @@
 /*
-DrawPathAnalysisAspect.h
+DrawFormEntry.m
 Draw
 
 Copyright © 2021, AJ Raftis and AJRFoundation authors
@@ -29,12 +29,30 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import <Draw/DrawAspect.h>
+import AJRInterface
 
-@class AJRPathAnalyzer;
+@objcMembers
+open class DrawFormEntry : DrawText {
 
-@interface DrawPathAnalysisAspect : DrawAspect <AJRXMLCoding>
+    open override func setupTextView(_ textView: NSTextView) {
+        super.setupTextView(textView)
 
-@property (nonatomic,strong) AJRPathAnalyzer *analyzer;
+        textView.isRichText = false
+        textView.importsGraphics = false
+    }
 
-@end
+    // MARK: - DrawAspect
+
+    open override func draw(_ path: AJRBezierPath, with priority: DrawAspectPriority) -> DrawGraphicCompletionBlock? {
+        let completionBlock = super.draw(path, with: priority)
+        path.stroke(color: NSColor.lightGray)
+        return completionBlock
+    }
+
+    // MARK: - AJRXMLCoding
+
+    class open override var ajr_nameForXMLArchiving: String {
+        return "formEntry"
+    }
+
+}

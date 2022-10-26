@@ -33,12 +33,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawDocument.h"
 #import "DrawEvent.h"
-#import "DrawFormEntry.h"
 #import "DrawGraphicsToolSet.h"
 #import "DrawPage.h"
 #import "DrawRectangle.h"
-#import "DrawText.h"
 #import "DrawToolAction.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
 

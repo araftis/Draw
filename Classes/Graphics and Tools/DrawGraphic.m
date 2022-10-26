@@ -38,8 +38,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawFunctions.h"
 #import "DrawLayer.h"
 #import "DrawPage.h"
-#import "DrawShadow.h"
-#import "DrawText.h"
 #import "AJRXMLCoder-DrawExtensions.h"
 #import <Draw/Draw-Swift.h>
 

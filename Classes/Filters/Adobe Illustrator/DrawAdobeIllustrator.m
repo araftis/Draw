@@ -34,7 +34,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawPage.h"
 #import "DrawPen.h"
 #import "DrawRectangle.h"
-#import "DrawText.h"
 #import "DrawDocument.h"
 #import <Draw/Draw-Swift.h>
 

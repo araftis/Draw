@@ -43,7 +43,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawBook.h>
 #import <Draw/DrawCircle.h>
 #import <Draw/DrawCircleTool.h>
-#import <Draw/DrawClip.h>
 #import <Draw/DrawDocument.h>
 #import <Draw/DrawDocumentStorage.h>
 #import <Draw/DrawDocumentViewController.h>
@@ -51,7 +50,6 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawEvent.h>
 #import <Draw/DrawFileWrapper.h>
 #import <Draw/DrawFilter.h>
-#import <Draw/DrawFormEntry.h>
 #import <Draw/DrawFunctions.h>
 #import <Draw/DrawGraphic.h>
 #import <Draw/DrawGraphicsInspectorController.h>
@@ -75,13 +73,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawLinkTool.h>
 #import <Draw/DrawLogging.h>
 #import <Draw/DrawMeasurementUnit.h>
-#import <Draw/DrawORSRibbonInspector.h>
 #import <Draw/DrawOldDrawFilter.h>
-#import <Draw/DrawOpacity.h>
 #import <Draw/DrawPage.h>
 #import <Draw/DrawPageLayout.h>
 #import <Draw/DrawPapelFilter.h>
-#import <Draw/DrawPathAnalysisAspect.h>
 #import <Draw/DrawPen.h>
 #import <Draw/DrawPenBezierAspect.h>
 #import <Draw/DrawPenTool.h>
@@ -92,13 +87,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Draw/DrawRulerView.h>
 #import <Draw/DrawSelectionActions.h>
 #import <Draw/DrawSelectionTool.h>
-#import <Draw/DrawShadow.h>
 #import <Draw/DrawSquiggle.h>
 #import <Draw/DrawSquiggleTool.h>
-#import <Draw/DrawText.h>
-#import <Draw/DrawTextContainer.h>
 #import <Draw/DrawTextTool.h>
-#import <Draw/DrawTextView.h>
 #import <Draw/DrawThicknessCell.h>
 #import <Draw/DrawThicknessControl.h>
 #import <Draw/DrawTool.h>

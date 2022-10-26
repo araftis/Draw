@@ -1,5 +1,5 @@
 /*
-DrawTextContainer.m
+DrawTextContainer.swift
 Draw
 
 Copyright © 2021, AJ Raftis and AJRFoundation authors
@@ -29,42 +29,38 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import "DrawTextContainer.h"
+import AJRInterface
 
-#import "DrawFunctions.h"
-#import "DrawGraphic.h"
-#import "DrawRectangle.h"
-#import <Draw/Draw-Swift.h>
+@objcMembers
+open class DrawTextContainer : NSTextContainer {
 
-#import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>
-
-@implementation DrawTextContainer
-
-- (id)initWithGraphic:(DrawGraphic *)aGraphic {
-    if ((self = [super initWithContainerSize:[aGraphic frame].size])) {
-        [self setGraphic:aGraphic];
+    public init(graphic: DrawGraphic?) {
+        self.graphic = graphic
+        super.init(size: graphic?.frame.size ?? NSSize(width: 15.0, height: 15.0))
     }
-    return self;
-}
 
-- (BOOL)isSimpleRectangularTextContainer {
-    if ([_graphic isKindOfClass:[DrawRectangle class]]) {
-        return [(DrawRectangle *)_graphic radius] == 0.0;
+    public override init(size: NSSize) {
+        super.init(size: size)
     }
-    return NO;
-}
+
+    open override var isSimpleRectangularTextContainer : Bool {
+        if let graphic = graphic as? DrawRectangle {
+            return graphic.radius == 0.0
+        }
+        return false
+    }
 
 /*
 - (BOOL)containsPoint:(NSPoint)aPoint {
     AJRBezierPath	*path = [_graphic path];
-    
+
     for (DrawAspectPriority x = 0; x < DrawAspectPriorityLast; x++) {
         NSArray *subaspects = [[_graphic aspects] objectAtIndex:x];
         for (DrawAspect *aspect in subaspects) {
             if ([aspect isKindOfClass:[DrawFill class]]) {
                 DrawFill		*fill = (DrawFill *)aspect;
                 NSRect			frame = [_graphic frame];
-                
+
                 aPoint.x += frame.origin.x;
                 aPoint.y += frame.origin.y;
                 if (fill) {
@@ -75,19 +71,19 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             }
         }
     }
-    
+
     return [path isHitByPoint:aPoint];
 }
 
 - (NSRect)rectFromRectsInArray:(NSArray *)rectangles range:(NSRange)range {
     NSInteger		x;
     NSRect	rect;
-    
+
     rect = [[rectangles objectAtIndex:range.location] rectValue];
     for (x = range.location + 1; x < range.length; x++) {
         rect = NSUnionRect(rect, [[rectangles objectAtIndex:range.location] rectValue]);
     }
-    
+
     return rect;
 }
 
@@ -106,7 +102,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     NSLayoutManager *manager = [self layoutManager];
     CGFloat lineFragmentPadding = [self lineFragmentPadding];
     NSTextStorage *textStorage = [[self textView] textStorage];
-    
+
     @try {
         if ([textStorage length]) {
             [manager getFirstUnlaidCharacterIndex:&charIndex glyphIndex:&glyphIndex];
@@ -123,18 +119,18 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     minSize.width += (lineFragmentPadding * 2.0);
     minSize.height += (lineFragmentPadding * 2.0);
-    
+
     //AJRPrintf(@"Size = %@\n", NSStringFromSize(minSize));
-    
+
     proposedRect.origin.x += bounds.origin.x;
     proposedRect.origin.y += bounds.origin.y;
     rectangles = [path subrectanglesContainedInRect:proposedRect error:[_graphic flatness] lineSweep:sweepDirection minimumSize:minSize.width];
     count = [rectangles count];
-    
+
     if (!count) {
         NSArray	*lastValidRectangles = nil;
         NSRect	graphicFrame = [_graphic frame];
-        
+
         if (movementDirection != NSLineDoesntMove) {
             if ((sweepDirection == NSLineSweepLeft) || (sweepDirection == NSLineSweepRight)) {
                 if (movementDirection == NSLineMovesDown) {
@@ -179,28 +175,28 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             } else {
             }
         }
-        
+
         if (!lastValidRectangles) {
             *remainingRect = NSZeroRect;
             //AJRPrintf(@"Couldn't find valid rectangle!\n");
             return NSZeroRect;
         }
-        
+
         rectangles = lastValidRectangles;
         count = [rectangles count];
     }
-    
+
     if (count == 1) {
         *remainingRect = NSZeroRect;
         returnRect = [[rectangles objectAtIndex:0] rectValue];
         returnRect.origin.x -= bounds.origin.x;
         returnRect.origin.y -= bounds.origin.y;
-        
+
         //AJRPrintf(@"Return %@\n", NSStringFromRect(returnRect));
-        
+
         return returnRect;
     }
-    
+
     if ((sweepDirection == NSLineSweepLeft) || (sweepDirection == NSLineSweepDown)) {
         *remainingRect = [self rectFromRectsInArray:rectangles range:(NSRange){0, [rectangles count] - 1}];
         returnRect = [[rectangles lastObject] rectValue];
@@ -216,30 +212,40 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         returnRect.origin.x -= bounds.origin.x;
         returnRect.origin.y -= bounds.origin.y;
     }
-    
+
     return returnRect;
 }
 */
 
-- (void)updateExclusionRegions {
-    [[self layoutManager] textContainerChangedGeometry:self];
+    public func updateExclusionRegions() {
+        layoutManager?.textContainerChangedGeometry(self)
 
-    AJRBezierPath *path = _graphic.path;
-    NSBezierPath *exclusionPath = [NSBezierPath bezierPathWithRect:path.bounds];
-    [exclusionPath appendBezierPath:(NSBezierPath *)path];
-    [exclusionPath setWindingRule:NSWindingRuleEvenOdd];
-    self.exclusionPaths = @[exclusionPath];
-}
-
-- (void)setGraphic:(DrawGraphic *)graphic {
-    if (_graphic != graphic) {
-        _graphic = graphic;
-        [self updateExclusionRegions];
+        if let graphic {
+            let path = graphic.path
+            let exclusionPath = NSBezierPath(rect: path.bounds)
+            exclusionPath.append(path.asBezierPath)
+            exclusionPath.windingRule = .evenOdd
+            self.exclusionPaths = [exclusionPath]
+        } else {
+            self.exclusionPaths = []
+        }
     }
-}
 
-- (void)graphicDidChangeShape:(DrawGraphic *)graphic {
-    [self updateExclusionRegions];
-}
+    open var graphic : DrawGraphic? {
+        didSet {
+            updateExclusionRegions()
+        }
+    }
 
-@end
+    open func graphicDidChangeShape(_ graphic: DrawGraphic) {
+        updateExclusionRegions()
+    }
+
+    // MARK: - NSCoding
+
+    // We have to implement this, but we don't actually allow ourself to code, or at least we won't encode our graphics.
+    public required init(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+}

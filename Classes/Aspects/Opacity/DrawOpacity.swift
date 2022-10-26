@@ -1,5 +1,5 @@
 /*
-DrawColorFill.m
+DrawOpacity.swift
 Draw
 
 Copyright © 2021, AJ Raftis and AJRFoundation authors
@@ -31,85 +31,77 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import AJRInterface
 
-//NSString * const DrawColorFillIdentifier = @"DrawColorFillIdentifier";
-public let DrawFillColorKey = "fillColor"
-
-public extension AJRUserDefaultsKey {
-    static var fillColor : AJRUserDefaultsKey<NSColor> {
-        return AJRUserDefaultsKey<NSColor>.key(named: DrawFillColorKey, defaultValue: NSColor(srgbRed: 1.0, green: 0.7, blue: 1.0, alpha: 1.0))
-    }
-}
+let DrawOpacityIdentifier = "opacity"
 
 @objcMembers
-open class DrawColorFill : DrawFill {
-
-    // MARK: - Properties
-    open var color : NSColor {
-        didSet(newValue) {
-            graphic?.setNeedsDisplay()
-        }
-    }
+open class DrawOpacity : DrawAspect {
 
     // MARK: - Creation
 
-    override class open func defaultAspect(for graphic: DrawGraphic) -> DrawAspect? {
-        return DrawColorFill(graphic: graphic)
-    }
-
-    required public init() {
-        color = NSColor.black // Doesn't matter, it's going to be overwritten.
+    public required init() {
+        self.opacity = 1
         super.init()
     }
 
     public override init(graphic: DrawGraphic?) {
-        color = UserDefaults[.fillColor]!
+        self.opacity = 1
         super.init(graphic: graphic)
+    }
+
+    // MARK: - Properties
+
+    open var opacity : CGFloat {
+        didSet {
+            graphic?.setNeedsDisplay()
+        }
     }
 
     // MARK: - DrawAspect
 
-    override open func draw(_ path: AJRBezierPath, with priority: DrawAspectPriority) -> DrawGraphicCompletionBlock? {
-        if let graphic = graphic {
-            if graphic.isDescendant(of: graphic.document?.focusedGroup) {
-                color.set()
-            } else {
-                NSColor.lightGray.set()
-            }
-            path.flatness = graphic.flatness
-            path.windingRule = windingRule
-            path.fill()
-        }
+    open override var rendersToCanvas: Bool {
+        return false
+    }
 
+    open override func draw(_ path: AJRBezierPath, with priority: DrawAspectPriority) -> DrawGraphicCompletionBlock? {
+        if let context = AJRGetCurrentContext(), let graphic {
+            context.setAlpha(opacity)
+            context.beginTransparencyLayer(in: graphic.dirtyBounds, auxiliaryInfo: nil)
+            return {
+                context.endTransparencyLayer()
+            }
+        }
         return nil
     }
 
-    // MARK: - NSCopying
-
-    open override func copy(with zone: NSZone?) -> Any {
-        let aspect = super.copy(with: zone) as! DrawColorFill
-        aspect.color = color
-        return aspect
+    class open override func defaultAspect(for graphic: DrawGraphic) -> DrawAspect? {
+        return DrawOpacity(graphic: graphic)
     }
 
     // MARK: - AJRXMLCoding
 
-    open class override var ajr_nameForXMLArchiving: String {
-        return "colorFill"
-    }
-
     open override func decode(with coder: AJRXMLCoder) {
         super.decode(with: coder)
 
-        coder.decodeObject(forKey: "color") { object in
-            if let color = object as? NSColor {
-                self.color = color
-            }
+        coder.decodeCGFloat(forKey: "opacity") { value in
+            self.opacity = value
         }
     }
 
     open override func encode(with coder: AJRXMLCoder) {
         super.encode(with: coder)
-        coder.encode(color, forKey: "color")
+        coder.encode(opacity, forKey: "opacity")
+    }
+
+    open class override var ajr_nameForXMLArchiving: String {
+        return "opacity"
+    }
+
+    // MARK: - NSCopying
+
+    open override func copy(with zone: NSZone? = nil) -> Any {
+        let new = super.copy(with: zone) as! DrawOpacity
+        new.opacity = opacity
+        return new
     }
 
 }

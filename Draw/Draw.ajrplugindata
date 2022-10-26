@@ -23,17 +23,17 @@
     </extension-point>
 
     <!-- Adds the path to the current clip. Useful for objects that contain objects. -->
-    <draw-aspect class="DrawClip" id="clip" name="Clip" />
+    <draw-aspect class="Draw.DrawClip" id="clip" name="Clip" />
     <!-- Draw a shadow. Draws the shadow as if the path is filled. -->
-    <draw-aspect class="DrawShadow" id="shadow" name="Shadow" priority="beforeBackground" />
+    <draw-aspect class="Draw.DrawShadow" id="shadow" name="Shadow" priority="beforeBackground" />
     <!-- Sets the opacity of object. Applies to all aspects that render after. -->
-    <draw-aspect class="DrawOpacity" id="opacity" name="Opacity" priority="beforeBackground" />
+    <draw-aspect class="Draw.DrawOpacity" id="opacity" name="Opacity" priority="beforeBackground" />
     <!-- Draws a reflection of the object, up to the point the reflection renders. -->
     <draw-aspect class="Draw.DrawReflection" id="reflection" name="Reflection" priority="beforeBackground" />
     <!-- Analyses the path. Not really functional, just something I was playing with to try and recognize basic shapes. -->
-    <draw-aspect class="DrawPathAnalysisAspect" id="pathAnalysis" name="Path Analysis" priority="last" />
+    <draw-aspect class="Draw.DrawPathAnalysisAspect" id="pathAnalysis" name="Path Analysis" priority="last" />
     <!-- Draw text inside the path. -->
-    <draw-aspect class="DrawText" id="text" name="Text" priority="afterBackground" />
+    <draw-aspect class="Draw.DrawText" id="text" name="Text" priority="afterBackground" />
     <!-- Strokes the path. Can apply color, line join, line cap, and dash patterns. -->
     <draw-aspect class="Draw.DrawStroke" id="stroke" name="Stroke" priority="foreground" />
     <!-- Fills the path. Can apply a color. Follows either even/odd or non-zero winding rules. -->

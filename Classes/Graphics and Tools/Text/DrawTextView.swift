@@ -1,5 +1,5 @@
 /*
-DrawClip.h
+DrawTextView.m
 Draw
 
 Copyright © 2021, AJ Raftis and AJRFoundation authors
@@ -29,14 +29,33 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import <Draw/DrawAspect.h>
+import AJRInterface
 
-NS_ASSUME_NONNULL_BEGIN
+@objcMembers
+open class DrawTextView : NSTextView {
 
-extern NSString *DrawClipIdentifier;
+    open override var menu : NSMenu? {
+        get {
+            if !isEditable && !isSelectable {
+                return nil
+            }
+            return super.menu
+        }
+        set {
+            super.menu = newValue
+        }
+    }
 
-@interface DrawClip : DrawAspect
+    open override func mouseDown(with event: NSEvent) {
+        if !isEditable && !isSelectable {
+            typealias MouseDownFunction = @convention(c) (AnyObject, Selector, NSEvent) -> Void
+            if let mouseDownImp = NSView.instanceMethod(for: #selector(mouseDown(with:))) {
+                let mouseDownFunction = unsafeBitCast(mouseDownImp, to: MouseDownFunction.self)
+                mouseDownFunction(self, #selector(mouseDown(with:)), event)
+            }
+        } else {
+            super.mouseDown(with: event)
+        }
+    }
 
-@end
-
-NS_ASSUME_NONNULL_END
+}

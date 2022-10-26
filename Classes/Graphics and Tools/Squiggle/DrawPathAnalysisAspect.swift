@@ -1,5 +1,5 @@
 /*
-DrawColorFill.m
+DrawPathAnalysisAspect.swift
 Draw
 
 Copyright © 2021, AJ Raftis and AJRFoundation authors
@@ -31,85 +31,78 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import AJRInterface
 
-//NSString * const DrawColorFillIdentifier = @"DrawColorFillIdentifier";
-public let DrawFillColorKey = "fillColor"
-
-public extension AJRUserDefaultsKey {
-    static var fillColor : AJRUserDefaultsKey<NSColor> {
-        return AJRUserDefaultsKey<NSColor>.key(named: DrawFillColorKey, defaultValue: NSColor(srgbRed: 1.0, green: 0.7, blue: 1.0, alpha: 1.0))
-    }
-}
+let DrawPathAnalysisIdentifier = "pathAnalysis"
 
 @objcMembers
-open class DrawColorFill : DrawFill {
+open class DrawPathAnalysisAspect : DrawAspect {
 
-    // MARK: - Properties
-    open var color : NSColor {
-        didSet(newValue) {
-            graphic?.setNeedsDisplay()
-        }
-    }
+    open var analyzer : AJRPathAnalyzer
 
     // MARK: - Creation
 
-    override class open func defaultAspect(for graphic: DrawGraphic) -> DrawAspect? {
-        return DrawColorFill(graphic: graphic)
-    }
-
-    required public init() {
-        color = NSColor.black // Doesn't matter, it's going to be overwritten.
+    public required init() {
+        self.analyzer = AJRPathAnalyzer(path: AJRBezierPath())
         super.init()
     }
 
     public override init(graphic: DrawGraphic?) {
-        color = UserDefaults[.fillColor]!
+        self.analyzer = AJRPathAnalyzer(path: graphic?.path ?? AJRBezierPath())
         super.init(graphic: graphic)
     }
 
     // MARK: - DrawAspect
 
-    override open func draw(_ path: AJRBezierPath, with priority: DrawAspectPriority) -> DrawGraphicCompletionBlock? {
-        if let graphic = graphic {
-            if graphic.isDescendant(of: graphic.document?.focusedGroup) {
-                color.set()
-            } else {
-                NSColor.lightGray.set()
+    open override func draw(_ path: AJRBezierPath, with priority: DrawAspectPriority) -> DrawGraphicCompletionBlock? {
+        let scale = NSAffineTransform.currentScale
+        let thickPath = AJRBezierPath()
+        let thinPath = AJRBezierPath()
+        var previousPoint = NSPoint.zero
+
+        for (index, contour) in analyzer.contours.enumerated() {
+            for corner in contour.corners {
+                if index == 0 {
+                    previousPoint = corner.point
+                } else {
+                    thickPath.move(to: previousPoint)
+                    thickPath.line(to: corner.point)
+                    previousPoint = corner.point
+                }
             }
-            path.flatness = graphic.flatness
-            path.windingRule = windingRule
-            path.fill()
         }
+
+        thickPath.lineWidth = 4.0 / scale
+        thickPath.stroke(color: NSColor.blue)
+
+        thinPath.lineWidth = 1.0 / scale
+        thinPath.stroke(color: NSColor.purple)
 
         return nil
     }
 
     // MARK: - NSCopying
 
-    open override func copy(with zone: NSZone?) -> Any {
-        let aspect = super.copy(with: zone) as! DrawColorFill
-        aspect.color = color
+    open override func copy(with zone: NSZone? = nil) -> Any {
+        let aspect = super.copy(with: nil) as! DrawPathAnalysisAspect
+        aspect.analyzer = AJRPathAnalyzer(path: analyzer.path)
         return aspect
     }
 
-    // MARK: - AJRXMLCoding
-
-    open class override var ajr_nameForXMLArchiving: String {
-        return "colorFill"
-    }
+    // MARK: - NSCoding
 
     open override func decode(with coder: AJRXMLCoder) {
         super.decode(with: coder)
-
-        coder.decodeObject(forKey: "color") { object in
-            if let color = object as? NSColor {
-                self.color = color
+        coder.decodeObject(forKey: "width") { object in
+            if let object = object as? AJRPathAnalyzer {
+                self.analyzer = object
+            } else {
+                self.analyzer = AJRPathAnalyzer(path: AJRBezierPath())
             }
         }
     }
 
     open override func encode(with coder: AJRXMLCoder) {
         super.encode(with: coder)
-        coder.encode(color, forKey: "color")
+        coder.encode(analyzer, forKey: "width")
     }
 
 }

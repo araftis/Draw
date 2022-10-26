@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable DrawAspect *)defaultAspectForGraphic:(DrawGraphic *)graphic;
 
 - (id)init NS_DESIGNATED_INITIALIZER;
-- (id)initWithGraphic:(nullable DrawGraphic *)aGraphic NS_DESIGNATED_INITIALIZER;
+- (id)initWithGraphic:(nullable DrawGraphic *)graphic NS_DESIGNATED_INITIALIZER;
 
 #pragma mark - Properties
 
@@ -80,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isPoint:(NSPoint)point inPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
 - (BOOL)doesRect:(NSRect)rect intersectPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority;
-- (BOOL)aspectAcceptsEdit;
+@property (nonatomic,readonly) BOOL aspectAcceptsEdit;
 
 @property (nonatomic,assign,readonly) AJRRectAdjustment boundsAdjustment;
 - (NSRect)boundsForPath:(AJRBezierPath *)path;
@@ -103,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Editing
 
-- (BOOL)beginEditingFromEvent:(DrawEvent *)anEvent;
+- (BOOL)beginEditingFromEvent:(DrawEvent *)event;
 - (void)endEditing;
 
 #pragma mark - Equality

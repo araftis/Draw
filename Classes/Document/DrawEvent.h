@@ -44,13 +44,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,readonly) DrawPage *page;
 @property (nonatomic,readonly) DrawLayer *layer;
 
-- (NSPoint)locationOnPage;
-- (NSPoint)locationOnPageSnappedToGrid;
-- (NSString *)characters;
-- (NSUInteger)modifierFlags;
-- (NSUInteger)clickCount;
+@property (nonatomic,readonly) NSPoint locationOnPage;
+@property (nonatomic,readonly) NSPoint locationOnPageSnappedToGrid;
+@property (nonatomic,readonly) NSString *characters;
+@property (nonatomic,readonly) NSUInteger modifierFlags;
+@property (nonatomic,readonly) NSUInteger clickCount;
 
-- (BOOL)layerIsLockedOrNotVisible;
+@property (nonatomic,readonly) BOOL layerIsLockedOrNotVisible;
 
 @end
 

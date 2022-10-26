@@ -34,11 +34,11 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "DrawDocument.h"
 #import "DrawEvent.h"
 #import "DrawGraphicsToolSet.h"
-#import "DrawPathAnalysisAspect.h"
 #import "DrawPage.h"
 #import "DrawSquiggle.h"
 #import "DrawToolAction.h"
 #import "DrawToolSet.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterface/AJRInterface.h>
