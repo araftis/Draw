@@ -20,12 +20,12 @@ open class DrawVariable: AJRVariable {
     // MARK: - Creation
 
     required public init() {
-        super.init(name: AJRVariable.UnsetPlaceholderName)
+        super.init(name: AJRVariable.UnsetPlaceholderName, type: AJRVariableType())
     }
 
-    public init(name: String, value: AJREvaluation?, document: DrawDocument) {
+    public init(name: String, type: AJRVariableType, value: Any?, document: DrawDocument) {
         self.document = document
-        super.init(name: name, value: value)
+        super.init(name: name, type: type, value: value)
     }
 
     // NSCoding

@@ -33,9 +33,12 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "DrawGraphic.h"
 #import "DrawDocumentStorage.h"
+#import <Draw/Draw-Swift.h>
 
 @implementation DrawDocument (Variables)
 
-
+- (AJRVariable *)createVariableWithNamed:(NSString *)name type:(AJRVariableType *)type with:(id)value in:(AJRStore *)store {
+    return [[DrawVariable alloc] initWithName:name type:type value:value document:self];
+}
 
 @end
