@@ -373,6 +373,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         _storage.masterPageOdd.document = nil;
         _storage.masterPageEven.document = nil;
         _storage.templateGraphic.document = nil;
+        _storage.variableStore.variableDelegate = nil;
     }
 
     // Make sure our variables point to us.
@@ -418,6 +419,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         _pagedView.enclosingScrollView.horizontalRulerView.clientView = self.page;
         _pagedView.enclosingScrollView.verticalRulerView.clientView = self.page;
     }
+
+    _storage.variableStore.variableDelegate = self;
 }
 
 - (void)setPrintInfo:(NSPrintInfo *)printInfo {

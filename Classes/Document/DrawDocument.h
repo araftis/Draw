@@ -446,7 +446,7 @@ extern NSString * const DrawSavePanelPathKey;
 
 @end
 
-@interface DrawDocument (Variables) <AJRStoreVariableDelegate>
+@interface DrawDocument (Variables) <AJRStoreVariableDelegate, AJRVariableListener>
 
 
 

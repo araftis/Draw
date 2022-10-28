@@ -208,7 +208,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         _pageNumber = 1;
     }
     // Make sure we have a variable store
-    _variableStore = [[AJRStore alloc] init];
+    if (_variableStore == nil) {
+        _variableStore = [[AJRStore alloc] init];
+    }
     return self;
 }
 

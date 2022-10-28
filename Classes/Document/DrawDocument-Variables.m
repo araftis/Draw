@@ -37,8 +37,37 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation DrawDocument (Variables)
 
-- (AJRVariable *)createVariableWithNamed:(NSString *)name type:(AJRVariableType *)type with:(id)value in:(AJRStore *)store {
+- (AJRVariable *)createVariableWithName:(NSString *)name type:(AJRVariableType *)type value:(id)value inStore:(AJRStore *)store {
     return [[DrawVariable alloc] initWithName:name type:type value:value document:self];
+}
+
+- (void)store:(AJRStore *)store didAddVariable:(AJRVariable *)variable {
+    [variable addListener:self];
+    [self registerUndoWithTarget:self handler:^(id  _Nonnull target) {
+        [self.variableStore removeVariable:variable];
+    }];
+}
+
+- (void)store:(AJRStore *)store didRemoveVariable:(AJRVariable *)variable {
+    [variable removeListener:self];
+    [self registerUndoWithTarget:self handler:^(id  _Nonnull target) {
+        // Theoretically, this is safe, because anything that would cause this to be a collision has been previously undone or redone.
+        [self.variableStore addOrReplaceVariable:variable];
+    }];
+}
+
+- (void)variable:(AJRVariable *)variable didChange:(AJRVariableChangeType)change {
+    switch (change) {
+        case AJRVariableChangeTypeName:
+            AJRPrintf(@"name now: %@\n", variable.name);
+            break;
+        case AJRVariableChangeTypeValue:
+            AJRPrintf(@"value now: %@\n", variable.value);
+            break;
+        case AJRVariableChangeTypeVariableType:
+            AJRPrintf(@"type now: %@\n", variable.variableType);
+            break;
+    }
 }
 
 @end
