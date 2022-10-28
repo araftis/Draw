@@ -56,18 +56,33 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }];
 }
 
-- (void)variable:(AJRVariable *)variable didChange:(AJRVariableChangeType)change {
+- (void)variable:(AJRVariable *)variable willChange:(AJRVariableChangeType)change {
     switch (change) {
-        case AJRVariableChangeTypeName:
-            AJRPrintf(@"name now: %@\n", variable.name);
+        case AJRVariableChangeTypeName: {
+            NSString *current = variable.name;
+            [self registerUndoWithTarget:self handler:^(id  _Nonnull target) {
+                variable.name = current;
+            }];
             break;
-        case AJRVariableChangeTypeValue:
-            AJRPrintf(@"value now: %@\n", variable.value);
+        }
+        case AJRVariableChangeTypeValue: {
+            id current = variable.value;
+            [self registerUndoWithTarget:self handler:^(id  _Nonnull target) {
+                variable.value = current;
+            }];
             break;
-        case AJRVariableChangeTypeVariableType:
-            AJRPrintf(@"type now: %@\n", variable.variableType);
+        }
+        case AJRVariableChangeTypeVariableType: {
+            AJRVariableType *current = variable.variableType;
+            [self registerUndoWithTarget:self handler:^(id  _Nonnull target) {
+                variable.variableType = current;
+            }];
             break;
+        }
     }
+}
+
+- (void)variable:(AJRVariable *)variable didChange:(AJRVariableChangeType)change {
 }
 
 @end

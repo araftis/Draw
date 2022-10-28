@@ -421,6 +421,12 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
 
     _storage.variableStore.variableDelegate = self;
+    [_storage.variableStore.symbols enumerateKeysAndObjectsUsingBlock:^(NSString *key, id <AJREvaluation> object, BOOL *stop) {
+        AJRVariable *variable = AJRObjectIfKindOfClass(object, AJRVariable);
+        if (variable != nil) {
+            [variable addListener:self];
+        }
+    }];
 }
 
 - (void)setPrintInfo:(NSPrintInfo *)printInfo {
