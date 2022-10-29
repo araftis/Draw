@@ -295,8 +295,6 @@ open class DrawText : DrawAspect {
             var distance : CGFloat = 0.0
             var range = NSRange(location: 0, length: 0)
 
-            let frame = graphic.frame
-            let bounds = NSRect(origin: NSPoint.zero, size: frame.size)
             setupTextView(textView)
             graphic.page?.addSubview(textView)
             textView.window?.makeFirstResponder(textView)
