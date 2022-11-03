@@ -13,6 +13,7 @@
 		210F8F872730A6E0004A939D /* DrawObjectStructureInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210F8F852730A6E0004A939D /* DrawObjectStructureInspector.swift */; };
 		210F8F882730A6E0004A939D /* DrawObjectStructureInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 210F8F862730A6E0004A939D /* DrawObjectStructureInspector.xib */; };
 		2171608229077787001F2D4C /* DrawStrokeDashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2171608129077787001F2D4C /* DrawStrokeDashTests.swift */; };
+		21FFE3032913341400A79F8F /* DrawGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FFE3022913341400A79F8F /* DrawGraphic.swift */; };
 		FA02BFD025BCFABF001EFBBA /* DrawPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02BFCF25BCFABF001EFBBA /* DrawPolygon.swift */; };
 		FA02BFD425BCFB00001EFBBA /* DrawPolygonTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02BFD325BCFB00001EFBBA /* DrawPolygonTool.swift */; };
 		FA092A8913F62AB900689484 /* DrawInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = FA092A8713F62AB900689484 /* DrawInspector.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -264,6 +265,7 @@
 		210F8F852730A6E0004A939D /* DrawObjectStructureInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawObjectStructureInspector.swift; sourceTree = "<group>"; };
 		210F8F862730A6E0004A939D /* DrawObjectStructureInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DrawObjectStructureInspector.xib; sourceTree = "<group>"; };
 		2171608129077787001F2D4C /* DrawStrokeDashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawStrokeDashTests.swift; sourceTree = "<group>"; };
+		21FFE3022913341400A79F8F /* DrawGraphic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawGraphic.swift; sourceTree = "<group>"; };
 		FA02BFCF25BCFABF001EFBBA /* DrawPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawPolygon.swift; sourceTree = "<group>"; };
 		FA02BFD325BCFB00001EFBBA /* DrawPolygonTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawPolygonTool.swift; sourceTree = "<group>"; };
 		FA092A8713F62AB900689484 /* DrawInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawInspector.h; sourceTree = "<group>"; usesTabs = 1; };
@@ -961,6 +963,7 @@
 				FA4608A713831AC20051A3B1 /* DrawGraphic-Subgraphics.m */,
 				FA4608A813831AC20051A3B1 /* DrawGraphic.h */,
 				FA4608A913831AC20051A3B1 /* DrawGraphic.m */,
+				21FFE3022913341400A79F8F /* DrawGraphic.swift */,
 				FAC4B72E25B3A8C000C08B80 /* DrawGraphic.inspector */,
 				FA4609D613831AC20051A3B1 /* DrawTool.h */,
 				FA4609D713831AC20051A3B1 /* DrawTool.m */,
@@ -1368,6 +1371,7 @@
 				FAE6AC7013DF6AA00098A599 /* DrawRulerMarker.m in Sources */,
 				FA092A8A13F62AB900689484 /* DrawInspector.m in Sources */,
 				FA092A8E13F62EC200689484 /* DrawAspectInspector.m in Sources */,
+				21FFE3032913341400A79F8F /* DrawGraphic.swift in Sources */,
 				FA092A9213F630B500689484 /* DrawInspectorController.m in Sources */,
 				FA092A9613F630E600689484 /* DrawRibbonInspectorController.m in Sources */,
 				FABE5170259FECB500552494 /* DrawGlobalToolSet.swift in Sources */,

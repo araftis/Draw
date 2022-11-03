@@ -340,11 +340,22 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         self.displayedToolSet = toolSet;
     }
 
+    // This is rediculous, but the toolbar item is refusing to resize correctly on startup, even when I tell the view hierarchy that it's out of sync.
+    CGFloat height = segments.fittingSize.height;
+    CGFloat width = segments.fittingSize.width;
     [segments sizeToFit];
-    if (tools.count > 4) {
-        NSRect frame = segments.frame;
-        frame.size.width *= 2.0;
-        segments.frame = frame;
+    if (segments.segmentCount > 0) {
+        NSRect first = [(AJRSegmentedCell *)[segments cell] rectForSegment:0 inFrame:segments.bounds];
+        NSRect last = [(AJRSegmentedCell *)[segments cell] rectForSegment:segments.segmentCount - 1 inFrame:segments.bounds];
+        
+        width = NSMaxX(last);
+        height = 28.0;
+        
+        [segments removeConstraints:segments.constraints];
+        [segments addConstraints:@[
+            [segments.widthAnchor constraintEqualToConstant:width],
+            [segments.heightAnchor constraintEqualToConstant:height],
+        ]];
     }
 }
 
@@ -520,7 +531,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 - (void)setCurrentTool:(DrawTool *)newTool {
-    if (newTool) {
+    if (newTool != nil) {
         if ((!_currentTool || (_currentTool && [_currentTool toolShouldDeactivateForDocument:self]))
             && (!newTool || (newTool && [newTool toolShouldActivateForDocument:self]))) {
             // The new tool set, which may be the old tool set.

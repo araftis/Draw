@@ -73,5 +73,9 @@ open class DrawVariable: AJRVariable {
     // MARK: - AJRXMLCoding
 
     // We don't actually override the coding methods, because our superclass's methods are sufficient. This is because we don't want to encode our document, layer, page, and graphic, as these objects will set themselves onto use during their decoding. This helps prevent the document archive from getting cluttered.
+    
+    open class override var ajr_nameForXMLArchiving: String {
+        return "drawVariable"
+    }
 
 }
