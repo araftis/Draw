@@ -46,9 +46,24 @@ open class DrawVariable: AJRVariable {
         super.init(name: AJRVariable.UnsetPlaceholderName, type: AJRVariableType())
     }
 
-    public init(name: String, type: AJRVariableType, value: Any?, document: DrawDocument) {
+    public init(name: String, type: AJRVariableType, value: Any?, document: DrawDocument, page: DrawPage?, layer: DrawLayer?, graphic: DrawGraphic?) {
         self.document = document
+        self.layer = layer
+        self.page = page
+        self.graphic = graphic
         super.init(name: name, type: type, value: value)
+    }
+
+    public convenience init(name: String, type: AJRVariableType, value: Any?, document: DrawDocument) {
+        self.init(name: name, type: type, value: value, document: document, page: nil, layer: nil, graphic: nil)
+    }
+
+    public convenience init(name: String, type: AJRVariableType, value: Any?, document: DrawDocument, page: DrawPage?) {
+        self.init(name: name, type: type, value: value, document: document, page: page, layer: nil, graphic: nil)
+    }
+
+    public convenience init(name: String, type: AJRVariableType, value: Any?, document: DrawDocument, page: DrawPage?, layer: DrawLayer?) {
+        self.init(name: name, type: type, value: value, document: document, page: page, layer: layer, graphic: nil)
     }
 
     // NSCoding

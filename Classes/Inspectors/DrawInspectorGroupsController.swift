@@ -44,16 +44,6 @@ open class DrawInspectorGroupsController : NSViewController {
 
     // MARK: - Properties
 
-    /*
-     @property (nonatomic,strong) NSView *managedView;
-     @property (nonatomic,strong) AJRButtonBar *buttonBar;
-     @property (nonatomic,weak) DrawDocument *document;
-     @property (nonatomic,readonly,strong) NSString *name;
-
-     #pragma mark - Inspector Controllers
-
-     @property (nonatomic,readonly,strong) NSArray *inspectorControllers;
-*/
     @IBOutlet open var managedView : NSView!
     @IBOutlet open var buttonBar : AJRButtonBar!
     open var groups = [DrawInspectorGroup]()

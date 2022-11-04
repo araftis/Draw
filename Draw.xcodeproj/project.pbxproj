@@ -25,6 +25,8 @@
 		FA092A9613F630E600689484 /* DrawRibbonInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA092A9413F630E600689484 /* DrawRibbonInspectorController.m */; };
 		FA092A9913F6316F00689484 /* DrawGraphicsInspectorController.h in Headers */ = {isa = PBXBuildFile; fileRef = FA092A9713F6316F00689484 /* DrawGraphicsInspectorController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA092A9A13F6316F00689484 /* DrawGraphicsInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA092A9813F6316F00689484 /* DrawGraphicsInspectorController.m */; };
+		FA0A4FCA291499A100802E11 /* DrawPage.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA0A4FC9291499A100802E11 /* DrawPage.inspector */; };
+		FA0A4FCC29149E4700802E11 /* DrawPage-Variables.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0A4FCB29149E4700802E11 /* DrawPage-Variables.m */; };
 		FA0B40E81469EEFC009DCCA4 /* DrawPathAnalysisAspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B40E61469EEFC009DCCA4 /* DrawPathAnalysisAspect.swift */; };
 		FA18A794142A969C00B21053 /* DrawLinkRibbonInspector.strings in Resources */ = {isa = PBXBuildFile; fileRef = FA18A796142A969C00B21053 /* DrawLinkRibbonInspector.strings */; };
 		FA18B44725ABCBCC000DEF0C /* DrawLayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA18B44525ABCBCC000DEF0C /* DrawLayerViewController.swift */; };
@@ -278,6 +280,8 @@
 		FA092A9413F630E600689484 /* DrawRibbonInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawRibbonInspectorController.m; sourceTree = "<group>"; };
 		FA092A9713F6316F00689484 /* DrawGraphicsInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawGraphicsInspectorController.h; sourceTree = "<group>"; };
 		FA092A9813F6316F00689484 /* DrawGraphicsInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawGraphicsInspectorController.m; sourceTree = "<group>"; };
+		FA0A4FC9291499A100802E11 /* DrawPage.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawPage.inspector; sourceTree = "<group>"; };
+		FA0A4FCB29149E4700802E11 /* DrawPage-Variables.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "DrawPage-Variables.m"; sourceTree = "<group>"; };
 		FA0B40E61469EEFC009DCCA4 /* DrawPathAnalysisAspect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawPathAnalysisAspect.swift; sourceTree = "<group>"; usesTabs = 0; };
 		FA18A795142A969C00B21053 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DrawLinkRibbonInspector.strings; sourceTree = "<group>"; };
 		FA18A797142A96A500B21053 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DrawLinkRibbonInspector.strings; sourceTree = "<group>"; };
@@ -890,8 +894,10 @@
 				FA46094C13831AC20051A3B1 /* DrawPage-DragAndDrop.m */,
 				FA46094D13831AC20051A3B1 /* DrawPage-Event.m */,
 				FA46094E13831AC20051A3B1 /* DrawPage-Rulers.m */,
+				FA0A4FCB29149E4700802E11 /* DrawPage-Variables.m */,
 				FA46094F13831AC20051A3B1 /* DrawPage.h */,
 				FA46095013831AC20051A3B1 /* DrawPage.m */,
+				FA0A4FC9291499A100802E11 /* DrawPage.inspector */,
 			);
 			path = Page;
 			sourceTree = "<group>";
@@ -1254,6 +1260,7 @@
 				FA8F41D0143FF27600AA47E7 /* DrawFillGradient0.tiff in Resources */,
 				FA8F41D1143FF27600AA47E7 /* DrawFillGradient270.tiff in Resources */,
 				FAA6ED8C1440171300111271 /* DrawInspectorGroupsController.xib in Resources */,
+				FA0A4FCA291499A100802E11 /* DrawPage.inspector in Resources */,
 				FA3D53C6144CD33F0083F3CF /* DrawRibbonInspectorController.xib in Resources */,
 				FA47394F144F9EA800962AA3 /* DrawSquiggleTool.strings in Resources */,
 			);
@@ -1276,6 +1283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA0A4FCC29149E4700802E11 /* DrawPage-Variables.m in Sources */,
 				FA4609EB13831AC20051A3B1 /* DrawAspect.m in Sources */,
 				FA18B44C25ABCD60000DEF0C /* DrawLayerTableCellView.swift in Sources */,
 				FA4609ED13831AC30051A3B1 /* DrawBook.m in Sources */,

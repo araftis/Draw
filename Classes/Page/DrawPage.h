@@ -30,7 +30,7 @@
  */
 
 #import <AppKit/AppKit.h>
-#import <AJRFoundation/AJRFoundation.h>
+#import <AJRInterface/AJRInterface.h>
 
 @class DrawGraphic, DrawLayer, DrawTool, DrawDocument;
 
@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void *DrawDrawingToken;
 typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
+
+extern const AJRInspectorIdentifier AJRInspectorIdentifierDrawPage;
 
 @interface DrawPage : NSView <NSCoding> {
     __weak DrawDocument *_document;
@@ -144,6 +146,7 @@ typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
 
 @end
 
+// MARK: - Rulers
 
 @interface DrawPage (Rulers)
 
@@ -157,6 +160,12 @@ typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
 
 - (NSArray *)horizontalMarginRanges;
 - (NSArray *)verticalMarginRanges;
+
+@end
+
+// MARK: - Variables
+
+@interface DrawPage (Variables) <AJRStoreVariableDelegate, AJRVariableListener>
 
 @end
 

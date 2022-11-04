@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector>
+    <group title="Page">
+        <group title="Paper">
+            <slice type="color" label="Color" valueKeyPath="controller.selection.paperColor" />
+        </group>
+        <group title="Variables">
+            <slice type="store" valueKeyPath="controller.selection.variableStore" fullWidth="true" />
+        </group>
+    </group>
+</inspector>

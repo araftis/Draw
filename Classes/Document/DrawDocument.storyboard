@@ -102,7 +102,7 @@
                                     <nil key="toolTip"/>
                                     <segmentedControl key="view" verticalHuggingPriority="750" id="x4U-ZK-XzG" customClass="AJRSegmentedControl" customModule="AJRInterface">
                                         <rect key="frame" x="0.0" y="14" width="214" height="23"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="texturedSquare" trackingMode="selectOne" id="Xt6-aQ-1LU" customClass="AJRSegmentedCell">
                                             <font key="font" metaFont="system"/>
                                             <segments>

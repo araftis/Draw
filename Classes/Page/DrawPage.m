@@ -40,6 +40,8 @@
 #import <AJRInterface/AJRInterface.h>
 #import <Draw/Draw-Swift.h>
 
+const AJRInspectorIdentifier AJRInspectorIdentifierDrawPage = @"page";
+
 @implementation DrawPage {
     NSMutableDictionary<NSString *, DrawGuestDrawer> *_guestDrawers;
 }
@@ -74,6 +76,9 @@ static NSDictionary *_pageNumberAttributes = nil;
         // Drag and Drop
         [self registerForDraggedTypes:[[DrawDocument draggedTypes] allKeys]];
         [self registerForDraggedTypes:[NSArray arrayWithObject:DrawGraphicPboardType]];
+
+        // Variabes
+        _variableStore = [[AJRStore alloc] init];
     }
     return self;
 }
@@ -82,6 +87,17 @@ static NSDictionary *_pageNumberAttributes = nil;
 
 - (NSColor *)paperColor {
     return _paperColor == nil ? [_document paperColor] : _paperColor;
+}
+
+- (void)setPaperColor:(NSColor *)newColor {
+    if (_paperColor != newColor) {
+        NSColor *copy = _paperColor;
+        [[self document] registerUndoWithTarget:self handler:^(id  _Nonnull target) {
+            [target setPaperColor:copy];
+        }];
+        _paperColor = newColor;
+        [self setNeedsDisplay:YES];
+    }
 }
 
 - (void)setDocument:(DrawDocument *)document {
@@ -515,6 +531,14 @@ static NSDictionary *_pageNumberAttributes = nil;
     _guestDrawers[(__bridge NSString *)token] = nil;
 }
 
+#pragma mark - AJRnspection
+
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
+    NSMutableArray *array = [[super inspectorIdentifiers] mutableCopy];
+    [array addObject:AJRInspectorIdentifierDrawPage];
+    return array;
+}
+
 #pragma mark - AJRXMLCoding
 
 - (id)init {
@@ -568,6 +592,11 @@ static NSDictionary *_pageNumberAttributes = nil;
             DrawGraphic *graphic = [graphics objectAtIndex:x];
             [self observeGraphic:graphic yesNo:YES];
         }
+    }
+
+    // Variables
+    if (_variableStore == nil) {
+        _variableStore = [[AJRStore alloc] init];
     }
 
     return self;

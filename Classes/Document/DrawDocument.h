@@ -324,11 +324,9 @@ extern NSString * const DrawSavePanelPathKey;
 
 @interface DrawDocument (Pages) <AJRPagedViewDataSource,AJRPagedViewDelegate>
 
-// TODO: Candidate for deletion
-//- (BOOL)knowsPageRange:(NSRange *)range;
-//- (NSRect)rectForPage:(NSInteger)aPageNumber;
 @property (nonatomic,readonly) NSArray<DrawPage *> *pages;
 @property (nonatomic,strong) DrawPage *page;
+
 - (IBAction)addPage:(id)sender;
 - (IBAction)insertPage:(id)sender;
 - (IBAction)appendPage:(id)sender;

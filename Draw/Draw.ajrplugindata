@@ -183,6 +183,7 @@
     <!-- Inspectors -->
 
     <ajr_inspector xml="DrawDocument" identifier="document" />
+    <ajr_inspector xml="DrawPage" identifier="page" />
     <ajr_inspector xml="DrawGraphic" identifier="graphic" />
     <ajr_inspector xml="DrawCircle" identifier="circle" />
     <ajr_inspector xml="DrawRectangle" identifier="rectangle" />

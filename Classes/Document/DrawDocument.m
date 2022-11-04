@@ -345,7 +345,6 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     CGFloat width = segments.fittingSize.width;
     [segments sizeToFit];
     if (segments.segmentCount > 0) {
-        NSRect first = [(AJRSegmentedCell *)[segments cell] rectForSegment:0 inFrame:segments.bounds];
         NSRect last = [(AJRSegmentedCell *)[segments cell] rectForSegment:segments.segmentCount - 1 inFrame:segments.bounds];
         
         width = NSMaxX(last);
@@ -747,6 +746,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [self updateRulers];
 
     [self.inspectorGroupsViewController push:@[self] for:AJRInspectorContentIdentifierAny];
+    [self.inspectorGroupsViewController push:@[self.page] for:AJRInspectorContentIdentifierAny];
     [self.inspectorGroupsViewController push:@[_storage.templateGraphic] for:AJRInspectorContentIdentifierAny];
 
     [self _notifyControllersOfDocumentLoad:_primaryWindowController.contentViewController];
