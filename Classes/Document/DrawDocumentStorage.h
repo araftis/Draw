@@ -33,7 +33,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class DrawGraphic, DrawLayer, DrawPage;
+@class DrawGraphic, DrawLayer, DrawPage, AJRPaper;
 
 @interface DrawDocumentStorage : NSObject <AJRXMLCoding>
 
@@ -44,6 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: - Print Info
 @property (nonatomic,strong) NSPrintInfo *printInfo;
+// This is necessary, because by default, the printInfo / PMPrintSession won't allow you to use a "generic" printer if an actual printer is available, but we want our use to be able to store a "generic" printer in their document.
+@property (nonatomic,strong) NSPrinter *printer;
+@property (nonatomic,strong) AJRPaper *paper;
 
 // MARK: - Basic Attributes
 @property (nonatomic,strong) NSColor *paperColor;

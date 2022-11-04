@@ -94,6 +94,12 @@
     [coder decodeObjectForKey:@"printInfo" setter:^(id _Nullable object) {
         self->_printInfo = object;
     }];
+    [coder decodeObjectForKey:@"printer" setter:^(NSPrinter *object) {
+        self->_printer = object;
+    }];
+    [coder decodeObjectForKey:@"paper" setter:^(AJRPaper *object) {
+        self->_paper = object;
+    }];
 
     // Basic Properties
     [coder decodeObjectForKey:@"paperColor" setter:^(id _Nullable object) {
@@ -199,6 +205,13 @@
 }
 
 - (id)finalizeXMLDecodingWithError:(NSError * _Nullable __autoreleasing *)error {
+    if (_printer == nil) {
+        // Support reading older documents.
+        _printer = _printInfo.printer;
+    }
+    if (_paper == nil) {
+        _paper = _printInfo.paper;
+    }
     if (_layer == nil) {
         // In case a default layer wasn't loaded or found...
         _layer = [_layers firstObject];
@@ -222,6 +235,8 @@
 
     // Print Info
     [coder encodeObject:_printInfo forKey:@"printInfo"];
+    [coder encodeObject:_printer forKey:@"printer"];
+    [coder encodeObject:_paper forKey:@"paper"];
 
     // Basic Attribuets
     [coder encodeObject:_paperColor forKey:@"paperColor"];

@@ -445,6 +445,24 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     _storage.printInfo = self.printInfo;
 }
 
+- (void)setPrinter:(NSPrinter *)printer {
+    _storage.printer = printer;
+    _storage.printInfo.printer = printer;
+}
+
+- (NSPrinter *)printer {
+    return _storage.printer;
+}
+
+- (void)setPaper:(AJRPaper *)paper {
+    _storage.paper = paper;
+    _storage.printInfo.paper = paper;
+}
+
+- (AJRPaper *)paper {
+    return _storage.paper;
+}
+
 - (void)setPaperColor:(NSColor *)color {
     if (_storage.paperColor != color) {
         [self registerUndoWithTarget:self selector:@selector(setPaperColor:) object:_storage.paperColor];
@@ -452,6 +470,29 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         _storage.paperColor = color;
         [self setPagesNeedDisplay:YES];
     }
+}
+
+/// Used by the inspectors to get the valid list of printers available on the system.
+- (NSArray<NSPrinter *> *)allPrinters {
+    NSMutableArray<NSPrinter *> *printers = [NSMutableArray array];
+
+    [printers addObject:NSPrinter.genericPrinter];
+    for (NSString *name in NSPrinter.printerNames) {
+        [printers addObject:[NSPrinter printerWithName:name]];
+    }
+
+    return printers;
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingAllPapers {
+    return [NSSet setWithObjects:@"printer", nil];
+}
+
+- (NSArray<AJRPaper *> *)allPapers {
+    if (self.printInfo.printer == nil) {
+        return [AJRPaper allGenericPapers];
+    }
+    return self.printer.allPapers;
 }
 
 - (NSColor *)paperColor {
@@ -1050,6 +1091,28 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
 - (void)makeGraphicFirstResponder:(DrawGraphic *)graphic andScrollToVisible:(BOOL)scrollToVisible {
     [self makePageFirstResponder:graphic.page andScrollToVisible:scrollToVisible];
+}
+
+@end
+
+// This is just a tiny re-mapping of the printer's name to make it play nice in the UI.
+
+@interface NSPrinter (DrawInspection)
+
+@property (nonatomic,readonly) NSString *displayName;
+
+@end
+
+@implementation NSPrinter (DrawInspection)
+
+- (NSString *)displayName {
+    NSString *name = self.name;
+
+    if ([name isEqualToString:AJRGenericPrinterName]) {
+        return [[AJRTranslator translatorForClass:[DrawDocument class]] valueForKey:@"Any Printer"];
+    }
+
+    return name;
 }
 
 @end
