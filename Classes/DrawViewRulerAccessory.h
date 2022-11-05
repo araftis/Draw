@@ -9,13 +9,13 @@
  are permitted provided that the following conditions are met:
 
  * Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
+ list of conditions and the following disclaimer.
  * Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
+ this list of conditions and the following disclaimer in the documentation
+ and/or other materials provided with the distribution.
  * Neither the name of Draw nor the names of its contributors may be
-   used to endorse or promote products derived from this software without
-   specific prior written permission.
+ used to endorse or promote products derived from this software without
+ specific prior written permission.
 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
@@ -35,31 +35,31 @@
 
 @interface DrawViewRulerAccessory : NSObject
 {
-	IBOutlet NSColorWell 	*gridColorWell;
-	IBOutlet NSTextField 	*gridSpacingText;
-	IBOutlet NSButton		*showGridSwitch;
-	IBOutlet NSButton		*showSnapLinesSwitch;
-	IBOutlet NSColorWell 	*snapLineColorWell;
-	IBOutlet NSButton		*snapToGridSwitch;
-	IBOutlet NSButton		*snapToSnapLinesSwitch;
-	IBOutlet NSView		 	*view;
-	IBOutlet NSWindow		*window;
-	
-	DrawDocument			*drawView;
+    IBOutlet NSColorWell *gridColorWell;
+    IBOutlet NSTextField *gridSpacingText;
+    IBOutlet NSButton *showGridSwitch;
+    IBOutlet NSButton *showSnapLinesSwitch;
+    IBOutlet NSColorWell *snapLineColorWell;
+    IBOutlet NSButton *snapToGridSwitch;
+    IBOutlet NSButton *snapToSnapLinesSwitch;
+    IBOutlet NSView *view;
+    IBOutlet NSWindow *window;
 }
 
-- (id)initWithDocument:(DrawDocument *)aGraphicView;
+- (id)initWithDocument:(DrawDocument *)documentView;
+
+@property (nonatomic,readonly) DrawDocument *drawDocument;
 
 - (NSView *)view;
 
 - (void)update;
 
-- (void)setGridColor:(id)sender;
-- (void)setGridSpacing:(id)sender;
-- (void)setShowGrid:(id)sender;
-- (void)setShowSnapLines:(id)sender;
-- (void)setSnapLineColor:(id)sender;
-- (void)setSnapToGrid:(id)sender;
-- (void)setSnapToSnapLines:(id)sender;
+- (IBAction)setGridColor:(id)sender;
+- (IBAction)setGridSpacing:(id)sender;
+- (IBAction)setShowGrid:(id)sender;
+- (IBAction)setShowSnapLines:(id)sender;
+- (IBAction)setSnapLineColor:(id)sender;
+- (IBAction)setSnapToGrid:(id)sender;
+- (IBAction)setSnapToSnapLines:(id)sender;
 
 @end

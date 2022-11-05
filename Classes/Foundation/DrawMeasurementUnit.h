@@ -33,18 +33,35 @@
 
 #import <AJRFoundation/AJRUniqueObject.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface DrawMeasurementUnit : NSObject
 
-+ (NSArray *)availableMeasurementUnits;
-+ (NSFormatter *)formatterForMeasurementUnit:(NSString *)measurementUnit;
+@property (class,nonatomic,readonly) NSArray<DrawMeasurementUnit *> *availableMeasurementUnits;
 
-- (id)initWithName:(NSString *)name abbreviation:(NSString *)abbreviation conversionFaction:(double)conversionFactor stepUpCycle:(NSArray *)stepUpCycle andStepDownCycle:(NSArray *)stepDownCycle;
+@property (nonatomic,class,readonly) DrawMeasurementUnit *defaultMeasurementUnit;
++ (nullable DrawMeasurementUnit *)measurementUnitForIdentifier:(NSString *)name;
 
-@property (readonly,strong) NSString *measureName;
-@property (readonly,strong) NSString *abbreviation;
-@property (readonly,assign) double conversionFactor;
-@property (readonly,strong) NSArray *stepUpCycle;
-@property (readonly,strong) NSArray *stepDownCycle;
-@property (strong) NSFormatter *formatter;
+- (id)initWithIdentifier:(NSRulerViewUnitName)name
+            abbreviation:(NSString *)abbreviation
+       conversionFaction:(double)conversionFactor
+             stepUpCycle:(NSArray *)stepUpCycle
+        andStepDownCycle:(NSArray *)stepDownCycle;
+
+@property (nonatomic,readonly,strong) NSString *identifier;
+@property (nonatomic,readonly) NSString *localizedName;
+@property (nonatomic,readonly,strong) NSString *abbreviation;
+@property (nonatomic,readonly,assign) double conversionFactor;
+@property (nonatomic,readonly,strong) NSArray *stepUpCycle;
+@property (nonatomic,readonly,strong) NSArray *stepDownCycle;
+@property (nonatomic,strong) NSFormatter *formatter;
+@property (nullable,nonatomic,readonly) NSUnit *unit;
+
+// MARK: - Utilities
+
+- (CGFloat)pointsToMeasure:(CGFloat)points;
+- (CGFloat)measureToPoints:(CGFloat)measure;
 
 @end
+
+NS_ASSUME_NONNULL_END

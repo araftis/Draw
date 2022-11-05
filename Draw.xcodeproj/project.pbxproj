@@ -114,8 +114,6 @@
 		FA460AB713831AC40051A3B1 /* DrawPage-Rulers.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46094E13831AC20051A3B1 /* DrawPage-Rulers.m */; };
 		FA460AB813831AC40051A3B1 /* DrawPage.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46094F13831AC20051A3B1 /* DrawPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460AB913831AC40051A3B1 /* DrawPage.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46095013831AC20051A3B1 /* DrawPage.m */; };
-		FA460ABA13831AC40051A3B1 /* DrawPageLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46095113831AC20051A3B1 /* DrawPageLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA460ABB13831AC40051A3B1 /* DrawPageLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46095213831AC20051A3B1 /* DrawPageLayout.m */; };
 		FA460ACA13831AC40051A3B1 /* DrawPen.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46096213831AC20051A3B1 /* DrawPen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460ACB13831AC40051A3B1 /* DrawPen.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46096313831AC20051A3B1 /* DrawPen.m */; };
 		FA460ACC13831AC40051A3B1 /* DrawPenBezierAspect.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46096413831AC20051A3B1 /* DrawPenBezierAspect.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -379,8 +377,6 @@
 		FA46094E13831AC20051A3B1 /* DrawPage-Rulers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DrawPage-Rulers.m"; sourceTree = "<group>"; usesTabs = 0; };
 		FA46094F13831AC20051A3B1 /* DrawPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPage.h; sourceTree = "<group>"; usesTabs = 0; };
 		FA46095013831AC20051A3B1 /* DrawPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPage.m; sourceTree = "<group>"; usesTabs = 0; };
-		FA46095113831AC20051A3B1 /* DrawPageLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPageLayout.h; sourceTree = "<group>"; };
-		FA46095213831AC20051A3B1 /* DrawPageLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPageLayout.m; sourceTree = "<group>"; };
 		FA46096213831AC20051A3B1 /* DrawPen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPen.h; sourceTree = "<group>"; };
 		FA46096313831AC20051A3B1 /* DrawPen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPen.m; sourceTree = "<group>"; usesTabs = 0; };
 		FA46096413831AC20051A3B1 /* DrawPenBezierAspect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPenBezierAspect.h; sourceTree = "<group>"; };
@@ -413,7 +409,7 @@
 		FA4609D313831AC20051A3B1 /* DrawTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawTextView.swift; sourceTree = "<group>"; };
 		FA4609D613831AC20051A3B1 /* DrawTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawTool.h; path = "Graphics and Tools/DrawTool.h"; sourceTree = "<group>"; usesTabs = 1; };
 		FA4609D713831AC20051A3B1 /* DrawTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawTool.m; path = "Graphics and Tools/DrawTool.m"; sourceTree = "<group>"; usesTabs = 0; };
-		FA4609E813831AC20051A3B1 /* DrawViewRulerAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawViewRulerAccessory.h; sourceTree = "<group>"; usesTabs = 1; };
+		FA4609E813831AC20051A3B1 /* DrawViewRulerAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawViewRulerAccessory.h; sourceTree = "<group>"; usesTabs = 0; };
 		FA4609E913831AC20051A3B1 /* DrawViewRulerAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawViewRulerAccessory.m; sourceTree = "<group>"; };
 		FA4662AC192AE24800CD9F19 /* Draw.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Draw.xcassets; sourceTree = "<group>"; };
 		FA473944144F8F1D00962AA3 /* DrawDocumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawDocumentWindowController.h; sourceTree = "<group>"; };
@@ -455,7 +451,7 @@
 		FA98048813C653ED00C0F6F5 /* DrawSelectionActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSelectionActions.m; sourceTree = "<group>"; };
 		FA9C342C141AE75800815A1A /* DrawReflection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawReflection.swift; sourceTree = "<group>"; };
 		FA9E6AEA141970360027B8A1 /* DrawOpacity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawOpacity.swift; sourceTree = "<group>"; };
-		FAA326351405BA4200A620E8 /* DrawMeasurementUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawMeasurementUnit.h; sourceTree = "<group>"; usesTabs = 1; };
+		FAA326351405BA4200A620E8 /* DrawMeasurementUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawMeasurementUnit.h; sourceTree = "<group>"; usesTabs = 0; };
 		FAA326361405BA4300A620E8 /* DrawMeasurementUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawMeasurementUnit.m; sourceTree = "<group>"; usesTabs = 0; };
 		FAA6ED881440171300111271 /* DrawInspectorGroupsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawInspectorGroupsController.swift; sourceTree = "<group>"; };
 		FAA6ED891440171300111271 /* DrawInspectorGroupsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawInspectorGroupsController.xib; sourceTree = "<group>"; };
@@ -696,8 +692,6 @@
 				FA46086B13831AC20051A3B1 /* DrawBook.m */,
 				FA46088E13831AC20051A3B1 /* DrawFileWrapper.h */,
 				FA46088F13831AC20051A3B1 /* DrawFileWrapper.m */,
-				FA46095113831AC20051A3B1 /* DrawPageLayout.h */,
-				FA46095213831AC20051A3B1 /* DrawPageLayout.m */,
 				FA4609E813831AC20051A3B1 /* DrawViewRulerAccessory.h */,
 				FA4609E913831AC20051A3B1 /* DrawViewRulerAccessory.m */,
 			);
@@ -1102,7 +1096,6 @@
 				FA460A9F13831AC40051A3B1 /* DrawLinkCapSquare.h in Headers */,
 				FA460AA313831AC40051A3B1 /* DrawLinkTool.h in Headers */,
 				FA460AB813831AC40051A3B1 /* DrawPage.h in Headers */,
-				FA460ABA13831AC40051A3B1 /* DrawPageLayout.h in Headers */,
 				FA460ACA13831AC40051A3B1 /* DrawPen.h in Headers */,
 				FA460ACC13831AC40051A3B1 /* DrawPenBezierAspect.h in Headers */,
 				FA460AD013831AC40051A3B1 /* DrawPenTool.h in Headers */,
@@ -1326,7 +1319,6 @@
 				FA460AB613831AC40051A3B1 /* DrawPage-Event.m in Sources */,
 				FA460AB713831AC40051A3B1 /* DrawPage-Rulers.m in Sources */,
 				FA460AB913831AC40051A3B1 /* DrawPage.m in Sources */,
-				FA460ABB13831AC40051A3B1 /* DrawPageLayout.m in Sources */,
 				FABD167F25C8F475000294E3 /* DrawToolAccessoryViewController.swift in Sources */,
 				FA460ACB13831AC40051A3B1 /* DrawPen.m in Sources */,
 				FA460ACD13831AC40051A3B1 /* DrawPenBezierAspect.m in Sources */,

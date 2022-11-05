@@ -31,8 +31,7 @@
 
 #import "DrawMeasurementUnit.h"
 
-#import <AJRFoundation/AJRFractionFormatter.h>
-#import <AJRFoundation/AJRFormat.h>
+#import <AJRFoundation/AJRFoundation.h>
 
 #import <objc/runtime.h>
 
@@ -44,6 +43,12 @@ static NSMutableDictionary *_units = nil;
 @interface NSRulerView (Private)
 
 + (void)_registerUnitWithName:(NSString *)unitName abbreviation:(NSString *)abbreviation unitToPointsConversionFactor:(CGFloat)conversionFactor stepUpCycle:(NSArray *)stepUpCycle stepDownCycle:(NSArray *)stepDownCycle;
+
+@end
+
+@interface DrawMeasurementUnit ()
+
+@property (nonatomic,strong) NSUnit *unit;
 
 @end
 
@@ -61,16 +66,12 @@ static NSMutableDictionary *_units = nil;
 }    
 
 + (void)draw_registerUnitWithName:(NSString *)unitName abbreviation:(NSString *)abbreviation unitToPointsConversionFactor:(CGFloat)conversionFactor stepUpCycle:(NSArray *)stepUpCycle stepDownCycle:(NSArray *)stepDownCycle {
-    DrawMeasurementUnit *entry;
-    
     if (_units == nil) {
         _units = [[NSMutableDictionary alloc] init];
     }
     
-    entry = [_units objectForKey:unitName];
-    if (entry == nil) {
-        entry = [[DrawMeasurementUnit alloc] initWithName:unitName abbreviation:abbreviation conversionFaction:conversionFactor stepUpCycle:stepUpCycle andStepDownCycle:stepDownCycle];
-        [_units setObject:entry forKey:unitName];
+    if ([_units objectForKey:unitName.lowercaseString] == nil) {
+        _units[unitName.lowercaseString] = [[DrawMeasurementUnit alloc] initWithIdentifier:unitName.lowercaseString abbreviation:abbreviation conversionFaction:conversionFactor stepUpCycle:stepUpCycle andStepDownCycle:stepDownCycle];
     }
 
     _originalRegistrationMethod(self, _cmd, unitName, abbreviation, conversionFactor, stepUpCycle, stepDownCycle);
@@ -78,22 +79,44 @@ static NSMutableDictionary *_units = nil;
 
 #pragma mark - Creation
 
-- (id)initWithName:(NSString *)name abbreviation:(NSString *)abbreviation conversionFaction:(double)conversionFactor stepUpCycle:(NSArray *)stepUpCycle andStepDownCycle:(NSArray *)stepDownCycle {
++ (DrawMeasurementUnit *)defaultMeasurementUnit {
+    return [DrawMeasurementUnit measurementUnitForIdentifier:NSUnitLength.defaultShortUnitForLocale.identifier];
+}
+
++ (DrawMeasurementUnit *)measurementUnitForIdentifier:(NSString *)name {
+    return _units[name];
+}
+
+- (id)initWithIdentifier:(NSString *)identifier abbreviation:(NSString *)abbreviation conversionFaction:(double)conversionFactor stepUpCycle:(NSArray *)stepUpCycle andStepDownCycle:(NSArray *)stepDownCycle {
     if ((self = [super init])) {
-        _measureName = name;
+        _identifier = identifier;
         _abbreviation = abbreviation;
         _conversionFactor = conversionFactor;
         _stepUpCycle = stepUpCycle;
         _stepDownCycle = stepDownCycle;
+        _unit = [NSUnit unitForIdentifier:_identifier];
+        if (_unit == nil) {
+            AJRLogWarning(@"Unable to find an NSUnit for identifier: %@\n", _identifier);
+        }
     }
     
     return self;
 }
 
+- (NSString *)localizedName {
+    return self.unit.localizedName;
+}
+
+- (NSString *)description {
+    return AJRFormat(@"<%C: %p: %@>", self, self, _identifier);
+}
+
 #pragma mark - Factory
 
-+ (NSArray *)availableMeasurementUnits {
-    return [_units allKeys];
++ (NSArray<DrawMeasurementUnit *> *)availableMeasurementUnits {
+    return [[_units allValues] sortedArrayUsingComparator:^NSComparisonResult(DrawMeasurementUnit *obj1, DrawMeasurementUnit *obj2) {
+        return [obj1.unit.localizedName caseInsensitiveCompare:obj2.unit.localizedName];
+    }];
 }
 
 + (NSFormatter *)formatterForMeasurementUnit:(NSString *)unitName {
@@ -117,6 +140,29 @@ static NSMutableDictionary *_units = nil;
     }
     
     return formatter;
+}
+
+- (CGFloat)pointsToMeasure:(CGFloat)points {
+    NSMeasurement *measurement = [[NSMeasurement alloc] initWithDoubleValue:points unit:[NSUnitLength points]];
+    return [[measurement measurementByConvertingToUnit:self.unit] doubleValue];
+}
+
+- (CGFloat)measureToPoints:(CGFloat)measure {
+    NSMeasurement *measurement = [[NSMeasurement alloc] initWithDoubleValue:measure unit:self.unit];
+    return [[measurement measurementByConvertingToUnit:[NSUnitLength points]] doubleValue];
+}
+
+- (NSUInteger)hash {
+    return _identifier.hash;
+}
+
+- (BOOL)isEqual:(id)object {
+    DrawMeasurementUnit *other = AJRObjectIfKindOfClass(object, DrawMeasurementUnit);
+    return other != nil && [_identifier isEqualToString:other->_identifier];
+}
+
+- (BOOL)isEqualTo:(id)object {
+    return [self isEqual:object];
 }
 
 @end

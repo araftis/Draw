@@ -32,16 +32,16 @@
 #import "DrawViewRulerAccessory.h"
 
 #import "DrawDocument.h"
-#import "DrawPageLayout.h"
+#import "DrawMeasurementUnit.h"
 
 #import <AJRInterface/AJRInterface.h>
 
 @implementation DrawViewRulerAccessory
 
-- (id)initWithDocument:(DrawDocument *)aGraphicView {
+- (id)initWithDocument:(DrawDocument *)documentView {
     if ((self = [super init])) {
-        drawView = aGraphicView;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(update) name:DrawViewDidUpdateNotification object:drawView];
+        _drawDocument = documentView;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(update) name:DrawViewDidUpdateNotification object:_drawDocument];
     }
     return self;
 }
@@ -57,14 +57,14 @@
 }
 
 - (void)update {
-    [snapLineColorWell setColor:[drawView markColor]];
-    [showSnapLinesSwitch setState:[drawView marksVisible]];
-    [snapToSnapLinesSwitch setState:[drawView marksEnabled]];
+    [snapLineColorWell setColor:[_drawDocument markColor]];
+    [showSnapLinesSwitch setState:[_drawDocument marksVisible]];
+    [snapToSnapLinesSwitch setState:[_drawDocument marksEnabled]];
 
-    [gridColorWell setColor:[drawView gridColor]];
-    [showGridSwitch setState:[drawView gridVisible]];
-    [snapToGridSwitch setState:[drawView gridEnabled]];
-    [gridSpacingText setFloatValue:[[drawView printInfo] pointsToMeasure:[drawView gridSpacing]]];
+    [gridColorWell setColor:[_drawDocument gridColor]];
+    [showGridSwitch setState:[_drawDocument gridVisible]];
+    [snapToGridSwitch setState:[_drawDocument gridEnabled]];
+    gridSpacingText.floatValue = [_drawDocument.unitOfMeasure pointsToMeasure:_drawDocument.gridSpacing];
 }
 
 - (void)awakeFromNib {
@@ -77,32 +77,34 @@
 }
 
 - (void)setGridColor:(id)sender {
-    [drawView setGridColor:[gridColorWell color]];
+    [_drawDocument setGridColor:[gridColorWell color]];
 }
 
 - (void)setGridSpacing:(id)sender {
-    [drawView setGridSpacing:[[drawView printInfo] measureToPoints:[gridSpacingText floatValue]]];
-    [gridSpacingText setFloatValue:[[drawView printInfo] pointsToMeasure:[drawView gridSpacing]]];
+    DrawMeasurementUnit *measure = _drawDocument.unitOfMeasure;
+
+    _drawDocument.gridSpacing = [measure measureToPoints:gridSpacingText.floatValue];
+    gridSpacingText.floatValue = [measure pointsToMeasure:_drawDocument.gridSpacing];
 }
 
 - (void)setShowGrid:(id)sender {
-    [drawView setGridVisible:[(NSButton *)sender state]];
+    [_drawDocument setGridVisible:[(NSButton *)sender state]];
 }
 
 - (void)setShowSnapLines:(id)sender {
-    [drawView setMarksVisible:[(NSButton *)sender state]];
+    [_drawDocument setMarksVisible:[(NSButton *)sender state]];
 }
 
 - (void)setSnapLineColor:(id)sender {
-    [drawView setMarkColor:[snapLineColorWell color]];
+    [_drawDocument setMarkColor:[snapLineColorWell color]];
 }
 
 - (void)setSnapToGrid:(id)sender {
-    [drawView setGridEnabled:[(NSButton *)sender state]];
+    [_drawDocument setGridEnabled:[(NSButton *)sender state]];
 }
 
 - (void)setSnapToSnapLines:(id)sender {
-    [drawView setMarksEnabled:[(NSButton *)sender state]];
+    [_drawDocument setMarksEnabled:[(NSButton *)sender state]];
 }
 
 @end

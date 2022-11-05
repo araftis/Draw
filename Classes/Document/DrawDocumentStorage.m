@@ -33,6 +33,7 @@
 
 #import "DrawDocument.h"
 #import "DrawLayer.h"
+#import "DrawMeasurementUnit.h"
 
 #import <AJRInterface/AJRInterface.h>
 
@@ -77,6 +78,22 @@
     }
 }
 
+- (void)setMargins:(AJRInset)margins {
+    _printInfo.leftMargin = margins.left;
+    _printInfo.rightMargin = margins.right;
+    _printInfo.topMargin = margins.top;
+    _printInfo.bottomMargin = margins.bottom;
+}
+
+- (AJRInset)margins {
+    return (AJRInset){
+        .left = _printInfo.leftMargin,
+        .right = _printInfo.rightMargin,
+        .top = _printInfo.topMargin,
+        .bottom = _printInfo.bottomMargin
+    };
+}
+
 #pragma mark - NSCoding
 
 + (NSString *)ajr_nameForXMLArchiving {
@@ -99,6 +116,9 @@
     }];
     [coder decodeObjectForKey:@"paper" setter:^(AJRPaper *object) {
         self->_paper = object;
+    }];
+    [coder decodeStringForKey:@"unitOfMeasure" setter:^(NSString *identifier) {
+        self->_unitOfMeasure = [DrawMeasurementUnit measurementUnitForIdentifier:identifier];
     }];
 
     // Basic Properties
@@ -212,6 +232,9 @@
     if (_paper == nil) {
         _paper = _printInfo.paper;
     }
+    if (_unitOfMeasure == nil) {
+        _unitOfMeasure = DrawMeasurementUnit.defaultMeasurementUnit;
+    }
     if (_layer == nil) {
         // In case a default layer wasn't loaded or found...
         _layer = [_layers firstObject];
@@ -237,6 +260,7 @@
     [coder encodeObject:_printInfo forKey:@"printInfo"];
     [coder encodeObject:_printer forKey:@"printer"];
     [coder encodeObject:_paper forKey:@"paper"];
+    [coder encodeString:_unitOfMeasure.identifier forKey:@"unitOfMeasure"];
 
     // Basic Attribuets
     [coder encodeObject:_paperColor forKey:@"paperColor"];

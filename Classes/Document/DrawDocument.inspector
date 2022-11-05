@@ -17,10 +17,19 @@
         <group title="Variables">
             <slice type="store" valueKeyPath="controller.selection.variableStore" fullWidth="true" />
         </group>
+        <group title="Units">
+            <slice type="choice" style="popUp" valueType="object" objectsKeyPath="controller.selection.allUnitsOfMeasure" choiceTitleKeyPath="localizedName" valueKeyPath="controller.selection.unitOfMeasure" />
+        </group>
         <group title="Printer &amp; Paper Size">
             <slice type="choice" label="Printer" style="popUp" valueType="object" objectsKeyPath="controller.selection.allPrinters" choiceTitleKeyPath="displayName" valueKeyPath="controller.selection.printer" />
             <slice type="choice" label="Paper" style="popUp" valueType="object" objectsKeyPath="controller.selection.allPapers" choiceTitleKeyPath="localizedName" valueKeyPath="controller.selection.paper" />
             <!--<slice type="choice" label="Paper" valueKeyPath="controller.selection.printInfo.paperName" />-->
+        </group>
+        <group title="Page Orientation">
+            <slice type="paperOrientation" valueKeyPath="controller.selection.orientation" paperValueKeyPath="controller.selection.paper" unitsKeyPath="controller.selection.unitOfMeasure.unit" fullWidth="true" />
+        </group>
+        <group title="Document Margins">
+            <slice type="insets" valueKeyPath="controller.selection.margins" unitsKeyPath="controller.selection.unitOfMeasure.unit" />
         </group>
         <group title="Info">
             <slice type="string" label="Author" valueKeyPath="controller.selection.documentInfo.author" />

@@ -31,7 +31,6 @@
 
 #import "DrawPage.h"
 
-#import "DrawPageLayout.h"
 #import "DrawRulerMarker.h"
 #import "DrawDocument.h"
 #import "DrawDocumentStorage.h"
@@ -255,7 +254,6 @@
             }
             [self.enclosingScrollView.verticalRulerView setNeedsDisplay:YES];
         }
-        [[NSUserDefaults standardUserDefaults] setPrintInfo:printInfo forKey:DrawPrintInfoKey];
         [self.document setPagesNeedDisplay:YES];
     } else if ([name hasPrefix:@"guide"]) {
         if (rulerView.orientation == NSHorizontalRuler) {

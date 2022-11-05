@@ -39,7 +39,6 @@
 #import "DrawGraphicsInspectorController.h"
 #import "DrawLayer.h"
 #import "DrawPage.h"
-#import "DrawPageLayout.h"
 #import "DrawRibbonInspectorController.h"
 #import "DrawRulerView.h"
 #import "DrawTool.h"
@@ -291,7 +290,6 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         if (_iconObserverTokens[tool.identifier] == nil) {
             __weak DrawDocument *weakSelf = self;
             _iconObserverTokens[tool.identifier] = [tool addObserver:self forKeyPath:@"icon" options:0 block:^(DrawTool *tool, NSString *keyPath, NSDictionary<NSKeyValueChangeKey,id> *change) {
-                AJRPrintf(@"update!\n");
                 DrawDocument *strongSelf = weakSelf;
                 if (strongSelf != nil) {
                     if ([tool isUsedByToolSet:strongSelf.displayedToolSet]) {
@@ -446,6 +444,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 - (void)setPrinter:(NSPrinter *)printer {
+    NSPrinter *current = printer;
+    [self registerUndoWithTarget:self handler:^(DrawDocument *target) {
+        [target setPrinter:current];
+    }];
     _storage.printer = printer;
     _storage.printInfo.printer = printer;
 }
@@ -455,12 +457,60 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 - (void)setPaper:(AJRPaper *)paper {
+    AJRPaper *current = paper;
+    [self registerUndoWithTarget:self handler:^(DrawDocument *target) {
+        [target setPaper:current];
+    }];
     _storage.paper = paper;
     _storage.printInfo.paper = paper;
 }
 
 - (AJRPaper *)paper {
     return _storage.paper;
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingOrientation {
+    return [NSSet setWithObjects:@"printInfo.orientation", nil];
+}
+
+- (void)setOrientation:(NSPaperOrientation)orientation {
+    NSPaperOrientation current = orientation;
+    [self registerUndoWithTarget:self handler:^(DrawDocument *target) {
+        [target setOrientation:current];
+    }];
+    self.printInfo.orientation = orientation;
+}
+
+- (NSPaperOrientation)orientation {
+    return self.printInfo.orientation;
+}
+
+- (NSArray<DrawMeasurementUnit *> *)allUnitsOfMeasure {
+    return DrawMeasurementUnit.availableMeasurementUnits;
+}
+
+- (void)setUnitOfMeasure:(DrawMeasurementUnit *)unitOfMeasure {
+    DrawMeasurementUnit *current = _storage.unitOfMeasure;
+    [self registerUndoWithTarget:self handler:^(DrawDocument *target) {
+        [self setUnitOfMeasure:current];
+    }];
+    _storage.unitOfMeasure = unitOfMeasure;
+}
+
+- (DrawMeasurementUnit *)unitOfMeasure {
+    return _storage.unitOfMeasure;
+}
+
+- (void)setMargins:(AJRInset)margins {
+    AJRInset current = _storage.margins;
+    [self registerUndoWithTarget:self handler:^(DrawDocument *target) {
+        [self setMargins:current];
+    }];
+    _storage.margins = margins;
+}
+
+- (AJRInset)margins {
+    return _storage.margins;
 }
 
 - (void)setPaperColor:(NSColor *)color {
@@ -878,8 +928,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [self updateGrid];
     [_pagedView setNeedsDisplay:YES];
 
-    [[enclosingScrollView horizontalRulerView] setMeasurementUnits:[[[self printInfo] dictionary] objectForKey:NSUnitsOfMeasure]];
-    [[enclosingScrollView verticalRulerView] setMeasurementUnits:[[[self printInfo] dictionary] objectForKey:NSUnitsOfMeasure]];
+    [[enclosingScrollView horizontalRulerView] setMeasurementUnits:self.unitOfMeasure.identifier.capitalizedString];
+    [[enclosingScrollView verticalRulerView] setMeasurementUnits:self.unitOfMeasure.identifier.capitalizedString];
 }
 
 - (CGFloat)scale {

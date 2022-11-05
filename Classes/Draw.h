@@ -75,7 +75,6 @@
 #import <Draw/DrawMeasurementUnit.h>
 #import <Draw/DrawOldDrawFilter.h>
 #import <Draw/DrawPage.h>
-#import <Draw/DrawPageLayout.h>
 #import <Draw/DrawPapelFilter.h>
 #import <Draw/DrawPen.h>
 #import <Draw/DrawPenBezierAspect.h>

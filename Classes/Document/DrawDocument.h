@@ -38,7 +38,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AJRBezierPath, AJRRibbonView, AJRSplitView, DrawBook, DrawDocumentStorage, DrawPage, DrawGraphic, DrawInspectorGroupController, DrawGraphicsInspectorController, DrawLayer, DrawRulerMarker, DrawTool, DrawViewRulerAccessory, DrawLayerViewController, DrawInspectorGroupsController;
+@class AJRBezierPath, AJRRibbonView, AJRSplitView, DrawBook, DrawDocumentStorage, DrawPage, DrawGraphic, DrawInspectorGroupController, DrawGraphicsInspectorController, DrawLayer, DrawRulerMarker, DrawTool, DrawViewRulerAccessory, DrawLayerViewController, DrawInspectorGroupsController, DrawMeasurementUnit;
 
 extern NSString * const DrawDocumentErrorDomain;
 extern NSString * const DrawDocumentLogDomain;
@@ -156,7 +156,17 @@ extern NSString * const DrawSavePanelPathKey;
  Defines the actualy storage for the document. This includes all data associated with the document that "comprise" the document, but not the UI portions of the document. While the attribute is writable, it should be extremely rare that you ever need to assign to it.
  */
 @property (nonatomic,strong) DrawDocumentStorage *storage;
+
+// MARK: - Printing & Layout
+
 @property (nonatomic,strong) NSPrinter *printer;
+@property (nonatomic,assign) NSPaperOrientation orientation;
+@property (nonatomic,readonly) NSArray<DrawMeasurementUnit *> *allUnitsOfMeasure;
+@property (nonatomic,assign) DrawMeasurementUnit *unitOfMeasure;
+@property (nonatomic,assign) AJRInset margins;
+
+// MARK: - Display & Editing
+
 @property (nonatomic,strong) NSSplitViewController *splitViewController;
 /** The document's editing context, used to track changes to its graphics. */
 @property (nonatomic,readonly) AJREditingContext *editingContext;
