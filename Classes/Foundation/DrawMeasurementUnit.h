@@ -56,6 +56,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,readonly,strong) NSArray *stepDownCycle;
 @property (nonatomic,strong) NSFormatter *formatter;
 @property (nullable,nonatomic,readonly) NSUnit *unit;
+/// The amount UI steppers should increment / decrement the unit.
+@property (nonatomic,readonly) CGFloat defaultIncrement;
 
 // MARK: - Utilities
 

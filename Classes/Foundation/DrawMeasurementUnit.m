@@ -31,6 +31,8 @@
 
 #import "DrawMeasurementUnit.h"
 
+#import "DrawLogging.h"
+
 #import <AJRFoundation/AJRFoundation.h>
 
 #import <objc/runtime.h>
@@ -72,6 +74,7 @@ static NSMutableDictionary *_units = nil;
     
     if ([_units objectForKey:unitName.lowercaseString] == nil) {
         _units[unitName.lowercaseString] = [[DrawMeasurementUnit alloc] initWithIdentifier:unitName.lowercaseString abbreviation:abbreviation conversionFaction:conversionFactor stepUpCycle:stepUpCycle andStepDownCycle:stepDownCycle];
+        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Measurement: %@, up: (%@), down: (%@)", unitName.lowercaseString, [stepUpCycle componentsJoinedByString:@","], [stepDownCycle componentsJoinedByString:@","]);
     }
 
     _originalRegistrationMethod(self, _cmd, unitName, abbreviation, conversionFactor, stepUpCycle, stepDownCycle);
@@ -105,6 +108,22 @@ static NSMutableDictionary *_units = nil;
 
 - (NSString *)localizedName {
     return self.unit.localizedName;
+}
+
+- (CGFloat)defaultIncrement {
+    if ([_identifier isEqualToString:@"inches"]) {
+        return (1.0 / 32.0 * 72.0);
+    }
+    if ([_identifier isEqualToString:@"centimeters"]) {
+        return 1.4173; // .5 mm stepping
+    }
+    if ([_identifier isEqualToString:@"picas"]) {
+        return 1.0;
+    }
+    if ([_identifier isEqualToString:@"points"]) {
+        return 1.0;
+    }
+    return 1.0;
 }
 
 - (NSString *)description {

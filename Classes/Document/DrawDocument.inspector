@@ -26,10 +26,10 @@
             <!--<slice type="choice" label="Paper" valueKeyPath="controller.selection.printInfo.paperName" />-->
         </group>
         <group title="Page Orientation">
-            <slice type="paperOrientation" valueKeyPath="controller.selection.orientation" paperValueKeyPath="controller.selection.paper" unitsKeyPath="controller.selection.unitOfMeasure.unit" fullWidth="true" />
+            <slice type="paperOrientation" valueKeyPath="controller.selection.orientation" paperValueKeyPath="controller.selection.paper" unitsKeyPath="controller.selection.unitOfMeasure.unit" displayInchesAsFractions="true" fullWidth="true" />
         </group>
         <group title="Document Margins">
-            <slice type="insets" valueKeyPath="controller.selection.margins" unitsKeyPath="controller.selection.unitOfMeasure.unit" />
+            <slice type="insets" valueKeyPath="controller.selection.margins" units="points" displayUnitsKeyPath="controller.selection.unitOfMeasure.unit" displayInchesAsFractions="true" incrementKeyPath="controller.selection.unitOfMeasure.defaultIncrement" />
         </group>
         <group title="Info">
             <slice type="string" label="Author" valueKeyPath="controller.selection.documentInfo.author" />

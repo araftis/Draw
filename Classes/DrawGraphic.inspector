@@ -2,7 +2,7 @@
 <inspector>
     <group title="Graphic">
         <group title="Position" hiddenKeyPath="controller.selection.isTemplateGraphic">
-            <slice type="rect" valueKeyPath="controller.selection.frame" />
+            <slice type="rect" valueKeyPath="controller.selection.frame" units="points" displayUnitsKeyPath="controller.selection.document.unitOfMeasure.unit" displayInchesAsFractions="true" incrementKeyPath="controller.selection.document.unitOfMeasure.defaultIncrement" />
         </group>
         <group title="Text">
             <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryText.active" />
