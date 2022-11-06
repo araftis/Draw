@@ -54,13 +54,14 @@
 NSString * const DrawDocumentErrorDomain = @"DrawDocumentErrorDomain";
 NSString * const DrawDocumentLogDomain = @"DrawDocument";
 
-NSString * const DrawViewWillDeallocateNotification = @"DrawViewWillDeallocateNotification";
-NSString * const DrawDocumentDidAddGraphicNotification = @"DrawDocumentDidAddGraphicNotification";
+const NSNotificationName DrawViewWillDeallocateNotification = @"DrawViewWillDeallocateNotification";
+const NSNotificationName DrawDocumentDidAddGraphicNotification = @"DrawDocumentDidAddGraphicNotification";
 NSString * const DrawGraphicKey = @"DrawGraphicKey";
-NSString * const DrawViewDidChangeSelectionNotification = @"DrawViewDidChangeSelectionNotification";
+const NSNotificationName DrawViewDidChangeSelectionNotification = @"DrawViewDidChangeSelectionNotification";
 NSString * const DrawViewSelectionKey = @"DrawViewSelectionKey";
-NSString * const DrawViewDidUpdateNotification = @"DrawViewDidUpdateNotification";
-NSString * const DrawObjectDidResignRulerNotification = @"DrawObjectDidResignRulerNotification";
+const NSNotificationName DrawViewDidUpdateNotification = @"DrawViewDidUpdateNotification";
+const NSNotificationName DrawDocumentDidUpdateLayoutNotification = @"DrawDocumentDidUpdateLayoutNotification";
+const NSNotificationName DrawObjectDidResignRulerNotification = @"DrawObjectDidResignRulerNotification";
 
 NSString * const DrawMarkColorKey = @"MarkColorKey";
 NSString * const DrawMarksEnabledKey = @"MarksEnabledKey";
@@ -437,10 +438,13 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }];
 }
 
+// MARK: - Layout Properties
+
 - (void)setPrintInfo:(NSPrintInfo *)printInfo {
     // Make sure the storage reflects our print info.
     [super setPrintInfo:printInfo];
     _storage.printInfo = self.printInfo;
+    [self updateLayoutAndNotify:YES];
 }
 
 - (void)setPrinter:(NSPrinter *)printer {
@@ -463,6 +467,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }];
     _storage.paper = paper;
     _storage.printInfo.paper = paper;
+    [self updateLayoutAndNotify:YES];
 }
 
 - (AJRPaper *)paper {
@@ -479,6 +484,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         [target setOrientation:current];
     }];
     self.printInfo.orientation = orientation;
+    [self updateLayoutAndNotify:YES];
 }
 
 - (NSPaperOrientation)orientation {
@@ -495,6 +501,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         [self setUnitOfMeasure:current];
     }];
     _storage.unitOfMeasure = unitOfMeasure;
+    [self updateLayoutAndNotify:YES];
 }
 
 - (DrawMeasurementUnit *)unitOfMeasure {
@@ -507,6 +514,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         [self setMargins:current];
     }];
     _storage.margins = margins;
+    [self updateLayoutAndNotify:YES];
 }
 
 - (AJRInset)margins {
@@ -921,15 +929,20 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [self clearSelection];
 }
 
-- (void)printInfoDidUpdate:(NSNotification *)aNotification {
+- (void)updateLayoutAndNotify:(BOOL)flag {
     NSScrollView *enclosingScrollView = [_pagedView enclosingScrollView];
+
+    [_pagedView reloadPages];
 
     [self updateRulers];
     [self updateGrid];
-    [_pagedView setNeedsDisplay:YES];
-
+    
     [[enclosingScrollView horizontalRulerView] setMeasurementUnits:self.unitOfMeasure.identifier.capitalizedString];
     [[enclosingScrollView verticalRulerView] setMeasurementUnits:self.unitOfMeasure.identifier.capitalizedString];
+    
+    if (flag) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:DrawDocumentDidUpdateLayoutNotification object:self];
+    }
 }
 
 - (CGFloat)scale {

@@ -43,20 +43,21 @@ NS_ASSUME_NONNULL_BEGIN
 extern NSString * const DrawDocumentErrorDomain;
 extern NSString * const DrawDocumentLogDomain;
 
-extern NSString * const DrawViewDidChangeURLNotification;
+extern const NSNotificationName DrawViewDidChangeURLNotification;
 extern NSString * const DrawViewOldURLKey;
 extern NSString * const DrawViewNewURLKey;
 
-extern NSString * const DrawLayerDidChangeNotification;
-extern NSString * const DrawViewWillDeallocateNotification;
+extern const NSNotificationName DrawLayerDidChangeNotification;
+extern const NSNotificationName DrawViewWillDeallocateNotification;
 
-extern NSString * const DrawDocumentDidAddGraphicNotification;
+extern const NSNotificationName DrawDocumentDidAddGraphicNotification;
 extern NSString * const DrawGraphicKey;
 
-extern NSString * const DrawViewDidChangeSelectionNotification;
+extern const NSNotificationName DrawViewDidChangeSelectionNotification;
 extern NSString * const DrawViewSelectionKey;
 
-extern NSString * const DrawViewDidUpdateNotification;
+extern const NSNotificationName DrawViewDidUpdateNotification;
+extern const NSNotificationName DrawDocumentDidUpdateLayoutNotification;
 
 extern NSString * const DrawObjectDidResignRulerNotification;
 
@@ -176,6 +177,13 @@ extern NSString * const DrawSavePanelPathKey;
 
 // Returns the current scale (frame.size.width / bounds.size.width)
 - (CGFloat)scale;
+
+/**
+ Called by the document when it changes something that would cause a signitifcant change to the UI layout. For example, updates to page size, page orientation, units of measure, margins, etc...
+ 
+ @param notify If `YES`, the DrawDocumentDidUpdateLayoutNotification will be sent.
+ */
+- (void)updateLayoutAndNotify:(BOOL)flag;
 
 - (void)addGraphic:(DrawGraphic *)graphic;
 - (void)removeGraphic:(DrawGraphic *)graphic;
