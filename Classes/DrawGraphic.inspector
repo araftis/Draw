@@ -12,12 +12,12 @@
                 <choice imageName="AJRInspectorAlignMiddle" bundle="com.ajr.framework.AJRInterface" value="1" />
                 <choice imageName="AJRInspectorAlignBottom" bundle="com.ajr.framework.AJRInterface" value="2" />
             </slice>
-            <slice type="float" label="Padding" valueKeyPath="controller.selection.primaryText.lineFragmentPadding" />
+            <slice type="float" label="Padding" valueKeyPath="controller.selection.primaryText.lineFragmentPadding" units="points" displayUnits="points" increment="1" />
         </group>
         <group title="Stroke">
             <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryStroke.active" />
             <slice type="color" label="Color" valueKeyPath="controller.selection.primaryStroke.color" />
-            <slice type="float" label="Width" valueKeyPath="controller.selection.primaryStroke.width" />
+            <slice type="float" label="Width" valueKeyPath="controller.selection.primaryStroke.width" units="points" displayUnits="points" increment="0.5" />
             <slice type="float" label="Miter Limit" valueKeyPath="controller.selection.primaryStroke.miterLimit" />
         </group>
         <group title="Fill">
@@ -28,7 +28,7 @@
             <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryShadow.active" />
             <slice type="color" label="Color" valueKeyPath="controller.selection.primaryShadow.color" />
             <slice type="size" label="Offset" valuesCanLink="false" valueKeyPath="controller.selection.primaryShadow.offset" />
-            <slice type="float" label="Blur Radius" valueKeyPath="controller.selection.primaryShadow.blurRadius" />
+            <slice type="float" label="Blur Radius" valueKeyPath="controller.selection.primaryShadow.blurRadius" units="points" displayUnits="points" increment="1" />
         </group>
         <group title="Reflection">
             <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryReflection.active" />
