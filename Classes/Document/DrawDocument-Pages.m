@@ -41,24 +41,6 @@
 
 @implementation DrawDocument (Pages)
 
-// TODO: Candidate for deletion
-//- (BOOL)knowsPageRange:(NSRange *)range {
-//    range->location = _storage.startingPageNumber;
-//    range->length = [_storage.pages count];
-//
-//    return YES;
-//}
-//
-//- (NSRect)rectForPage:(NSInteger)aPageNumber {
-//    if (_storage.pageNumber <= [_storage.pages count]) {
-//        if (self.isPrinting) {
-//            _storage.pageNumber = aPageNumber;
-//        }
-//    }
-//
-//    return (NSRect){{0.0, 0.0}, [[self printInfo] paperSize]};
-//}
-
 - (NSView *)viewForPage:(NSInteger)aPageNumber {
     return [_storage.pages objectAtIndex:aPageNumber - _storage.startingPageNumber];
 }
@@ -163,11 +145,11 @@
 }
 
 - (NSSize)pagedView:(AJRPagedView *)pagedView sizeForPage:(NSInteger)pageNumber {
-    return [[self printInfo] paperSize];
+    return [self.storage.pages[pageNumber].paper sizeForOrientation:self.orientation];
 }
 
 - (NSColor *)pagedView:(AJRPagedView *)pagedView colorForPage:(NSInteger)pageNumber {
-    return _storage.paperColor;
+    return self.storage.pages[pageNumber].paperColor;
 }
 
 - (void)setPagesNeedDisplay:(BOOL)flag {

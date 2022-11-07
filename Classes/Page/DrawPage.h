@@ -73,6 +73,15 @@ extern const AJRInspectorIdentifier AJRInspectorIdentifierDrawPage;
 @property (nonatomic,strong,null_resettable) NSColor *paperColor;
 @property (nonatomic,readonly) BOOL isPrinting;
 
+#pragma mark - Layout
+
+/**
+ The page's paper, which controls the page's size.
+
+ If `nil`, this defaults to the document's paper. Note that individual paper for a page is not currently supported, but is something I'd like to support in the future, which is why this hook is here.
+ */
+@property (null_resettable,nonatomic,strong) AJRPaper *paper;
+
 #pragma mark - Graphics
 
 - (void)addGraphic:(DrawGraphic *)aGraphic;

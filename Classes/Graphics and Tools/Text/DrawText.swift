@@ -213,15 +213,15 @@ open class DrawText : DrawAspect {
 
     internal func updateMaxSize() {
         if let graphic,
-           let printInfo = graphic.document?.printInfo,
+           let document = graphic.document,
            let textView {
-            let paperSize = printInfo.paperSize
+            let paperSize = document.paper.size(for: document.orientation)
             let origin = graphic.frame.origin
             let textView = textView
             var maxSize = NSSize.zero
 
-            maxSize.width = paperSize.width - printInfo.rightMargin - origin.x
-            maxSize.height = paperSize.height - printInfo.bottomMargin - origin.y
+            maxSize.width = paperSize.width - document.margins.right - origin.x
+            maxSize.height = paperSize.height - document.margins.bottom - origin.y
             AJRLog.debug("maxSize = \(maxSize)")
             textView.maxSize = maxSize
         }

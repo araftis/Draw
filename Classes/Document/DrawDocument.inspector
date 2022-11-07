@@ -23,7 +23,6 @@
         <group title="Printer &amp; Paper Size">
             <slice type="choice" label="Printer" style="popUp" valueType="object" objectsKeyPath="controller.selection.allPrinters" choiceTitleKeyPath="displayName" valueKeyPath="controller.selection.printer" />
             <slice type="choice" label="Paper" style="popUp" valueType="object" objectsKeyPath="controller.selection.allPapers" choiceTitleKeyPath="localizedName" valueKeyPath="controller.selection.paper" />
-            <!--<slice type="choice" label="Paper" valueKeyPath="controller.selection.printInfo.paperName" />-->
         </group>
         <group title="Page Orientation">
             <slice type="paperOrientation" valueKeyPath="controller.selection.orientation" paperValueKeyPath="controller.selection.paper" unitsKeyPath="controller.selection.unitOfMeasure.unit" displayInchesAsFractions="true" fullWidth="true" />

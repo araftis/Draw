@@ -59,7 +59,7 @@ static NSDictionary *_pageNumberAttributes = nil;
 }
 
 - (id)initWithDocument:(DrawDocument *)document {
-    NSRect frame = {NSZeroPoint, document.printInfo.paperSize};
+    NSRect frame = {NSZeroPoint, [document.paper sizeForOrientation:document.orientation]};
 
     if ((self = [super initWithFrame:frame])) {
         [self setDocument:document];
@@ -86,7 +86,7 @@ static NSDictionary *_pageNumberAttributes = nil;
 #pragma mark - Properties
 
 - (NSColor *)paperColor {
-    return _paperColor == nil ? [_document paperColor] : _paperColor;
+    return _paperColor ?: _document.paperColor;
 }
 
 - (void)setPaperColor:(NSColor *)newColor {
@@ -117,6 +117,19 @@ static NSDictionary *_pageNumberAttributes = nil;
             variable.page = self;
         }
     }];
+}
+
+@synthesize paper = _paper;
+
+- (void)setPaper:(AJRPaper *)paper {
+    if (_paper != paper) {
+        _paper = paper;
+        [self.document updateLayoutAndNotify:YES];
+    }
+}
+
+- (AJRPaper *)paper {
+    return _paper ?: self.document.paper;
 }
 
 #pragma mark - Graphics
@@ -264,26 +277,23 @@ static NSDictionary *_pageNumberAttributes = nil;
 }
 
 - (void)drawPageMarkingsInRect:(NSRect)rect {
-    NSColor *tempColor;
-    NSSize paperSize;
-    NSPrintInfo *printInfo = [_document printInfo];
-    NSRect marginRect;
-    
     // Draw the margins.
-    tempColor = [[NSUserDefaults standardUserDefaults] colorForKey:DrawMarginColorKey];
+    NSColor *tempColor = [[NSUserDefaults standardUserDefaults] colorForKey:DrawMarginColorKey];
     if (!tempColor) {
         tempColor = NSColor.gridColor;
     }
     [tempColor set];
-    paperSize = [printInfo paperSize];
-    marginRect.origin.x = [printInfo leftMargin];
+    NSSize paperSize = [_document.paper sizeForOrientation:_document.orientation];
+    AJRInset margins = _document.margins;
+    NSRect marginRect;
+    marginRect.origin.x = margins.left;
     if (self.isFlipped) {
-        marginRect.origin.y = [printInfo topMargin];
+        marginRect.origin.y = margins.top;
     } else {
-        marginRect.origin.y = [printInfo bottomMargin];
+        marginRect.origin.y = margins.bottom;
     }
-    marginRect.size.width = paperSize.width - ([printInfo leftMargin] + [printInfo rightMargin]);
-    marginRect.size.height = paperSize.height - ([printInfo bottomMargin] + [printInfo topMargin]);
+    marginRect.size.width = paperSize.width - (margins.left + margins.right);
+    marginRect.size.height = paperSize.height - (margins.bottom + margins.top);
     marginRect = [self backingAlignedRect:marginRect options:NSAlignAllEdgesNearest];
     NSFrameRect(marginRect);
 

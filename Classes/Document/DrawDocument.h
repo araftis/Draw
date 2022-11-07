@@ -161,10 +161,17 @@ extern NSString * const DrawSavePanelPathKey;
 // MARK: - Printing & Layout
 
 @property (nonatomic,strong) NSPrinter *printer;
+@property (nonatomic,strong) AJRPaper *paper;
 @property (nonatomic,assign) NSPaperOrientation orientation;
 @property (nonatomic,readonly) NSArray<DrawMeasurementUnit *> *allUnitsOfMeasure;
 @property (nonatomic,assign) DrawMeasurementUnit *unitOfMeasure;
 @property (nonatomic,assign) AJRInset margins;
+
+// NOTE: These are basically here to make the margins observable, but they're also convenient for setting individual margin values without having to get/change/set.
+@property (nonatomic,assign) CGFloat leftMargin;
+@property (nonatomic,assign) CGFloat rightMargin;
+@property (nonatomic,assign) CGFloat topMargin;
+@property (nonatomic,assign) CGFloat bottomMargin;
 
 // MARK: - Display & Editing
 

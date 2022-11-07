@@ -61,19 +61,19 @@
 - (void)_updateMarkersForRulerView:(NSRulerView *)rulerView {
     NSArray<NSNumber *> *marks;
     DrawRulerMarker *marker;
-    NSPrintInfo *printInfo = [_document printInfo];
+    NSSize paperSize = [_document.paper sizeForOrientation:_document.orientation];
 
     if ([rulerView orientation] == NSHorizontalRuler) {
         marks = _document.storage.horizontalMarks;
 
         [rulerView setMarkers:nil];
 
-        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:[printInfo leftMargin] image:[AJRImages imageNamed:@"marginLeftMarker" forObject:self] imageOrigin:(NSPoint){4.0, 0.0}];
+        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:_document.margins.left image:[AJRImages imageNamed:@"marginLeftMarker" forObject:self] imageOrigin:(NSPoint){4.0, 0.0}];
         [marker setMovable:YES];
         [marker setRemovable:NO];
         [rulerView addMarker:marker];
 
-        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:[printInfo paperSize].width - [printInfo rightMargin] image:[AJRImages imageNamed:@"marginRightMarker" forObject:self] imageOrigin:(NSPoint){0.0, 0.0}];
+        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:paperSize.width - _document.margins.right image:[AJRImages imageNamed:@"marginRightMarker" forObject:self] imageOrigin:(NSPoint){0.0, 0.0}];
         [marker setMovable:YES];
         [marker setRemovable:NO];
         [rulerView addMarker:marker];
@@ -82,12 +82,12 @@
 
         [rulerView setMarkers:nil];
 
-        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:[self isFlipped] ? [printInfo paperSize].height - [printInfo bottomMargin] : [printInfo bottomMargin] image:[AJRImages imageNamed:@"marginBottomMarker" forObject:self] imageOrigin:(NSPoint){15.0, [self isFlipped] ? 5.0 : 4.0}];
+        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:[self isFlipped] ? paperSize.height - _document.margins.bottom : _document.margins.bottom image:[AJRImages imageNamed:@"marginBottomMarker" forObject:self] imageOrigin:(NSPoint){15.0, [self isFlipped] ? 5.0 : 4.0}];
         [marker setMovable:YES];
         [marker setRemovable:NO];
         [rulerView addMarker:marker];
 
-        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:[self isFlipped] ? [printInfo topMargin] : [printInfo paperSize].height - [printInfo topMargin] image:[AJRImages imageNamed:@"marginTopMarker" forObject:self] imageOrigin:(NSPoint){15.0, [self isFlipped] ? 1.0 : 0.0}];
+        marker = [[DrawRulerMarker alloc] initWithRulerView:rulerView markerLocation:[self isFlipped] ? _document.margins.top : paperSize.height - _document.margins.top image:[AJRImages imageNamed:@"marginTopMarker" forObject:self] imageOrigin:(NSPoint){15.0, [self isFlipped] ? 1.0 : 0.0}];
         [marker setMovable:YES];
         [marker setRemovable:NO];
         [rulerView addMarker:marker];
@@ -152,41 +152,45 @@
 
 - (CGFloat)rulerView:(NSRulerView *)rulerView willMoveMarker:(NSRulerMarker *)marker toLocation:(CGFloat)location {
     NSString *name = [[marker image] name];
-    CGFloat min, max;
-    NSPrintInfo *printInfo = [_document printInfo];
 
     AJRLogDebug(@"name: %@\n", name);
 
     if ([name hasPrefix:@"margin"]) {
+        NSSize paperSize = [_document.paper sizeForOrientation:_document.orientation];
+        CGFloat min, max;
         if ([name isEqualToString:@"marginLeftMarker"]) {
             min = 0.0;
-            max = [printInfo paperSize].width - [printInfo rightMargin] - 18.0;
+            max = paperSize.width - _document.margins.right - 18.0;
         } else if ([name isEqualToString:@"marginRightMarker"]) {
-            min = [printInfo leftMargin] + 18.0;
-            max = [printInfo paperSize].width;
+            min = _document.margins.left + 18.0;
+            max = paperSize.width;
         } else if ([name isEqualToString:@"marginTopMarker"]) {
             if ([self isFlipped]) {
                 min = 0.0;
-                max = [printInfo paperSize].height - [printInfo bottomMargin] - 18.0;
+                max = paperSize.height - _document.margins.bottom - 18.0;
             } else {
-                min = [printInfo bottomMargin] + 18.0;
-                max = [printInfo paperSize].height;
+                min = _document.margins.bottom + 18.0;
+                max = paperSize.height;
             }
         } else if ([name isEqualToString:@"marginBottomMarker"]) {
             if ([self isFlipped]) {
-                min = [printInfo topMargin] + 18.0;
-                max = [printInfo paperSize].height;
+                min = _document.margins.top + 18.0;
+                max = paperSize.height;
             } else {
                 min = 0.0;
-                max = [printInfo paperSize].height - [printInfo topMargin] - 18.0;
+                max = paperSize.height - _document.margins.top - 18.0;
             }
         } else {
             min = 0.0;
-            max = MIN([printInfo paperSize].width, [printInfo paperSize].height);
+            max = MIN(paperSize.width, paperSize.height);
         }
 
-        if (location < min) return min;
-        if (location > max) return max;
+        if (location < min) {
+            return min;
+        }
+        if (location > max) {
+            return max;
+        }
 
         return location;
     }
@@ -230,27 +234,27 @@
 
 - (void)rulerView:(NSRulerView *)rulerView didMoveMarker:(NSRulerMarker *)marker {
     NSString *name = [[marker image] name];
-    NSPrintInfo *printInfo = [_document printInfo];
+    NSSize paperSize = [_document.paper sizeForOrientation:_document.orientation];
 
     if ([name hasPrefix:@"margin"]) {
         if ([name isEqualToString:@"marginLeftMarker"]) {
-            [printInfo setLeftMargin:[marker markerLocation]];
+            self.document.leftMargin = marker.markerLocation;
             [self.enclosingScrollView.horizontalRulerView setNeedsDisplay:YES];
         } else if ([name isEqualToString:@"marginRightMarker"]) {
-            [printInfo setRightMargin:[printInfo paperSize].width - [marker markerLocation]];
+            self.document.rightMargin = paperSize.width - marker.markerLocation;
             [self.enclosingScrollView.horizontalRulerView setNeedsDisplay:YES];
         } else if ([name isEqualToString:@"marginTopMarker"]) {
             if ([self isFlipped]) {
-                [printInfo setTopMargin:[marker markerLocation]];
+                self.document.topMargin = marker.markerLocation;
             } else {
-                [printInfo setTopMargin:[printInfo paperSize].height - [marker markerLocation]];
+                self.document.topMargin = paperSize.height - marker.markerLocation;
             }
             [self.enclosingScrollView.verticalRulerView setNeedsDisplay:YES];
         } else if ([name isEqualToString:@"marginBottomMarker"]) {
             if ([self isFlipped]) {
-                [printInfo setBottomMargin:[printInfo paperSize].height - [marker markerLocation]];
+                self.document.bottomMargin = paperSize.height - marker.markerLocation;
             } else {
-                [printInfo setBottomMargin:[marker markerLocation]];
+                self.document.bottomMargin = marker.markerLocation;
             }
             [self.enclosingScrollView.verticalRulerView setNeedsDisplay:YES];
         }
@@ -293,28 +297,26 @@
 }
 
 - (NSArray *)horizontalMarginRanges {
-    NSPrintInfo *printInfo = [_document printInfo];
-    NSSize paperSize = [printInfo paperSize];
+    NSSize paperSize = [_document.paper sizeForOrientation:_document.orientation];
 
     return [NSArray arrayWithObjects:
-            [NSValue valueWithRange:(NSRange){0, [printInfo leftMargin]}],
-            [NSValue valueWithRange:(NSRange){paperSize.width - [printInfo rightMargin], [printInfo rightMargin]}],
+            [NSValue valueWithRange:(NSRange){0, _document.margins.left}],
+            [NSValue valueWithRange:(NSRange){paperSize.width - _document.margins.right, _document.margins.right}],
             nil];
 }
 
 - (NSArray *)verticalMarginRanges {
-    NSPrintInfo *printInfo = [_document printInfo];
-    NSSize paperSize = [printInfo paperSize];
+    NSSize paperSize = [_document.paper sizeForOrientation:_document.orientation];
 
     if (self.isFlipped) {
         return [NSArray arrayWithObjects:
-                [NSValue valueWithRange:(NSRange){paperSize.height - [printInfo bottomMargin], [printInfo bottomMargin]}],
-                [NSValue valueWithRange:(NSRange){0, [printInfo topMargin]}],
+                [NSValue valueWithRange:(NSRange){paperSize.height - _document.margins.bottom, _document.margins.bottom}],
+                [NSValue valueWithRange:(NSRange){0, _document.margins.top}],
                 nil];
     } else {
         return [NSArray arrayWithObjects:
-                [NSValue valueWithRange:(NSRange){paperSize.height - [printInfo topMargin], [printInfo topMargin]}],
-                [NSValue valueWithRange:(NSRange){0, [printInfo bottomMargin]}],
+                [NSValue valueWithRange:(NSRange){paperSize.height - _document.margins.top, _document.margins.top}],
+                [NSValue valueWithRange:(NSRange){0, _document.margins.bottom}],
                 nil];
     }
 }

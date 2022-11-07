@@ -509,16 +509,74 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 - (void)setMargins:(AJRInset)margins {
-    AJRInset current = _storage.margins;
-    [self registerUndoWithTarget:self handler:^(DrawDocument *target) {
-        [self setMargins:current];
-    }];
-    _storage.margins = margins;
-    [self updateLayoutAndNotify:YES];
+    if (!AJRInsetEqual(_storage.margins, margins)) {
+        AJRInset current = _storage.margins;
+        [self registerUndoWithTarget:self handler:^(DrawDocument *target) {
+            [self setMargins:current];
+        }];
+        _storage.margins = margins;
+        [self updateLayoutAndNotify:YES];
+    }
 }
 
 - (AJRInset)margins {
     return _storage.margins;
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingLeftMargin {
+    return [NSSet setWithObjects:@"margins", nil];
+}
+
+- (CGFloat)leftMargin {
+    return self.margins.left;
+}
+
+- (void)setLeftMargin:(CGFloat)left {
+    AJRInset margins = self.margins;
+    margins.left = left;
+    [self setMargins:margins];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingRightMargin {
+    return [NSSet setWithObjects:@"margins", nil];
+}
+
+- (CGFloat)rightMargin {
+    return self.margins.right;
+}
+
+- (void)setRightMargin:(CGFloat)right {
+    AJRInset margins = self.margins;
+    margins.right = right;
+    [self setMargins:margins];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingTopMargin {
+    return [NSSet setWithObjects:@"margins", nil];
+}
+
+- (CGFloat)topMargin {
+    return self.margins.top;
+}
+
+- (void)setTopMargin:(CGFloat)top {
+    AJRInset margins = self.margins;
+    margins.top = top;
+    [self setMargins:margins];
+}
+
++ (NSSet<NSString *> *)keyPathsForValuesAffectingBottomMargin {
+    return [NSSet setWithObjects:@"margins", nil];
+}
+
+- (CGFloat)bottomMargin {
+    return self.margins.bottom;
+}
+
+- (void)setBottomMargin:(CGFloat)bottom {
+    AJRInset margins = self.margins;
+    margins.bottom = bottom;
+    [self setMargins:margins];
 }
 
 - (void)setPaperColor:(NSColor *)color {
@@ -936,10 +994,15 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
     [self updateRulers];
     [self updateGrid];
-    
-    [[enclosingScrollView horizontalRulerView] setMeasurementUnits:self.unitOfMeasure.identifier.capitalizedString];
-    [[enclosingScrollView verticalRulerView] setMeasurementUnits:self.unitOfMeasure.identifier.capitalizedString];
-    
+
+    DrawRulerView *ruler = AJRObjectIfKindOfClass(enclosingScrollView.horizontalRulerView, DrawRulerView);
+    ruler.measurementUnits = self.unitOfMeasure.identifier.capitalizedString;
+    [(id <DrawRulerViewClient>)ruler.clientView rulerViewDidSetClientView:ruler];
+
+    ruler = AJRObjectIfKindOfClass(enclosingScrollView.verticalRulerView, DrawRulerView);
+    ruler.measurementUnits = self.unitOfMeasure.identifier.capitalizedString;
+    [(id <DrawRulerViewClient>)ruler.clientView rulerViewDidSetClientView:ruler];
+
     if (flag) {
         [[NSNotificationCenter defaultCenter] postNotificationName:DrawDocumentDidUpdateLayoutNotification object:self];
     }

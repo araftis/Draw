@@ -49,7 +49,7 @@ static inline CGFloat SNAP(CGFloat a, CGFloat b) {
 - (void)updateGrid {
     NSInteger x, y, i;
     short w, h;
-    NSRect bounds = {{0.0, 0.0}, [[self printInfo] paperSize]};
+    NSRect bounds = {{0.0, 0.0}, [self.paper sizeForOrientation:self.orientation]};
 
     if (_storage.gridSpacing <= (0.1 * [self scale])) return;
 
@@ -91,11 +91,11 @@ static inline CGFloat SNAP(CGFloat a, CGFloat b) {
                     point.y = position;
                 }
             }
-            position = [[self printInfo] bottomMargin];
+            position = self.margins.bottom;
             if ((position >= point.y - offset) && (position <= point.y + offset)) {
                 point.y = position;
             }
-            position = [[self printInfo] paperSize].height - [[self printInfo] topMargin];
+            position = [self.paper sizeForOrientation:self.orientation].height - self.margins.top;
             if ((position >= point.y - offset) && (position <= point.y + offset)) {
                 point.y = position;
             }
@@ -105,11 +105,11 @@ static inline CGFloat SNAP(CGFloat a, CGFloat b) {
                     point.x = position;
                 }
             }
-            position = [[self printInfo] leftMargin];
+            position = self.margins.left;
             if ((position >= point.x - offset) && (position <= point.x + offset)) {
                 point.x = position;
             }
-            position = [[self printInfo] paperSize].width - [[self printInfo] rightMargin];
+            position = [self.paper sizeForOrientation:self.orientation].width - self.margins.right;
             if ((position >= point.x - offset) && (position <= point.x + offset)) {
                 point.x = position;
             }

@@ -163,18 +163,18 @@
 
 - (void)_updateMarginsForRuler:(NSRulerView *)rulerView {
     NSString *name;
-    NSSize paperSize = [[self printInfo] paperSize];
+    NSSize paperSize = [self.paper sizeForOrientation:self.orientation];
 
     for (NSRulerMarker *marker in [rulerView markers]) {
         name = [[marker image] name];
         if ([name isEqualToString:@"MarginBottom"]) {
-            [marker setMarkerLocation:paperSize.height - [[self printInfo] bottomMargin]];
+            [marker setMarkerLocation:paperSize.height - self.margins.bottom];
         } else if ([name isEqualToString:@"MarginLeft"]) {
-            [marker setMarkerLocation:[[self printInfo] leftMargin]];
+            [marker setMarkerLocation:self.margins.left];
         } else if ([name isEqualToString:@"MarginRight"]) {
-            [marker setMarkerLocation:paperSize.width - [[self printInfo] rightMargin]];
+            [marker setMarkerLocation:paperSize.width - self.margins.right];
         } else if ([name isEqualToString:@"MarginTop"]) {
-            [marker setMarkerLocation:[[self printInfo] topMargin]];
+            [marker setMarkerLocation:self.margins.top];
         }
     }
 }

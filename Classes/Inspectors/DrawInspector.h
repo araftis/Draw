@@ -39,8 +39,8 @@ typedef DrawAspect * (^DrawAspectCreationCallback)(DrawGraphic *graphic, DrawAsp
 
 @interface DrawInspector : NSViewController
 {
-	__unsafe_unretained DrawInspectorController	*_inspectorController;
-	NSArrayController							*_selectionController;
+    __unsafe_unretained DrawInspectorController *_inspectorController;
+    NSArrayController *_selectionController;
 }
 
 #pragma mark - Factory Clients
