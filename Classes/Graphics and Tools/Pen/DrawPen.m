@@ -44,12 +44,6 @@
 
 const AJRInspectorIdentifier AJRInspectorIdentifierPen = @"pen";
 
-@interface AJRBezierPath (DrawPrivate)
-
-- (NSRect)strokeBounds:(BOOL)flag;
-
-@end
-
 @implementation DrawPen {
     _DrawPolyPos _position;
      BOOL _frameAndBoundsAreDirty;
@@ -212,10 +206,6 @@ static NSCursor *cursor = nil; \
 }
 
 - (void)drawHandles {
-//   if (!_ignore) {
-//      [_path strokeBounds:YES];
-//   }
-    
     if (!self.editing && ![self isLine]) {
         return [super drawHandles];
     }

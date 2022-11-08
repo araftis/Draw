@@ -139,6 +139,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
 }
 
 - (void)setClosed:(BOOL)flag {
+    // Overridden, because we don't ever want to be closed.
 }
 
 - (NSRect)boundsForAspect:(DrawAspect *)aspect withPriority:(DrawAspectPriority)priority {
@@ -513,7 +514,10 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
 }
 
 - (void)removeAspect:(DrawAspect *)aspect {
-    if ([aspect isKindOfClass:[DrawStroke class]]) return;
+    // Refuse to allow the removal of our "stroke".
+    if ([aspect isKindOfClass:[DrawStroke class]]) {
+        return;
+    }
     [super removeAspect:aspect];
 }
 
@@ -601,7 +605,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     return new;
 }
 
-#pragma mark - NSCoding
+#pragma mark - AJRXMLArchiving
 
 - (void)decodeWithXMLCoder:(AJRXMLCoder *)coder {
     [super decodeWithXMLCoder:coder];

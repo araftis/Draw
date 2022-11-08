@@ -192,33 +192,33 @@ static BOOL _showsDirtyBounds = NO;
     _frame = frame;
 }
 
-- (void)setFrame:(NSRect)aFrame {
-    if (!NSEqualRects(aFrame, _frame)) {
+- (void)setFrame:(NSRect)frame {
+    if (!NSEqualRects(frame, _frame)) {
         NSRect deltaRect;
         NSRect oldFrame = _frame;
         BOOL informAspects = NO;
 
         [_page setNeedsDisplayInRect:[self dirtyBounds]];
 
-        if ((aFrame.size.width > -0.01) && (aFrame.size.width < 0.01)) {
-            if (aFrame.size.width < 0.0) aFrame.size.width = -0.01;
-            else aFrame.size.width = 0.01;
+        if ((frame.size.width > -0.01) && (frame.size.width < 0.01)) {
+            if (frame.size.width < 0.0) frame.size.width = -0.01;
+            else frame.size.width = 0.01;
         }
-        if ((aFrame.size.height > -0.01) && (aFrame.size.height < 0.01)) {
-            if (aFrame.size.height < 0.0) aFrame.size.height = -0.01;
-            else aFrame.size.height = 0.01;
+        if ((frame.size.height > -0.01) && (frame.size.height < 0.01)) {
+            if (frame.size.height < 0.0) frame.size.height = -0.01;
+            else frame.size.height = 0.01;
         }
 
-        deltaRect.origin.x = (aFrame.origin.x - _frame.origin.x);
-        deltaRect.origin.y = (aFrame.origin.y - _frame.origin.y);
-        deltaRect.size.width = (aFrame.size.width / _frame.size.width);
-        deltaRect.size.height = (aFrame.size.height / _frame.size.height);
+        deltaRect.origin.x = (frame.origin.x - _frame.origin.x);
+        deltaRect.origin.y = (frame.origin.y - _frame.origin.y);
+        deltaRect.size.width = (frame.size.width / _frame.size.width);
+        deltaRect.size.height = (frame.size.height / _frame.size.height);
 
         [(DrawGraphic *)[_document prepareWithInvocationTarget:self] setFrame:_frame];
 
-        [_path setControlPointBounds:aFrame];
+        [_path setControlPointBounds:frame];
 
-        if (NSEqualSizes(aFrame.size, _frame.size)) {
+        if (NSEqualSizes(frame.size, _frame.size)) {
             _bounds.origin.x += deltaRect.origin.x;
             _bounds.origin.y += deltaRect.origin.y;
             informAspects = YES;
@@ -226,7 +226,7 @@ static BOOL _showsDirtyBounds = NO;
             [self updateBounds];
         }
 
-        _frame = AJRNormalizeRect(aFrame);
+        _frame = AJRNormalizeRect(frame);
 
         if ([_subgraphics count] && !_editing && _autosizeSubgraphics) {
             [self _resizeSubgraphicsFromRect:oldFrame toRect:_frame];
@@ -244,8 +244,7 @@ static BOOL _showsDirtyBounds = NO;
 }
 
 - (void)setFrameOrigin:(NSPoint)origin {
-    NSRect newFrame = {origin, _frame.size};
-    [self setFrame:newFrame];
+    [self setFrame:(NSRect){origin, _frame.size}];
 }
 
 - (void)setFrameSize:(NSSize)size {
@@ -705,11 +704,17 @@ static BOOL _showsDirtyBounds = NO;
     return NO;
 }
 
-- (void)informAspectsOfShapeChange {
+- (void)_informAspectsOfShapeChange {
     [self enumerateAspectsWithBlock:^(DrawAspect *aspect) {
         [aspect graphicDidChangeShape:self];
     }];
     [_relatedGraphics makeObjectsPerformSelector:@selector(graphicDidChangeShape:) withObject:self];
+}
+
+- (void)informAspectsOfShapeChange {
+    // Coalesce to the end of the event loop.
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_informAspectsOfShapeChange) object:nil];
+    [self performSelector:@selector(_informAspectsOfShapeChange) withObject:nil afterDelay:0.0];
 }
 
 - (NSRect)boundsForAspect:(DrawAspect *)aspect withPriority:(DrawAspectPriority)priority {
