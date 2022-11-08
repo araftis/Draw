@@ -571,18 +571,24 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     _destination = nil;
 }
 
-- (void)graphicDidChangeShape:(DrawGraphic *)aGraphic {
-    if (aGraphic == _source) {
+- (void)graphicDidChangeShape:(DrawGraphic *)graphic {
+    if (graphic == _source) {
         [self updateSourcePoint];
         if ([self isLine]) {
             [self updateDestinationPoint];
         }
-    } else if (aGraphic == _destination) {
+    } else if (graphic == _destination) {
         [self updateDestinationPoint];
         if ([self isLine]) {
             [self updateSourcePoint];
         }
     }
+}
+
+- (void)setFrame:(NSRect)frame {
+    [super setFrame:frame];
+    [self graphicDidChangeShape:_source];
+    [self graphicDidChangeShape:_destination];
 }
 
 #pragma mark - NSCopying

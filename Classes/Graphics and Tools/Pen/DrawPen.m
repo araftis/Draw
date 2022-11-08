@@ -174,23 +174,19 @@ static NSCursor *cursor = nil; \
 
 - (void)updateBounds {
     NSRect frame = [_path controlPointBounds];
-    BOOL updateFrame;
 
     _frameAndBoundsAreDirty = NO;
 
     if (frame.size.width < 0.01) {
         frame.size.width = 0.01;
-        updateFrame = YES;
     }
     if (frame.size.height < 0.01) {
         frame.size.height = 0.01;
-        updateFrame = YES;
     }
 
-    if (updateFrame) {
-        [self setFrameWithoutNotification:frame];
-    }
-    
+    // So, from what I can tell, this actually needs to be called always. I'm not sure why I was only calling it when I was changing the minimum width or height of the frame. Basically, if you don't call this all the time, then the frame doesn't update when handles get moved, which cases strange behavior, especially with link graphics.
+    [self setFrameWithoutNotification:frame];
+
     //[self informAspectsOfShapeChange];
     [super updateBounds];
 }

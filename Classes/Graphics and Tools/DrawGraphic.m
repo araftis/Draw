@@ -518,6 +518,9 @@ static BOOL _showsDirtyBounds = NO;
                 NSMutableArray *drawingCompletionBlocks = [[NSMutableArray alloc] init];
                 BOOL didDraw = NO;
 
+                [NSColor.lightGrayColor set];
+                NSFrameRect(self.frame);
+
                 [self.supergraphic addClip];
                 if (self.editing && self.subgraphics.count) {
                     [[NSColor lightGrayColor] set];
