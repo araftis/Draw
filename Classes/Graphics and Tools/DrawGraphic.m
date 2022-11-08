@@ -43,9 +43,10 @@
 
 #import <AJRInterface/AJRInterface.h>
 
-NSString *DrawGraphicDidInitNotification = @"DrawGraphicDidInitNotification";
-NSString *DrawGraphicDidChangeFrameNotification = @"DrawGraphicDidChangeFrameNotification";
-NSString *DrawFlatnessKey = @"DrawFlatnessKey";
+NSString * const DrawGraphicDidInitNotification = @"DrawGraphicDidInitNotification";
+NSString * const DrawGraphicDidChangeFrameNotification = @"DrawGraphicDidChangeFrameNotification";
+NSString * const DrawFlatnessKey = @"DrawFlatnessKey";
+NSString * const DrawDebugGraphicFramesKey = @"debugGraphicFrame";
 const AJRInspectorIdentifier AJRInspectorIdentifierGraphic = @"graphic";
 const DrawHandle DrawHandleMissed = (DrawHandle){DrawHandleTypeMissed, 0, 0};
 
@@ -518,8 +519,10 @@ static BOOL _showsDirtyBounds = NO;
                 NSMutableArray *drawingCompletionBlocks = [[NSMutableArray alloc] init];
                 BOOL didDraw = NO;
 
-                [NSColor.lightGrayColor set];
-                NSFrameRect(self.frame);
+                if ([NSUserDefaults.standardUserDefaults boolForKey:DrawDebugGraphicFramesKey]) {
+                    [NSColor.lightGrayColor set];
+                    NSFrameRect(self.frame);
+                }
 
                 [self.supergraphic addClip];
                 if (self.editing && self.subgraphics.count) {

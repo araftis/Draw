@@ -33,6 +33,12 @@ import AJRInterface
 
 let DrawTextIdentifier = "text"
 
+public extension AJRUserDefaultsKey {
+    static var debugTextContainerFrames : AJRUserDefaultsKey<Bool> {
+        return AJRUserDefaultsKey<Bool>.key(named: "debugTextContainerFrames", defaultValue: false)
+    }
+}
+
 @objcMembers
 open class DrawText : DrawAspect {
 
@@ -191,6 +197,13 @@ open class DrawText : DrawAspect {
 
                 layoutManager.drawBackground(forGlyphRange: range, at: point)
                 layoutManager.drawGlyphs(forGlyphRange: range, at: point)
+                
+                if UserDefaults[.debugTextContainerFrames]! {
+                    NSColor.red.set()
+                    for container in layoutManager.textContainers {
+                        NSRect(origin: point, size: container.containerSize).frame()
+                    }
+                }
             }
         }
         
@@ -236,21 +249,22 @@ open class DrawText : DrawAspect {
         super.willRemove(from: document)
     }
 
-    open override func graphicDidChangeShape(_ graphic: DrawGraphic) {
-        if !ignoreGraphicShapeChange,
-           let textView,
+    open func updateContainerSize() {
+        if let graphic,
            let textContainer {
-            let textFrame = textView.frame
             let graphicFrame = graphic.frame
-            if textFrame != graphicFrame  {
-                textView.frame = graphicFrame
-                //[textContainer graphicDidChangeShape:aGraphic];
+            if let textView {
+                let textFrame = textView.frame
+                if textFrame != graphicFrame  {
+                    textView.frame = graphicFrame
+                    //[textContainer graphicDidChangeShape:aGraphic];
+                }
             }
-            
+              
             if !textContainer.isSimpleRectangularTextContainer {
                 textContainer.graphicDidChangeShape(graphic)
             }
-            if textFrame.size != graphicFrame.size {
+            if textContainer.size != graphicFrame.size {
                 var size = graphicFrame.size
                 if size.width < 15.0 {
                     size.width = 15.0
@@ -262,6 +276,16 @@ open class DrawText : DrawAspect {
             }
             updateMaxSize()
         }
+    }
+    
+    open override func graphicDidChangeShape(_ graphic: DrawGraphic) {
+        if !ignoreGraphicShapeChange {
+            updateContainerSize()
+        }
+    }
+    
+    open override func didAdd(to graphic: DrawGraphic) {
+        updateContainerSize()
     }
 
     open override var aspectAcceptsEdit : Bool {
@@ -428,7 +452,7 @@ open class DrawText : DrawAspect {
         initialize(from: textStorage)
         lineFragmentPadding = 0.0
         lineFragmentPadding = save
-
+        
         return self
     }
 
