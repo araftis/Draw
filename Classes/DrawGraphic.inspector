@@ -4,34 +4,10 @@
         <group title="Position" hiddenKeyPath="controller.selection.isTemplateGraphic">
             <slice type="rect" valueKeyPath="controller.selection.frame" units="points" displayUnitsKeyPath="controller.selection.document.unitOfMeasure.unit" displayInchesAsFractions="true" incrementKeyPath="controller.selection.document.unitOfMeasure.defaultIncrement" />
         </group>
-        <group title="Text">
-            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryText.active" />
-            <slice type="attributedString" label="Text" valueKeyPath="controller.selection.primaryText.attributedString" />
-            <slice type="choice" style="segments" label="V. Alignment" valueType="integer" valueKeyPath="controller.selection.primaryText.verticalAlignment">
-                <choice imageName="AJRInspectorAlignTop" bundle="com.ajr.framework.AJRInterface" value="0" />
-                <choice imageName="AJRInspectorAlignMiddle" bundle="com.ajr.framework.AJRInterface" value="1" />
-                <choice imageName="AJRInspectorAlignBottom" bundle="com.ajr.framework.AJRInterface" value="2" />
-            </slice>
-            <slice type="float" label="Padding" valueKeyPath="controller.selection.primaryText.lineFragmentPadding" units="points" displayUnits="points" increment="1" />
-        </group>
-        <group title="Stroke">
-            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryStroke.active" />
-            <slice type="color" label="Color" valueKeyPath="controller.selection.primaryStroke.color" />
-            <slice type="float" label="Width" valueKeyPath="controller.selection.primaryStroke.width" units="points" displayUnits="points" increment="0.5" />
-            <slice type="float" label="Miter Limit" valueKeyPath="controller.selection.primaryStroke.miterLimit" />
-        </group>
-        <group title="Fill">
-            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryFill.active" />
-            <slice type="color" label="Color" valueKeyPath="controller.selection.primaryFill.color" />
-        </group>
-        <group title="Shadow">
-            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryShadow.active" />
-            <slice type="color" label="Color" valueKeyPath="controller.selection.primaryShadow.color" />
-            <slice type="size" label="Offset" valuesCanLink="false" valueKeyPath="controller.selection.primaryShadow.offset" />
-            <slice type="float" label="Blur Radius" valueKeyPath="controller.selection.primaryShadow.blurRadius" units="points" displayUnits="points" increment="1" />
-        </group>
-        <group title="Reflection">
-            <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryReflection.active" />
-        </group>
+        <include file="DrawText"/>
+        <include file="DrawStroke"/>
+        <include file="DrawFill"/>
+        <include file="DrawShadow"/>
+        <include file="DrawReflection"/>
     </group>
 </inspector>

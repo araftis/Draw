@@ -1,0 +1,8 @@
+<inspector-include>
+    <group title="Stroke">
+        <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryStroke.active" />
+        <slice type="color" label="Color" valueKeyPath="controller.selection.primaryStroke.color" />
+        <slice type="float" label="Width" valueKeyPath="controller.selection.primaryStroke.width" units="points" displayUnits="points" increment="0.5" />
+        <slice type="float" label="Miter Limit" valueKeyPath="controller.selection.primaryStroke.miterLimit" />
+    </group>
+</inspector-include>
