@@ -261,6 +261,9 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 - (void)graphicWillRemoveFromPage:(DrawPage *)page;
 - (void)graphicDidRemoveFromPage:(DrawPage *)page;
 
+/// Called once the entire object graph has be unarchived.
+- (void)awakeFromUnarchiving;
+
 #pragma mark - Links
 
 @property (nonatomic,strong,readonly) NSSet<DrawGraphic *> *relatedGraphics;

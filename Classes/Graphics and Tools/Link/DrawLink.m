@@ -606,6 +606,12 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     [_destination removeFromRelatedGraphics:self];
 }
 
+#pragma mark - NSObject
+
+- (NSString *)description {
+    return AJRFormat(@"<%C: %p: %@ -> %@>", self, self, _source, _destination);
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)aZone {

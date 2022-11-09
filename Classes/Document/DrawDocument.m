@@ -436,6 +436,11 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
             [variable addListener:self];
         }
     }];
+
+    // And now that we're a valid document, let all of our graphics know they're valid.
+    [self enumerateGraphicsUsing:^(DrawGraphic *graphic, BOOL *stop) {
+        [graphic awakeFromUnarchiving];
+    }];
 }
 
 // MARK: - Layout Properties

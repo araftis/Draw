@@ -1457,6 +1457,9 @@ static BOOL _showsDirtyBounds = NO;
     }];
 }
 
+- (void)awakeFromUnarchiving {
+}
+
 #pragma mark - Links
 
 - (NSSet *)relatedGraphics {
