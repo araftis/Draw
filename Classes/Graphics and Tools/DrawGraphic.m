@@ -1044,7 +1044,7 @@ static BOOL _showsDirtyBounds = NO;
     return foundAspect;
 }
 
-- (NSArray *)prioritiesForAspect:(DrawAspect *)aspect {
+- (NSArray<NSNumber *> *)prioritiesForAspect:(DrawAspect *)aspect {
     NSInteger x;
     NSUInteger index;
     NSMutableArray *priorities = [[NSMutableArray alloc] init];

@@ -417,7 +417,9 @@ open class DrawText : DrawAspect {
         super.encode(with: coder)
 
         coder.encode(textStorage, forKey: "text")
-        coder.encode(editing, forKey: "editing")
+        if editing {
+            coder.encode(editing, forKey: "editing")
+        }
         coder.encode(lineFragmentPadding, forKey:"lineFragmentPadding")
         if verticalAlignment != .top {
             coder.encode(verticalAlignment, forKey: "verticalAlignment")

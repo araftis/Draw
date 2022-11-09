@@ -57,19 +57,19 @@ static NSCursor *cursor = nil; \
     return cursor
 
 + (NSCursor *)cursorArrowAdd {
-    DrawPenGetCursor(@"cursorArrowAdd", NSMakePoint(1.0, -1.0));
+    DrawPenGetCursor(@"cursorArrowAdd", NSMakePoint(4.0, 4.0));
 }
 
 + (NSCursor *)cursorArrowAddCurveTo {
-    DrawPenGetCursor(@"cursorArrowAddCurve", NSMakePoint(1.0, -1.0));
+    DrawPenGetCursor(@"cursorArrowAddCurve", NSMakePoint(4.0, 4.0));
 }
 
 + (NSCursor *)cursorArrowRemove {
-    DrawPenGetCursor(@"cursorArrowRemove", NSMakePoint(1.0, -1.0));
+    DrawPenGetCursor(@"cursorArrowRemove", NSMakePoint(4.0, 4.0));
 }
 
 + (NSCursor *)cursorArrowAddMoveTo {
-    DrawPenGetCursor(@"cursorArrowAdd", NSMakePoint(1.0, -1.0));
+    DrawPenGetCursor(@"cursorArrowAdd", NSMakePoint(4.0, 4.0));
 }
 
 + (NSCursor *)cursorCrossAdd {
@@ -108,33 +108,40 @@ static NSCursor *cursor = nil; \
     return self;
 }
 
-- (void)appendLineToPoint:(NSPoint)point {
+// MARK: - Path Modifiers
+
+- (BOOL)appendLineToPoint:(NSPoint)point {
     [_path lineToPoint:point];
-    _frameAndBoundsAreDirty = YES;
+    return YES;
 }
 
-- (void)appendMoveToPoint:(NSPoint)point {
-    NSInteger elementCount = [_path elementCount];
-    
-    [_path moveToPoint:point];
-    _frameAndBoundsAreDirty = [_path elementCount] != elementCount;
+- (BOOL)canAppendMoveToPoint:(NSPoint)point {
+    return YES;
 }
 
-- (void)appendBezierCurve:(AJRBezierCurve)curve {
-    [self appendBezierCurveToPoint:curve.end controlPoint1:curve.handle1 controlPoint2:curve.handle2];
+- (BOOL)appendMoveToPoint:(NSPoint)point {
+    if ([self canAppendMoveToPoint:point]) {
+        [_path moveToPoint:point];
+        return YES;
+    }
+    return NO;
 }
 
-- (void)appendBezierCurveToPoint:(NSPoint)point controlPoint1:(NSPoint)controlPoint1 controlPoint2:(NSPoint)controlPoint2 {
+- (BOOL)appendBezierCurve:(AJRBezierCurve)curve {
+    return [self appendBezierCurveToPoint:curve.end controlPoint1:curve.handle1 controlPoint2:curve.handle2];
+}
+
+- (BOOL)appendBezierCurveToPoint:(NSPoint)point controlPoint1:(NSPoint)controlPoint1 controlPoint2:(NSPoint)controlPoint2 {
     [_path curveToPoint:point controlPoint1:controlPoint1 controlPoint2:controlPoint2];
-    _frameAndBoundsAreDirty = YES;
+    return YES;
 }
 
-- (void)insertPoint:(NSPoint)point atIndex:(NSUInteger)index {
+- (BOOL)insertPoint:(NSPoint)point atIndex:(NSUInteger)index {
     [_path insertLineToPoint:point atIndex:index];
-    _frameAndBoundsAreDirty = YES;
+    return YES;
 }
 
-- (void)insertPoint:(NSPoint)point {
+- (BOOL)insertPoint:(NSPoint)point {
     CGFloat t;
     CGFloat width = 6.0;
     NSUInteger elementIndex;
@@ -148,28 +155,74 @@ static NSCursor *cursor = nil; \
     if (elementIndex != NSNotFound) {
         if ([_path elementAtIndex:elementIndex] == AJRBezierPathElementCurveTo) {
             [_path splitElementAtIndex:elementIndex atTValue:t];
-            _frameAndBoundsAreDirty = YES;
+            return YES;
         } else {
-            [self insertPoint:point atIndex:elementIndex];
+            return [self insertPoint:point atIndex:elementIndex];
         }
     } else {
-        [self appendLineToPoint:point];
+        return [self appendLineToPoint:point];
     }
+
+    return NO;
 }
 
-- (void)removePointAtIndex:(NSUInteger)index {
+- (BOOL)removePointAtIndex:(NSUInteger)index {
     [_path removeElementAtIndex:index];
-    
-    _frameAndBoundsAreDirty = YES;
+    return YES;
 }
 
-- (void)removePoint:(NSPoint)point {
+- (BOOL)removePoint:(NSPoint)point {
     if ([_path pointCount] > 2) {
         DrawHandle hitHandle = [_path drawHandleForPoint:point error:[self.page error]];
         if (hitHandle.type == DrawHandleTypeIndexed) {
-            [self removePointAtIndex:hitHandle.elementIndex];
+            return [self removePointAtIndex:hitHandle.elementIndex];
         }
     }
+    return NO;
+}
+
+- (BOOL)insertCurveToPoint:(NSPoint)point {
+    CGFloat t;
+    CGFloat width = 6.0;
+    NSUInteger elementIndex;
+
+    if (width < 6.0) {
+        width = 6.0;
+    }
+
+    elementIndex = [_path elementIndexOfElementHitByPoint:point atTValue:&t width:width];
+
+    if (elementIndex != NSNotFound) {
+        if ([_path elementAtIndex:elementIndex] == AJRBezierPathElementCurveTo) {
+            [_path splitElementAtIndex:elementIndex atTValue:t];
+        } else {
+            NSPoint start;
+            NSPoint handle1, handle2;
+            NSPoint end;
+
+            if ([_path elementAtIndex:elementIndex - 1] == AJRBezierPathElementCurveTo) {
+                start = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex - 1] + 2];
+            } else {
+                start = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex - 1]];
+            }
+            end = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex]];
+
+            if (t <= 0.5) {
+                handle1 = point;
+                handle2.x = end.x - (end.x - start.x) * t;
+                handle2.y = end.y - (end.y - start.y) * t;
+            } else {
+                handle2 = point;
+                handle1.x = end.x - (end.x - start.x) * t;
+                handle1.y = end.y - (end.y - start.y) * t;
+            }
+
+            [_path changeToCurveToWithControlPoint1:handle1 controlPoint2:handle2 elementAtIndex:elementIndex];
+        }
+        return YES;
+    }
+
+    return NO;
 }
 
 - (void)updateBounds {
@@ -515,70 +568,30 @@ static NSCursor *cursor = nil; \
     return YES;
 }
 
-- (void)insertCurveToPoint:(NSPoint)point {
-    CGFloat t;
-    CGFloat width = 6.0;
-    NSUInteger elementIndex;
-    
-    if (width < 6.0) {
-        width = 6.0;
-    }
-    
-    elementIndex = [_path elementIndexOfElementHitByPoint:point atTValue:&t width:width];
-    
-    if (elementIndex != NSNotFound) {
-        if ([_path elementAtIndex:elementIndex] == AJRBezierPathElementCurveTo) {
-            [_path splitElementAtIndex:elementIndex atTValue:t];
-        } else {
-            NSPoint start;
-            NSPoint handle1, handle2;
-            NSPoint end;
-            
-            if ([_path elementAtIndex:elementIndex - 1] == AJRBezierPathElementCurveTo) {
-                start = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex - 1] + 2];
-            } else {
-                start = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex - 1]];
-            }
-            end = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex]];
-            
-            if (t <= 0.5) {
-                handle1 = point;
-                handle2.x = end.x - (end.x - start.x) * t;
-                handle2.y = end.y - (end.y - start.y) * t;
-            } else {
-                handle2 = point;
-                handle1.x = end.x - (end.x - start.x) * t;
-                handle1.y = end.y - (end.y - start.y) * t;
-            }
-            
-            [_path changeToCurveToWithControlPoint1:handle1 controlPoint2:handle2 elementAtIndex:elementIndex];
-        }
-        _frameAndBoundsAreDirty = YES;
-    }
-}
-
 - (BOOL)mouseDown:(DrawEvent *)event {
     NSInteger flags = [event modifierFlags];
+    BOOL actionHappened = NO;
     
     if (!self.editing) {
         return NO;
     }
     
     if ((flags & NSEventModifierFlagShift) && (flags & NSEventModifierFlagOption)) {
-        [self insertCurveToPoint:[event locationOnPage]];
-        return NO;
+        actionHappened = [self insertCurveToPoint:[event locationOnPage]];
     } else if (flags & NSEventModifierFlagShift) {
-        [self insertPoint:[event locationOnPage]];
-        return NO;
+        actionHappened = [self insertPoint:[event locationOnPage]];
     } else if (flags & NSEventModifierFlagCommand) {
-        [self removePoint:[event locationOnPage]];
-        return YES;
+        actionHappened = [self removePoint:[event locationOnPage]];
     } else if (flags & NSEventModifierFlagControl) {
-        [self appendMoveToPoint:[event locationOnPage]];
-        return NO;
+        actionHappened = [self appendMoveToPoint:[event locationOnPage]];
+    }
+
+    if (actionHappened) {
+        _frameAndBoundsAreDirty = YES;
+        [self setNeedsDisplay];
     }
     
-    return NO;
+    return actionHappened;
 }
 
 #pragma mark - Inspectors

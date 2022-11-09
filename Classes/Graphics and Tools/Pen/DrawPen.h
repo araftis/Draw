@@ -53,14 +53,24 @@ extern const AJRInspectorIdentifier AJRInspectorIdentifierPen;
 - (id)initWithFrame:(NSRect)aFrame;
 - (id)initWithFrame:(NSRect)frame path:(AJRBezierPath *)aPath;
 
-- (void)appendLineToPoint:(NSPoint)point;
-- (void)appendMoveToPoint:(NSPoint)point;
-- (void)appendBezierCurve:(AJRBezierCurve)curve;
-- (void)appendBezierCurveToPoint:(NSPoint)point controlPoint1:(NSPoint)controlPoint1 controlPoint2:(NSPoint)controlPoint2;
-- (void)insertPoint:(NSPoint)point atIndex:(NSUInteger)index;
-- (void)insertPoint:(NSPoint)point;
-- (void)removePointAtIndex:(NSUInteger)index;
-- (void)removePoint:(NSPoint)point;
+- (BOOL)appendLineToPoint:(NSPoint)point;
+/**
+ Offers an override point where subclasses can prevent adding new move to points.
+
+ This can happen with certain graphics that don't want to allow subpaths. For example, DrawLinks.
+
+ @param point Where the move to would be added.
+
+ @return `YES` if the point can be added.
+ */
+- (BOOL)canAppendMoveToPoint:(NSPoint)point;
+- (BOOL)appendMoveToPoint:(NSPoint)point;
+- (BOOL)appendBezierCurve:(AJRBezierCurve)curve;
+- (BOOL)appendBezierCurveToPoint:(NSPoint)point controlPoint1:(NSPoint)controlPoint1 controlPoint2:(NSPoint)controlPoint2;
+- (BOOL)insertPoint:(NSPoint)point atIndex:(NSUInteger)index;
+- (BOOL)insertPoint:(NSPoint)point;
+- (BOOL)removePointAtIndex:(NSUInteger)index;
+- (BOOL)removePoint:(NSPoint)point;
 
 - (BOOL)isLine;
 

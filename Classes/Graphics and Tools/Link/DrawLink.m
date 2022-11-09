@@ -138,6 +138,13 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     return self;
 }
 
+// MARK: - DrawPen / DrawGraphic
+
+- (BOOL)canAppendMoveToPoint:(NSPoint)point {
+    return _path.elementCount < 1;
+}
+
+
 - (void)setClosed:(BOOL)flag {
     // Overridden, because we don't ever want to be closed.
 }
