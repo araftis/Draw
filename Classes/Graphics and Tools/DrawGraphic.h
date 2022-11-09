@@ -288,6 +288,19 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 
 - (BOOL)isEqualToGraphic:(DrawGraphic *)other;
 
+#pragma mark - Extended Properties
+
+/**
+ Use these to store additional information on a graphic. These properties will be archived and unarchived. They're basically here so that if you have a related graphic, and it needs to store some additional piece of information, you can drop it here.
+ 
+ This was specifically created so that some graphics could add information to DrawLinks, but I thought this was a useful enough of a concept to make it generic.
+ 
+ **NOTE:** This property is only archived if it contains values.
+ 
+ Any value is OK for key and value, but they should be AJRXMLCoding.
+ */
+@property (nonatomic,strong) NSMutableDictionary<id <AJRXMLCoding,NSCopying>, id <AJRXMLCoding>> *extendedProperties;
+
 @end
 
 

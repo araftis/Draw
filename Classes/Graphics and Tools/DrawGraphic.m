@@ -119,6 +119,8 @@ static BOOL _showsDirtyBounds = NO;
     _subgraphics = [[NSMutableArray alloc] init];
 
     _variableStore = [AJRStore store];
+    
+    _extendedProperties = [NSMutableDictionary dictionary];
 }
 
 - (id)init {
@@ -1227,6 +1229,9 @@ static BOOL _showsDirtyBounds = NO;
             self->_variableStore = object;
         }
     }];
+    [coder decodeObjectForKey:@"extendedProperties" setter:^(id object) {
+        self->_extendedProperties = object;
+    }];
 }
 
 + (NSArray<NSString *> *)priorityNames {
@@ -1291,6 +1296,9 @@ static BOOL _showsDirtyBounds = NO;
     if (_variableStore.count > 0) {
         [encoder encodeObject:_variableStore forKey:@"variableStore"];
     }
+    if (_extendedProperties.count > 0) {
+        [encoder encodeObject:_extendedProperties forKey:@"extendedProperties"];
+    }
 }
 
 - (id)finalizeXMLDecodingWithError:(NSError * _Nullable __autoreleasing *)error {
@@ -1303,6 +1311,9 @@ static BOOL _showsDirtyBounds = NO;
     }
     // Make sure to mark this, because if we're reading from a document, we're definitely dirty.
     _boundsAreDirty = YES;
+    if (_extendedProperties == nil) {
+        _extendedProperties = [NSMutableDictionary dictionary];
+    }
     return self;
 }
 
