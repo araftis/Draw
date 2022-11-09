@@ -211,6 +211,12 @@ static NSMutableDictionary  *_aspects = nil;
 - (void)didAddToPage:(DrawPage *)page {
 }
 
+- (void)willRemoveFromPage:(DrawPage *)page {
+}
+
+- (void)didRemoveFromPage:(DrawPage *)page {
+}
+
 - (void)willRemoveFromDocument:(DrawDocument *)document {
 }
 

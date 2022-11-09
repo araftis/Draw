@@ -591,6 +591,14 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     [self graphicDidChangeShape:_destination];
 }
 
+- (void)graphicWillRemoveFromDocument:(DrawDocument *)document {
+    [super graphicWillRemoveFromDocument:document];
+
+    // Since we're no longer in the document, make sure we remove ourself from the related graphics.
+    [_source removeFromRelatedGraphics:self];
+    [_destination removeFromRelatedGraphics:self];
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)aZone {

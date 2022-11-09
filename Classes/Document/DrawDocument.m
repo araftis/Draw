@@ -1040,7 +1040,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         }
     } else {
         if ([graphic document] != self) {
-            [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@, because I don't contain it.", graphic];
+            AJRLogWarning(@"Cannot remove graphic %@, because I don't contain it.", graphic);
+            return;
         }
 
         [[self undoManager] registerUndoWithTarget:self selector:@selector(addGraphic:) object:graphic];

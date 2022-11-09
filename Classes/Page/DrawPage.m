@@ -198,12 +198,15 @@ static NSDictionary *_pageNumberAttributes = nil;
         NSMutableArray *graphics = [_layers objectForKey:[layer name]];
 
         if (!graphics) {
-            [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@ because it's layer doesn't exist.", graphic];
+            AJRLogWarning(@"Cannot remove graphic %@ because it's layer doesn't exist.", graphic);
+            return;
         }
 
         [self setGraphicNeedsDisplayInRect:[graphic bounds]];
 
+        [graphic graphicWillRemoveFromPage:self];
         [graphics removeObjectIdenticalTo:graphic];
+        [graphic graphicDidRemoveFromPage:self];
     }
 }
 
@@ -213,14 +216,20 @@ static NSDictionary *_pageNumberAttributes = nil;
     NSUInteger index;
     
     if (!graphics) {
-        [NSException raise:NSInvalidArgumentException format:@"Cannot remove graphic %@ because it's layer doesn't exist.", oldGraphic];
+        AJRLogWarning(@"Cannot remove graphic %@ because it's layer doesn't exist.", oldGraphic);
+        return;
     }
     
     index = [graphics indexOfObjectIdenticalTo:oldGraphic];
     if (index != NSNotFound) {
+        [oldGraphic graphicWillRemoveFromPage:self];
+        [newGraphic graphicWillAddToPage:self];
         [graphics replaceObjectAtIndex:index withObject:newGraphic];
         [newGraphic setLayer:layer];
         [newGraphic setPage:self];
+        [newGraphic graphicDidAddToPage:self];
+        [oldGraphic graphicDidRemoveFromPage:self];
+
         [self setGraphicNeedsDisplayInRect:[oldGraphic bounds]];
     }
 }

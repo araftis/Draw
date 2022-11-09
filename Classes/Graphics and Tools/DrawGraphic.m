@@ -1426,9 +1426,9 @@ static BOOL _showsDirtyBounds = NO;
     }];
 }
 
-- (void)graphicWillRemoveFromDocument:(DrawDocument *)view {
+- (void)graphicWillRemoveFromDocument:(DrawDocument *)document {
     [self enumerateAspectsWithBlock:^(DrawAspect *aspect) {
-        [aspect willRemoveFromDocument:view];
+        [aspect willRemoveFromDocument:document];
     }];
 }
 
@@ -1438,6 +1438,22 @@ static BOOL _showsDirtyBounds = NO;
     _layer = nil;
     [self enumerateAspectsWithBlock:^(DrawAspect *aspect) {
         [aspect didRemoveFromDocument:view];
+    }];
+}
+
+
+- (void)graphicWillRemoveFromPage:(DrawPage *)page {
+    [self enumerateAspectsWithBlock:^(DrawAspect * _Nonnull aspect) {
+        [aspect willRemoveFromPage:page];
+    }];
+    [_document removeGraphicFromSelection:self];
+}
+
+- (void)graphicDidRemoveFromPage:(DrawPage *)page {
+    _page = nil;
+    _layer = nil;
+    [self enumerateAspectsWithBlock:^(DrawAspect * _Nonnull aspect) {
+        [aspect didRemoveFromPage:page];
     }];
 }
 

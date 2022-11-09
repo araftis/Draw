@@ -252,12 +252,14 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 
 #pragma mark - Notifications
 
-- (void)graphicWillAddToDocument:(DrawDocument *)view;
-- (void)graphicDidAddToDocument:(DrawDocument *)aView;
-- (void)graphicWillAddToPage:(DrawPage *)view;
-- (void)graphicDidAddToPage:(DrawPage *)aView;
-- (void)graphicWillRemoveFromDocument:(DrawDocument *)aView;
-- (void)graphicDidRemoveFromDocument:(DrawDocument *)aView;
+- (void)graphicWillAddToDocument:(DrawDocument *)document;
+- (void)graphicDidAddToDocument:(DrawDocument *)document;
+- (void)graphicWillAddToPage:(DrawPage *)page;
+- (void)graphicDidAddToPage:(DrawPage *)page;
+- (void)graphicWillRemoveFromDocument:(DrawDocument *)document;
+- (void)graphicDidRemoveFromDocument:(DrawDocument *)document;
+- (void)graphicWillRemoveFromPage:(DrawPage *)page;
+- (void)graphicDidRemoveFromPage:(DrawPage *)page;
 
 #pragma mark - Links
 

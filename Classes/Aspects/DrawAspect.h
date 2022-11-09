@@ -91,10 +91,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)willAddToDocument:(DrawDocument *)document;
 - (void)didAddToDocument:(DrawDocument *)document;
-- (void)willAddToPage:(DrawPage *)page;
-- (void)didAddToPage:(DrawPage *)page;
 - (void)willRemoveFromDocument:(DrawDocument *)document;
 - (void)didRemoveFromDocument:(DrawDocument *)document;
+- (void)willAddToPage:(DrawPage *)page;
+- (void)didAddToPage:(DrawPage *)page;
+- (void)willRemoveFromPage:(DrawPage *)page;
+- (void)didRemoveFromPage:(DrawPage *)page;
 - (void)willAddToGraphic:(DrawGraphic *)graphic;
 - (void)didAddToGraphic:(DrawGraphic *)graphic;
 - (void)willRemoveFromGraphic:(DrawGraphic *)graphic;
