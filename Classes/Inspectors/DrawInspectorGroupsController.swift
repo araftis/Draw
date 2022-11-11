@@ -142,7 +142,6 @@ open class DrawInspectorGroupsController : NSViewController {
     }
 
     open func selectInspectorGroup(at index: Int) -> Void {
-        AJRLog.info("selected: \(index)")
         buttonBar.setSelected(true, for: index)
         UserDefaults[.selectedInspectorGroup] = groups[index].identifier
 

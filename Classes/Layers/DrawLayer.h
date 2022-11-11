@@ -50,6 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSDictionary<NSString *, id> *)snapshot;
 - (void)restoreFromSnapshot:(NSDictionary<NSString *, id> *)snapshot;
 
+// MARK: - Variables
+
+- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables;
+@property (nonatomic,readonly) NSArray<AJRVariable *> *variables;
+
 @end
 
 NS_ASSUME_NONNULL_END

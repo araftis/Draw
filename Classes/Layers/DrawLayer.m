@@ -102,6 +102,23 @@
     }];
 }
 
+#pragma mark - Variables
+
+- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables {
+    for (NSString *name in self.variableStore.orderedNames) {
+        AJRVariable *variable = AJRObjectIfKindOfClass(self.variableStore[name], AJRVariable);
+        if (variable != nil && ![variables containsVariable:variable]) {
+            [variables addObject:variable];
+        }
+    }
+}
+
+- (NSMutableArray <AJRVariable *> *)variables {
+    NSMutableArray <AJRVariable *> *variables = [NSMutableArray array];
+    [self addVariablesTo:variables];
+    return variables;
+}
+
 #pragma mark - Snapshotting
 
 - (NSDictionary *)snapshot {

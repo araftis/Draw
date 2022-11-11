@@ -150,6 +150,26 @@ static BOOL _showsDirtyBounds = NO;
     return self;
 }
 
+#pragma mark - Properties
+
+- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables {
+    // NOTE: We'll pick up the document variables from page.
+    [self.page addVariablesTo:variables];
+    [self.layer addVariablesTo:variables];
+    for (NSString *name in self.variableStore.orderedNames) {
+        AJRVariable *variable = AJRObjectIfKindOfClass(self.variableStore[name], AJRVariable);
+        if (variable != nil && ![variables containsVariable:variable]) {
+            [variables addObject:variable];
+        }
+    }
+}
+
+- (NSMutableArray <AJRVariable *> *)variables {
+    NSMutableArray <AJRVariable *> *variables = [NSMutableArray array];
+    [self addVariablesTo:variables];
+    return variables;
+}
+
 #pragma mark - Document, Pages, and Layers
 
 - (void)setDocument:(DrawDocument *)aDocumentView {

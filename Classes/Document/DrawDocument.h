@@ -472,7 +472,8 @@ extern NSString * const DrawSavePanelPathKey;
 
 @interface DrawDocument (Variables) <AJRStoreVariableDelegate, AJRVariableListener>
 
-
+- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables;
+@property (nonatomic,readonly) NSMutableArray <AJRVariable *> *variables;
 
 @end
 

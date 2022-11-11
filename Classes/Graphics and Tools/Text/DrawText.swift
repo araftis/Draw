@@ -371,6 +371,23 @@ open class DrawText : DrawAspect {
         return false
     }
 
+    // MARK: - Property Conveniences
+
+    open var font : NSFont? {
+        get {
+            if textStorage.length > 0 {
+                let attributes = textStorage.attributes(at: 0, effectiveRange: nil)
+                return attributes[.font] as? NSFont
+            }
+            return nil
+        }
+        set {
+            if let newValue {
+                textStorage.addAttribute(.font, value: newValue, range: textStorage.allRange)
+            }
+        }
+    }
+
     // MARK: - DrawAspect
 
     open override class func defaultAspect(for graphic: DrawGraphic) -> DrawAspect? {

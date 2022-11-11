@@ -121,7 +121,6 @@ open class DrawStructureInspectors: DrawViewController {
     }
     
     open func selectInspector(at index: Int) -> Void {
-        AJRLog.info("selected: \(index)")
         buttonBar.setSelected(true, for: index)
         UserDefaults[.selectedStructureInspector] = inspectors[index].identifier
 

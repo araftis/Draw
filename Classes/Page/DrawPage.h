@@ -176,6 +176,9 @@ extern const AJRInspectorIdentifier AJRInspectorIdentifierDrawPage;
 
 @interface DrawPage (Variables) <AJRStoreVariableDelegate, AJRVariableListener>
 
+- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables;
+@property (nonatomic,readonly) NSArray<AJRVariable *> *variables;
+
 @end
 
 NS_ASSUME_NONNULL_END

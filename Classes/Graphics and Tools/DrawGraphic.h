@@ -147,6 +147,12 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 @property (nonatomic,weak) DrawLayer *layer;
 @property (nonatomic,strong) AJRStore *variableStore;
 
+#pragma mark - Variables
+
+/// This is a computed property that ascends our hierachy and adds all variables in our visible scope to an array and returns them.
+- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables;
+@property (nonatomic,readonly) NSArray<AJRVariable *> *variables;
+
 #pragma mark - Frame
 
 - (void)setFrameOrigin:(NSPoint)origin;

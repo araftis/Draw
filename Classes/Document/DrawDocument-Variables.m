@@ -37,6 +37,21 @@
 
 @implementation DrawDocument (Variables)
 
+- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables {
+    for (NSString *name in self.variableStore.orderedNames) {
+        AJRVariable *variable = AJRObjectIfKindOfClass(self.variableStore[name], AJRVariable);
+        if (variable != nil && ![variables containsVariable:variable]) {
+            [variables addObject:variable];
+        }
+    }
+}
+
+- (NSMutableArray <AJRVariable *> *)variables {
+    NSMutableArray <AJRVariable *> *variables = [NSMutableArray array];
+    [self addVariablesTo:variables];
+    return variables;
+}
+
 - (AJRVariable *)createVariableWithName:(NSString *)name type:(AJRVariableType *)type value:(id)value inStore:(AJRStore *)store {
     return [[DrawVariable alloc] initWithName:name type:type value:value document:self];
 }
