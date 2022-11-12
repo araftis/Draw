@@ -1572,6 +1572,25 @@ static BOOL _showsDirtyBounds = NO;
     return @"Help";
 }
 
+- (NSAttributedString *)helpText {
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSURL *url = [bundle URLForResource:AJRStringFromClassSansModule(self.class) withExtension:@"md"];
+    if (url != nil) {
+        NSError *localError = nil;
+        NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&localError];
+        if (data != nil) {
+            NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
+            options.allowsExtendedAttributes = YES;
+            NSAttributedString *string = [[NSAttributedString alloc] initWithMarkdown:data options:options baseURL:[NSURL URLWithString:AJRFormat(@"bundle://%@/", bundle.bundleIdentifier)] error:&localError];
+            if (string == nil) {
+                return string;
+            }
+        }
+        return [[NSAttributedString alloc] initWithString:AJRFormat(@"Error loading help: %@", localError.localizedDescription) attributes:nil];
+    }
+    return [[NSAttributedString alloc] initWithString:@"No help available." attributes:nil];
+}
+
 @end
 
 DrawHandle DrawHandleMake(DrawHandleType type, NSInteger elementIndex, NSInteger index) {

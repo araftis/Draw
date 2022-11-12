@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <inspector>
     <group titleKeyPath="controller.selection.helpTitle">
-        <slice type="string" label="help" value="help text" />
+        <slice type="attributedString" fullWidth="true" valueKeyPath="controller.selection.helpText" />
     </group>
 </inspector>

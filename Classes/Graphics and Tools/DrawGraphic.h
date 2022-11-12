@@ -316,6 +316,7 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 // MARK: - Help
 
 @property (nonatomic,strong) NSString *helpTitle;
+@property (nonatomic,strong) NSAttributedString *helpText;
 
 @end
 
