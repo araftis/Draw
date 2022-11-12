@@ -718,10 +718,12 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
 
 #pragma mark - Inspectors
 
-- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
-    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiers] mutableCopy];
-    [identifiers addObject:AJRInspectorIdentifierLink];
-    [identifiers removeObjectIdenticalTo:AJRInspectorIdentifierPen];
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
+    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
+    if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierGraphic]) {
+        [identifiers addObject:AJRInspectorIdentifierLink];
+        [identifiers removeObjectIdenticalTo:AJRInspectorIdentifierPen];
+    }
     return identifiers;
 }
 

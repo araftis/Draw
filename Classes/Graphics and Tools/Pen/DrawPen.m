@@ -596,9 +596,11 @@ static NSCursor *cursor = nil; \
 
 #pragma mark - Inspectors
 
-- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
-    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiers] mutableCopy];
-    [identifiers addObject:AJRInspectorIdentifierPen];
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
+    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
+    if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierGraphic]) {
+        [identifiers addObject:AJRInspectorIdentifierPen];
+    }
     return identifiers;
 }
 

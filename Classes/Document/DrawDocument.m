@@ -52,6 +52,8 @@
 NSString * const DrawDocumentErrorDomain = @"DrawDocumentErrorDomain";
 NSString * const DrawDocumentLogDomain = @"DrawDocument";
 
+const AJRInspectorContentIdentifier DrawInspectorContentIdentifierDocument = @"document"; 
+
 const NSNotificationName DrawViewWillDeallocateNotification = @"DrawViewWillDeallocateNotification";
 const NSNotificationName DrawDocumentDidAddGraphicNotification = @"DrawDocumentDidAddGraphicNotification";
 NSString * const DrawGraphicKey = @"DrawGraphicKey";
@@ -934,8 +936,8 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     }
 }
 
-- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
-    NSMutableArray *array = [[super inspectorIdentifiers] mutableCopy];
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
+    NSMutableArray *array = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
     [array addObject:AJRInspectorIdentifierDrawDocument];
     return array;
 }

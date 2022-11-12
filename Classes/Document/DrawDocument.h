@@ -40,8 +40,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class AJRBezierPath, AJRRibbonView, AJRSplitView, DrawBook, DrawDocumentStorage, DrawPage, DrawGraphic, DrawInspectorGroupController, DrawGraphicsInspectorController, DrawLayer, DrawRulerMarker, DrawTool, DrawViewRulerAccessory, DrawLayerViewController, DrawInspectorGroupsController, DrawMeasurementUnit;
 
+// Errors
+
 extern NSString * const DrawDocumentErrorDomain;
 extern NSString * const DrawDocumentLogDomain;
+
+// Inspectors
+
+extern const AJRInspectorContentIdentifier DrawInspectorContentIdentifierDocument;
+
+// Notifications
 
 extern const NSNotificationName DrawViewDidChangeURLNotification;
 extern NSString * const DrawViewOldURLKey;
@@ -62,9 +70,11 @@ extern const NSNotificationName DrawDocumentDidUpdateLayoutNotification;
 extern NSString * const DrawObjectDidResignRulerNotification;
 
 // The Pasteboard
+
 extern NSString * const DrawGraphicPboardType;
 
 // Defaults Keys
+
 extern NSString * const DrawMarkColorKey;
 extern NSString * const DrawMarksEnabledKey;
 extern NSString * const DrawMarksVisibleKey;
@@ -82,6 +92,7 @@ extern NSString * const DrawRightViewExpandedWidthKey;
 extern NSString * const DrawMarginColorKey;
 
 // Standard Document Info Keys
+
 extern NSString * const DrawDocumentInfoAuthorKey;
 extern NSString * const DrawDocumentInfoCreationDateKey;
 extern NSString * const DrawDocumentInfoCommentsKey;
@@ -89,6 +100,7 @@ extern NSString * const DrawDocumentInfoCopyrightKey;
 extern NSString * const DrawDocumentInfoLicenseKey;
 
 // Panels
+
 extern NSString * const DrawOpenPanelPathKey;
 extern NSString * const DrawSavePanelPathKey;
 

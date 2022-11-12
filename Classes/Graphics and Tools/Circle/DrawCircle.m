@@ -441,9 +441,11 @@ const AJRInspectorIdentifier AJRInspectorIdentifierCircle = @"circle";
 
 #pragma mark - Inspectors
 
-- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
-    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiers] mutableCopy];
-    [identifiers addObject:AJRInspectorIdentifierCircle];
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
+    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
+    if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierGraphic]) {
+        [identifiers addObject:AJRInspectorIdentifierCircle];
+    }
     return identifiers;
 }
 

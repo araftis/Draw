@@ -41,7 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void *DrawDrawingToken;
 typedef void (^DrawGuestDrawer)(DrawPage *page, NSRect dirtyRect);
 
-extern const AJRInspectorIdentifier AJRInspectorIdentifierDrawPage;
+// Inspectors
+
+extern const AJRInspectorIdentifier DrawInspectorIdentifierPage;
+extern const AJRInspectorContentIdentifier DrawInspectorContentIdentifierPage;
 
 @interface DrawPage : NSView <NSCoding> {
     __weak DrawDocument *_document;

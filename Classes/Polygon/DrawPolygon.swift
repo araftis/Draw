@@ -177,9 +177,11 @@ open class DrawPolygon: DrawGraphic {
 
     // MARK: - AJRInspection
 
-    open override var inspectorIdentifiers: [AJRInspectorIdentifier] {
-        var ids = super.inspectorIdentifiers
-        ids.append(.polygon)
+    open override func inspectorIdentifiers(forInspectorContent inspectorContentIdentifier: AJRInspectorContentIdentifier?) -> [AJRInspectorIdentifier] {
+        var ids = super.inspectorIdentifiers(forInspectorContent: inspectorContentIdentifier)
+        if inspectorContentIdentifier == .graphic {
+            ids.append(.polygon)
+        }
         return ids
     }
 

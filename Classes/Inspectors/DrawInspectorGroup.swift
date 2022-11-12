@@ -29,8 +29,17 @@
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Cocoa
+import AJRInterface
 
+public extension AJRInspectorContentIdentifier {
+    static let document = DrawInspectorContentIdentifierDocument
+    static let page = DrawInspectorContentIdentifierPage
+    static let graphic = AJRInspectorContentIdentifier(rawValue: "graphic")
+    static let styles = AJRInspectorContentIdentifier(rawValue: "styles")
+    static let help = AJRInspectorContentIdentifier(rawValue: "help")
+}
+
+@objcMembers
 open class DrawInspectorGroup: NSObject {
 
     // MARK: - Factory
@@ -62,7 +71,7 @@ open class DrawInspectorGroup: NSObject {
                 let filteredClasses : [NSObject.Type] = classes.map { (input) -> NSObject.Type in
                     return input["class"] as! NSObject.Type
                 }
-                let inspectorGroup = DrawInspectorGroup(name: name, identifier: id, inspectedClasses: filteredClasses, icon: icon, priority: priority)
+                let inspectorGroup = DrawInspectorGroup(name: name, identifier: AJRInspectorContentIdentifier(rawValue: id), inspectedClasses: filteredClasses, icon: icon, priority: priority)
                 newGroups.append(inspectorGroup)
 
                 newGroups.sort { (left, right) -> Bool in
@@ -80,20 +89,30 @@ open class DrawInspectorGroup: NSObject {
     // MARK: - Properties
 
     open var name : String
-    open var identifier : String
+    open var identifier : AJRInspectorContentIdentifier
     open var inspectedClasses : [NSObject.Type]
     open var icon : NSImage
     open var priority : Double
 
     // MARK: - Creation
 
-    public required init(name: String, identifier: String, inspectedClasses: [NSObject.Type], icon: NSImage, priority: Double) {
+    public required init(name: String, identifier: AJRInspectorContentIdentifier, inspectedClasses: [NSObject.Type], icon: NSImage, priority: Double) {
         self.name = name
         self.inspectedClasses = inspectedClasses
         self.identifier = identifier;
         self.icon = icon
         self.priority = priority
         super.init()
+    }
+    
+    // MARK: - Pushing / Popping Content
+    
+    open func push(content objects: [AnyObject]) -> Void {
+        viewController.push(content: objects, for: identifier)
+    }
+    
+    open func pop(content objects: [AnyObject]) -> Void {
+        viewController.pop(content: objects, for: identifier)
     }
 
 }

@@ -43,7 +43,13 @@ extern NSString * const DrawGraphicDidChangeFrameNotification;
 extern NSString * const DrawFlatnessKey;
 extern NSString * const DrawDebugGraphicFramesKey;
 
-extern const AJRInspectorIdentifier AJRInspectorIdentifierGraphic;
+// Inspectors
+
+extern const AJRInspectorIdentifier DrawInspectorIdentifierGraphic;
+extern const AJRInspectorIdentifier DrawInspectorIdentifierGraphicHelp;
+extern const AJRInspectorContentIdentifier DrawInspectorContentIdentifierGraphic;
+extern const AJRInspectorContentIdentifier DrawInspectorContentIdentifierStyles;
+extern const AJRInspectorContentIdentifier DrawInspectorContentIdentifierHelp;
 
 typedef NS_OPTIONS(NSUInteger, DrawAutosizeMask) {
     DrawGraphicNotSizable = 0x00,
@@ -306,6 +312,10 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
  Any value is OK for key and value, but they should be AJRXMLCoding.
  */
 @property (nonatomic,strong) NSMutableDictionary<id <AJRXMLCoding,NSCopying>, id <AJRXMLCoding>> *extendedProperties;
+
+// MARK: - Help
+
+@property (nonatomic,strong) NSString *helpTitle;
 
 @end
 

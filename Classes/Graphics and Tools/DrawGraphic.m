@@ -47,7 +47,13 @@ NSString * const DrawGraphicDidInitNotification = @"DrawGraphicDidInitNotificati
 NSString * const DrawGraphicDidChangeFrameNotification = @"DrawGraphicDidChangeFrameNotification";
 NSString * const DrawFlatnessKey = @"DrawFlatnessKey";
 NSString * const DrawDebugGraphicFramesKey = @"debugGraphicFrame";
-const AJRInspectorIdentifier AJRInspectorIdentifierGraphic = @"graphic";
+
+const AJRInspectorIdentifier DrawInspectorIdentifierGraphic = @"graphic";
+const AJRInspectorIdentifier DrawInspectorIdentifierGraphicHelp = @"graphicHelp";
+const AJRInspectorContentIdentifier DrawInspectorContentIdentifierGraphic = @"graphic";
+const AJRInspectorContentIdentifier DrawInspectorContentIdentifierStyles = @"styles";
+const AJRInspectorContentIdentifier DrawInspectorContentIdentifierHelp = @"help";
+
 const DrawHandle DrawHandleMissed = (DrawHandle){DrawHandleTypeMissed, 0, 0};
 
 static BOOL _notificationsAreDisabled = NO;
@@ -1549,10 +1555,21 @@ static BOOL _showsDirtyBounds = NO;
 
 #pragma mark - Inspectors
 
-- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
-    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiers] mutableCopy];
-    [identifiers addObject:AJRInspectorIdentifierGraphic];
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
+    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
+    AJRPrintf(@"Asked for content: %@\n", inspectorContentIdentifier);
+    if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierGraphic]) {
+        [identifiers addObject:DrawInspectorIdentifierGraphic];
+    } else if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierHelp]) {
+        [identifiers addObject:DrawInspectorIdentifierGraphicHelp];
+    }
     return identifiers;
+}
+
+#pragma mark - Help
+
+- (NSString *)helpTitle {
+    return @"Help";
 }
 
 @end

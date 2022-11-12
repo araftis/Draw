@@ -194,9 +194,11 @@ const CGFloat DrawRectanglePillRadius = 1000000.0;
 
 #pragma mark - Inspectors
 
-- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
-    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiers] mutableCopy];
-    [identifiers addObject:AJRInspectorIdentifierRectangle];
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
+    NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
+    if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierGraphic]) {
+        [identifiers addObject:AJRInspectorIdentifierRectangle];
+    }
     return identifiers;
 }
 

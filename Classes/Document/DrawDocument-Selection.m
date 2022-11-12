@@ -90,7 +90,7 @@ static NSComparisonResult _compareGraphics(DrawGraphic *first, DrawGraphic *seco
         [graphic.page setNeedsDisplayInRect:graphic.dirtyBounds];
     }
     if (currentSelection.count > 0) {
-        [self.inspectorGroupsViewController pop:currentSelection for:AJRInspectorIdentifierGraphic];
+        [self.inspectorGroupsViewController pop:currentSelection for:DrawInspectorIdentifierGraphic];
     }
     [self.inspectorGroupsViewController push:_storage.selection.allObjects for:AJRInspectorContentIdentifierAny];
     [self didChangeValueForKey:@"selection"];

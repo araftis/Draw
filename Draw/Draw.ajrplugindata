@@ -173,7 +173,7 @@
     <draw-inspector-group name="Graphic" icon="inspectorGroupGraphic" id="graphic" priority="3.0">
         <inspected-class class="DrawGraphic" />
     </draw-inspector-group>
-    <draw-inspector-group name="Styles" icon="inspectorGroupAspects" id="graphic" priority="4.0">
+    <draw-inspector-group name="Styles" icon="inspectorGroupAspects" id="styles" priority="4.0">
         <inspected-class class="DrawGraphic" />
     </draw-inspector-group>
     <draw-inspector-group name="Help" icon="inspectorGroupHelp" id="help" priority="5.0">
@@ -185,6 +185,7 @@
     <ajr_inspector xml="DrawDocument" identifier="document" />
     <ajr_inspector xml="DrawPage" identifier="page" />
     <ajr_inspector xml="DrawGraphic" identifier="graphic" />
+    <ajr_inspector xml="DrawGraphicHelp" identifier="graphicHelp" />
     <ajr_inspector xml="DrawCircle" identifier="circle" />
     <ajr_inspector xml="DrawRectangle" identifier="rectangle" />
     <ajr_inspector xml="DrawLink" identifier="link" />

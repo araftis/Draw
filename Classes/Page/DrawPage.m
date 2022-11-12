@@ -40,7 +40,8 @@
 #import <AJRInterface/AJRInterface.h>
 #import <Draw/Draw-Swift.h>
 
-const AJRInspectorIdentifier AJRInspectorIdentifierDrawPage = @"page";
+const AJRInspectorIdentifier DrawInspectorIdentifierPage = @"page";
+const AJRInspectorContentIdentifier DrawInspectorContentIdentifierPage = @"page";
 
 @implementation DrawPage {
     NSMutableDictionary<NSString *, DrawGuestDrawer> *_guestDrawers;
@@ -552,9 +553,9 @@ static NSDictionary *_pageNumberAttributes = nil;
 
 #pragma mark - AJRnspection
 
-- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiers {
-    NSMutableArray *array = [[super inspectorIdentifiers] mutableCopy];
-    [array addObject:AJRInspectorIdentifierDrawPage];
+- (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
+    NSMutableArray *array = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
+    [array addObject:DrawInspectorIdentifierPage];
     return array;
 }
 

@@ -34,8 +34,8 @@ import AJRInterfaceFoundation
 import AJRInterface
 
 public extension AJRUserDefaultsKey {
-    static var selectedInspectorGroup : AJRUserDefaultsKey<String> {
-        return AJRUserDefaultsKey<String>.key(named: "selectedInspectorGroup", defaultValue: "document")
+    static var selectedInspectorGroup : AJRUserDefaultsKey<AJRInspectorContentIdentifier> {
+        return AJRUserDefaultsKey<String>.key(named: "selectedInspectorGroup", defaultValue: .document)
     }
 }
 
@@ -47,7 +47,7 @@ open class DrawInspectorGroupsController : NSViewController {
     @IBOutlet open var managedView : NSView!
     @IBOutlet open var buttonBar : AJRButtonBar!
     open var groups = [DrawInspectorGroup]()
-    open var groupsByID = [String:DrawInspectorGroup]()
+    open var groupsByID = [AJRInspectorContentIdentifier:DrawInspectorGroup]()
     open var selectedGroup : DrawInspectorGroup?
 
     // MARK: - Creation
@@ -62,11 +62,11 @@ open class DrawInspectorGroupsController : NSViewController {
 
     // MARK: - Groups
 
-    open func inspectorGroup(for id: String) -> DrawInspectorGroup? {
+    open func inspectorGroup(for id: AJRInspectorContentIdentifier) -> DrawInspectorGroup? {
         return groupsByID[id]
     }
 
-    open func indexOfGroup(for id: String) -> Int? {
+    open func indexOfGroup(for id: AJRInspectorContentIdentifier) -> Int? {
         return groups.firstIndex { (group) -> Bool in
             return group.identifier == id
         }
@@ -81,8 +81,8 @@ open class DrawInspectorGroupsController : NSViewController {
 //        }
     }
 
-    open func matchingObjects(in group: DrawInspectorGroup, from objects: [NSObject]) -> [NSObject] {
-        var matchingObjects = [NSObject]()
+    open func matchingObjects(in group: DrawInspectorGroup, from objects: [AnyObject]) -> [AnyObject] {
+        var matchingObjects = [AnyObject]()
         for object in objects {
             if group.inspectedClasses.contains(where: { (possible) -> Bool in
                 return object.isKind(of: possible)
@@ -93,11 +93,11 @@ open class DrawInspectorGroupsController : NSViewController {
         return matchingObjects
     }
 
-    open func push(_ objects: [NSObject], for identifier: AJRInspectorContentIdentifier) -> Void {
+    open func push(_ objects: [AnyObject], for identifier: AJRInspectorContentIdentifier) -> Void {
         for group in groups {
             let matchingObjects = self.matchingObjects(in: group, from: objects)
             if matchingObjects.count > 0 {
-                group.viewController.push(content: matchingObjects, for: identifier)
+                group.push(content: matchingObjects)
             }
         }
     }
@@ -106,7 +106,7 @@ open class DrawInspectorGroupsController : NSViewController {
         for group in groups {
             let matchingObjects = self.matchingObjects(in: group, from: objects)
             if matchingObjects.count > 0 {
-                group.viewController.pop(content: matchingObjects, for: identifier)
+                group.pop(content: matchingObjects)
             }
         }
     }
