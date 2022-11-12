@@ -38,8 +38,6 @@
 #import <Draw/AJRXMLCoder-DrawExtensions.h>
 #import <Draw/DrawAdobeIllustrator.h>
 #import <Draw/DrawAspect.h>
-#import <Draw/DrawAspectInspector.h>
-#import <Draw/DrawAspectInspector.h>
 #import <Draw/DrawBook.h>
 #import <Draw/DrawCircle.h>
 #import <Draw/DrawCircleTool.h>
@@ -52,16 +50,10 @@
 #import <Draw/DrawFilter.h>
 #import <Draw/DrawFunctions.h>
 #import <Draw/DrawGraphic.h>
-#import <Draw/DrawGraphicsInspectorController.h>
 #import <Draw/DrawGraphicsToolSet.h>
 #import <Draw/DrawImage.h>
 #import <Draw/DrawImageTool.h>
-#import <Draw/DrawInspector.h>
-#import <Draw/DrawInspector.h>
-#import <Draw/DrawInspectorController.h>
-#import <Draw/DrawInspectorController.h>
 #import <Draw/DrawLayer.h>
-#import <Draw/DrawLayerInspectorController.h>
 #import <Draw/DrawLink.h>
 #import <Draw/DrawLinkCap.h>
 #import <Draw/DrawLinkCapArrow.h>
@@ -69,7 +61,6 @@
 #import <Draw/DrawLinkCapDiamond.h>
 #import <Draw/DrawLinkCapDoubleArrow.h>
 #import <Draw/DrawLinkCapSquare.h>
-#import <Draw/DrawLinkRibbonInspector.h>
 #import <Draw/DrawLinkTool.h>
 #import <Draw/DrawLogging.h>
 #import <Draw/DrawMeasurementUnit.h>
@@ -81,7 +72,6 @@
 #import <Draw/DrawPenTool.h>
 #import <Draw/DrawRectangle.h>
 #import <Draw/DrawRectangleTool.h>
-#import <Draw/DrawRibbonInspectorController.h>
 #import <Draw/DrawRulerMarker.h>
 #import <Draw/DrawRulerView.h>
 #import <Draw/DrawSelectionActions.h>

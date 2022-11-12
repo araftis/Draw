@@ -33,7 +33,6 @@
 
 #import "DrawEvent.h"
 #import "DrawGraphic.h"
-#import "DrawInspector.h"
 #import "DrawTool.h"
 #import "DrawToolSet.h"
 #import "DrawDocument.h"

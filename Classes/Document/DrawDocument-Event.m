@@ -34,7 +34,6 @@
 #import "DrawEvent.h"
 #import "DrawFunctions.h"
 #import "DrawGraphic.h"
-#import "DrawInspector.h"
 #import "DrawPage.h"
 
 @interface DrawGraphicPasteboardWriter : NSObject <NSPasteboardWriting>
