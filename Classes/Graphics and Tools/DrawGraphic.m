@@ -1573,22 +1573,31 @@ static BOOL _showsDirtyBounds = NO;
 }
 
 - (NSAttributedString *)helpText {
-    NSBundle *bundle = [NSBundle bundleForClass:self.class];
-    NSURL *url = [bundle URLForResource:AJRStringFromClassSansModule(self.class) withExtension:@"md"];
-    if (url != nil) {
-        NSError *localError = nil;
-        NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&localError];
-        if (data != nil) {
-            NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
-            options.allowsExtendedAttributes = YES;
-            NSAttributedString *string = [[NSAttributedString alloc] initWithMarkdown:data options:options baseURL:[NSURL URLWithString:AJRFormat(@"bundle://%@/", bundle.bundleIdentifier)] error:&localError];
-            if (string == nil) {
-                return string;
+    if (_helpText == nil) {
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
+        NSURL *url = [bundle URLForResource:AJRStringFromClassSansModule(self.class) withExtension:@"md"];
+        if (url != nil) {
+            NSError *localError = nil;
+            NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&localError];
+            if (data != nil) {
+                NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
+                options.allowsExtendedAttributes = YES;
+                options.appliesSourcePositionAttributes = YES;
+                options.failurePolicy = NSAttributedStringMarkdownParsingFailureReturnPartiallyParsedIfPossible;
+                options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxFull;
+                NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithMarkdown:data options:options baseURL:[NSURL URLWithString:AJRFormat(@"bundle://%@/", bundle.bundleIdentifier)] error:&localError];
+                //[string addAttribute:NSFontAttributeName value:[NSFont boldSystemFontOfSize:14] range:(NSRange){0, 20}];
+                if (string != nil) {
+                    _helpText = string;
+                }
+            } else {
+                _helpText = [[NSAttributedString alloc] initWithString:AJRFormat(@"Error loading help: %@", localError.localizedDescription) attributes:nil];
             }
+        } else {
+            _helpText = [[NSAttributedString alloc] initWithString:@"No help available." attributes:nil];
         }
-        return [[NSAttributedString alloc] initWithString:AJRFormat(@"Error loading help: %@", localError.localizedDescription) attributes:nil];
     }
-    return [[NSAttributedString alloc] initWithString:@"No help available." attributes:nil];
+    return _helpText;
 }
 
 @end
