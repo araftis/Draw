@@ -1582,12 +1582,11 @@ static BOOL _showsDirtyBounds = NO;
             if (data != nil) {
                 NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
                 options.allowsExtendedAttributes = YES;
-                options.appliesSourcePositionAttributes = YES;
                 options.failurePolicy = NSAttributedStringMarkdownParsingFailureReturnPartiallyParsedIfPossible;
                 options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxFull;
                 NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithMarkdown:data options:options baseURL:[NSURL URLWithString:AJRFormat(@"bundle://%@/", bundle.bundleIdentifier)] error:&localError];
-                //[string addAttribute:NSFontAttributeName value:[NSFont boldSystemFontOfSize:14] range:(NSRange){0, 20}];
                 if (string != nil) {
+                    [[AJRMarkdownStyleSheet basic] applyTo:string];
                     _helpText = string;
                 }
             } else {
