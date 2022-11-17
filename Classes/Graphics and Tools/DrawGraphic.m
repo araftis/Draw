@@ -1576,6 +1576,7 @@ static BOOL _showsDirtyBounds = NO;
     if (_helpText == nil) {
         NSBundle *bundle = [NSBundle bundleForClass:self.class];
         NSURL *url = [bundle URLForResource:AJRStringFromClassSansModule(self.class) withExtension:@"md"];
+        
         if (url != nil) {
             NSError *localError = nil;
             NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&localError];
@@ -1592,8 +1593,35 @@ static BOOL _showsDirtyBounds = NO;
             } else {
                 _helpText = [[NSAttributedString alloc] initWithString:AJRFormat(@"Error loading help: %@", localError.localizedDescription) attributes:nil];
             }
-        } else {
-            _helpText = [[NSAttributedString alloc] initWithString:@"No help available." attributes:nil];
+        }
+        
+        if (url == nil) {
+            // Try again with RTF...
+            url = [bundle URLForResource:AJRStringFromClassSansModule(self.class) withExtension:@"rtf"];
+
+            if (url != nil) {
+                NSError *localError = nil;
+                NSData *data = [NSData dataWithContentsOfURL:url options:0 error:&localError];
+                if (data != nil) {
+                    NSAttributedString *string = [[NSAttributedString alloc] initWithRTF:data documentAttributes:nil];
+                    if (string != nil) {
+                        _helpText = string;
+                    }
+                } else {
+                    _helpText = [[NSAttributedString alloc] initWithString:AJRFormat(@"Error loading help: %@", localError.localizedDescription) attributes:nil];
+                }
+            }
+        }
+        
+        if (url == nil) {
+            NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+            [style setAlignment:NSTextAlignmentCenter];
+            NSDictionary *attributes = @{
+                NSFontAttributeName:[NSFont boldSystemFontOfSize:18],
+                NSParagraphStyleAttributeName:style,
+                NSForegroundColorAttributeName:NSColor.disabledControlTextColor,
+            };
+            _helpText = [[NSAttributedString alloc] initWithString:@"\n\n\nNo help available." attributes:attributes];
         }
     }
     return _helpText;
