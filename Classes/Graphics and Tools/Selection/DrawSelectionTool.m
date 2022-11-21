@@ -36,11 +36,11 @@
 #import "DrawFunctions.h"
 #import "DrawGraphic.h"
 #import "DrawGraphicsToolSet.h"
-#import "DrawLayer.h"
 #import "DrawPage.h"
 #import "DrawSelectionActions.h"
 #import "DrawToolAction.h"
 #import "DrawToolSet.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>

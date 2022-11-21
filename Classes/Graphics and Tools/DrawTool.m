@@ -35,9 +35,9 @@
 #import "DrawEvent.h"
 #import "DrawGraphic.h"
 #import "DrawPage.h"
-#import "DrawLayer.h"
 #import "DrawToolAction.h"
 #import "DrawToolSet.h"
+#import <Draw/Draw-Swift.h>
 
 NSString *DrawToolDidBecomeActiveNotification = @"DrawToolDidBecomeActiveNotification";
 

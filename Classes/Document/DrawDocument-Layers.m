@@ -32,9 +32,7 @@
 #import "DrawDocument.h"
 
 #import "DrawDocumentStorage.h"
-#import "DrawLayer.h"
 #import "DrawPage.h"
-
 #import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
@@ -47,7 +45,7 @@ NSString * const DrawLayerDidChangeNotification = @"DrawLayerDidChangeNotificati
     return AJRObjectIfKindOfClass([self.pagedView.window.contentViewController ajr_descendantViewControllerOfClass:DrawLayerViewController.class], DrawLayerViewController);
 }
 
-- (void)_resetLayerPopUpButton {
+- (void)noteLayersChanged {
     [_layerPopUpButton removeAllItems];
 
     for (NSInteger x = 0; x < (const NSInteger)[_storage.layers count]; x++) {
@@ -83,7 +81,7 @@ NSString * const DrawLayerDidChangeNotification = @"DrawLayerDidChangeNotificati
     [_storage.layers addObject:aLayer];
     _storage.layer = aLayer;
 
-    [self _resetLayerPopUpButton];
+    [self noteLayersChanged];
 }
 
 - (void)addLayerWithName:(NSString *)name {
@@ -119,7 +117,7 @@ NSString * const DrawLayerDidChangeNotification = @"DrawLayerDidChangeNotificati
         }
     }
 
-    [self _resetLayerPopUpButton];
+    [self noteLayersChanged];
 }
 
 - (void)moveLayerAtIndex:(NSUInteger)index toIndex:(NSUInteger)otherIndex {
@@ -134,7 +132,7 @@ NSString * const DrawLayerDidChangeNotification = @"DrawLayerDidChangeNotificati
             [_storage.layers insertObject:temp atIndex:otherIndex];
         }
 
-        [self _resetLayerPopUpButton];
+        [self noteLayersChanged];
 
         [[self.pagedView visiblePageIndexes] enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
             [[_storage.pages objectAtIndex:idx] setNeedsDisplay:YES];
@@ -193,7 +191,7 @@ NSString * const DrawLayerDidChangeNotification = @"DrawLayerDidChangeNotificati
 
     [aLayer setName:newName];
 
-    [self _resetLayerPopUpButton];
+    [self noteLayersChanged];
 }
 
 @end

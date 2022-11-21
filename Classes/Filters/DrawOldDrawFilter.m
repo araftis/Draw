@@ -35,7 +35,6 @@
 #import "DrawImage.h"
 #import "DrawPage.h"
 #import "DrawPen.h"
-#import "DrawRectangle.h"
 #import "DrawDocument.h"
 #import <Draw/Draw-Swift.h>
 

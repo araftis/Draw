@@ -32,8 +32,10 @@
 #import "DrawDocument.h"
 
 #import "DrawDocumentStorage.h"
+#import "DrawGraphic.h"
 #import "DrawPage.h"
-#import "DrawRectangle.h"
+
+#import <Draw/Draw-Swift.h>
 
 @implementation DrawDocument (Group)
 

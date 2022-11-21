@@ -327,6 +327,8 @@ extern NSString * const DrawSavePanelPathKey;
 
 @property (nonatomic,readonly) DrawLayerViewController *layerViewController;
 
+- (void)noteLayersChanged;
+
 @property (nonatomic,readonly) NSArray<DrawLayer *> *layers;
 @property (nonatomic,strong) DrawLayer *layer;
 - (void)setLayerWithName:(NSString *)lame;
@@ -372,7 +374,7 @@ extern NSString * const DrawSavePanelPathKey;
 
 - (NSInteger)pageNumberForPage:(DrawPage *)page;
 
-- (void)setPagesNeedDisplay:(BOOL)flag;
+@property (nonatomic,assign) BOOL pagesNeedDisplay;
 
 - (void)enumerateGraphicsUsing:(void (^)(DrawGraphic *graphic, BOOL *stop))block;
 

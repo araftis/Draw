@@ -33,12 +33,11 @@
 
 #import "DrawFunctions.h"
 #import "DrawGraphic.h"
-#import "DrawLayer.h"
 #import "DrawDocument.h"
 #import "AJRXMLCoder-DrawExtensions.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
-#import <Draw/Draw-Swift.h>
 
 const AJRInspectorIdentifier DrawInspectorIdentifierPage = @"page";
 const AJRInspectorContentIdentifier DrawInspectorContentIdentifierPage = @"page";

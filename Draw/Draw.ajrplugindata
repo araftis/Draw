@@ -89,13 +89,13 @@
     <draw-tool-set class="DrawGraphicsToolSet" id="graphics" name="Graphics" icon="toolSetGraphics" activationKey="G" />
 
     <!-- Draw rectangles. Rectangles may have a corner radius. -->
-    <draw-tool class="DrawRectangleTool" name="Rectangles" id="rectangle" toolset="graphics" activationKey="r">
+    <draw-tool class="Draw.DrawRectangleTool" name="Rectangles" id="rectangle" toolset="graphics" activationKey="r">
         <action title="Rectangle" icon="toolRectangle" tag="0" />
         <action title="Rounded Rectangle" icon="toolRectangleRounded" tag="1" />
         <action title="Pill" icon="toolRectanglePill" tag="2" />
     </draw-tool>
     <!-- Draw text or form text. Basically a "rectangle" with a contained text aspect. -->
-    <draw-tool class="DrawTextTool" name="Text" id="text" toolset="graphics" activationKey="t">
+    <draw-tool class="Draw.DrawTextTool" name="Text" id="text" toolset="graphics" activationKey="t">
         <action title="Text" icon="toolText" tag="0" />
         <action title="Form Entry" icon="toolFormText" tag="1" />
     </draw-tool>

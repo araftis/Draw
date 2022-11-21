@@ -33,12 +33,11 @@
 
 #import "DrawDocumentStorage.h"
 #import "DrawGraphic.h"
-#import "DrawLayer.h"
 #import "DrawPage.h"
 #import "DrawToolSet.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/NSMutableArray+Extensions.h>
-#import <Draw/Draw-Swift.h>
 #import <objc/runtime.h>
 
 @implementation DrawDocument (Selection)

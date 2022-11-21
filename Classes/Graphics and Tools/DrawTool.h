@@ -37,11 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 extern NSString *DrawToolDidBecomeActiveNotification;
 
+typedef NSString * DrawToolIdentifier NS_TYPED_EXTENSIBLE_ENUM;
+
 @interface DrawTool : NSObject 
 
 #pragma mark - Factory
 
-@property (nonatomic,class,readonly) NSString *identifier;
+@property (nonatomic,class,readonly) DrawToolIdentifier identifier;
 @property (nonatomic,class,readonly) NSString *name;
 @property (nonatomic,class,readonly) BOOL addsViaDrag;
 @property (nonatomic,class,readonly) NSSize newGraphicSize;
@@ -54,7 +56,7 @@ extern NSString *DrawToolDidBecomeActiveNotification;
 #pragma mark - Properties
 
 @property (nonatomic,readonly,readonly) NSArray<DrawToolSet *> *toolSets;
-@property (nonatomic,readonly) NSString *identifier;
+@property (nonatomic,readonly) DrawToolIdentifier identifier;
 @property (nonatomic,readonly) NSString *name;
 @property (nonatomic,readonly,strong) NSArray<DrawToolAction *> *actions;
 @property (nonatomic,strong) DrawToolAction *currentAction;

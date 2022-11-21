@@ -32,8 +32,8 @@
 #import "DrawEvent.h"
 
 #import "DrawDocument.h"
-#import "DrawLayer.h"
 #import "DrawPage.h"
+#import <Draw/Draw-Swift.h>
 
 @implementation DrawEvent
 

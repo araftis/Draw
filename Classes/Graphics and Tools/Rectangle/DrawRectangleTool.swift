@@ -1,5 +1,5 @@
 /*
- DrawLayer.h
+ DrawRectangleTool.m
  Draw
 
  Copyright © 2022, AJ Raftis and Draw authors
@@ -29,32 +29,45 @@
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <AppKit/AppKit.h>
-#import <AJRFoundation/AJRFoundation.h>
+import AJRInterface
 
-@class DrawDocument;
+@objcMembers
+open class DrawRectangleTool : DrawTool {
 
-NS_ASSUME_NONNULL_BEGIN
+    @objc(DrawRectangleToolTag)
+    public enum Tag : Int {
+        case rectangle
+        case roundedRectangle
+        case pill
+    }
 
-@interface DrawLayer : NSObject <AJRXMLCoding>
+    open var tag : Tag {
+        if let tag = Tag(rawValue: currentAction.tag) {
+            return tag
+        }
+        preconditionFailure("Our action returned a tag (\(currentAction.tag)) that we don't understand.")
+    }
 
-- (id)initWithName:(NSString *)aName document:(DrawDocument *)aDocumentView;
+    // MARK: - DrawTool
 
-@property (nonatomic,weak) DrawDocument *document;
-@property (nonatomic,strong) NSString *name;
-@property (nonatomic,assign) BOOL locked;
-@property (nonatomic,assign) BOOL visible;
-@property (nonatomic,assign) BOOL printable;
-@property (nonatomic,strong) AJRStore *variableStore;
+    open override func graphic(with point: NSPoint, document: DrawDocument, page: DrawPage) -> DrawGraphic {
+        let graphic : DrawRectangle
+        let frame = NSRect(origin: point, size: NSSize.zero)
 
-- (NSDictionary<NSString *, id> *)snapshot;
-- (void)restoreFromSnapshot:(NSDictionary<NSString *, id> *)snapshot;
+        switch tag {
+        case .rectangle:
+            graphic = DrawRectangle(frame: frame)
+        case .roundedRectangle:
+            graphic = DrawRectangle(frame: frame)
+            graphic.radius = UserDefaults[.rectangleRadius]!
+        case .pill:
+            graphic = DrawRectangle(frame: frame)
+            graphic.radius = DrawRectangle.pillRadius
+        }
 
-// MARK: - Variables
+        graphic.takeAspects(from: document.templateGraphic)
 
-- (void)addVariablesTo:(NSMutableArray <AJRVariable *> *)variables;
-@property (nonatomic,readonly) NSArray<AJRVariable *> *variables;
+        return graphic
+    }
 
-@end
-
-NS_ASSUME_NONNULL_END
+}

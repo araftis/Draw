@@ -32,8 +32,8 @@
 #import "DrawDocumentStorage.h"
 
 #import "DrawDocument.h"
-#import "DrawLayer.h"
 #import "DrawMeasurementUnit.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
 

@@ -36,7 +36,6 @@
 #import "DrawDocument.h"
 #import "DrawEvent.h"
 #import "DrawFunctions.h"
-#import "DrawLayer.h"
 #import "DrawPage.h"
 #import "AJRXMLCoder-DrawExtensions.h"
 #import <Draw/Draw-Swift.h>

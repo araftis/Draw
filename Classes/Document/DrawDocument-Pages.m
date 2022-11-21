@@ -34,7 +34,7 @@
 #import "DrawDocumentStorage.h"
 #import "DrawFunctions.h"
 #import "DrawPage.h"
-#import "DrawLayer.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
 #import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>
@@ -161,6 +161,11 @@
         [[_storage.pages objectAtIndex:index] setNeedsDisplay:flag];
         index = [pageIndexes indexGreaterThanIndex:index];
     }
+}
+
+- (BOOL)pagesNeedDisplay {
+    // Because we can't have a "write only" property.
+    return NO;
 }
 
 - (BOOL)_enumerateGraphicsInPage:(DrawPage *)page using:(void (^)(DrawGraphic *graphic, BOOL *stop))block {

@@ -33,8 +33,8 @@
 
 #import "DrawImage.h"
 #import "DrawPage.h"
-#import "DrawRectangle.h"
 #import "DrawDocument.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
 

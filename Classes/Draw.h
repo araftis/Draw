@@ -53,7 +53,6 @@
 #import <Draw/DrawGraphicsToolSet.h>
 #import <Draw/DrawImage.h>
 #import <Draw/DrawImageTool.h>
-#import <Draw/DrawLayer.h>
 #import <Draw/DrawLink.h>
 #import <Draw/DrawLinkCap.h>
 #import <Draw/DrawLinkCapArrow.h>
@@ -70,15 +69,12 @@
 #import <Draw/DrawPen.h>
 #import <Draw/DrawPenBezierAspect.h>
 #import <Draw/DrawPenTool.h>
-#import <Draw/DrawRectangle.h>
-#import <Draw/DrawRectangleTool.h>
 #import <Draw/DrawRulerMarker.h>
 #import <Draw/DrawRulerView.h>
 #import <Draw/DrawSelectionActions.h>
 #import <Draw/DrawSelectionTool.h>
 #import <Draw/DrawSquiggle.h>
 #import <Draw/DrawSquiggleTool.h>
-#import <Draw/DrawTextTool.h>
 #import <Draw/DrawThicknessCell.h>
 #import <Draw/DrawThicknessControl.h>
 #import <Draw/DrawTool.h>

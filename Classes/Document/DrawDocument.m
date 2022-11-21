@@ -36,7 +36,6 @@
 #import "DrawDocumentStorage.h"
 #import "DrawGraphic.h"
 #import "DrawGraphicsToolSet.h"
-#import "DrawLayer.h"
 #import "DrawPage.h"
 #import "DrawRulerView.h"
 #import "DrawTool.h"
