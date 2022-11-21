@@ -33,7 +33,7 @@
 
 #import "DrawDocumentStorage.h"
 #import "DrawPage.h"
-#import "DrawViewRulerAccessory.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterface/AJRInterface.h>

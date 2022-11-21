@@ -35,8 +35,8 @@
 #import "DrawBook.h"
 #import "DrawGraphic.h"
 #import "DrawFilter.h"
-#import "DrawViewRulerAccessory.h"
 #import "AJRXMLCoder-DrawExtensions.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 

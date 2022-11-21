@@ -38,7 +38,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class AJRBezierPath, AJRRibbonView, AJRSplitView, DrawBook, DrawDocumentStorage, DrawPage, DrawGraphic, DrawInspectorGroupController, DrawGraphicsInspectorController, DrawLayer, DrawRulerMarker, DrawTool, DrawViewRulerAccessory, DrawLayerViewController, DrawInspectorGroupsController, DrawMeasurementUnit;
+@class AJRBezierPath, AJRRibbonView, AJRSplitView, DrawBook, DrawDocumentStorage, DrawPage, DrawGraphic, DrawInspectorGroupController, DrawGraphicsInspectorController, DrawLayer, DrawRulerMarker, DrawTool, DrawRulerAccessory, DrawLayerViewController, DrawInspectorGroupsController, DrawMeasurementUnit;
 
 // Errors
 
@@ -128,7 +128,7 @@ extern NSString * const DrawSavePanelPathKey;
     AJRBezierPath *_grid;
 
     // Ruler Support
-    DrawViewRulerAccessory *_rulerAccessory;
+    DrawRulerAccessory *_rulerAccessory;
 
     // Layers
     NSPopUpButton *_layerPopUpButton;
@@ -178,6 +178,7 @@ extern NSString * const DrawSavePanelPathKey;
 @property (nonatomic,readonly) NSArray<DrawMeasurementUnit *> *allUnitsOfMeasure;
 @property (nonatomic,assign) DrawMeasurementUnit *unitOfMeasure;
 @property (nonatomic,assign) AJRInset margins;
+@property (nonatomic,strong) AJRUnitsFormatter *unitFormatter;
 
 // NOTE: These are basically here to make the margins observable, but they're also convenient for setting individual margin values without having to get/change/set.
 @property (nonatomic,assign) CGFloat leftMargin;

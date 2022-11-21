@@ -33,10 +33,9 @@
 
 #import "DrawDocumentStorage.h"
 #import "DrawRulerMarker.h"
-#import "DrawViewRulerAccessory.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
-#import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>
 
 @implementation DrawDocument (Rulers)
 

@@ -42,7 +42,6 @@
 #import "DrawToolAction.h"
 #import "DrawToolSet.h"
 #import "DrawViewController.h"
-#import "DrawViewRulerAccessory.h"
 #import <Draw/Draw-Swift.h>
 
 #import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>
@@ -205,10 +204,6 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         _storage.verticalMarks = [[NSMutableArray alloc] init];
         _storage.marksEnabled = [defaults boolForKey:DrawMarksEnabledKey];
         _storage.marksVisible = [defaults boolForKey:DrawMarksVisibleKey];
-
-        // Ruler Support
-        _rulerAccessory = [[DrawViewRulerAccessory alloc] initWithDocument:self];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectDidResignRuler:) name:DrawObjectDidResignRulerNotification object:self];
 
         // Grid
         _storage.gridColor = [defaults colorForKey:DrawGridColorKey];
@@ -505,6 +500,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
         [self setUnitOfMeasure:current];
     }];
     _storage.unitOfMeasure = unitOfMeasure;
+    [self updateUnitFormatter];
     [self updateLayoutAndNotify:YES];
 }
 
@@ -525,6 +521,12 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
 - (AJRInset)margins {
     return _storage.margins;
+}
+
+- (void)updateUnitFormatter {
+    AJRUnitsFormatter *formatter = [[AJRUnitsFormatter alloc] initWithUnits:NSUnitLength.points displayUnits:self.unitOfMeasure.unit];
+    formatter.displayInchesAsFrations = YES;
+    self.unitFormatter = formatter;
 }
 
 + (NSSet<NSString *> *)keyPathsForValuesAffectingLeftMargin {
@@ -852,6 +854,9 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
     [self windowDidLoad];
 
+    // Do this early, because parts of the UI below are going to want to access it.
+    [self updateUnitFormatter];
+
     window = [_pagedView window];
     screenFrame = [screen visibleFrame];
     frame = [window frame];
@@ -884,6 +889,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
             ribbonFrame.size.height = 26.0;
             [_ribbonView setFrame:ribbonFrame];
             [_ribbonView setAutoresizingMask:NSViewWidthSizable | NSViewMaxYMargin];
+            [_ribbonView addSubview:_rulerAccessory.view];
         }
     }
     frame.size.height += [_ribbonView frame].size.height;
@@ -960,11 +966,13 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
     [_pagedView setScale:1.25];
 
     // Setup Rulers
+    _rulerAccessory = [[DrawRulerAccessory alloc] initWithDocument:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(objectDidResignRuler:) name:DrawObjectDidResignRulerNotification object:self];
 
     rulerView = [[DrawRulerView alloc] initWithScrollView:scrollView orientation:NSHorizontalRuler];
-    [rulerView setReservedThicknessForMarkers:0.0];
-    [rulerView setReservedThicknessForAccessoryView:0.0];
-    [rulerView setRuleThickness:16.0];
+    [rulerView setReservedThicknessForMarkers:36.0];
+    [rulerView setReservedThicknessForAccessoryView:36.0];
+    [rulerView setRuleThickness:72.0];
     [rulerView setClientView:[self page]];
     [scrollView setHorizontalRulerView:rulerView];
 

@@ -60,9 +60,6 @@
 
 @implementation DrawMeasureView
 
-#pragma mark - Destruction
-
-
 #pragma mark - Properties
 
 @synthesize units = _units;

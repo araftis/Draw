@@ -80,7 +80,6 @@
 #import <Draw/DrawToolAction.h>
 #import <Draw/DrawToolSet.h>
 #import <Draw/DrawViewController.h>
-#import <Draw/DrawViewRulerAccessory.h>
 #import <Draw/NSPasteboard-DrawExtensions.h>
 
 #endif /* Draw_h */

@@ -135,8 +135,7 @@
 		FA460B3013831AC50051A3B1 /* DrawTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4609D313831AC20051A3B1 /* DrawTextView.swift */; };
 		FA460B3313831AC50051A3B1 /* DrawTool.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4609D613831AC20051A3B1 /* DrawTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460B3413831AC50051A3B1 /* DrawTool.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4609D713831AC20051A3B1 /* DrawTool.m */; };
-		FA460B4513831AC50051A3B1 /* DrawViewRulerAccessory.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4609E813831AC20051A3B1 /* DrawViewRulerAccessory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA460B4613831AC50051A3B1 /* DrawViewRulerAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4609E913831AC20051A3B1 /* DrawViewRulerAccessory.m */; };
+		FA460B4613831AC50051A3B1 /* DrawRulerAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4609E913831AC20051A3B1 /* DrawRulerAccessory.swift */; };
 		FA4662AD192AE24800CD9F19 /* Draw.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA4662AC192AE24800CD9F19 /* Draw.xcassets */; };
 		FA473946144F8F1D00962AA3 /* DrawDocumentWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = FA473944144F8F1D00962AA3 /* DrawDocumentWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA473947144F8F1D00962AA3 /* DrawDocumentWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA473945144F8F1D00962AA3 /* DrawDocumentWindowController.m */; };
@@ -180,6 +179,7 @@
 		FAA6ED8C1440171300111271 /* DrawInspectorGroupsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA6ED891440171300111271 /* DrawInspectorGroupsController.xib */; };
 		FAAD131D25B65A19005EA73B /* DrawRectangle.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FAAD131C25B65A19005EA73B /* DrawRectangle.inspector */; };
 		FAB61A791437AEB2001499FE /* DrawDocument.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAB61A771437AEB1001499FE /* DrawDocument.strings */; };
+		FABB1367292B1F08002DD56B /* DrawRulerAccessory.xib in Resources */ = {isa = PBXBuildFile; fileRef = FABB1366292B1F08002DD56B /* DrawRulerAccessory.xib */; };
 		FABD165425C8E14D000294E3 /* DrawToolAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD165325C8E14D000294E3 /* DrawToolAccessory.swift */; };
 		FABD167F25C8F475000294E3 /* DrawToolAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABD167E25C8F475000294E3 /* DrawToolAccessoryViewController.swift */; };
 		FABE5170259FECB500552494 /* DrawGlobalToolSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABE516F259FECB500552494 /* DrawGlobalToolSet.swift */; };
@@ -380,8 +380,7 @@
 		FA4609D313831AC20051A3B1 /* DrawTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawTextView.swift; sourceTree = "<group>"; };
 		FA4609D613831AC20051A3B1 /* DrawTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawTool.h; path = "Graphics and Tools/DrawTool.h"; sourceTree = "<group>"; usesTabs = 1; };
 		FA4609D713831AC20051A3B1 /* DrawTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DrawTool.m; path = "Graphics and Tools/DrawTool.m"; sourceTree = "<group>"; usesTabs = 0; };
-		FA4609E813831AC20051A3B1 /* DrawViewRulerAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawViewRulerAccessory.h; sourceTree = "<group>"; usesTabs = 0; };
-		FA4609E913831AC20051A3B1 /* DrawViewRulerAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawViewRulerAccessory.m; sourceTree = "<group>"; };
+		FA4609E913831AC20051A3B1 /* DrawRulerAccessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawRulerAccessory.swift; sourceTree = "<group>"; };
 		FA4662AC192AE24800CD9F19 /* Draw.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Draw.xcassets; sourceTree = "<group>"; };
 		FA473944144F8F1D00962AA3 /* DrawDocumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawDocumentWindowController.h; sourceTree = "<group>"; };
 		FA473945144F8F1D00962AA3 /* DrawDocumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawDocumentWindowController.m; sourceTree = "<group>"; };
@@ -428,6 +427,7 @@
 		FAAD131C25B65A19005EA73B /* DrawRectangle.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawRectangle.inspector; sourceTree = "<group>"; };
 		FAB61A781437AEB2001499FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DrawDocument.strings; sourceTree = "<group>"; };
 		FAB61A7B1437AEB7001499FE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DrawDocument.strings; sourceTree = "<group>"; };
+		FABB1366292B1F08002DD56B /* DrawRulerAccessory.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawRulerAccessory.xib; sourceTree = "<group>"; };
 		FABD165325C8E14D000294E3 /* DrawToolAccessory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawToolAccessory.swift; sourceTree = "<group>"; };
 		FABD167E25C8F475000294E3 /* DrawToolAccessoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawToolAccessoryViewController.swift; sourceTree = "<group>"; };
 		FABE516F259FECB500552494 /* DrawGlobalToolSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawGlobalToolSet.swift; sourceTree = "<group>"; };
@@ -644,8 +644,6 @@
 				FA46086B13831AC20051A3B1 /* DrawBook.m */,
 				FA46088E13831AC20051A3B1 /* DrawFileWrapper.h */,
 				FA46088F13831AC20051A3B1 /* DrawFileWrapper.m */,
-				FA4609E813831AC20051A3B1 /* DrawViewRulerAccessory.h */,
-				FA4609E913831AC20051A3B1 /* DrawViewRulerAccessory.m */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -859,6 +857,8 @@
 				FA46098913831AC20051A3B1 /* DrawRulerView.m */,
 				FAE6AC6D13DF6AA00098A599 /* DrawRulerMarker.h */,
 				FAE6AC6E13DF6AA00098A599 /* DrawRulerMarker.m */,
+				FA4609E913831AC20051A3B1 /* DrawRulerAccessory.swift */,
+				FABB1366292B1F08002DD56B /* DrawRulerAccessory.xib */,
 			);
 			path = Ruler;
 			sourceTree = "<group>";
@@ -1049,7 +1049,6 @@
 				FA2C17FD258EF9C2007FD1B2 /* Draw.h in Headers */,
 				FA460B3313831AC50051A3B1 /* DrawTool.h in Headers */,
 				FAF48D0B25AFCC0E001D3166 /* DrawLogging.h in Headers */,
-				FA460B4513831AC50051A3B1 /* DrawViewRulerAccessory.h in Headers */,
 				FA49843F13B2A40C00CE9495 /* DrawDocument.h in Headers */,
 				FACF545B13B562B90056AADE /* DrawToolAction.h in Headers */,
 				FA18B48125ABD69E000DEF0C /* DrawDocumentViewController.h in Headers */,
@@ -1186,6 +1185,7 @@
 				21FFE307291C745900A79F8F /* DrawStroke.inspector in Resources */,
 				FA8F41D0143FF27600AA47E7 /* DrawFillGradient0.tiff in Resources */,
 				FA8F41D1143FF27600AA47E7 /* DrawFillGradient270.tiff in Resources */,
+				FABB1367292B1F08002DD56B /* DrawRulerAccessory.xib in Resources */,
 				FAA6ED8C1440171300111271 /* DrawInspectorGroupsController.xib in Resources */,
 				FA0A4FCA291499A100802E11 /* DrawPage.inspector in Resources */,
 				21FFE305291C730300A79F8F /* DrawText.inspector in Resources */,
@@ -1277,7 +1277,7 @@
 				FA460B2E13831AC50051A3B1 /* DrawTextTool.swift in Sources */,
 				FA460B3013831AC50051A3B1 /* DrawTextView.swift in Sources */,
 				FA460B3413831AC50051A3B1 /* DrawTool.m in Sources */,
-				FA460B4613831AC50051A3B1 /* DrawViewRulerAccessory.m in Sources */,
+				FA460B4613831AC50051A3B1 /* DrawRulerAccessory.swift in Sources */,
 				FA49843113B2A40C00CE9495 /* DrawDocument-Chapters.m in Sources */,
 				FA49843213B2A40C00CE9495 /* DrawDocument-DragAndDrop.m in Sources */,
 				FA49843313B2A40C00CE9495 /* DrawDocument-EPS.m in Sources */,
