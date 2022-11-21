@@ -31,7 +31,6 @@
 
 #import "DrawLink.h"
 
-#import "DrawEvent.h"
 #import "DrawLinkCap.h"
 #import "DrawLinkCapArrow.h"
 #import "DrawLinkTool.h"

@@ -45,7 +45,6 @@
 #import <Draw/DrawDocumentStorage.h>
 #import <Draw/DrawDocumentViewController.h>
 #import <Draw/DrawDocumentWindowController.h>
-#import <Draw/DrawEvent.h>
 #import <Draw/DrawFileWrapper.h>
 #import <Draw/DrawFilter.h>
 #import <Draw/DrawFunctions.h>

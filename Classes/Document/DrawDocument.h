@@ -281,10 +281,10 @@ extern NSString * const DrawSavePanelPathKey;
 
 - (void)updateGrid;
 
-- (CGFloat)snapLocationToGrid:(CGFloat)location;
-- (NSPoint)snapPointToGrid:(NSPoint)point;
-- (NSSize)snapSizeToGrid:(NSSize)size;
-- (NSRect)snapRectToGrid:(NSRect)rect;
+- (CGFloat)snapLocationToGrid:(CGFloat)location NS_SWIFT_NAME(snapToGrid(location:));
+- (NSPoint)snapPointToGrid:(NSPoint)point NS_SWIFT_NAME(snapToGrid(point:));
+- (NSSize)snapSizeToGrid:(NSSize)size NS_SWIFT_NAME(snapToGrid(size:));
+- (NSRect)snapRectToGrid:(NSRect)rect NS_SWIFT_NAME(snapToGrid(rect:));
 
 - (IBAction)takeGridStateFrom:(NSSegmentedControl *)sender;
 - (IBAction)toggleGridVisible:(id)sender;

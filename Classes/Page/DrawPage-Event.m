@@ -31,11 +31,11 @@
 
 #import "DrawPage.h"
 
-#import "DrawEvent.h"
 #import "DrawGraphic.h"
 #import "DrawTool.h"
 #import "DrawToolSet.h"
 #import "DrawDocument.h"
+#import <Draw/Draw-Swift.h>
 
 @implementation DrawPage (Event)
 

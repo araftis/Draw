@@ -31,9 +31,9 @@
 
 #import "DrawCircle.h"
 
-#import "DrawEvent.h"
 #import "DrawFunctions.h"
 #import "DrawDocument.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRInterface.h>
 

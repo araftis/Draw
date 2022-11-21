@@ -34,7 +34,6 @@
 #import "AJRBezierPath-DrawExtensions.h"
 #import "DrawAspect.h"
 #import "DrawDocument.h"
-#import "DrawEvent.h"
 #import "DrawFunctions.h"
 #import "DrawPage.h"
 #import "AJRXMLCoder-DrawExtensions.h"
@@ -1556,7 +1555,7 @@ static BOOL _showsDirtyBounds = NO;
 
 - (NSArray<AJRInspectorIdentifier> *)inspectorIdentifiersForInspectorContent:(AJRInspectorContentIdentifier)inspectorContentIdentifier {
     NSMutableArray<AJRInspectorIdentifier> *identifiers = [[super inspectorIdentifiersForInspectorContent:inspectorContentIdentifier] mutableCopy];
-    AJRPrintf(@"Asked for content: %@\n", inspectorContentIdentifier);
+    //AJRPrintf(@"Asked for content: %@\n", inspectorContentIdentifier);
     if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierGraphic]) {
         [identifiers addObject:DrawInspectorIdentifierGraphic];
     } else if ([inspectorContentIdentifier isEqualToString:DrawInspectorContentIdentifierHelp]) {

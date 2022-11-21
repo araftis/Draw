@@ -33,11 +33,11 @@
 
 #import "DrawCircle.h"
 #import "DrawDocument.h"
-#import "DrawEvent.h"
 #import "DrawGraphicsToolSet.h"
 #import "DrawPage.h"
 #import "DrawToolAction.h"
 #import "DrawToolSet.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRInterface/AJRImages.h>
 

@@ -32,7 +32,6 @@
 #import "DrawTool.h"
 
 #import "DrawDocument.h"
-#import "DrawEvent.h"
 #import "DrawGraphic.h"
 #import "DrawPage.h"
 #import "DrawToolAction.h"

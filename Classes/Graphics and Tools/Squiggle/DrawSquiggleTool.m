@@ -32,7 +32,6 @@
 #import "DrawSquiggleTool.h"
 
 #import "DrawDocument.h"
-#import "DrawEvent.h"
 #import "DrawGraphicsToolSet.h"
 #import "DrawPage.h"
 #import "DrawSquiggle.h"

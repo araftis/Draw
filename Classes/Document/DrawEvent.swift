@@ -1,5 +1,5 @@
 /*
- DrawEvent.h
+ DrawEvent.m
  Draw
 
  Copyright © 2022, AJ Raftis and Draw authors
@@ -29,29 +29,55 @@
  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+import AJRInterface
 
-@class DrawDocument, DrawLayer, DrawPage;
+@objcMembers
+open class DrawEvent : NSObject {
+    
+    // MARK: - Creation
 
-NS_ASSUME_NONNULL_BEGIN
+    public init(originalEvent event: NSEvent, document: DrawDocument, page: DrawPage) {
+        self.event = event
+        self.document = document
+        self.page = page
+    }
 
-@interface DrawEvent : NSObject
+    @objc(eventWithOriginalEvent:document:page:)
+    open class func event(with event: NSEvent, document: DrawDocument, page: DrawPage) -> DrawEvent {
+        return DrawEvent(originalEvent: event, document: document, page: page)
+    }
+    
+    // MARK: - Properties
+    
+    open var event : NSEvent
+    open var document : DrawDocument
+    open var page : DrawPage
+    open var layer : DrawLayer { return document.layer }
 
-+ (DrawEvent *)eventWithOriginalEvent:(NSEvent *)event document:(DrawDocument *)document page:(DrawPage *)page;
-
-@property (nonatomic,readonly) NSEvent *event;
-@property (nonatomic,readonly) DrawDocument *document;
-@property (nonatomic,readonly) DrawPage *page;
-@property (nonatomic,readonly) DrawLayer *layer;
-
-@property (nonatomic,readonly) NSPoint locationOnPage;
-@property (nonatomic,readonly) NSPoint locationOnPageSnappedToGrid;
-@property (nonatomic,readonly) NSString *characters;
-@property (nonatomic,readonly) NSUInteger modifierFlags;
-@property (nonatomic,readonly) NSUInteger clickCount;
-
-@property (nonatomic,readonly) BOOL layerIsLockedOrNotVisible;
-
-@end
-
-NS_ASSUME_NONNULL_END
+    // MARK: - Utilities
+    
+    open var locationOnPage : NSPoint {
+        return page.convert(event.locationInWindow, from: nil)
+    }
+    
+    open var locationOnPageSnappedToGrid : NSPoint {
+        document.snapToGrid(point: locationOnPage)
+    }
+    
+    open var characters : String? {
+        return event.characters
+    }
+    
+    open var modifierFlags : NSEvent.ModifierFlags {
+        return event.modifierFlags
+    }
+    
+    open var clickCount : Int {
+        return event.clickCount
+    }
+    
+    open var layerIsLockedOrNotVisible : Bool {
+        return layer.locked || !layer.visible
+    }
+    
+}

@@ -31,12 +31,12 @@
 
 #import "DrawPen.h"
 
-#import "DrawEvent.h"
 #import "DrawFunctions.h"
 #import "DrawPage.h"
 #import "DrawPenBezierAspect.h"
 #import "DrawDocument.h"
 #import "AJRBezierPath-DrawExtensions.h"
+#import <Draw/Draw-Swift.h>
 
 #import <AJRFoundation/AJRFoundation.h>
 #import <AJRInterfaceFoundation/AJRInterfaceFoundation.h>

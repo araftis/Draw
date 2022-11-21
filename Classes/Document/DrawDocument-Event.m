@@ -31,10 +31,10 @@
 
 #import "DrawDocument.h"
 
-#import "DrawEvent.h"
 #import "DrawFunctions.h"
 #import "DrawGraphic.h"
 #import "DrawPage.h"
+#import <Draw/Draw-Swift.h>
 
 @interface DrawGraphicPasteboardWriter : NSObject <NSPasteboardWriting>
 

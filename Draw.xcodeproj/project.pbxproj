@@ -157,8 +157,7 @@
 		FA49843E13B2A40C00CE9495 /* DrawDocument-Undo.m in Sources */ = {isa = PBXBuildFile; fileRef = FA49842E13B2A40C00CE9495 /* DrawDocument-Undo.m */; };
 		FA49843F13B2A40C00CE9495 /* DrawDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = FA49842F13B2A40C00CE9495 /* DrawDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA49844013B2A40C00CE9495 /* DrawDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = FA49843013B2A40C00CE9495 /* DrawDocument.m */; };
-		FA4CD82713BE898400EF1ECF /* DrawEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4CD82513BE898400EF1ECF /* DrawEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA4CD82813BE898400EF1ECF /* DrawEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4CD82613BE898400EF1ECF /* DrawEvent.m */; };
+		FA4CD82813BE898400EF1ECF /* DrawEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4CD82613BE898400EF1ECF /* DrawEvent.swift */; };
 		FA4E23E513B2B94A00F21FA5 /* DrawFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4E23E413B2B94A00F21FA5 /* DrawFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA58066913F35BFF00910987 /* stylesTemplate.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA58066813F35BFF00910987 /* stylesTemplate.tiff */; };
 		FA7DC9B525B687C700B16CDB /* DrawLink.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA7DC9B425B687C700B16CDB /* DrawLink.inspector */; };
@@ -404,8 +403,7 @@
 		FA49842E13B2A40C00CE9495 /* DrawDocument-Undo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DrawDocument-Undo.m"; sourceTree = "<group>"; };
 		FA49842F13B2A40C00CE9495 /* DrawDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawDocument.h; sourceTree = "<group>"; usesTabs = 0; };
 		FA49843013B2A40C00CE9495 /* DrawDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawDocument.m; sourceTree = "<group>"; usesTabs = 0; };
-		FA4CD82513BE898400EF1ECF /* DrawEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawEvent.h; sourceTree = "<group>"; usesTabs = 1; };
-		FA4CD82613BE898400EF1ECF /* DrawEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawEvent.m; sourceTree = "<group>"; };
+		FA4CD82613BE898400EF1ECF /* DrawEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawEvent.swift; sourceTree = "<group>"; };
 		FA4E23E413B2B94A00F21FA5 /* DrawFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFilter.h; sourceTree = "<group>"; };
 		FA58066813F35BFF00910987 /* stylesTemplate.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = stylesTemplate.tiff; sourceTree = "<group>"; };
 		FA7DC9B425B687C700B16CDB /* DrawLink.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawLink.inspector; sourceTree = "<group>"; };
@@ -965,8 +963,7 @@
 				FA18B48025ABD69E000DEF0C /* DrawDocumentViewController.m */,
 				FA473944144F8F1D00962AA3 /* DrawDocumentWindowController.h */,
 				FA473945144F8F1D00962AA3 /* DrawDocumentWindowController.m */,
-				FA4CD82513BE898400EF1ECF /* DrawEvent.h */,
-				FA4CD82613BE898400EF1ECF /* DrawEvent.m */,
+				FA4CD82613BE898400EF1ECF /* DrawEvent.swift */,
 				FA8B8FE528FF7C7A00650F23 /* DrawVariable.swift */,
 				FA18B45925ABD310000DEF0C /* DrawViewController.h */,
 				FA18B45A25ABD310000DEF0C /* DrawViewController.m */,
@@ -1058,7 +1055,6 @@
 				FA18B48125ABD69E000DEF0C /* DrawDocumentViewController.h in Headers */,
 				FACF546013B564260056AADE /* DrawToolSet.h in Headers */,
 				FACF546513B56CB40056AADE /* DrawGraphicsToolSet.h in Headers */,
-				FA4CD82713BE898400EF1ECF /* DrawEvent.h in Headers */,
 				FA98048913C653ED00C0F6F5 /* DrawSelectionActions.h in Headers */,
 				FAE6AC6F13DF6AA00098A599 /* DrawRulerMarker.h in Headers */,
 				FA460A1F13831AC30051A3B1 /* DrawFunctions.h in Headers */,
@@ -1303,7 +1299,7 @@
 				FACF545C13B562B90056AADE /* DrawToolAction.m in Sources */,
 				FACF546113B564260056AADE /* DrawToolSet.m in Sources */,
 				FACF546613B56CB40056AADE /* DrawGraphicsToolSet.m in Sources */,
-				FA4CD82813BE898400EF1ECF /* DrawEvent.m in Sources */,
+				FA4CD82813BE898400EF1ECF /* DrawEvent.swift in Sources */,
 				FA98048A13C653ED00C0F6F5 /* DrawSelectionActions.m in Sources */,
 				FA98048B13C65A5700C0F6F5 /* DrawDocument-Menu.m in Sources */,
 				FAE6AC7013DF6AA00098A599 /* DrawRulerMarker.m in Sources */,
