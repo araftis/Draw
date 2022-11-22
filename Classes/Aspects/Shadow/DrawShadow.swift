@@ -110,7 +110,7 @@ open class DrawShadow : DrawAspect {
 
         bounds = bounds.insetBy(dx: -(shadow.shadowBlurRadius + 2.0), dy: -(shadow.shadowBlurRadius + 2.0))
         bounds.origin.x += shadow.shadowOffset.width
-        bounds.origin.y += shadow.shadowOffset.height
+        bounds.origin.y -= shadow.shadowOffset.height
 
         return graphicBounds.union(bounds)
     }

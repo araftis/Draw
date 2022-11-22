@@ -84,6 +84,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,assign,readonly) AJRRectAdjustment boundsAdjustment;
 - (NSRect)boundsForPath:(AJRBezierPath *)path;
+/*!
+ If `true`, this property denotes that the aspect causes the graphics bounds to be "expanded" beyond what you be expected. By default, this returns `false`, since the computation of the expanded bounds can be expensive.
+ */
 @property (nonatomic,assign,readonly) BOOL boundsExpandsGraphicBounds;
 - (NSRect)boundsForGraphicBounds:(NSRect)graphicBounds;
 

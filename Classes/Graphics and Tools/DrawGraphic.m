@@ -69,7 +69,7 @@ static BOOL _notificationsAreDisabled = NO;
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{DrawFlatnessKey:@(1.0)}];
 }
 
-static BOOL _showsDirtyBounds = NO;
+static BOOL _showsDirtyBounds = YES;
 
 + (BOOL)showsDirtyBounds {
     return _showsDirtyBounds;
@@ -608,10 +608,9 @@ static BOOL _showsDirtyBounds = NO;
                     AJRBezierPath *path = [AJRBezierPath bezierPathWithRect:NSInsetRect([self.page centerScanRect:self.dirtyBounds], -inset, -inset)];
                     CGFloat dash[2] = { 1.0, 2.0 };
 
-                    [[NSColor lightGrayColor] set];
                     [path setLineDash:dash count:2 phase:0];
                     [path setLineWidth:AJRHairLineWidth];
-                    [path stroke];
+                    [path strokeWithColor:NSColor.redColor];
                 }
             }];
         }
@@ -750,7 +749,7 @@ static BOOL _showsDirtyBounds = NO;
 }
 
 - (NSRect)boundsForAspect:(DrawAspect *)aspect withPriority:(DrawAspectPriority)priority {
-    return [aspect boundsForPath:[self path]];
+    return [aspect boundsForPath:self.path];
 }
 
 - (void)updateBounds {

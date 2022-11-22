@@ -209,9 +209,13 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 - (BOOL)beginAspectEditingFromEvent:(DrawEvent *)event;
 - (void)informAspectsOfShapeChange;
 - (NSRect)boundsForAspect:(DrawAspect *)aspect withPriority:(DrawAspectPriority)priority;
-/*! Not generally called by anything other than a draw graphic, but is provided as an override point for subclasses that need more complex bounds computations than the default. */
+/*!
+ Not generally called by anything other than a draw graphic, but is provided as an override point for subclasses that need more complex bounds computations than the default.
+ */
 - (void)updateBounds;
-/*! This method is generally called by subclasses or a graphic's aspects to denote that the graphic's bounds have likely changed. This updates both the bounds and dirtyBounds. */
+/*!
+ This method is generally called by subclasses or a graphic's aspects to denote that the graphic's bounds have likely changed. This updates both the bounds and dirtyBounds.
+ */
 - (void)noteBoundsAreDirty;
 
 #pragma mark - Aspects
