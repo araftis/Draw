@@ -92,5 +92,12 @@ open class DrawVariable: AJRVariable {
     open class override var ajr_nameForXMLArchiving: String {
         return "drawVariable"
     }
+    
+    // MARK: - CustomStringConversion
+    
+    open override var description: String {
+        // For out purposes, we just return the name, since that's really what we care about.
+        return name
+    }
 
 }
