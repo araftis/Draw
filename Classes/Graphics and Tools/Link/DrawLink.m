@@ -837,4 +837,16 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
     }
 }
 
+// MARK: - AJREditableObject
+
++ (NSSet<NSString *> *)editableFriendPropertiesToIgnore {
+    // We ignore these properties, because they're other graphics, and those are already managed by the document as far as going in and out of the editing context.
+    static NSSet<NSString *> *set = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        set = [NSSet setWithObjects:@"source", @"destination", nil];
+    });
+    return set;
+}
+
 @end

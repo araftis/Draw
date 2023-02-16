@@ -97,7 +97,8 @@ open class DrawText : DrawAspect {
     open var editing : Bool = false
     open var ignoreGraphicShapeChange : Bool = false
 
-    open override var graphic: DrawGraphic? {
+    // Wow, this is subtle. If you override a property where the original property is weak, but the override is not, then the property will now be strong. I wouldn't not have expected that. Although note that it's only strong for the subclass.
+    open override weak var graphic: DrawGraphic? {
         didSet {
             textContainer?.graphic = graphic
         }

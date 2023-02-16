@@ -123,6 +123,15 @@ static NSMutableDictionary  *_aspects = nil;
     return YES;
 }
 
+#pragma mark - AJREditableObject
+
+//+ (NSSet<NSString *> *)propertiesToIgnore {
+//    NSMutableSet<NSString *> *ignore = [[super propertiesToIgnore] mutableCopy];
+//    // We ignore this, because we basically want to only follow the parent -> child relationship, not the child -> parent relationship.
+//    [ignore addObject:@"graphic"];
+//    return ignore;
+//}
+
 #pragma mark - Drawing
 
 - (DrawGraphicCompletionBlock)drawPath:(AJRBezierPath *)path withPriority:(DrawAspectPriority)priority {
@@ -197,6 +206,10 @@ static NSMutableDictionary  *_aspects = nil;
 }
 
 #pragma mark - Life Cycle
+
++ (NSSet<NSString *> *)propertiesToObserve {
+    return [super propertiesToObserve];
+}
 
 - (void)willAddToDocument:(DrawDocument *)document {
 }
