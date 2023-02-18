@@ -128,6 +128,16 @@
     }
 }
 
+/*!
+ Respond to the editing context tracking a change, but we're going to return `NO`, because we want to register the undos ourself.
+ 
+ @param editingContext The editing context that tracked the change.
+ @param value The new value.
+ @param key The key on the obejct that changed.
+ @param object The obejct that changed.
+ 
+ @return Always returns `NO`, because we want to track the change ourself.
+ */
 - (BOOL)editingContext:(AJREditingContext *)editingContext shouldRegisterUndoOfValue:(id)value forKey:(NSString *)key onObject:(id)object {
     [self registerUndoWithTarget:object handler:^(AJREditableObject *target) {
         [target undoValue:value forKey:key];
