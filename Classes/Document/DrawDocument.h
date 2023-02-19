@@ -203,7 +203,7 @@ extern NSString * const DrawSavePanelPathKey;
  
  @param notify If `YES`, the DrawDocumentDidUpdateLayoutNotification will be sent.
  */
-- (void)updateLayoutAndNotify:(BOOL)flag;
+- (void)updateLayoutAndNotify:(BOOL)notify;
 
 - (void)addGraphic:(DrawGraphic *)graphic;
 - (void)removeGraphic:(DrawGraphic *)graphic;
