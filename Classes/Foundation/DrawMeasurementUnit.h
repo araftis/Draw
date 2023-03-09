@@ -39,8 +39,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class,nonatomic,readonly) NSArray<DrawMeasurementUnit *> *availableMeasurementUnits;
 
+/*!
+ Returns the default measurement unit based on the local. This will likely be inches or centimeters.
+ */
 @property (nonatomic,class,readonly) DrawMeasurementUnit *defaultMeasurementUnit;
-+ (nullable DrawMeasurementUnit *)measurementUnitForIdentifier:(NSString *)name;
++ (nullable DrawMeasurementUnit *)measurementUnitForIdentifier:(NSRulerViewUnitName)name;
 
 - (id)initWithIdentifier:(NSRulerViewUnitName)name
             abbreviation:(NSString *)abbreviation
@@ -48,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
              stepUpCycle:(NSArray *)stepUpCycle
         andStepDownCycle:(NSArray *)stepDownCycle;
 
-@property (nonatomic,readonly,strong) NSString *identifier;
+@property (nonatomic,readonly,strong) NSRulerViewUnitName identifier;
 @property (nonatomic,readonly) NSString *localizedName;
 @property (nonatomic,readonly,strong) NSString *abbreviation;
 @property (nonatomic,readonly,assign) double conversionFactor;

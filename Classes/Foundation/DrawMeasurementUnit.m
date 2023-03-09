@@ -40,7 +40,7 @@
 typedef void (*DrawRulerRegisterMethod)(id, SEL, NSString *, NSString *, CGFloat, NSArray *, NSArray *);
 static DrawRulerRegisterMethod _originalRegistrationMethod = NULL;
 
-static NSMutableDictionary *_units = nil;
+static NSMutableDictionary<NSRulerViewUnitName, DrawMeasurementUnit *> *_units = nil;
 
 @interface NSRulerView (Private)
 
@@ -90,7 +90,7 @@ static NSMutableDictionary *_units = nil;
     return _units[name];
 }
 
-- (id)initWithIdentifier:(NSString *)identifier abbreviation:(NSString *)abbreviation conversionFaction:(double)conversionFactor stepUpCycle:(NSArray *)stepUpCycle andStepDownCycle:(NSArray *)stepDownCycle {
+- (id)initWithIdentifier:(NSRulerViewUnitName)identifier abbreviation:(NSString *)abbreviation conversionFaction:(double)conversionFactor stepUpCycle:(NSArray *)stepUpCycle andStepDownCycle:(NSArray *)stepDownCycle {
     if ((self = [super init])) {
         _identifier = identifier;
         _abbreviation = abbreviation;

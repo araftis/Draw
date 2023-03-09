@@ -195,8 +195,15 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 
         _storage = [[self.class.storageClass alloc] init];
         _storage.printInfo = self.printInfo;
+        _storage.printInfo.orientation = [[self class] defaultPaperOrientation];
 
         _storage.paperColor = [defaults colorForKey:DrawPaperColorKey];
+
+        // Printer Setup
+        _storage.paper = [[self class] defaultPaper];
+        _storage.printer = [NSPrinter genericPrinter];
+        _storage.unitOfMeasure = [DrawMeasurementUnit defaultMeasurementUnit];
+        _storage.margins = [[self class] defaultMargins];
 
         // Snap Marks
         _storage.markColor = [defaults colorForKey:DrawMarkColorKey];
@@ -438,6 +445,22 @@ const AJRInspectorIdentifier AJRInspectorIdentifierDrawDocument = @"document";
 }
 
 // MARK: - Layout Properties
+
++ (AJRPaper *)defaultPaper {
+    DrawMeasurementUnit *base = [DrawMeasurementUnit defaultMeasurementUnit];
+    if ([base.identifier isEqualToString:NSRulerViewUnitInches]) {
+        return [AJRPaper paperForPaperId:AJRPaperIdLetter];
+    }
+    return [AJRPaper paperForPaperId:AJRPaperIdA4];
+}
+
++ (NSPaperOrientation)defaultPaperOrientation {
+    return NSPaperOrientationPortrait;
+}
+
++ (AJRInset)defaultMargins {
+    return (AJRInset){.top = 72.0, .bottom = 72.0, .left = 72.0, .right = 72.0 };
+}
 
 - (void)setPrintInfo:(NSPrintInfo *)printInfo {
     // Make sure the storage reflects our print info.

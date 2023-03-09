@@ -172,6 +172,10 @@ extern NSString * const DrawSavePanelPathKey;
 
 // MARK: - Printing & Layout
 
+@property (nonatomic,class,readonly) AJRPaper *defaultPaper;
+@property (nonatomic,class,readonly) NSPaperOrientation defaultPaperOrientation;
+@property (nonatomic,class,readonly) AJRInset defaultMargins;
+
 @property (nonatomic,strong) NSPrinter *printer;
 @property (nonatomic,strong) AJRPaper *paper;
 @property (nonatomic,assign) NSPaperOrientation orientation;
