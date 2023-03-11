@@ -153,13 +153,13 @@
 }
 
 - (void)setPagesNeedDisplay:(BOOL)flag {
-    NSIndexSet *pageIndexes = [self.pagedView visiblePageIndexes];
-    NSUInteger index;
-    
-    index = [pageIndexes firstIndex];
-    while (index != NSNotFound) {
-        [[_storage.pages objectAtIndex:index] setNeedsDisplay:flag];
-        index = [pageIndexes indexGreaterThanIndex:index];
+    if (self.pagedView != nil) {
+        NSIndexSet *pageIndexes = [self.pagedView visiblePageIndexes];
+        NSUInteger index = [pageIndexes firstIndex];
+        while (index != NSNotFound) {
+            [[_storage.pages objectAtIndex:index] setNeedsDisplay:flag];
+            index = [pageIndexes indexGreaterThanIndex:index];
+        }
     }
 }
 

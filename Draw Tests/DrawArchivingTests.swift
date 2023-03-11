@@ -64,10 +64,10 @@ class DrawArchivingTests: XCTestCase {
     }
 
     func testDrawGraphics() throws {
-        var graphics : [DrawGraphic] = [DrawCircle(frame: NSRect(x: 10, y: 10, width: 100, height: 100)),
-                                        DrawPen(frame: NSRect.zero, path: buildTestPath()),
-                                        DrawSquiggle(frame: NSRect.zero, path: buildTestPath()),
-                                        DrawRectangle(frame: NSRect(x: 10, y: 10, width: 100, height: 100))]
+        var graphics : [[DrawGraphic]] = [[DrawCircle(frame: NSRect(x: 10, y: 10, width: 100, height: 100))],
+                                          [DrawPen(frame: NSRect.zero, path: buildTestPath())],
+                                          [DrawSquiggle(frame: NSRect.zero, path: buildTestPath())],
+                                          [DrawRectangle(frame: NSRect(x: 10, y: 10, width: 100, height: 100))]]
 
         let sourceGraphic = DrawCircle(frame: NSRect(x: 10, y: 10, width: 100, height: 100));
         let destinationGraphic = DrawPen(frame: NSRect.zero, path: buildTestPath());
@@ -75,17 +75,20 @@ class DrawArchivingTests: XCTestCase {
         drawLink.destination = destinationGraphic
         drawLink.sourceCap = DrawLinkCapArrow()
         drawLink.destinationCap = DrawLinkCapCircle()
-        graphics.append(drawLink)
+        graphics.append([sourceGraphic, destinationGraphic, drawLink])
 
-        for graphic in graphics {
-            let data = AJRXMLArchiver.archivedData(withRootObject: graphic)
+        for graphicList in graphics {
+            let graphic = graphicList.last!
+            let data = AJRXMLArchiver.archivedData(withRootObject: graphicList as AJRXMLCoding)
             XCTAssert(data != nil)
             if let data = data {
                 if let string = String(data: data, encoding: .utf8) {
                     print(string)
                 }
-                let newGraphic = try? AJRXMLUnarchiver.unarchivedObject(with: data)
+                let newList = try? AJRXMLUnarchiver.unarchivedObject(with: data) as? [DrawGraphic]
+                let newGraphic = newList?.last
                 XCTAssert(newGraphic != nil)
+                print("\(type(of:graphic)).equal?: \(graphic.isEqual(newGraphic))")
                 XCTAssert(graphic.isEqual(newGraphic), "graphic \(graphic) wasn't equal to decoded.")
             }
         }

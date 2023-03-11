@@ -1667,34 +1667,34 @@ DrawHandleType DrawHandleTypeFromString(NSString *string) {
         return DrawHandleTypeMissed;
     }
     if ([string caseInsensitiveCompare:@"Indexed"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeIndexed;
     }
     if ([string caseInsensitiveCompare:@"TopLeft"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeTopLeft;
     }
     if ([string caseInsensitiveCompare:@"TopCenter"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeTopCenter;
     }
     if ([string caseInsensitiveCompare:@"TopRight"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeTopRight;
     }
     if ([string caseInsensitiveCompare:@"Left"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeLeft;
     }
     if ([string caseInsensitiveCompare:@"Center"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeCenter;
     }
     if ([string caseInsensitiveCompare:@"Right"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeRight;
     }
     if ([string caseInsensitiveCompare:@"BottomLeft"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeBottomLeft;
     }
     if ([string caseInsensitiveCompare:@"BottomCenter"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeBottomCenter;
     }
     if ([string caseInsensitiveCompare:@"BottomRight"] == NSOrderedSame) {
-        return DrawHandleTypeMissed;
+        return DrawHandleTypeBottomRight;
     }
     return DrawHandleTypeMissed;
 }
