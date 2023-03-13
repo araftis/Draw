@@ -152,6 +152,8 @@ typedef BOOL (^DrawGraphicAspectFilter)(DrawAspect *aspect, DrawAspectPriority p
 @property (nonatomic,weak) DrawPage *page;
 @property (nonatomic,weak) DrawLayer *layer;
 @property (nonatomic,strong) AJRStore *variableStore;
+/// Returns an array of stack frames for evaluation, mostly for when evaluating a variable in the variableStore.
+@property (nonatomic,readonly) NSArray<AJRStackFrame *> *stackFrames;
 
 #pragma mark - Variables
 

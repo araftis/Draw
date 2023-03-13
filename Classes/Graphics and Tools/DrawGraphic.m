@@ -174,6 +174,22 @@ static BOOL _showsDirtyBounds = YES;
     return variables;
 }
 
+- (NSArray<AJRStackFrame *> *)stackFrames {
+    NSMutableArray<AJRStackFrame *> *frames = [NSMutableArray array];
+    [frames addObject:[AJRStackFrame rootStackFrame]];
+    if (self.document.variableStore != nil) {
+        [frames addObject:[[AJRStackFrame alloc] initWithStore:self.document.variableStore]];
+    }
+    if (self.page.variableStore != nil) {
+        [frames addObject:[[AJRStackFrame alloc] initWithStore:self.page.variableStore]];
+    }
+    if (self.layer.variableStore != nil) {
+        [frames addObject:[[AJRStackFrame alloc] initWithStore:self.layer.variableStore]];
+    }
+    [frames addObject:[[AJRStackFrame alloc] initWithStore:self.variableStore]];
+    return frames;
+}
+
 #pragma mark - Document, Pages, and Layers
 
 - (void)setDocument:(DrawDocument *)aDocumentView {
