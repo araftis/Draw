@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DrawViewController : NSViewController
 
-@property (nullable,nonatomic,readonly) DrawDocument *document;
+@property (nullable,nonatomic,weak) DrawDocument *document;
 @property (nullable,nonatomic,readonly) DrawLayerViewController *layerViewController;
 @property (nullable,nonatomic,readonly) DrawInspectorGroupsController *inspectorGroupsViewController;
 

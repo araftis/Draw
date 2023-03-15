@@ -51,6 +51,7 @@ open class DrawLayerViewController: DrawStructureInspector, NSTableViewDataSourc
     @IBOutlet open var layersTable : NSTableView!
 
     open override func documentDidLoad(_ document: DrawDocument) {
+        super.documentDidLoad(document)
         reload()
     }
     
