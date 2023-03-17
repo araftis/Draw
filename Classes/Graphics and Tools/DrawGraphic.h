@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 extern NSString * const DrawGraphicDidInitNotification;
 extern NSString * const DrawGraphicDidChangeFrameNotification;
 extern NSString * const DrawFlatnessKey;
+extern NSString * const DrawShowDirtyBoundsKey;
 extern NSString * const DrawDebugGraphicFramesKey;
 
 // Inspectors

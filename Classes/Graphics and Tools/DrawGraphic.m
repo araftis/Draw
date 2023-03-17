@@ -43,7 +43,8 @@
 
 NSString * const DrawGraphicDidInitNotification = @"DrawGraphicDidInitNotification";
 NSString * const DrawGraphicDidChangeFrameNotification = @"DrawGraphicDidChangeFrameNotification";
-NSString * const DrawFlatnessKey = @"DrawFlatnessKey";
+NSString * const DrawFlatnessKey = @"DrawFlatness";
+NSString * const DrawShowDirtyBoundsKey = @"DrawShowDirtyBounds";
 NSString * const DrawDebugGraphicFramesKey = @"debugGraphicFrame";
 
 const AJRInspectorIdentifier DrawInspectorIdentifierGraphic = @"graphic";
@@ -66,10 +67,13 @@ static BOOL _notificationsAreDisabled = NO;
 @implementation DrawGraphic
 
 + (void)initialize {
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{DrawFlatnessKey:@(1.0)}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{DrawFlatnessKey:@(1.0),
+                                                              DrawShowDirtyBoundsKey:@(NO),
+                                                            }];
+    _showsDirtyBounds = [NSUserDefaults.standardUserDefaults boolForKey:DrawShowDirtyBoundsKey defaultValue:NO];
 }
 
-static BOOL _showsDirtyBounds = YES;
+static BOOL _showsDirtyBounds = NO;
 
 + (BOOL)showsDirtyBounds {
     return _showsDirtyBounds;
