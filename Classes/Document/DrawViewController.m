@@ -42,16 +42,12 @@
 
 @implementation DrawViewController
 
-- (DrawDocument *)document {
-    return [AJRObjectIfKindOfClass([self.view.window.contentViewController ajr_descendantViewControllerOfClass:DrawDocumentViewController.class], DrawDocumentViewController) document];
-}
-
 - (DrawLayerViewController *)layerViewController {
-    return AJRObjectIfKindOfClass([self.view.window.contentViewController ajr_descendantViewControllerOfClass:DrawLayerViewController.class], DrawLayerViewController);
+    return AJRObjectIfKindOfClass([self.rootViewController ajr_descendantViewControllerOfClass:DrawLayerViewController.class], DrawLayerViewController);
 }
 
 - (DrawInspectorGroupsController *)inspectorGroupsViewController {
-    return AJRObjectIfKindOfClass([self.view.window.contentViewController ajr_descendantViewControllerOfClass:DrawInspectorGroupsController.class], DrawInspectorGroupsController);
+    return AJRObjectIfKindOfClass([self.rootViewController ajr_descendantViewControllerOfClass:DrawInspectorGroupsController.class], DrawInspectorGroupsController);
 }
 
 - (void)loadView {
@@ -69,7 +65,7 @@
 #pragma mark - Life Cycle
 
 - (void)documentDidLoad:(DrawDocument *)document {
-    // We don't do anything by default.
+    self.document = document;
 }
 
 - (void)documentWillClose:(DrawDocument *)document {

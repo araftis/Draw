@@ -77,6 +77,7 @@ open class DrawStructureInspectors: DrawViewController {
     // MARK: - DrawViewController
     
     open override func documentDidLoad(_ document: DrawDocument) {
+        super.documentDidLoad(document)
         for (index, inspector) in inspectors.enumerated() {
             inspector.documentDidLoad(document)
             weak var weakSelf = self

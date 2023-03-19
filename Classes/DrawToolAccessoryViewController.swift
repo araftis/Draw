@@ -62,6 +62,7 @@ open class DrawToolAccessoryViewController: DrawViewController {
     }
 
     override open func documentDidLoad(_ document: DrawDocument) {
+        super.documentDidLoad(document)
         for toolSet in DrawToolSet.toolSets {
             accessories.append(contentsOf: toolSet.accessories)
         }
