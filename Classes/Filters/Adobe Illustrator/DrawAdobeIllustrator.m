@@ -55,7 +55,7 @@
     NSString *line;
     
     while (YES) {
-        line = [file readLineWithError:NULL];
+        line = [file readLineReturningError:NULL];
         if (!line) break;
         if ([line hasPrefix:@"%%EndProlog"]) break;
     }
@@ -65,7 +65,7 @@
     NSString *line;
     
     while (1) {
-        line = [file readLineWithError:NULL];
+        line = [file readLineReturningError:NULL];
         if (!line) break;
         if ([line hasPrefix:@"%%EndSetup"]) break;
     }
@@ -75,7 +75,7 @@
     NSString *line;
     
     while (1) {
-        line = [file readLineWithError:NULL];
+        line = [file readLineReturningError:NULL];
         if (!line) break;
         if ([line hasPrefix:@"%%BoundingBox:"]) {
             NSArray *parts = [line componentsSeparatedByString:@" "];
@@ -664,7 +664,7 @@
     NSString		*line;
     
     while (1) {
-        line = [file readLineWithError:NULL];
+        line = [file readLineReturningError:NULL];
         if (!line) break;
         if ([line hasPrefix:@"%%EOF"]) break;
     }
@@ -674,7 +674,7 @@
     NSString		*line;
     
     while (1) {
-        line = [file readLineWithError:NULL];
+        line = [file readLineReturningError:NULL];
         if (!line) break;
         if ([line hasPrefix:@"%!"]) [self readHeader];
         else if ([line hasPrefix:@"%%BeginProlog"]) [self readProlog];
