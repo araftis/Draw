@@ -1,5 +1,4 @@
 <inspector-include>
-    <group title="Reflection">
-        <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryReflection.active" />
+    <group title="Reflection" expandedKeyPath="controller.selection.primaryReflection.active">
     </group>
 </inspector-include>

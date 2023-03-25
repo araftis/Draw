@@ -1,6 +1,5 @@
 <inspector-include>
-    <group title="Shadow">
-        <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryShadow.active" />
+    <group title="Shadow" expandedKeyPath="controller.selection.primaryShadow.active">
         <slice type="color" label="Color" valueKeyPath="controller.selection.primaryShadow.color" />
         <slice type="size" label="Offset" valuesCanLink="false" valueKeyPath="controller.selection.primaryShadow.offset" />
         <slice type="float" label="Blur Radius" valueKeyPath="controller.selection.primaryShadow.blurRadius" units="points" displayUnits="points" increment="1" />

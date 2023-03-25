@@ -1,6 +1,5 @@
 <inspector-include>
-    <group title="Fill">
-        <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryFill.active" />
+    <group title="Fill" expandedKeyPath="controller.selection.primaryFill.active">
         <slice type="color" label="Color" valueKeyPath="controller.selection.primaryFill.color" />
     </group>
 </inspector-include>

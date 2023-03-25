@@ -1,6 +1,5 @@
 <inspector-include>
-    <group title="Text">
-        <slice type="boolean" title="Active" valueKeyPath="controller.selection.primaryText.active" />
+    <group title="Text" expandedKeyPath="controller.selection.primaryText.active">
         <slice type="attributedString" label="Text" valueKeyPath="controller.selection.primaryText.attributedString" />
         <slice type="choice" style="segments" label="V. Alignment" valueType="integer" valueKeyPath="controller.selection.primaryText.verticalAlignment">
             <choice imageName="AJRInspectorAlignTop" bundle="com.ajr.framework.AJRInterface" value="0" />
