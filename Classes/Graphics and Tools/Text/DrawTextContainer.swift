@@ -221,11 +221,13 @@ open class DrawTextContainer : NSTextContainer {
         layoutManager?.textContainerChangedGeometry(self)
 
         if let graphic {
-            let path = graphic.path
-            let exclusionPath = NSBezierPath(rect: path.bounds)
-            exclusionPath.append(path.asBezierPath)
-            exclusionPath.windingRule = .evenOdd
-            self.exclusionPaths = [exclusionPath]
+            // TODO: We need to experiment with this more.
+//            let graphicPath = graphic.path
+//            var path = NSBezierPath(rect: graphic.frame)
+//            path.windingRule = NSBezierPath.WindingRule(rawValue: graphicPath.windingRule.rawValue)!
+//            path = path.subtracting(with: graphicPath)
+//            self.exclusionPaths = path.separateComponents
+            self.exclusionPaths = []
         } else {
             self.exclusionPaths = []
         }

@@ -268,9 +268,9 @@ extern NSString * const DrawSavePanelPathKey;
 
 @interface DrawDocument (EPS)
 
-- (NSImage *)imageForSelection;
-- (NSImage *)imageForGraphicsArray:(NSArray<DrawGraphic *> *)graphics;
-- (NSData *)PDFForGraphics:(NSArray<DrawGraphic *> *)graphics;
+- (nullable NSImage *)imageForSelection;
+- (nullable NSImage *)imageForGraphicsArray:(NSArray<DrawGraphic *> *)graphics;
+- (nullable NSData *)PDFForGraphics:(NSArray<DrawGraphic *> *)graphics;
 
 @end
 

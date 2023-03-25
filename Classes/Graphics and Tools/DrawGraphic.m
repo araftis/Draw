@@ -959,17 +959,21 @@ static BOOL _showsDirtyBounds = NO;
                                           aspectTest:(BOOL (^)(DrawAspectPriority priority))aspectTest
                                             pathTest:(BOOL (^)(AJRBezierPath *path))pathTest {
     NSGraphicsContext *context = [NSGraphicsContext currentContext];
-    NSMutableArray<DrawGraphic *> *hit = nil;
+    __block NSMutableArray<DrawGraphic *> *hit = nil;
     NSArray<DrawGraphic *> *others;
     BOOL hasAspects = NO;
+
+    void (^addGraphics)(NSArray<DrawGraphic *> *) = ^void(NSArray<DrawGraphic *> *graphics) {
+        if (hit == nil) {
+            hit = [NSMutableArray array];
+        }
+        [hit addObjectsFromArray:graphics];
+    };
 
     for (DrawGraphic *subgraphic in [_subgraphics reverseObjectEnumerator]) {
         others = graphicTest(subgraphic);
         if ([others count]) {
-            if (!hit) {
-                hit = [NSMutableArray array];
-            }
-            [hit addObjectsFromArray:others];
+            addGraphics(others);
         }
     }
 
@@ -983,10 +987,7 @@ static BOOL _showsDirtyBounds = NO;
 
     for (DrawAspectPriority priority = DrawAspectPriorityFirst; priority <= DrawAspectPriorityLast; priority++) {
         if (aspectTest(priority)) {
-            if (!hit) {
-                hit = [NSMutableArray array];
-            }
-            [hit addObject:self];
+            addGraphics(@[self]);
             break;
         }
         hasAspects = YES;
@@ -997,10 +998,7 @@ static BOOL _showsDirtyBounds = NO;
         // This just makes really small lines easier to actual hit with the mouse.
         [_path setLineWidth:3.0 / [_page scale]];
         if (pathTest(_path)) {
-            if (!hit) {
-                hit = [NSMutableArray array];
-            }
-            [hit addObject:self];
+            addGraphics(@[self]);
         }
     }
 

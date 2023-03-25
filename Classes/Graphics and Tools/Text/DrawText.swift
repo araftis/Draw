@@ -198,6 +198,11 @@ open class DrawText : DrawAspect {
 
                 layoutManager.drawBackground(forGlyphRange: range, at: point)
                 layoutManager.drawGlyphs(forGlyphRange: range, at: point)
+
+                for path in textContainer.exclusionPaths {
+                    NSColor(calibratedRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.1).set()
+                    path.fill()
+                }
                 
                 if UserDefaults[.debugTextContainerFrames]! {
                     NSColor.red.set()
