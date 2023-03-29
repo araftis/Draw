@@ -61,7 +61,7 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
 
 + (void)registerToolSet:(Class)toolSetClass properties:(NSDictionary<NSString *, id> *)properties {
     if ([_toolSetsByClass objectForKey:toolSetClass] == Nil) {
-        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Tool Set: %C", toolSetClass);
+        AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelDebug, @"Tool Set: %C", toolSetClass);
         DrawToolSet *toolSet = [[toolSetClass alloc] init];
         [_toolSets setObject:toolSet forKey:properties[@"id"]];
         [_toolSetsByClass setObject:toolSet forKey:(id)toolSetClass];
@@ -73,7 +73,7 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
     DrawToolSet *toolSet = _toolSets[toolSetId];
 
     if (toolSet == nil) {
-        AJRLog(DrawPlugInLogDomain, AJRLogLevelError, @"No registered \"%@\" tool set, tool \"%@\" will not be loaded.", toolSetId);
+        AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelError, @"No registered \"%@\" tool set, tool \"%@\" will not be loaded.", toolSetId);
     } else {
         [toolSet registerToolClass:toolClass properties:properties];
     }
@@ -175,7 +175,7 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
 - (void)registerToolClass:(Class)toolClass properties:(NSDictionary<NSString *, id> *)properties {
     NSString *alias = properties[@"alias"];
     if (alias) {
-        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Tool Alias: \"%@\" in %C", alias, self.class);
+        AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelDebug, @"Tool Alias: \"%@\" in %C", alias, self.class);
         NSArray<NSString *> *components = [alias componentsSeparatedByString:@":"];
         if (components.count == 2) {
             NSString *toolSetId = components[0];
@@ -189,16 +189,16 @@ static NSMutableDictionary<Class, DrawToolSet *> *_toolSetsByClass = nil;
                     _tools[toolId] = tool;
                     [tool addAliasedToolSet:self];
                 } else {
-                    AJRLog(DrawPlugInLogDomain, AJRLogLevelError, @"Tool set \"%@\" contains no tool \"%@\".", toolSetId, toolId);
+                    AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelError, @"Tool set \"%@\" contains no tool \"%@\".", toolSetId, toolId);
                 }
             } else {
-                AJRLog(DrawPlugInLogDomain, AJRLogLevelError, @"No tool set \"%@\".", toolSetId);
+                AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelError, @"No tool set \"%@\".", toolSetId);
             }
         } else {
-            AJRLog(DrawPlugInLogDomain, AJRLogLevelError, @"The \"alias\" property of a tool must contain a string in the form \"<tool set id>:<tool id>\", but we received \"%@\" instead.", alias);
+            AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelError, @"The \"alias\" property of a tool must contain a string in the form \"<tool set id>:<tool id>\", but we received \"%@\" instead.", alias);
         }
     } else {
-        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Tool: %C in %C", toolClass, self.class);
+        AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelDebug, @"Tool: %C in %C", toolClass, self.class);
         [_toolClasses setObject:toolClass forKey:properties[@"id"]];
     }
 }

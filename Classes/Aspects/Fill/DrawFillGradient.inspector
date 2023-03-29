@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector-include>
+    <slice type="color" valueKeyPath="controller.selection.primaryFill.filler.startColor" />
+    <slice type="color" valueKeyPath="controller.selection.primaryFill.filler.endColor" />
+    <slice type="float" valueKeyPath="controller.selection.primaryFill.filler.angle" minValue="0.0" maxValue="360.0" />
+</inspector-include>

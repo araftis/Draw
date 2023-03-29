@@ -199,22 +199,14 @@ open class DrawStrokeDash : NSObject, AJREquatable, AJRXMLCoding, AJRUserDefault
     
     // MARK: - AJREquatable
     
-    open func isEqual(toStrokeDash other: DrawStrokeDash) -> Bool {
-        return (AJRAnyEquals(dash, other.dash)
-                && AJRAnyEquals(offset, other.offset))
-    }
-    
-    open override func isEqual(to object: Any?) -> Bool {
+    open override func isEqual(_ object: Any?) -> Bool {
         if let object = object as? DrawStrokeDash {
-            return isEqual(toStrokeDash: object)
+            return (AJRAnyEquals(dash, object.dash)
+                    && AJRAnyEquals(offset, object.offset))
         }
         return false
     }
     
-    open override func isEqual(_ object: Any?) -> Bool {
-        return isEqual(to: object)
-    }
-
     // MARK: - NSObject
     
     open override var hash: Int {

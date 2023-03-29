@@ -58,9 +58,6 @@ NSString *DrawLinkCapTailFilledKey = @"DrawLinkCapTailFilled";
 
 - (id)initWithSize:(NSSize)size filled:(BOOL)flag {
     if ((self = [super initWithSource:nil])) {
-        DrawColorFill *fill;
-        DrawStroke *stroke;
-
         _path = [[AJRBezierPath alloc] init];
         [_path moveToPoint:(NSPoint){1.0, size.height / 2.0}];
         [_path lineToPoint:(NSPoint){size.width - 1.0, size.height / 2.0}];
@@ -68,12 +65,11 @@ NSString *DrawLinkCapTailFilledKey = @"DrawLinkCapTailFilled";
         [self removeAllAspects];
 
         if (flag) {
-            fill = [[DrawColorFill alloc] initWithGraphic:self];
-            [fill setColor:[NSColor blackColor]];
+            DrawFill *fill = [[DrawFill alloc] initWithGraphic:self color:NSColor.blackColor];
             [self addAspect:fill withPriority:DrawAspectPriorityBackground];
         }
 
-        stroke = [[DrawStroke alloc] initWithGraphic:self];
+        DrawStroke *stroke = [[DrawStroke alloc] initWithGraphic:self];
         [stroke setLineJoin:AJRLineJoinStyleMitered];
         [stroke setLineCap:AJRLineCapStyleButt];
         [stroke setWidth:1.0];

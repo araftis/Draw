@@ -66,7 +66,7 @@ static NSMutableArray<Class> *_linkCaps = nil;
 }
 
 + (void)registerLinkCap:(Class)class properties:(NSDictionary *)properties {
-    AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Link Cap: %@\n", class);
+    AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelDebug, @"Link Cap: %@\n", class);
     [_linkCaps addObject:class];
     [_linkCaps sortUsingSelector:@selector(compare:)];
 }

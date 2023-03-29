@@ -41,7 +41,7 @@ open class DrawStructureInspector: DrawViewController {
     @objc(registerStructureInspector:)
     open class func registerStructureInspector(_ properties: [String:Any]) {
         inspectors.append(properties)
-        AJRLog.in(domain: DrawPlugInLogDomain, level: .debug, message: "Structure Inspector: \(properties["name"]!)")
+        AJRLog.in(domain: .drawPlugIn, level: .debug, message: "Structure Inspector: \(properties["name"]!)")
     }
 
     open class func createInspectors() -> [DrawStructureInspector] {

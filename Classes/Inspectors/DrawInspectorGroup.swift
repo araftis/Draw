@@ -56,7 +56,7 @@ open class DrawInspectorGroup: NSObject {
     @objc(registerInspectorGroupWithProperties:)
     open class func registerInspectorGroup(properties: [String:Any]) {
         groups.append(properties)
-        AJRLog.in(domain: DrawPlugInLogDomain, level: .debug, message: "Inspector Group: \(properties["name"]!)")
+        AJRLog.in(domain: .drawPlugIn, level: .debug, message: "Inspector Group: \(properties["name"]!)")
     }
 
     open class func createGroups() -> [DrawInspectorGroup] {

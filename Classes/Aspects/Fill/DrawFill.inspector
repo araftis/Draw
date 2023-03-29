@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <inspector-include>
     <group title="Fill" expandedKeyPath="controller.selection.primaryFill.active">
-        <slice type="color" label="Color" valueKeyPath="controller.selection.primaryFill.color" />
+        <slice type="choice" style="popUp" label="Type" valueType="object" valueKeyPath="controller.selection.primaryFill.inspectedFiller" objectsKeyPath="controller.selection.primaryFill.inspectedAllFillers" choiceTitleKeyPath="localizedName"/>
     </group>
 </inspector-include>

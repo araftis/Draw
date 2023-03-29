@@ -74,9 +74,9 @@ open class DrawVariable: AJRVariable {
 
     // MARK: - AJREquatable
 
-    open override func isEqual(to object: Any?) -> Bool {
+    open override func isEqual(_ object: Any?) -> Bool {
         if let object = object as? DrawVariable {
-            return (super.isEqual(to: object)
+            return (super.isEqual(object)
                     && document === object.document
                     && layer == object.layer
                     && page == object.page

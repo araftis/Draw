@@ -53,7 +53,7 @@ static NSMutableDictionary<NSString *, DrawFilter *> *_writeFilters = nil;
 
 + (void)registerFilter:(Class)filterClass properties:(NSDictionary<NSString *, id> *)properties {
     @autoreleasepool {
-        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Filter: %C", filterClass);
+        AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelDebug, @"Filter: %C", filterClass);
 
         DrawFilter *filter = [[filterClass alloc] init];
         DrawFilter *existingFilter;

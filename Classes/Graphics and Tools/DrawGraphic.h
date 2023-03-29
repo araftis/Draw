@@ -36,7 +36,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class DrawAspect, DrawEvent, DrawFill, DrawGraphic, DrawInspectorModule, DrawLayer, DrawPage, DrawStroke, DrawColorFill, DrawShadow, DrawText, DrawDocument, DrawReflection, AJRBezierPath;
+@class DrawAspect, DrawEvent, DrawFill, DrawGraphic, DrawInspectorModule, DrawLayer, DrawPage, DrawStroke, DrawFillColor, DrawShadow, DrawText, DrawDocument, DrawReflection, AJRBezierPath;
 
 extern NSString * const DrawGraphicDidInitNotification;
 extern NSString * const DrawGraphicDidChangeFrameNotification;

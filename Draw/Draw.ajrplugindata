@@ -22,6 +22,13 @@
         <attribute name="image" type="string" />
     </extension-point>
 
+    <extension-point name="draw-fill" class="Draw.DrawFill" registrySelector="registerFill:properties:">
+        <attribute name="class" type="class" required="YES" />
+        <attribute name="name" type="string" required="YES" />
+        <attribute name="id" type="string" required="YES" />
+        <attribute name="priority" type="float" required="YES" />
+    </extension-point>
+
     <!-- Adds the path to the current clip. Useful for objects that contain objects. -->
     <draw-aspect class="Draw.DrawClip" id="clip" name="Clip" />
     <!-- Draw a shadow. Draws the shadow as if the path is filled. -->
@@ -36,10 +43,14 @@
     <draw-aspect class="Draw.DrawText" id="text" name="Text" priority="afterBackground" />
     <!-- Strokes the path. Can apply color, line join, line cap, and dash patterns. -->
     <draw-aspect class="Draw.DrawStroke" id="stroke" name="Stroke" priority="foreground" />
-    <!-- Fills the path. Can apply a color. Follows either even/odd or non-zero winding rules. -->
-    <draw-aspect class="Draw.DrawColorFill" id="colorFill" name="Color Fill" image="fillStandard" />
-    <!-- Fills the path. Mostly the superclass of other fills. You don't generally create one directly. -->
+    <!-- Fills the path. This will contain a draw-fill, as defined below. -->
     <draw-aspect class="Draw.DrawFill" id="fill" name="Fill" />
+
+    <!-- These are the different fill types -->
+    <draw-fill class="Draw.DrawFillColor" id="fillColor" name="Color Fill" priority="1.0" />
+    <draw-fill class="Draw.DrawFillGradient" id="fillGradient" name="Gradient Fill" priority="2.0" />
+    <draw-fill class="Draw.DrawFillGradientAdvanced" id="fillGradientAdvanced" name="Advanced Gradient Fill" priority="3.0" />
+    <draw-fill class="Draw.DrawFillImage" id="fillImage" name="Image Fill" priority="4.0" />
 
     <!-- Defines a tool set. A toolset contains a collection of tools presented to the user as a groups set. -->
     <extension-point name="draw-tool-set" class="DrawToolSet" registrySelector="registerToolSet:properties:">

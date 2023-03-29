@@ -68,7 +68,7 @@
 		FA460A0B13831AC30051A3B1 /* DrawFileWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FA46088E13831AC20051A3B1 /* DrawFileWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460A0C13831AC30051A3B1 /* DrawFileWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = FA46088F13831AC20051A3B1 /* DrawFileWrapper.m */; };
 		FA460A1513831AC30051A3B1 /* DrawFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46089913831AC20051A3B1 /* DrawFill.swift */; };
-		FA460A1A13831AC30051A3B1 /* DrawColorFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46089E13831AC20051A3B1 /* DrawColorFill.swift */; };
+		FA460A1A13831AC30051A3B1 /* DrawFillColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA46089E13831AC20051A3B1 /* DrawFillColor.swift */; };
 		FA460A1F13831AC30051A3B1 /* DrawFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4608A513831AC20051A3B1 /* DrawFunctions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA460A2013831AC30051A3B1 /* DrawFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4608A613831AC20051A3B1 /* DrawFunctions.m */; };
 		FA460A2113831AC30051A3B1 /* DrawGraphic-Subgraphics.m in Sources */ = {isa = PBXBuildFile; fileRef = FA4608A713831AC20051A3B1 /* DrawGraphic-Subgraphics.m */; };
@@ -159,6 +159,11 @@
 		FA4CD82813BE898400EF1ECF /* DrawEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4CD82613BE898400EF1ECF /* DrawEvent.swift */; };
 		FA4E23E513B2B94A00F21FA5 /* DrawFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = FA4E23E413B2B94A00F21FA5 /* DrawFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA58066913F35BFF00910987 /* stylesTemplate.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA58066813F35BFF00910987 /* stylesTemplate.tiff */; };
+		FA5D2D7C29D3D50F00E54D45 /* DrawFillColor.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA5D2D7B29D3D50F00E54D45 /* DrawFillColor.inspector */; };
+		FA5D2D7E29D3D66F00E54D45 /* DrawFillGradient.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA5D2D7D29D3D66F00E54D45 /* DrawFillGradient.inspector */; };
+		FA5D2D8029D3D67F00E54D45 /* DrawFillGradientAdvanced.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA5D2D7F29D3D67F00E54D45 /* DrawFillGradientAdvanced.inspector */; };
+		FA5D2D8229D3D68E00E54D45 /* DrawFillImage.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA5D2D8129D3D68E00E54D45 /* DrawFillImage.inspector */; };
+		FA5D2D8429D3DD1600E54D45 /* DrawFillGradientAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5D2D8329D3DD1600E54D45 /* DrawFillGradientAdvanced.swift */; };
 		FA7DC9B525B687C700B16CDB /* DrawLink.inspector in Resources */ = {isa = PBXBuildFile; fileRef = FA7DC9B425B687C700B16CDB /* DrawLink.inspector */; };
 		FA80BF6F2592DA9F00ABF3CD /* DrawArchivingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA80BF6E2592DA9F00ABF3CD /* DrawArchivingTests.swift */; };
 		FA8B8FE428FF7C2700650F23 /* DrawDocument-Variables.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8B8FE328FF7C2700650F23 /* DrawDocument-Variables.m */; };
@@ -168,6 +173,11 @@
 		FA8F41CC143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA8F41CB143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff */; };
 		FA8F41D0143FF27600AA47E7 /* DrawFillGradient0.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA8F41CE143FF27600AA47E7 /* DrawFillGradient0.tiff */; };
 		FA8F41D1143FF27600AA47E7 /* DrawFillGradient270.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FA8F41CF143FF27600AA47E7 /* DrawFillGradient270.tiff */; };
+		FA938E2E29D0DB620076D9CD /* DrawFillGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA938E2D29D0DB620076D9CD /* DrawFillGradient.swift */; };
+		FA938E3229D0DB780076D9CD /* DrawFillImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA938E3129D0DB780076D9CD /* DrawFillImage.swift */; };
+		FA938E3629D0ECD00076D9CD /* DrawFiller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA938E3529D0ECD00076D9CD /* DrawFiller.swift */; };
+		FA938E3829D0EDEC0076D9CD /* DrawAspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA938E3729D0EDEC0076D9CD /* DrawAspect.swift */; };
+		FA938E3F29D2A0630076D9CD /* test in Resources */ = {isa = PBXBuildFile; fileRef = FA938E3E29D2A0630076D9CD /* test */; };
 		FA98048913C653ED00C0F6F5 /* DrawSelectionActions.h in Headers */ = {isa = PBXBuildFile; fileRef = FA98048713C653ED00C0F6F5 /* DrawSelectionActions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA98048A13C653ED00C0F6F5 /* DrawSelectionActions.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98048813C653ED00C0F6F5 /* DrawSelectionActions.m */; };
 		FA98048B13C65A5700C0F6F5 /* DrawDocument-Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = FA98048413C6500600C0F6F5 /* DrawDocument-Menu.m */; };
@@ -313,7 +323,7 @@
 		FA46088E13831AC20051A3B1 /* DrawFileWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFileWrapper.h; sourceTree = "<group>"; };
 		FA46088F13831AC20051A3B1 /* DrawFileWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFileWrapper.m; sourceTree = "<group>"; };
 		FA46089913831AC20051A3B1 /* DrawFill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawFill.swift; sourceTree = "<group>"; usesTabs = 0; };
-		FA46089E13831AC20051A3B1 /* DrawColorFill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawColorFill.swift; sourceTree = "<group>"; };
+		FA46089E13831AC20051A3B1 /* DrawFillColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawFillColor.swift; sourceTree = "<group>"; };
 		FA4608A513831AC20051A3B1 /* DrawFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFunctions.h; sourceTree = "<group>"; };
 		FA4608A613831AC20051A3B1 /* DrawFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawFunctions.m; sourceTree = "<group>"; usesTabs = 0; };
 		FA4608A713831AC20051A3B1 /* DrawGraphic-Subgraphics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "DrawGraphic-Subgraphics.m"; path = "Graphics and Tools/DrawGraphic-Subgraphics.m"; sourceTree = "<group>"; };
@@ -405,6 +415,11 @@
 		FA4CD82613BE898400EF1ECF /* DrawEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawEvent.swift; sourceTree = "<group>"; };
 		FA4E23E413B2B94A00F21FA5 /* DrawFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawFilter.h; sourceTree = "<group>"; };
 		FA58066813F35BFF00910987 /* stylesTemplate.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = stylesTemplate.tiff; sourceTree = "<group>"; };
+		FA5D2D7B29D3D50F00E54D45 /* DrawFillColor.inspector */ = {isa = PBXFileReference; explicitFileType = text.xml; path = DrawFillColor.inspector; sourceTree = "<group>"; };
+		FA5D2D7D29D3D66F00E54D45 /* DrawFillGradient.inspector */ = {isa = PBXFileReference; explicitFileType = text.xml; path = DrawFillGradient.inspector; sourceTree = "<group>"; };
+		FA5D2D7F29D3D67F00E54D45 /* DrawFillGradientAdvanced.inspector */ = {isa = PBXFileReference; explicitFileType = text.xml; path = DrawFillGradientAdvanced.inspector; sourceTree = "<group>"; };
+		FA5D2D8129D3D68E00E54D45 /* DrawFillImage.inspector */ = {isa = PBXFileReference; explicitFileType = text.xml; path = DrawFillImage.inspector; sourceTree = "<group>"; };
+		FA5D2D8329D3DD1600E54D45 /* DrawFillGradientAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawFillGradientAdvanced.swift; sourceTree = "<group>"; };
 		FA7DC9B425B687C700B16CDB /* DrawLink.inspector */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = DrawLink.inspector; sourceTree = "<group>"; };
 		FA80BF6D2592DA9F00ABF3CD /* Draw Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Draw Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA80BF6E2592DA9F00ABF3CD /* DrawArchivingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawArchivingTests.swift; sourceTree = "<group>"; };
@@ -415,6 +430,11 @@
 		FA8F41CB143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DrawFillSwapGradientTemplate.tiff; sourceTree = "<group>"; };
 		FA8F41CE143FF27600AA47E7 /* DrawFillGradient0.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DrawFillGradient0.tiff; sourceTree = "<group>"; };
 		FA8F41CF143FF27600AA47E7 /* DrawFillGradient270.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = DrawFillGradient270.tiff; sourceTree = "<group>"; };
+		FA938E2D29D0DB620076D9CD /* DrawFillGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawFillGradient.swift; sourceTree = "<group>"; };
+		FA938E3129D0DB780076D9CD /* DrawFillImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawFillImage.swift; sourceTree = "<group>"; };
+		FA938E3529D0ECD00076D9CD /* DrawFiller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawFiller.swift; sourceTree = "<group>"; };
+		FA938E3729D0EDEC0076D9CD /* DrawAspect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawAspect.swift; sourceTree = "<group>"; };
+		FA938E3E29D2A0630076D9CD /* test */ = {isa = PBXFileReference; lastKnownFileType = text; path = test; sourceTree = "<group>"; };
 		FA98048413C6500600C0F6F5 /* DrawDocument-Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DrawDocument-Menu.m"; sourceTree = "<group>"; usesTabs = 0; };
 		FA98048713C653ED00C0F6F5 /* DrawSelectionActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawSelectionActions.h; sourceTree = "<group>"; };
 		FA98048813C653ED00C0F6F5 /* DrawSelectionActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawSelectionActions.m; sourceTree = "<group>"; };
@@ -523,6 +543,7 @@
 			children = (
 				FA1D8F1A1939490F008690DD /* DrawDocumentTests.m */,
 				FA80BF6E2592DA9F00ABF3CD /* DrawArchivingTests.swift */,
+				FA938E3E29D2A0630076D9CD /* test */,
 				2171608129077787001F2D4C /* DrawStrokeDashTests.swift */,
 				FA1D8F181939490F008690DD /* Supporting Files */,
 				FA80BF6D2592DA9F00ABF3CD /* Draw Tests-Bridging-Header.h */,
@@ -686,9 +707,17 @@
 		FA46089013831AC20051A3B1 /* Fill */ = {
 			isa = PBXGroup;
 			children = (
-				FA46089E13831AC20051A3B1 /* DrawColorFill.swift */,
 				21FFE308291C74AA00A79F8F /* DrawFill.inspector */,
 				FA46089913831AC20051A3B1 /* DrawFill.swift */,
+				FA938E3529D0ECD00076D9CD /* DrawFiller.swift */,
+				FA46089E13831AC20051A3B1 /* DrawFillColor.swift */,
+				FA5D2D7B29D3D50F00E54D45 /* DrawFillColor.inspector */,
+				FA938E2D29D0DB620076D9CD /* DrawFillGradient.swift */,
+				FA5D2D7D29D3D66F00E54D45 /* DrawFillGradient.inspector */,
+				FA5D2D8329D3DD1600E54D45 /* DrawFillGradientAdvanced.swift */,
+				FA5D2D7F29D3D67F00E54D45 /* DrawFillGradientAdvanced.inspector */,
+				FA938E3129D0DB780076D9CD /* DrawFillImage.swift */,
+				FA5D2D8129D3D68E00E54D45 /* DrawFillImage.inspector */,
 				FA8F41CE143FF27600AA47E7 /* DrawFillGradient0.tiff */,
 				FA8F41CF143FF27600AA47E7 /* DrawFillGradient270.tiff */,
 				FA8F41CB143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff */,
@@ -976,6 +1005,7 @@
 			children = (
 				FA46086813831AC20051A3B1 /* DrawAspect.h */,
 				FA46086913831AC20051A3B1 /* DrawAspect.m */,
+				FA938E3729D0EDEC0076D9CD /* DrawAspect.swift */,
 				FA46087F13831AC20051A3B1 /* Clip */,
 				FA46089013831AC20051A3B1 /* Fill */,
 				FA9E6AE7141970040027B8A1 /* Opacity */,
@@ -1150,6 +1180,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA938E3F29D2A0630076D9CD /* test in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1157,6 +1188,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA5D2D7C29D3D50F00E54D45 /* DrawFillColor.inspector in Resources */,
 				210F8F882730A6E0004A939D /* DrawObjectStructureInspector.xib in Resources */,
 				21FFE30B291C754E00A79F8F /* DrawShadow.inspector in Resources */,
 				FA460860138318CD0051A3B1 /* InfoPlist.strings in Resources */,
@@ -1166,6 +1198,7 @@
 				FAC4B72F25B3A8C000C08B80 /* DrawGraphic.inspector in Resources */,
 				FA7DC9B525B687C700B16CDB /* DrawLink.inspector in Resources */,
 				FA8E366625BD201600EB554F /* DrawPolygon.inspector in Resources */,
+				FA5D2D8229D3D68E00E54D45 /* DrawFillImage.inspector in Resources */,
 				FA58066913F35BFF00910987 /* stylesTemplate.tiff in Resources */,
 				FAD38A5025B2927600383EA3 /* DrawDocument.inspector in Resources */,
 				FA2877042611726C00F5BBE8 /* LICENSE.md in Resources */,
@@ -1179,7 +1212,9 @@
 				21FFE311291F2F2800A79F8F /* DrawGraphicHelp.inspector in Resources */,
 				FAB61A791437AEB2001499FE /* DrawDocument.strings in Resources */,
 				21FFE30D291C759900A79F8F /* DrawReflection.inspector in Resources */,
+				FA5D2D7E29D3D66F00E54D45 /* DrawFillGradient.inspector in Resources */,
 				FAD1CEA814392E00009C8396 /* DrawTextTool.strings in Resources */,
+				FA5D2D8029D3D67F00E54D45 /* DrawFillGradientAdvanced.inspector in Resources */,
 				FA8F41CC143FF0DB00AA47E7 /* DrawFillSwapGradientTemplate.tiff in Resources */,
 				FA2877052611726C00F5BBE8 /* README.md in Resources */,
 				21FFE307291C745900A79F8F /* DrawStroke.inspector in Resources */,
@@ -1224,15 +1259,17 @@
 				FA460A0C13831AC30051A3B1 /* DrawFileWrapper.m in Sources */,
 				FA460A1513831AC30051A3B1 /* DrawFill.swift in Sources */,
 				FA8E366225BD066100EB554F /* DrawDocument.swift in Sources */,
-				FA460A1A13831AC30051A3B1 /* DrawColorFill.swift in Sources */,
+				FA460A1A13831AC30051A3B1 /* DrawFillColor.swift in Sources */,
 				FA460A2013831AC30051A3B1 /* DrawFunctions.m in Sources */,
 				FA460A2113831AC30051A3B1 /* DrawGraphic-Subgraphics.m in Sources */,
 				FA460A2313831AC30051A3B1 /* DrawGraphic.m in Sources */,
 				FA8B8FE428FF7C2700650F23 /* DrawDocument-Variables.m in Sources */,
 				FA18B44725ABCBCC000DEF0C /* DrawLayerViewController.swift in Sources */,
 				FA460A2E13831AC30051A3B1 /* DrawImage.m in Sources */,
+				FA938E3829D0EDEC0076D9CD /* DrawAspect.swift in Sources */,
 				FABD165425C8E14D000294E3 /* DrawToolAccessory.swift in Sources */,
 				FA460A3313831AC30051A3B1 /* DrawImageTool.m in Sources */,
+				FA938E3229D0DB780076D9CD /* DrawFillImage.swift in Sources */,
 				FA18B45D25ABD310000DEF0C /* DrawViewController.m in Sources */,
 				FA460A7A13831AC30051A3B1 /* DrawAdobeIllustrator.m in Sources */,
 				210F8F872730A6E0004A939D /* DrawObjectStructureInspector.swift in Sources */,
@@ -1257,6 +1294,7 @@
 				FA460ACB13831AC40051A3B1 /* DrawPen.m in Sources */,
 				FA460ACD13831AC40051A3B1 /* DrawPenBezierAspect.m in Sources */,
 				FA460AD113831AC40051A3B1 /* DrawPenTool.m in Sources */,
+				FA938E3629D0ECD00076D9CD /* DrawFiller.swift in Sources */,
 				FA460ADD13831AC40051A3B1 /* DrawRectangle.swift in Sources */,
 				FA460AE113831AC40051A3B1 /* DrawRectangleTool.swift in Sources */,
 				FA460AEC13831AC40051A3B1 /* DrawRulerView.m in Sources */,
@@ -1266,6 +1304,7 @@
 				FA460AF613831AC40051A3B1 /* DrawSquiggleTool.m in Sources */,
 				FA460B0F13831AC40051A3B1 /* DrawStroke.swift in Sources */,
 				FA460B1113831AC40051A3B1 /* DrawStrokeDash.swift in Sources */,
+				FA938E2E29D0DB620076D9CD /* DrawFillGradient.swift in Sources */,
 				FA8B8FE628FF7C7A00650F23 /* DrawVariable.swift in Sources */,
 				FA02BFD025BCFABF001EFBBA /* DrawPolygon.swift in Sources */,
 				FA460B1613831AC40051A3B1 /* DrawThicknessCell.m in Sources */,
@@ -1312,6 +1351,7 @@
 				FA9C342E141AE75800815A1A /* DrawReflection.swift in Sources */,
 				FAA6ED8B1440171300111271 /* DrawInspectorGroupsController.swift in Sources */,
 				FA1BE5C71443DF650065BF7F /* DrawLayer.swift in Sources */,
+				FA5D2D8429D3DD1600E54D45 /* DrawFillGradientAdvanced.swift in Sources */,
 				FA473947144F8F1D00962AA3 /* DrawDocumentWindowController.m in Sources */,
 				FA0B40E81469EEFC009DCCA4 /* DrawPathAnalysisAspect.swift in Sources */,
 			);

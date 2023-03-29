@@ -204,21 +204,10 @@ open class DrawRectangle : DrawGraphic {
 
     // MARK: - Equality
 
-    open func isEqual(toRectangle other: DrawRectangle) -> Bool {
-        return (super.isEqual(to: other)
-                && radius == other.radius)
-    }
-
-    open override func isEqual(to object: Any?) -> Bool {
-        if let object = object as? DrawRectangle {
-            return isEqual(toRectangle: object)
-        }
-        return false
-    }
-
     open override func isEqual(_ object: Any?) -> Bool {
         if let object = object as? DrawRectangle {
-            return isEqual(toRectangle: object)
+            return (super.isEqual(object)
+                    && radius == object.radius)
         }
         return false
     }

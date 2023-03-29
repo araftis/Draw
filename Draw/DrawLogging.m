@@ -31,4 +31,4 @@
 
 #import "Draw.h"
 
-NSString * const DrawPlugInLogDomain = @"DrawPlugIns";
+NSString * const AJRLoggingDomainDrawPlugIn = @"DrawPlugIns";

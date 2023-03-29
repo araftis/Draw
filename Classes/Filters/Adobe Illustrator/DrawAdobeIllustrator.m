@@ -159,19 +159,17 @@
 
 - (void)createGraphicWithFill:(BOOL)fillFlag stroke:(BOOL)strokeFlag {
     DrawPen *pen;
-    DrawColorFill *fill = nil;
+    DrawFill *fill = nil;
     DrawStroke *stroke = nil;
     DrawRectangle *group;
     
     pen = [[DrawPen alloc] initWithFrame:[path controlPointBounds] path:path];
     if (fillFlag) {
         if (aiFlags.winding) {
-            fill = [[DrawColorFill alloc] initWithGraphic:pen];
-            [fill setColor:fillColor];
+            fill = [[DrawFill alloc] initWithGraphic:pen color:fillColor];
             [fill setWindingRule:AJRWindingRuleEvenOdd];
         } else {
-            fill = [[DrawColorFill alloc] initWithGraphic:pen];
-            [fill setColor:fillColor];
+            fill = [[DrawFill alloc] initWithGraphic:pen color:fillColor];
             [fill setWindingRule:AJRWindingRuleNonZero];
         }
         [pen addAspect:fill withPriority:DrawAspectPriorityBeforeChildren];

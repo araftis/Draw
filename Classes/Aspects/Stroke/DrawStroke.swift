@@ -295,9 +295,9 @@ open class DrawStroke : DrawAspect, AJREquatable {
     
     // MARK: - AJREquatable
     
-    open func isEqual(toStroke stroke: DrawStroke?) -> Bool {
-        if let stroke {
-            return (isEqual(toAspect: stroke)
+    open override func isEqual(_ stroke: Any?) -> Bool {
+        if let stroke = stroke as? DrawStroke {
+            return (super.isEqual(stroke)
                     && AJRAnyEquals(width, stroke.width)
                     && AJRAnyEquals(color, stroke.color)
                     && AJRAnyEquals(miterLimit, stroke.miterLimit)
@@ -306,17 +306,6 @@ open class DrawStroke : DrawAspect, AJREquatable {
                     && AJRAnyEquals(dash, stroke.dash))
         }
         return false
-    }
-    
-    open override func isEqual(to other: Any?) -> Bool {
-        if let other = other as? DrawStroke {
-            return isEqual(toStroke: other)
-        }
-        return false
-    }
-    
-    open override func isEqual(_ object: Any?) -> Bool {
-        return isEqual(to: object)
     }
     
 }

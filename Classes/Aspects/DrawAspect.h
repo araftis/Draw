@@ -36,16 +36,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NSString *DrawAspectId NS_EXTENSIBLE_STRING_ENUM;
+
 @interface DrawAspect : AJREditableObject <NSCopying, AJRXMLCoding>
 
 #pragma mark - Factory
 
 + (void)registerAspect:(Class)aspect properties:(NSDictionary<NSString *, id> *)properties;
 + (NSArray<DrawAspect *> *)aspects;
-+ (NSArray<NSString *> *)aspectIdentifiers;
-+ (Class)aspectForIdentifier:(NSString *)identifier; 
++ (NSArray<DrawAspectId> *)aspectIdentifiers;
++ (Class)aspectForIdentifier:(DrawAspectId)identifier;
 
-@property (nonatomic,readonly,class) NSString *identifier;
+@property (nonatomic,readonly,class) DrawAspectId identifier;
 @property (nonatomic,readonly,class) NSString *name;
 @property (nonatomic,readonly,class,nullable) NSImage *image;
 @property (nonatomic,readonly,class) DrawAspectPriority defaultPriority;
@@ -110,10 +112,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)beginEditingFromEvent:(DrawEvent *)event;
 - (void)endEditing;
-
-#pragma mark - Equality
-
-- (BOOL)isEqualToAspect:(nullable DrawAspect *)aspect NS_SWIFT_NAME(isEqual(toAspect:));
 
 @end
 

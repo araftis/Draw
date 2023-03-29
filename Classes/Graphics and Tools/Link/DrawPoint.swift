@@ -55,7 +55,7 @@ public class DrawPoint : DrawGraphic {
                                  y: location.y - radius,
                                  width: radius * 2.0,
                                  height: radius * 2.0))
-        let fill = DrawColorFill(graphic: self)
+        let fill = DrawFillColor(graphic: self)
         fill.color = NSColor.black
         super.addAspect(fill, with: .afterChildren)
     }

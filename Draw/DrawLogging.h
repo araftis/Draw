@@ -32,7 +32,8 @@
 #ifndef DrawLogging_h
 #define DrawLogging_h
 
-extern NSString * const DrawPlugInLogDomain;
-extern NSString * const DrawPlugInLogDomain;
+#import <AJRFoundation/AJRFoundation.h>
+
+extern const AJRLoggingDomain AJRLoggingDomainDrawPlugIn;
 
 #endif /* DrawLogging_h */

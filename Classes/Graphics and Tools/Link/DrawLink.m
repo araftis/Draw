@@ -99,7 +99,6 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
 - (id)initWithSource:(DrawGraphic *)sourceGraphic {
     NSPoint centroid = [sourceGraphic centroid];
     DrawStroke *stroke;
-    DrawColorFill *fill;
 
     if ((self = [super initWithFrame:(NSRect){centroid, {0.0, 0.0}}])) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -120,8 +119,7 @@ const AJRInspectorIdentifier AJRInspectorIdentifierLink = @"link";
 
         stroke = [[DrawStroke alloc] initWithGraphic:self];
         [self addAspect:stroke withPriority:DrawAspectPriorityForeground];
-        fill = [[DrawColorFill alloc] initWithGraphic:self];
-        [fill setColor:[NSColor blackColor]];
+        DrawFill *fill = [[DrawFill alloc] initWithGraphic:self color:NSColor.blackColor];
         [self addAspect:fill withPriority:DrawAspectPriorityBackground];
 
         headClass = [userDefaults classForKey:DrawLinkCapHeadStyleKey defaultValue:nil];

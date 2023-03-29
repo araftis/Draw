@@ -51,23 +51,23 @@ static NSMutableDictionary  *_aspects = nil;
 #pragma mark - Factory
 
 + (void)registerAspect:(Class)aspect properties:(NSDictionary<NSString *, id> *)properties {
-    AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Aspect: %C", aspect);
+    AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelDebug, @"Aspect: %C", aspect);
     [_aspects setObject:aspect forKey:properties[@"id"]];
 }
 
-+ (NSArray *)aspects {
++ (NSArray<DrawAspect *> *)aspects {
     return [_aspects allValues];
 }
 
-+ (NSArray *)aspectIdentifiers {
++ (NSArray<DrawAspectId> *)aspectIdentifiers {
     return [_aspects allKeys];
 }
 
-+ (Class)aspectForIdentifier:(NSString *)identifier {
++ (Class)aspectForIdentifier:(DrawAspectId)identifier {
     return [_aspects objectForKey:identifier];
 }
 
-+ (NSString *)identifier {
++ (DrawAspectId)identifier {
     return [[[AJRPlugInManager sharedPlugInManager] extensionPointForName:@"draw-aspect"] valueForProperty:@"id" onExtensionForClass:self.class];
 }
 
@@ -195,14 +195,13 @@ static NSMutableDictionary  *_aspects = nil;
     [encoder encodeBool:_active forKey:@"active"];
 }
 
-- (BOOL)isEqualToAspect:(DrawAspect *)aspect {
-    return (self.class == aspect.class
-            //&& AJREqual(_graphic, aspect->_graphic) Can't be part of the comparison, otherwise we'll go into an infinite loop.
-            && _active == aspect->_active);
-}
-
 - (BOOL)isEqual:(id)object {
-    return self == object || ([object isKindOfClass:DrawAspect.class] && [self isEqualToAspect:object]);
+    DrawAspect *other = AJRObjectIfKindOfClass(object, DrawAspect);
+    if (other != nil) {
+        return (self.class == other.class
+                && _active == other->_active);
+    }
+    return NO;
 }
 
 #pragma mark - Life Cycle

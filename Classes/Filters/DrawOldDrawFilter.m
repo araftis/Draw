@@ -108,12 +108,11 @@
 
 - (void)initializeGraphic:(DrawGraphic *)graphic fromDictionary:(NSDictionary *)source {
     NSString *fillType = [source objectForKey:@"Filled"];
-    DrawColorFill *fill = nil;
+    DrawFill *fill = nil;
     DrawStroke *stroke = nil;
     NSString *value;
 
-    fill = [[DrawColorFill alloc] initWithGraphic:graphic];
-    fill.color = [self colorFromPropertyList:[source objectForKey:@"FillColor"]];
+    fill = [[DrawFill alloc] initWithGraphic:graphic color:[self colorFromPropertyList:[source objectForKey:@"FillColor"]]];
     if ([fillType isEqualToString:@"Non-ZeroWindingRule"]) {
         [fill setWindingRule:AJRWindingRuleNonZero];
     } else {

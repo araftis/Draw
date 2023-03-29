@@ -74,7 +74,7 @@ static NSMutableDictionary<NSRulerViewUnitName, DrawMeasurementUnit *> *_units =
     
     if ([_units objectForKey:unitName.lowercaseString] == nil) {
         _units[unitName.lowercaseString] = [[DrawMeasurementUnit alloc] initWithIdentifier:unitName.lowercaseString abbreviation:abbreviation conversionFaction:conversionFactor stepUpCycle:stepUpCycle andStepDownCycle:stepDownCycle];
-        AJRLog(DrawPlugInLogDomain, AJRLogLevelDebug, @"Measurement: %@, up: (%@), down: (%@)", unitName.lowercaseString, [stepUpCycle componentsJoinedByString:@","], [stepDownCycle componentsJoinedByString:@","]);
+        AJRLog(AJRLoggingDomainDrawPlugIn, AJRLogLevelDebug, @"Measurement: %@, up: (%@), down: (%@)", unitName.lowercaseString, [stepUpCycle componentsJoinedByString:@","], [stepDownCycle componentsJoinedByString:@","]);
     }
 
     _originalRegistrationMethod(self, _cmd, unitName, abbreviation, conversionFactor, stepUpCycle, stepDownCycle);

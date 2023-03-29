@@ -1,5 +1,5 @@
 /*
- DrawColorFill.swift
+ DrawFillColor.swift
  Draw
 
  Copyright © 2022, AJ Raftis and Draw authors
@@ -31,17 +31,18 @@
 
 import AJRInterface
 
-//NSString * const DrawColorFillIdentifier = @"DrawColorFillIdentifier";
-public let DrawFillColorKey = "fillColor"
+public extension DrawAspectId {
+    static var fillColor = DrawAspectId(rawValue: "fillColor")
+}
 
 public extension AJRUserDefaultsKey {
     static var fillColor : AJRUserDefaultsKey<NSColor> {
-        return AJRUserDefaultsKey<NSColor>.key(named: DrawFillColorKey, defaultValue: NSColor(srgbRed: 1.0, green: 0.7, blue: 1.0, alpha: 1.0))
+        return AJRUserDefaultsKey<NSColor>.key(named: "fillColor", defaultValue: NSColor(srgbRed: 1.0, green: 0.7, blue: 1.0, alpha: 1.0))
     }
 }
 
 @objcMembers
-open class DrawColorFill : DrawFill {
+open class DrawFillColor : DrawFiller {
 
     // MARK: - Properties
     open var color : NSColor {
@@ -52,18 +53,18 @@ open class DrawColorFill : DrawFill {
 
     // MARK: - Creation
 
-    override class open func defaultAspect(for graphic: DrawGraphic) -> DrawAspect? {
-        return DrawColorFill(graphic: graphic)
-    }
-
     required public init() {
-        color = NSColor.black // Doesn't matter, it's going to be overwritten.
+        color = UserDefaults[.fillColor]!
         super.init()
     }
 
-    public override init(graphic: DrawGraphic?) {
-        color = UserDefaults[.fillColor]!
-        super.init(graphic: graphic)
+    public init(color: NSColor) {
+        self.color = color
+        super.init()
+    }
+
+    open override class func createDefaultFiller() -> DrawFiller {
+        return DrawFillColor(color: UserDefaults[.fillColor]!)
     }
 
     // MARK: - DrawAspect
@@ -86,7 +87,7 @@ open class DrawColorFill : DrawFill {
     // MARK: - NSCopying
 
     open override func copy(with zone: NSZone?) -> Any {
-        let aspect = super.copy(with: zone) as! DrawColorFill
+        let aspect = super.copy(with: zone) as! DrawFillColor
         aspect.color = color
         return aspect
     }
@@ -94,7 +95,7 @@ open class DrawColorFill : DrawFill {
     // MARK: - AJRXMLCoding
 
     open class override var ajr_nameForXMLArchiving: String {
-        return "colorFill"
+        return "fillColor"
     }
 
     open override func decode(with coder: AJRXMLCoder) {
@@ -110,6 +111,15 @@ open class DrawColorFill : DrawFill {
     open override func encode(with coder: AJRXMLCoder) {
         super.encode(with: coder)
         coder.encode(color, forKey: "color")
+    }
+
+    // MARK: - AJREquatable
+
+    open override func isEqual(_ object: Any?) -> Bool {
+        if let object = object as? DrawFillColor {
+            return (AJRAnyEquals(color, object.color))
+        }
+        return false
     }
 
 }

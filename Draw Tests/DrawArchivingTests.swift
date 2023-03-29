@@ -35,6 +35,10 @@ import AJRFoundation
 
 class DrawArchivingTests: XCTestCase {
 
+    override class func setUp() {
+        _ = AJRPlugInManager.shared
+    }
+
     func testDrawLinkCap() throws {
         let linkCaps = [DrawLinkCapArrow(), DrawLinkCapCircle(), DrawLinkCapDiamond(), DrawLinkCapDoubleArrow(), DrawLinkCapSquare()]
 
@@ -47,7 +51,7 @@ class DrawArchivingTests: XCTestCase {
                 }
                 let newLinkCap = try? AJRXMLUnarchiver.unarchivedObject(with: data)
                 XCTAssert(newLinkCap != nil)
-                XCTAssert(linkCap.isEqual(to: newLinkCap))
+                XCTAssert(linkCap.isEqual(newLinkCap))
             }
         }
     }
@@ -120,7 +124,7 @@ class DrawArchivingTests: XCTestCase {
         if let document = document {
             let data = AJRXMLArchiver.archivedData(withRootObject: document.storage)
             XCTAssert(data != nil, "Document failed to archive.")
-            if let data = data {
+            if let data {
                 if let string = String(data: data, encoding: .utf8) {
                     print(string)
                 }
@@ -130,4 +134,104 @@ class DrawArchivingTests: XCTestCase {
             }
         }
     }
+
+    internal class FillTest : NSObject, AJRXMLCoding, AJREquatable {
+
+        var colorFill : DrawFill?
+        var gradientFill : DrawFill?
+        var imageFill : DrawFill?
+
+        var all : [DrawFill] {
+            var all = [DrawFill]()
+            if let colorFill {
+                all.append(colorFill.copy() as! DrawFill)
+            }
+            if let gradientFill {
+                all.append(gradientFill.copy() as! DrawFill)
+            }
+            all.append(DrawFill(graphic: nil, image: NSImage(named: NSImage.addTemplateName)!))
+            return all
+        }
+
+        required override init() {
+        }
+
+        class func test() -> FillTest {
+            let fillTest = FillTest()
+
+            fillTest.colorFill = DrawFill(graphic: nil, color: NSColor.black)
+            fillTest.gradientFill = DrawFill(graphic: nil,
+                                             startColor: NSColor(srgbRed: 1.0, green: 0.0, blue: 0.0, alpha: 1.0),
+                                             endColor: NSColor(srgbRed: 0.0, green: 0.0, blue: 1.0, alpha: 1.0),
+                                             colorSpace: .sRGB)
+            fillTest.imageFill = DrawFill(graphic: nil, image: NSImage(named: NSImage.addTemplateName)!)
+
+            return fillTest
+        }
+
+        func encode(with coder: AJRXMLCoder) {
+            if let colorFill {
+                coder.encode(colorFill, forKey: "cf")
+            }
+            if let gradientFill {
+                coder.encode(gradientFill, forKey: "gf")
+            }
+            if let imageFill {
+                coder.encode(imageFill, forKey: "if")
+            }
+            coder.encode(all, forKey: "all")
+        }
+
+        func decode(with coder: AJRXMLCoder) {
+            coder.decodeObject(forKey: "cf") { value in
+                self.colorFill = value as? DrawFill
+            }
+            coder.decodeObject(forKey: "gf") { value in
+                self.gradientFill = value as? DrawFill
+            }
+            coder.decodeObject(forKey: "if") { value in
+                self.imageFill = value as? DrawFill
+            }
+        }
+
+        override class var ajr_nameForXMLArchiving: String {
+            return "fill_test"
+        }
+
+        override func isEqual(_ object: Any?) -> Bool {
+            if let object = object as? FillTest {
+                print("color: \(AJRAnyEquals(colorFill, object.colorFill))")
+                print("gradient: \(AJRAnyEquals(gradientFill, object.gradientFill))")
+                print("image: \(AJRAnyEquals(imageFill, object.imageFill))")
+                return (AJRAnyEquals(colorFill, object.colorFill)
+                        && AJRAnyEquals(gradientFill, object.gradientFill)
+                        && AJRAnyEquals(imageFill, object.imageFill))
+            }
+            return false
+        }
+
+    }
+
+    func testFill() throws {
+        let test = FillTest.test()
+
+        let data = AJRXMLArchiver.archivedData(withRootObject: test)
+        XCTAssert(data != nil, "Fill failed to archive")
+        if let data {
+            if let string = String(data: data, encoding: .utf8) {
+                print(string)
+                let fileName = FileManager.default.temporaryFilename()
+                print("file: \(fileName)")
+                try? data.write(to: URL(filePath: fileName))
+            }
+            do {
+                let decoded = try AJRXMLUnarchiver.unarchivedObject(with: data)
+                print("\(decoded): \(AJRAnyEquals(test, decoded))")
+                XCTAssert(AJRAnyEquals(test, decoded))
+            } catch {
+                XCTAssert(true, "error: \(error)")
+            }
+        }
+    }
+
 }
