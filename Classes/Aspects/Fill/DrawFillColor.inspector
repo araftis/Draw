@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<inspector-include>
+    <slice type="color" label="Color" valueKeyPath="controller.selection.primaryFill.filler.color" />
+</inspector-include>
