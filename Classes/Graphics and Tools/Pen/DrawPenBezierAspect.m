@@ -55,7 +55,7 @@ NSString *DrawPenBezierAspectKey = @"DrawPenBezierAspectKey";
                 case AJRBezierPathElementLineTo:
                     previous = points[0];
                     break;
-                case AJRBezierPathElementCurveTo:
+                case AJRBezierPathElementCubicCurveTo:
                     [workPath removeAllPoints];
                     [workPath moveToPoint:previous];
                     [workPath lineToPoint:points[0]];

@@ -153,7 +153,7 @@ static NSCursor *cursor = nil; \
     elementIndex = [_path elementIndexOfElementHitByPoint:point atTValue:&t width:width];
     
     if (elementIndex != NSNotFound) {
-        if ([_path elementAtIndex:elementIndex] == AJRBezierPathElementCurveTo) {
+        if ([_path elementAtIndex:elementIndex] == AJRBezierPathElementCubicCurveTo) {
             [_path splitElementAtIndex:elementIndex atTValue:t];
             return YES;
         } else {
@@ -193,14 +193,14 @@ static NSCursor *cursor = nil; \
     elementIndex = [_path elementIndexOfElementHitByPoint:point atTValue:&t width:width];
 
     if (elementIndex != NSNotFound) {
-        if ([_path elementAtIndex:elementIndex] == AJRBezierPathElementCurveTo) {
+        if ([_path elementAtIndex:elementIndex] == AJRBezierPathElementCubicCurveTo) {
             [_path splitElementAtIndex:elementIndex atTValue:t];
         } else {
             NSPoint start;
             NSPoint handle1, handle2;
             NSPoint end;
 
-            if ([_path elementAtIndex:elementIndex - 1] == AJRBezierPathElementCurveTo) {
+            if ([_path elementAtIndex:elementIndex - 1] == AJRBezierPathElementCubicCurveTo) {
                 start = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex - 1] + 2];
             } else {
                 start = [_path pointAtIndex:[_path pointIndexForPathElementIndex:elementIndex - 1]];
@@ -261,7 +261,7 @@ static NSCursor *cursor = nil; \
     
     if (!self.ignore) {
         NSPoint points[3];
-        AJRBezierPathElementType elementType;
+        AJRBezierPathElement elementType;
         
         for (NSInteger x = 0; x < (const NSInteger)[_path elementCount]; x++) {
             elementType = [_path elementAtIndex:x associatedPoints:points];
@@ -270,7 +270,7 @@ static NSCursor *cursor = nil; \
                 case AJRBezierPathElementLineTo:
                     [self drawHandleAtPoint:points[0]];
                     break;
-                case AJRBezierPathElementCurveTo:
+                case AJRBezierPathElementCubicCurveTo:
                     [self drawHandleAtPoint:points[0]];
                     [self drawHandleAtPoint:points[1]];
                     [self drawHandleAtPoint:points[2]];
@@ -395,35 +395,35 @@ static NSCursor *cursor = nil; \
         delta.y = point.y - pathPoint.y;
         
         if (!([[NSApp currentEvent] modifierFlags] & NSEventModifierFlagOption)) {
-            if (_position.currentOp == AJRBezierPathElementCurveTo) {
+            if (_position.currentOp == AJRBezierPathElementCubicCurveTo) {
                 if (_position.handle.subindex == 2) {
                     [_path movePointAtIndex:_position.currentOffset - 1 byDelta:delta];
-                    if (_position.nextOp == AJRBezierPathElementCurveTo) {
+                    if (_position.nextOp == AJRBezierPathElementCubicCurveTo) {
                         [_path movePointAtIndex:_position.currentOffset + 1 byDelta:delta];
                     }
                 } else if (_position.handle.subindex == 1) {
-                    if (_position.nextOp == AJRBezierPathElementCurveTo) {
+                    if (_position.nextOp == AJRBezierPathElementCubicCurveTo) {
                         [self _updateBezierHandleForLeftPoint:point
                                                   atLeftIndex:_position.currentOffset + 0
                                                   centerIndex:_position.currentOffset + 1
                                                    rightIndex:_position.currentOffset + 2];
                     } else if ((_position.handle.elementIndex == [_path lastDrawingElementIndex]) &&
                                NSEqualPoints([_path pointAtIndex:0], [_path lastPoint]) &&
-                               ([_path elementAtIndex:1] == AJRBezierPathElementCurveTo)) {
+                               ([_path elementAtIndex:1] == AJRBezierPathElementCubicCurveTo)) {
                         [self _updateBezierHandleForLeftPoint:point
                                                   atLeftIndex:_position.currentOffset
                                                   centerIndex:0
                                                    rightIndex:1];
                     }
                 } else if (_position.handle.subindex == 0) {
-                    if (_position.previousOp == AJRBezierPathElementCurveTo) {
+                    if (_position.previousOp == AJRBezierPathElementCubicCurveTo) {
                         [self _updateBezierHandleForLeftPoint:point
                                                   atLeftIndex:_position.currentOffset + 0
                                                   centerIndex:_position.currentOffset - 1
                                                    rightIndex:_position.currentOffset - 2];
                     } else if ((_position.handle.elementIndex == 1) &&
                                NSEqualPoints([_path pointAtIndex:0], [_path lastPoint]) &&
-                               ([_path lastDrawingElementType] == AJRBezierPathElementCurveTo)) {
+                               ([_path lastDrawingElementType] == AJRBezierPathElementCubicCurveTo)) {
                         [self _updateBezierHandleForLeftPoint:point
                                                   atLeftIndex:_position.currentOffset
                                                   centerIndex:0
@@ -431,7 +431,7 @@ static NSCursor *cursor = nil; \
                     }
                 }
             } else if ((_position.currentOp == AJRBezierPathElementLineTo) || (_position.currentOp == AJRBezierPathElementMoveTo)) {
-                if (_position.nextOp == AJRBezierPathElementCurveTo) {
+                if (_position.nextOp == AJRBezierPathElementCubicCurveTo) {
                     [_path movePointAtIndex:_position.currentOffset + 1 byDelta:delta];
                 }
             }
@@ -439,7 +439,7 @@ static NSCursor *cursor = nil; \
             if (_position.previousOp == -1) {
                 if (NSEqualPoints([_path pointAtIndex:_position.currentOffset], [_path lastPoint])) {
                     [_path movePointAtIndex:[_path pointCount] - 1 byDelta:delta];
-                    if ([_path lastDrawingElementType] == AJRBezierPathElementCurveTo) {
+                    if ([_path lastDrawingElementType] == AJRBezierPathElementCubicCurveTo) {
                         [_path movePointAtIndex:[_path pointCount] - 2 byDelta:delta];
                     }
                 }

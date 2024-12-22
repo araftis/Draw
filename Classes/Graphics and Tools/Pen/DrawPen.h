@@ -37,9 +37,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef struct __drawPolyPos {
-   AJRBezierPathElementType	currentOp;
-   AJRBezierPathElementType	previousOp;
-   AJRBezierPathElementType	nextOp;
+   AJRBezierPathElement	currentOp;
+   AJRBezierPathElement	previousOp;
+   AJRBezierPathElement	nextOp;
    NSInteger currentOffset;
    NSInteger previousOffset;
    NSInteger nextOffset;

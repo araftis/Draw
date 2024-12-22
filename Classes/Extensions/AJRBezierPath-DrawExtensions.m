@@ -67,7 +67,7 @@
                     handle.elementIndex = x - 1;
                 }
                 break;
-            case AJRBezierPathElementCurveTo:
+            case AJRBezierPathElementCubicCurveTo:
                 if ([self _isPoint:aPoint inPoint:_points[pointIndex] error:error]) {
                     found = YES;
                     handle.type = DrawHandleTypeIndexed;
